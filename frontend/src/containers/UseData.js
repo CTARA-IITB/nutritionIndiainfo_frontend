@@ -34,5 +34,21 @@ export const useData = (selArea) => {
   }, []);
   
   return data;
-  } 
+  }
+
+  export const useDataState =(areaCode,indiaDistrictGeojson) =>{
+    let [data, setData] = useState(null);
+
+    useEffect(()=>{
+      console.log(areaCode ==='IND');
+      console.log(indiaDistrictGeojson);
+      // if(indiaDistrictGeojson)
+      // indiaDistrictGeojson.state.features.filter(feature => console.log(feature.properties.ID_));
+      
+
+    },[areaCode])
+
+    return data;
+
+  }
   

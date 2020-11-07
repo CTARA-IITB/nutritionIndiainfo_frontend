@@ -47,7 +47,6 @@ let tooltip = select("body").append("div")
 useEffect(() => {
   const svg = select(svgRef.current);
   const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
-  console.log("w&h",width, height);
   const projection = geoMercator().fitSize([width, height], geometry);
 
   const pathGenerator = geoPath(projection);

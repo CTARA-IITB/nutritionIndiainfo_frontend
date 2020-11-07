@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, Timeperiod, NiStDtbPoly
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 class AreaEnSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,7 +58,7 @@ class UtDataSerializer(serializers.ModelSerializer):
         model = UtData
         fields = ('area' , 'data_value')
 
-class NiStDtbPolySerializer(serializers.ModelSerializer):
+class NiStDtbPolySerializer(GeoFeatureModelSerializer):
     class Meta:
         model = NiStDtbPoly
         geo_field = "wkb_geometry"

@@ -77,6 +77,7 @@ class AreaMapView(generics.ListAPIView):
                 areaDetails=AreaEn.objects.filter(area_id=areaSelect).values('area_level','area_name')
                 select_area_level = areaDetails[0].get('area_level')
                 select_area_name = areaDetails[0].get('area_name')
+                queryset=[]
                 if select_area_level == 2:
                         queryset = NiStDtbPoly.objects.all().filter(st_name=select_area_name)
                 elif select_area_level == 3:

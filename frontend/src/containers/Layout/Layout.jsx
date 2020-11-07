@@ -229,7 +229,8 @@ else
           </div>
           <div className="grid-item" id='map-div'>
     	        {/* <Marks data={renderMap} width={width} height={height} onMapClick={setArea}/> */}
-              <Map geometry={renderMap} width={width} height={height} data = {selIndiaData} />
+              <Map geometry={renderMap}  data = {selIndiaData} />
+             
 
           </div>
           {/* <div className="grid-item">footer</div> */}

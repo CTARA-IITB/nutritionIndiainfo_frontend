@@ -1,15 +1,17 @@
 import React,{useRef,useEffect} from 'react';
 import { geoMercator, geoPath, scaleSequential,interpolateRdYlGn, min,max,extent,select } from 'd3';
 import _ from 'lodash';
+import useResizeObserver from "../../useResizeObserver";
 
 import "./Map.css";
 
 
 
-export const Map = ({geometry, width, height, data}) =>{
+export const Map = ({geometry, data}) =>{
 
 const svgRef = useRef();
 const wrapperRef = useRef();
+const dimensions = useResizeObserver(wrapperRef);
 
 // colorScale
 
@@ -44,6 +46,8 @@ let tooltip = select("body").append("div")
 
 useEffect(() => {
   const svg = select(svgRef.current);
+  const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
+  console.log("w&h",width, height);
   const projection = geoMercator().fitSize([width, height], geometry);
 
   const pathGenerator = geoPath(projection);
@@ -96,7 +100,7 @@ useEffect(() => {
       .duration(500)    
       .style("opacity", 0); 
     });
-}, [geometry,width,height,data])
+}, [geometry, dimensions, data])
 
 
 

@@ -36,18 +36,20 @@ export const useData = (selArea) => {
   return data;
   }
 
-  export const useDataState =(areaCode,indiaDistrictGeojson) =>{
+  export const useDataState =(areaParentName,indiaDistrictGeojson) =>{
     let [data, setData] = useState(null);
 
     useEffect(()=>{
-      console.log(areaCode ==='IND');
-      console.log(indiaDistrictGeojson);
-      // if(indiaDistrictGeojson)
-      // indiaDistrictGeojson.state.features.filter(feature => console.log(feature.properties.ID_));
+      let features;
+      if(indiaDistrictGeojson)
+        features = indiaDistrictGeojson.state.features.filter(feature => feature.properties.NAME2_ === areaParentName);
+      
+      const featureCollection = {type: "FeatureCollection",features}
+      setData(featureCollection);
       
 
-    },[areaCode])
-
+    },[areaParentName])
+    
     return data;
 
   }

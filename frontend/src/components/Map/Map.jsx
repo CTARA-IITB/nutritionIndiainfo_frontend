@@ -1,13 +1,13 @@
 import React,{useRef,useEffect} from 'react';
 import { geoMercator, geoPath, scaleSequential,interpolateRdYlGn, min,max,extent,select } from 'd3';
-import _ from 'lodash';
+import _, { set } from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 
 import "./Map.css";
 
 
 
-export const Map = ({geometry, data}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,setSelArea}) =>{
 
 const svgRef = useRef();
 const wrapperRef = useRef();
@@ -21,11 +21,11 @@ const dimensions = useResizeObserver(wrapperRef);
 //merge geometry and data
 
 function addProperties(geojson,data){
-
   let newArr = _.map(data, function(item) {
     return {
       areacode: item.area.area_code,
       areaname: item.area.area_name,
+      area_id: item.area.area_id,
       dataValue: parseFloat(item.data_value),
     }
   });
@@ -98,6 +98,11 @@ useEffect(() => {
       tooltip.transition()    
       .duration(500)    
       .style("opacity", 0); 
+    }).on('click',(i,d) =>{
+      let id = d.area_id
+      setSelArea(''+d.area_id);
+      setLevel(2);
+      onMapClick(d.areaname);
     });
 }, [geometry, dimensions, data])
 

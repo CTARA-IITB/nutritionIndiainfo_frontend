@@ -33,7 +33,7 @@ const Layout = ({tabId}) => {
   const [selArea,setSelArea] = useState(iniSelArea);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [areaList,setAreaList] = useState(null);
-  const [areaCode,setAreaCode] = useState('IND');
+  const [areaParentName,setAreaParentName] = useState('IND');
   useEffect(() => {
     const url = 'http://localhost:8000/api/area';
     json(url).then( options =>{
@@ -125,9 +125,7 @@ const Layout = ({tabId}) => {
 
   const boundaries = useData();
   const Dboundaries= useDataDistrict();
-  const stateBoundary=useDataState(areaCode,Dboundaries);
-
-  
+  const stateBoundary=useDataState(areaParentName,Dboundaries);
 const handleClick=()=>{
   setToggleState(!toggleState);
   let text=null;
@@ -141,7 +139,7 @@ const handleClick=()=>{
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
 
-  if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt   || !areaList){
+  if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList){
   	return <pre>Loading...</pre>
   }
  
@@ -149,13 +147,14 @@ const handleClick=()=>{
 
   
 
-if(level){
+if(level === 1 || stateBoundary.features === undefined){
   if(toggleState===true)
   renderMap = renderedMap(boundaries);
 else
   renderMap = renderedMap(Dboundaries);
 }else{
-  // renderMap = stateBoundary;
+  renderMap = stateBoundary;
+  // console.log(stateBoundary);
 }
 
 
@@ -171,10 +170,11 @@ else
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeData={areaDropdownOpt}
         treeDefaultExpandAll
-        onChange={ value =>  {
+        onChange={ (value,title) =>  {
             setSelArea(value);
-            (value === 1)?setLevel(1):setLevel(2);
-            setAreaCode(fetchAreaCode(areaList, value));
+            (value === "1")?setLevel(1):setLevel(2);
+            // setAreaCode(fetchAreaCode(areaList, value));
+            setAreaParentName(title[0]);
           } 
         }
       />
@@ -208,7 +208,7 @@ else
           </div>
           <div className="grid-item" id='map-div'>
     	        {/* <Marks data={renderMap} width={width} height={height} onMapClick={setArea}/> */}
-              <Map geometry={renderMap}  data = {selIndiaData} />
+              <Map geometry={renderMap}  data = {selIndiaData} onMapClick={setAreaParentName} setLevel={setLevel} setSelArea={setSelArea} />
              
 
           </div>

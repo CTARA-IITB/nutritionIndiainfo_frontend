@@ -208,7 +208,7 @@ else
           </div>
           <div className="grid-item" id='map-div'>
     	        {/* <Marks data={renderMap} width={width} height={height} onMapClick={setArea}/> */}
-              <Map geometry={renderMap}  data = {selIndiaData} onMapClick={setAreaParentName} setLevel={setLevel} setSelArea={setSelArea} />
+              <Map geometry={renderMap}  data = {selIndiaData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
              
 
           </div>

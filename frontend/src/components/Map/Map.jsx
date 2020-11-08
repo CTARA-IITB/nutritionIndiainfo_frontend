@@ -7,7 +7,7 @@ import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,setSelArea}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea}) =>{
 
 const svgRef = useRef();
 const wrapperRef = useRef();
@@ -46,8 +46,9 @@ let tooltip = select("body").append("div")
 
 useEffect(() => {
   const svg = select(svgRef.current);
+
   const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
-  const projection = geoMercator().fitSize([width, height], geometry);
+  const projection = geoMercator().fitSize([width, height], geometry).precision(10000);
 
   const pathGenerator = geoPath(projection);
   let mergedGeometry = addProperties(geometry.features,data);
@@ -91,7 +92,6 @@ useEffect(() => {
     .selectAll(".polygon")
     .data(mergedGeometry)
     .join("path").attr("class", "polygon")
-    .attr("d" ,feature => pathGenerator(feature))
     .style("fill", d =>colorScale(c2Value(d)))
     .on("mouseover", (i,d) => onMouseOver(i,d))
     .on("mouseout", function(d) {   
@@ -100,10 +100,18 @@ useEffect(() => {
       .style("opacity", 0); 
     }).on('click',(i,d) =>{
       let id = d.area_id
-      setSelArea(''+d.area_id);
-      setLevel(2);
-      onMapClick(d.areaname);
-    });
+      if(level == 1){
+        setSelArea(''+d.area_id);
+        setLevel(2);
+        onMapClick(d.areaname);
+      }else if(level == 2){
+        setSelArea("1");  //india
+        setLevel(1);
+      }
+      tooltip.style('opacity',0);
+  })
+  // .transition().duration(500)
+  .attr("d" ,feature => pathGenerator(feature));
 }, [geometry, dimensions, data])
 
 

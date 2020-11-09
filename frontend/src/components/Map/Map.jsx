@@ -110,7 +110,7 @@ useEffect(() => {
       }
       tooltip.style('opacity',0);
   })
-  // .transition().duration(500)
+  .transition().duration(1000)
   .attr("d" ,feature => pathGenerator(feature));
 }, [geometry, dimensions, data])
 

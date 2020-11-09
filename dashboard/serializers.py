@@ -13,7 +13,7 @@ class AreaEnDropSerializer(serializers.ModelSerializer):
 
     class Meta:	
         model = AreaEn	
-        fields = ('area_id','area_name','area_parent_id','area_level')	
+        fields = ('area_id','area_name','area_parent_id','area_level','area_code')	
 
     
 

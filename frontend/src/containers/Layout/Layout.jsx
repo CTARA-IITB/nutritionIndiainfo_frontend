@@ -109,6 +109,24 @@ const Layout = ({tabId}) => {
     }, [selIndicator,selSubgroup,selTimeperiod])
 
 
+    //state data
+
+    const [selStateData,setSelStateData] = useState(null);
+  
+    useEffect(() => {
+      let url;
+      if(selArea == 1)
+        url = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/3`
+      else
+        url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
+      json(url).then( data =>{
+        setSelStateData(data);
+      }
+      )
+
+    }, [selIndicator,selSubgroup,selTimeperiod,selArea])
+
+console.log(selStateData);
     // change selTimeperiod when indicator updated
     useEffect(() => {
     let flag = false;
@@ -144,16 +162,21 @@ const handleClick=()=>{
   }
  
   let renderMap=null;
-
+  let nutritionData = null;
   
 
 if(level === 1 || stateBoundary.features === undefined){
-  if(toggleState===true)
+  if(toggleState===true){
   renderMap = renderedMap(boundaries);
-else
-  renderMap = renderedMap(Dboundaries);
+  nutritionData = selIndiaData;
+  }
+  else{
+    renderMap = renderedMap(Dboundaries);
+    nutritionData = selStateData;
+  }
 }else{
   renderMap = stateBoundary;
+  nutritionData = selStateData;
   // console.log(stateBoundary);
 }
 
@@ -208,7 +231,7 @@ else
           </div>
           <div className="grid-item" id='map-div'>
     	        {/* <Marks data={renderMap} width={width} height={height} onMapClick={setArea}/> */}
-              <Map geometry={renderMap}  data = {selIndiaData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
+              <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
              
 
           </div>

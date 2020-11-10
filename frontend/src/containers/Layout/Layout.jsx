@@ -15,8 +15,6 @@ import "./Layout.css";
 
 const renderedMap = (boundaries) => (boundaries.state);
 
-
-
 const Layout = ({tabId}) => {
 
   let tab;
@@ -93,7 +91,19 @@ const Layout = ({tabId}) => {
       )
 
     }, [selIndicator,selSubgroup,selArea])
-
+ 
+ 
+    //district data
+    const [selDistrictData,setSelDistrictData] = useState(null);
+  
+    useEffect(() => {
+      const url = `http://localhost:8000/api/indiaMap/12/6/19/3`;
+      json(url).then( data =>{
+        setSelDistrictData(data);
+      
+      }
+      )
+    },['3'])
 
 
     //india data
@@ -143,15 +153,21 @@ const handleClick=()=>{
   	return <pre>Loading...</pre>
   }
  
-  let renderMap=null;
-
-  
-
+let renderMap=null;
+let selMapData=null;
+ 
 if(level === 1 || stateBoundary.features === undefined){
   if(toggleState===true)
+  {
+    selMapData=selIndiaData;
+
   renderMap = renderedMap(boundaries);
+  }
 else
+{
+  selMapData=selDistrictData;
   renderMap = renderedMap(Dboundaries);
+}
 }else{
   renderMap = stateBoundary;
   // console.log(stateBoundary);
@@ -208,9 +224,8 @@ else
           </div>
           <div className="grid-item" id='map-div'>
     	        {/* <Marks data={renderMap} width={width} height={height} onMapClick={setArea}/> */}
-              <Map geometry={renderMap}  data = {selIndiaData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
+              <Map geometry={renderMap}  data = {selMapData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
              
-
           </div>
           {/* <div className="grid-item">footer</div> */}
 

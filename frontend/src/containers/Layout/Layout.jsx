@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from "react";
 import Dropdown from "react-dropdown";
 import 'react-dropdown/style.css';
-
+import Button from 'react-bootstrap/Button'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 // import Form from "../../components/Form/Form";
 import { Marks } from "../../components/Marks/Marks";
@@ -147,13 +148,13 @@ console.log(selStateData);
 const handleClick=()=>{
   setToggleState(!toggleState);
   let text=null;
-  if(buttonText==='District')
-    text='state';
+  if(buttonText==='District Level')
+    text='State Level';
   else
-    text='District';
+    text='District Level';
   changeText(text);
   }
-  const [buttonText, setButtonText] = useState("District");
+  const [buttonText, setButtonText] = useState("District Level");
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
 
@@ -187,52 +188,53 @@ if(level === 1 || stateBoundary.features === undefined){
           {/* <div className="grid-item">header</div> */}
           <div className="grid-item">
             
-      <TreeSelect
-        style={{ width: '20%' }}
-        value={selArea}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={areaDropdownOpt}
-        treeDefaultExpandAll
-        onChange={ (value,title) =>  {
-            setSelArea(value);
-            (value === "1")?setLevel(1):setLevel(2);
-            // setAreaCode(fetchAreaCode(areaList, value));
-            setAreaParentName(title[0]);
-          } 
-        }
-      />
+          <TreeSelect
+            style={{ width: '20%' }}
+            value={selArea}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            treeData={areaDropdownOpt}
+            treeDefaultExpandAll
+            onChange={ (value,title) =>  {
+                setSelArea(value);
+                (value === "1")?setLevel(1):setLevel(2);
+                // setAreaCode(fetchAreaCode(areaList, value));
+                setAreaParentName(title[0]);
+              } 
+            }
+          />
 
-      <TreeSelect
-        style={{ width: '20%' }}
-        value={selIndicator}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={indicatorDropdownOpt}
-        onChange={ value => setSelIndicator(value) }
-        />
+          <TreeSelect className="dropdown"
+            style={{ width: '20%' }}
+            value={selIndicator}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            treeData={indicatorDropdownOpt}
+            onChange={ value => setSelIndicator(value) }
+            />
 
-      <TreeSelect
-        style={{ width: '20%' }}
-        value={selSubgroup}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={subgroupDropdownOpt}
-        onChange={ value => setSelSubgroup(value)}
-        />
+          <TreeSelect className="dropdown"
+            style={{ width: '20%' }}
+            value={selSubgroup}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            treeData={subgroupDropdownOpt}
+            onChange={ value => setSelSubgroup(value)}
+            />
 
-      <TreeSelect
-        style={{ width: '20%' }}
-        value={selTimeperiod}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={timeperiodDropdownOpt}
-        onChange={value => setSelTimeperiod(value) }
-        />
+          <TreeSelect className="dropdown"
+            style={{ width: '20%' }}
+            value={selTimeperiod}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            treeData={timeperiodDropdownOpt}
+            onChange={value => setSelTimeperiod(value) }
+            />
 
-          <button onClick={handleClick}> {buttonText} </button>
+          {/* <Button onClick={handleClick}> {buttonText} </Button> */}
 
           </div>
-          <div className="grid-item" id='map-div'>
+          <div className="grid-item" id='map-div' style={{ margin:"auto" }} >
     	        {/* <Marks data={renderMap} width={width} height={height} onMapClick={setArea}/> */}
               <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
              
+              <Button  onClick={handleClick}> {buttonText} </Button>
 
           </div>
           {/* <div className="grid-item">footer</div> */}

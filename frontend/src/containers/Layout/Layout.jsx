@@ -1,6 +1,9 @@
 import React,{useState,useEffect} from "react";
 import Dropdown from "react-dropdown";
-import 'react-dropdown/style.css';
+// import 'react-dropdown/style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
 
 
 // import Form from "../../components/Form/Form";
@@ -8,7 +11,8 @@ import { Marks } from "../../components/Marks/Marks";
 import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
 import { json } from 'd3';
-import { TreeSelect } from 'antd';
+import { TreeSelect, Switch } from 'antd';
+
 import { fetchAreaCode,createHierarchy } from '../../utils';
 
 import "./Layout.css";
@@ -119,6 +123,24 @@ const Layout = ({tabId}) => {
     }, [selIndicator,selSubgroup,selTimeperiod])
 
 
+    //state data
+
+    const [selStateData,setSelStateData] = useState(null);
+  
+    useEffect(() => {
+      let url;
+      if(selArea == 1)
+        url = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/3`
+      else
+        url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
+      json(url).then( data =>{
+        setSelStateData(data);
+      }
+      )
+
+    }, [selIndicator,selSubgroup,selTimeperiod,selArea])
+
+console.log(selStateData);
     // change selTimeperiod when indicator updated
     useEffect(() => {
     let flag = false;
@@ -153,83 +175,104 @@ const handleClick=()=>{
   	return <pre>Loading...</pre>
   }
  
-let renderMap=null;
-let selMapData=null;
- 
-if(level === 1 || stateBoundary.features === undefined){
-  if(toggleState===true)
-  {
-    selMapData=selIndiaData;
+  let renderMap=null;
+  let nutritionData = null;
+  
 
+if(level === 1 || stateBoundary.features === undefined){
+  if(toggleState===true){
   renderMap = renderedMap(boundaries);
+  nutritionData = selIndiaData;
   }
-else
-{
-  selMapData=selDistrictData;
-  renderMap = renderedMap(Dboundaries);
-}
+  else{
+    renderMap = renderedMap(Dboundaries);
+    nutritionData = selStateData;
+  }
 }else{
   renderMap = stateBoundary;
+  nutritionData = selStateData;
   // console.log(stateBoundary);
 }
 
 
     return (
       <React.Fragment>
-        <div className="grid-container">
-          {/* <div className="grid-item">header</div> */}
-          <div className="grid-item">
-            
-      <TreeSelect
-        style={{ width: '20%' }}
-        value={selArea}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={areaDropdownOpt}
-        treeDefaultExpandAll
-        onChange={ (value,title) =>  {
-            setSelArea(value);
-            (value === "1")?setLevel(1):setLevel(2);
-            // setAreaCode(fetchAreaCode(areaList, value));
-            setAreaParentName(title[0]);
-          } 
-        }
-      />
+        <Container>
+          <Row>
+            <Col>
+            <TreeSelect
+                className='dropdown'
+                style={{ width: '100%' }}
+                value={selArea}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                treeData={areaDropdownOpt}
+                treeDefaultExpandAll
+                onChange={ (value,title) =>  {
+                    setSelArea(value);
+                    (value === "1")?setLevel(1):setLevel(2);
+                    // setAreaCode(fetchAreaCode(areaList, value));
+                    setAreaParentName(title[0]);
+                  } 
+                }
+              />
+            </Col>
 
-      <TreeSelect
-        style={{ width: '20%' }}
-        value={selIndicator}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={indicatorDropdownOpt}
-        onChange={ value => setSelIndicator(value) }
-        />
+            <Col>
+            <TreeSelect
+                className='dropdown'
+                style={{ width: '100%' }}
+                value={selIndicator}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                treeData={indicatorDropdownOpt}
+                onChange={ value => setSelIndicator(value) }
+                />
+            </Col>
 
-      <TreeSelect
-        style={{ width: '20%' }}
-        value={selSubgroup}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={subgroupDropdownOpt}
-        onChange={ value => setSelSubgroup(value)}
-        />
-
-      <TreeSelect
-        style={{ width: '20%' }}
-        value={selTimeperiod}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={timeperiodDropdownOpt}
-        onChange={value => setSelTimeperiod(value) }
-        />
-
-          <button onClick={handleClick}> {buttonText} </button>
-
-          </div>
-          <div className="grid-item" id='map-div'>
-    	        {/* <Marks data={renderMap} width={width} height={height} onMapClick={setArea}/> */}
-              <Map geometry={renderMap}  data = {selMapData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
+              
+                <Col>
+                <TreeSelect
+                className='dropdown'
+                style={{ width: '100%' }}
+                value={selSubgroup}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                treeData={subgroupDropdownOpt}
+                onChange={ value => setSelSubgroup(value)}
+                />
+                </Col>
+        
+              <Col>
+                <TreeSelect
+                className='dropdown'
+                style={{ width: '100%' }}
+                value={selTimeperiod}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                treeData={timeperiodDropdownOpt}
+                onChange={value => setSelTimeperiod(value) }
+                />
+              </Col>
              
-          </div>
-          {/* <div className="grid-item">footer</div> */}
+     
 
-        </div>
+          </Row>
+          <Row className="d-flex justify-content-center">
+            {/* <ToggleButton></ToggleButton> */}
+            {/* <Switch className="" size="large" checkedChildren="District Level" unCheckedChildren="State Level" /> */}
+<div>
+                <Button> Enabled Button</Button> &nbsp;
+                <Button disabled={true}>Disabled Button </Button>
+            </div>
+
+            <Button onClick={handleClick}> {buttonText} </Button>
+          </Row>
+
+          <Row>
+            <Col>
+              <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
+            </Col>
+          </Row>
+
+        </Container>
+
       </React.Fragment>
     );
 }

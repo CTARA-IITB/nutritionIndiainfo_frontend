@@ -15,7 +15,7 @@ import { TreeSelect, Switch } from 'antd';
 
 import { fetchAreaCode,createHierarchy } from '../../utils';
 
-import "./Layout.css";
+import styles from "./Layout.css";
 
 const renderedMap = (boundaries) => (boundaries.state);
 
@@ -188,8 +188,8 @@ if(level === 1 || stateBoundary.features === undefined){
     return (
       <React.Fragment>
         <Container>
-          <Row>
-            <Col>
+          <Row className="con">
+            <Col>Select India, State or District
             <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -207,7 +207,7 @@ if(level === 1 || stateBoundary.features === undefined){
               />
             </Col>
 
-            <Col>
+            <Col>Select Indicator
             <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -219,7 +219,7 @@ if(level === 1 || stateBoundary.features === undefined){
             </Col>
 
               
-                <Col>
+                <Col>Select Subgroup
                 <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -230,7 +230,7 @@ if(level === 1 || stateBoundary.features === undefined){
                 />
                 </Col>
         
-              <Col>
+              <Col>Select Time Period
                 <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -244,9 +244,9 @@ if(level === 1 || stateBoundary.features === undefined){
      
 
           </Row>
-          <Row className="d-flex justify-content-center">
+          <Row className="d-flex justify-content-center con">
             {/* <ToggleButton></ToggleButton> */}
-            <Switch className="" size="large" checkedChildren="District Level" unCheckedChildren="State Level" />
+            <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
 
             {/* <Button onClick={handleClick}> {buttonText} </Button> */}
           </Row>

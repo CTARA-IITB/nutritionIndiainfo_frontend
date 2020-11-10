@@ -188,7 +188,7 @@ if(level === 1 || stateBoundary.features === undefined){
     return (
       <React.Fragment>
         <Container >
-          <Row>
+          <Row className='mx-3'>
             <Col>
             <TreeSelect
                 className='dropdown'
@@ -246,7 +246,7 @@ if(level === 1 || stateBoundary.features === undefined){
           </Row>
           <Row className="d-flex justify-content-center">
             {/* <ToggleButton></ToggleButton> */}
-            <Switch className="" size="large" checkedChildren="District Level" unCheckedChildren="State Level" />
+            <Switch onClick={handleClick} className="" size="large" checkedChildren="District Level" unCheckedChildren="State Level" />
 
             {/* <Button onClick={handleClick}> {buttonText} </Button> */}
           </Row>

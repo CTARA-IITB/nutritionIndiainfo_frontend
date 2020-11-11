@@ -256,8 +256,8 @@ if(level === 1 || stateBoundary.features === undefined){
             {/* <ToggleButton></ToggleButton> */}
             {/* <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> */}
 
-            {level===1 ? <Button onClick={handleClick}> {buttonText} </Button> : ''}
-            
+            {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}
+            {/* <Button onClick={handleClick}> {buttonText} </Button> */}
           </Row>
 
           <Row>

@@ -19,8 +19,6 @@ import "./Layout.css";
 
 const renderedMap = (boundaries) => (boundaries.state);
 
-
-
 const Layout = ({tabId}) => {
 
   let tab;
@@ -97,7 +95,19 @@ const Layout = ({tabId}) => {
       )
 
     }, [selIndicator,selSubgroup,selArea])
-
+ 
+ 
+    //district data
+    const [selDistrictData,setSelDistrictData] = useState(null);
+  
+    useEffect(() => {
+      const url = `http://localhost:8000/api/indiaMap/12/6/19/3`;
+      json(url).then( data =>{
+        setSelDistrictData(data);
+      
+      }
+      )
+    },['3'])
 
 
     //india data
@@ -248,13 +258,12 @@ if(level === 1 || stateBoundary.features === undefined){
                 />
               </Col>
              
-     
-
           </Row>
           <Row className="d-flex justify-content-center">
             {/* <ToggleButton></ToggleButton> */}
-            <Switch onClick={handleClick} className="" size="large" checkedChildren="District Level" unCheckedChildren="State Level" />
+            {/* <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> */}
 
+            {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}
             {/* <Button onClick={handleClick}> {buttonText} </Button> */}
           </Row>
 

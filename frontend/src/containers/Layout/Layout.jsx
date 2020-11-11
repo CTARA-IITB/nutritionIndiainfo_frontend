@@ -190,13 +190,14 @@ if(level === 1 || stateBoundary.features === undefined){
         <Container >
           <Row className='mx-3'>
             <Col>
+            <span>Select Area</span>
             <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
                 value={selArea}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={areaDropdownOpt}
-                treeDefaultExpandAll
+                // treeDefaultExpandAll
                 onChange={ (value,title) =>  {
                     setSelArea(value);
                     (value === "1")?setLevel(1):setLevel(2);
@@ -208,6 +209,8 @@ if(level === 1 || stateBoundary.features === undefined){
             </Col>
 
             <Col>
+            <span>Select Indicator</span>
+
             <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -220,6 +223,8 @@ if(level === 1 || stateBoundary.features === undefined){
 
               
                 <Col>
+            <span>Select subgroup</span>
+
                 <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -231,6 +236,8 @@ if(level === 1 || stateBoundary.features === undefined){
                 </Col>
         
               <Col>
+            <span>Select timeperiod</span>
+
                 <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}

@@ -12,6 +12,12 @@
     cursor: pointer;
   }
 
+  /* svg .polygon:hover{
+    stroke: black;
+    stroke-width: 2px;
+  } */
+
+
   div.tooltip { 
     position: absolute;     
     text-align: center;     

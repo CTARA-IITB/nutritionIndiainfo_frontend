@@ -11,7 +11,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# GDAL_LIBRARY_PATH = r'E:\Vidya\D3\to\myenv\Lib\site-packages\osgeo\gdal300.dll'
+#GDAL_LIBRARY_PATH = r'E:\Vidya\D3\to\myenv\Lib\site-packages\osgeo\gdal300.dll'
 
 
 # Quick-start development settings - unsuitable for production
@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-     'django.contrib.gis',
+    'django.contrib.gis',
     'rest_framework',
     'dashboard',
     'drf_multiple_model',

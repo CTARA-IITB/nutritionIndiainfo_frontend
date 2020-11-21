@@ -15,7 +15,7 @@ import { TreeSelect, Switch } from 'antd';
 
 import { fetchAreaCode,createHierarchy } from '../../utils';
 
-import styles from "./Layout.css";
+import "./Layout.css";
 
 const renderedMap = (boundaries) => (boundaries.state);
 
@@ -197,16 +197,17 @@ if(level === 1 || stateBoundary.features === undefined){
 
     return (
       <React.Fragment>
-        <Container>
-          <Row className="con">
-            <Col>Select India, State or District
+        <Container className='container'>
+          <Row className='mx-3'>
+            <Col>
+            <span>Select Area</span>
             <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
                 value={selArea}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={areaDropdownOpt}
-                treeDefaultExpandAll
+                // treeDefaultExpandAll
                 onChange={ (value,title) =>  {
                     setSelArea(value);
                     (value === "1")?setLevel(1):setLevel(2);
@@ -217,7 +218,9 @@ if(level === 1 || stateBoundary.features === undefined){
               />
             </Col>
 
-            <Col>Select Indicator
+            <Col>
+            <span>Select Indicator</span>
+
             <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -229,7 +232,9 @@ if(level === 1 || stateBoundary.features === undefined){
             </Col>
 
               
-                <Col>Select Subgroup
+                <Col>
+            <span>Select subgroup</span>
+
                 <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -240,7 +245,9 @@ if(level === 1 || stateBoundary.features === undefined){
                 />
                 </Col>
         
-              <Col>Select Time Period
+              <Col>
+            <span>Select timeperiod</span>
+
                 <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -252,7 +259,7 @@ if(level === 1 || stateBoundary.features === undefined){
               </Col>
              
           </Row>
-          <Row className="d-flex justify-content-center con">
+          <Row className="d-flex justify-content-center">
             {/* <ToggleButton></ToggleButton> */}
             {/* <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> */}
 

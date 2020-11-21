@@ -1,7 +1,8 @@
 import React,{useRef,useEffect} from 'react';
-import { geoMercator, geoPath, scaleSequential,interpolateRdYlGn, min,max,extent,select } from 'd3';
-import _, { set } from 'lodash';
+import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateRdYlGn } from 'd3';
+import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
+import { legendColor } from 'd3-svg-legend'
 
 import "./Map.css";
 
@@ -48,13 +49,13 @@ useEffect(() => {
   const svg = select(svgRef.current);
 
   const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
-  const projection = geoMercator().fitSize([width, height], geometry).precision(10000);
+  const projection = geoMercator().fitSize([width, height], geometry);
 
   const pathGenerator = geoPath(projection);
   let mergedGeometry = addProperties(geometry.features,data);
   let c1Value  = d => d.data_value;
   let c2Value  = d => d.dataValue;
-  
+  console.log(mergedGeometry);
   let color_range = _.map(data, d =>{
     return +d.data_value
   });
@@ -62,9 +63,21 @@ useEffect(() => {
   let comp = (max - min)/3;
   let low = min + comp;
   let high = max - comp;
+  // console.log("minmax", min, max);
+  // console.log("lowhigh", low, high);
 
+  let colorScale3 = scaleSequential().domain([max,min])
+      .interpolator(interpolateRdYlGn);
 
-  let colorScale = (v) =>{
+    let colorScale = scaleQuantize().domain([min, max])
+      .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
+
+  // let colorScale = scaleOrdinal();
+  // colorScale.domain(c2Value)
+  //     .range("red","yellow", "green");
+  
+  
+  let colorScale2 = (v) =>{
     if (typeof v != "undefined") {
         let selectedColor;
           if (v < low) {selectedColor =  "#24562B";}//matte green
@@ -77,6 +90,15 @@ useEffect(() => {
     }
   };
 
+
+  // colorLegendG.call(colorLegend, {
+  //   colorScale,
+  //   circleRadius: 8,
+  //   spacing: 20,
+  //   textOffset: 12,
+  //   backgroundRectWidth: 235
+  // });
+
   //OnMouseOver
 
   const onMouseOver = (event,d) =>{	
@@ -88,17 +110,24 @@ useEffect(() => {
     }
   };
 
+ 
+
   svg
     .selectAll(".polygon")
     .data(mergedGeometry)
     .join("path").attr("class", "polygon")
-    .style("fill", d =>colorScale(c2Value(d)))
+    .style("fill", d =>{
+      if (typeof c2Value(d) != "undefined")
+        return colorScale(c2Value(d))
+      else
+        return "#A9A9B0";
+    })
     .on("mouseover", (i,d) => onMouseOver(i,d))
     .on("mouseout", function(d) {   
       tooltip.transition()    
       .duration(500)    
-      .style("opacity", 0); 
-    }).on('click',(i,d) =>{
+      .style("opacity", 0);
+         }).on('click',(i,d) =>{
       let id = d.area_id
       if(level == 1){
         setSelArea(''+d.area_id);
@@ -112,6 +141,21 @@ useEffect(() => {
   })
   .transition().duration(1000)
   .attr("d" ,feature => pathGenerator(feature));
+  
+
+    svg.append("g")
+  .attr("class", "legendQuant")
+  .attr("transform", "translate(1000,400)");
+
+  let legend = legendColor()
+    .labelFormat(format(".2f"))
+    .title("Legend")
+    .titleWidth(100)
+    .scale(colorScale);
+
+  svg.select(".legendQuant")
+    .call(legend);
+    
 }, [geometry, dimensions, data])
 
 

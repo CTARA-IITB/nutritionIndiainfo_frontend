@@ -149,9 +149,12 @@ useEffect(() => {
     }).on('click',(i,d) =>{
       let id = d.area_id
       if(level == 1){
-        setSelArea(''+d.area_id);
-        setLevel(2);
-        onMapClick(d.areaname);
+        
+        if(typeof c2Value(d) != "undefined"){
+          setSelArea(''+d.area_id);
+          setLevel(2);
+          onMapClick(d.areaname);
+        }
       }else if(level == 2){
         setSelArea("1");  //india
         setLevel(1);

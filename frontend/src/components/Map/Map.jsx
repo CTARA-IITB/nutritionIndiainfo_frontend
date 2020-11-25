@@ -129,6 +129,7 @@ useEffect(() => {
       .style("opacity", 0);
          }).on('click',(i,d) =>{
       let id = d.area_id
+
       if(level == 1){
         setSelArea(''+d.area_id);
         setLevel(2);
@@ -145,7 +146,7 @@ useEffect(() => {
 
     svg.append("g")
   .attr("class", "legendQuant")
-  .attr("transform", "translate(1000,400)");
+  .attr("transform", "translate(20,20)");
 
   let legend = legendColor()
     .labelFormat(format(".2f"))

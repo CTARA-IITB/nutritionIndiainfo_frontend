@@ -1,8 +1,8 @@
 
 from django.shortcuts import render
 from rest_framework import generics   
-from .serializers import IndicatorSerializer, IndicatorUnitSubgroupSerializer, SubgroupSerializer, UtDataSerializer, UtDatatimeSerializer, AreaEnSerializer, AreaEnDropSerializer, NiStDtbPolySerializer , UnitSerializer 
-from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, Timeperiod, NiStDtbPoly    
+from .serializers import IndicatorSerializer, IndicatorUnitSubgroupSerializer, SubgroupSerializer, UtDataSerializer, UtDatatimeSerializer, AreaEnSerializer, AreaEnDropSerializer, NiStDtbPolySerializer , UnitSerializer,UnitNameSerializer                        
+from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, Timeperiod, NiStDtbPoly  ,Unit  
 # from drf_multiple_model.viewsets import ObjectMultipleModelAPIViewSet  
 from django.db.models import Q
 from rest_framework.response import Response   
@@ -93,4 +93,11 @@ class GetUnitView(generics.ListAPIView):
                 selIndicator = self.kwargs.get('indicator',None)
                 selSubgroup = self.kwargs.get('subgroup',None)
                 queryset = IndicatorUnitSubgroup.objects.all().filter(Q(indicator=selIndicator)&Q(subgroup=selSubgroup))
+                return queryset
+
+class GetUnitNameView(generics.ListAPIView):
+        serializer_class = UnitNameSerializer
+        queryset=[]
+        def get_queryset(self,*args,**kwargs):
+                queryset = Unit.objects.all()
                 return queryset

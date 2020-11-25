@@ -3,14 +3,15 @@ import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,sel
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
+import { Row, Col } from 'react-bootstrap';
 
 import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit}) =>{
-
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName}) =>{
 const svgRef = useRef();
+const svgLegRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 
@@ -68,7 +69,7 @@ let tooltip = select("body").append("div")
 
 useEffect(() => {
   const svg = select(svgRef.current);
-
+  const legend = select(svgLegRef.current)
   const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
   const projection = geoMercator().fitSize([width, height], geometry);
 
@@ -103,16 +104,6 @@ useEffect(() => {
   };
 
  
-
-  // colorLegendG.call(colorLegend, {
-  //   colorScale,
-  //   circleRadius: 8,
-  //   spacing: 20,
-  //   textOffset: 12,
-  //   backgroundRectWidth: 235
-  // });
-
-  //OnMouseOver
 
   const onMouseOver = (event,d) =>{	
     if(typeof d.dataValue != 'undefined'){
@@ -159,25 +150,32 @@ useEffect(() => {
   .attr("d" ,feature => pathGenerator(feature));
   
 
-    svg.append("g")
+    legend.append("g")
   .attr("class", "legendQuant")
   .attr("transform", "translate(20,20)");
 
-  let legend = legendColor()
+  let myLegend = legendColor()
     .labelFormat(format(".2f"))
-    .title("Legend")
+    .title(`Legend (${unitName})`)
     .titleWidth(100)
     .scale(colorScale);
 
-  svg.select(".legendQuant")
-    .call(legend);
+    legend.select(".legendQuant")
+    .call(myLegend);
     
 }, [geometry, dimensions, data,unit])
 
 
 
 return ( 
+  <>
+  <Col xs={12} lg={8}>
 <div ref={wrapperRef}  style={{ marginBottom: "2rem" }}>
-  <svg className = "svg-map" ref={svgRef}></svg>
+  <svg className = "svg-map" ref={svgRef} ></svg>
 </div>
+</Col>
+<Col className="d-flex justify-content-center">
+<svg className = "svg-legend" ref={svgLegRef}></svg>
+</Col>
+</>
 )};

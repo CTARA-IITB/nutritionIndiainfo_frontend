@@ -16,6 +16,7 @@ const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 
 
+
 let color_range = _.map(data, d =>{
   return +d.data_value
 });

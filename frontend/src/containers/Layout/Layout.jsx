@@ -23,11 +23,19 @@ const renderedMap = (boundaries) => (boundaries.state);
 const Layout = ({tabId}) => {
 
   let tab;
-    if(tabId === undefined){
-      tab =8;
-    }else{
-      tab=tabId;
-    }
+  if(tabId === undefined || tabId === 'section1')
+  {
+    tab =8;
+  }
+  else if(tabId === 'section2'){
+    tab=1;
+  }
+  else if(tabId === 'section3'){
+    tab=3;
+  }
+  else if(tabId === 'section4'){ 
+    tab=6;
+  }
 
 
   const [level,setLevel] = useState(1);
@@ -158,7 +166,7 @@ const Layout = ({tabId}) => {
     }, [timeperiodDropdownOpt])
 
 
-    //set Unit on timeperiod and subgroup change
+    //set Unit on indicator and subgroup change
 
     useEffect(()=>{
       const url = `http://localhost:8000/api/getUnit/${selIndicator}/${selSubgroup}`;
@@ -292,6 +300,12 @@ if(level === 1 || stateBoundary.features === undefined){
 
           <Row>
               <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/>
+           
+            {/* {
+             nutritionData.length > 0?  <Col><Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} /></Col>
+            : <Col className="text-center"><h3> No data: please select another survey</h3></Col> } */}
+           
+            
           </Row>
 
         </Container>

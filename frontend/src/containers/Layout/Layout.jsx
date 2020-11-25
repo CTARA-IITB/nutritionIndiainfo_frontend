@@ -37,6 +37,7 @@ const Layout = ({tabId}) => {
   const [areaList,setAreaList] = useState(null);
   const [areaParentName,setAreaParentName] = useState('IND');
   const [unit,setUnit] = useState(null);
+  const [unitList,setUnitList] = useState(null);
   useEffect(() => {
     const url = 'http://localhost:8000/api/area';
     json(url).then( options =>{
@@ -165,6 +166,17 @@ const Layout = ({tabId}) => {
       })
       json()
     },[selIndicator,selSubgroup])
+
+
+    //get Units Name
+
+    useEffect(()=>{
+      const url = "http://localhost:8000/api/getUnitName";
+      json(url).then(unitList =>{
+        setUnitList(unitList)
+      })
+    },[])
+    console.log(unitList)
   const boundaries = useData();
   const Dboundaries= useDataDistrict();
   const stateBoundary=useDataState(areaParentName,Dboundaries);
@@ -181,7 +193,7 @@ const handleClick=()=>{
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
 
-  if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList){
+  if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList || !unitList){
   	return <pre>Loading...</pre>
   }
  
@@ -203,6 +215,8 @@ if(level === 1 || stateBoundary.features === undefined){
   nutritionData = selStateData;
   // console.log(stateBoundary);
 }
+
+// let unitName = unitList.filter(unitObj => unitObj.unit_id === unit)
 
 
     return (
@@ -276,9 +290,7 @@ if(level === 1 || stateBoundary.features === undefined){
           </Row>
 
           <Row>
-            <Col>
-              <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} />
-            </Col>
+              <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/>
           </Row>
 
         </Container>

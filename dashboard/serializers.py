@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, Timeperiod, NiStDtbPoly
+from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, Timeperiod, NiStDtbPoly, Unit
 from rest_framework_gis.serializers import (GeoFeatureModelSerializer, GeometryField)
 
 class AreaEnSerializer(serializers.ModelSerializer):
@@ -77,8 +77,17 @@ class NiStDtbPolySerializer(GeoFeatureModelSerializer):
 #         model = UtData
 #         fields = ('data_id','data_value')
 
+
+
 class UnitSerializer(serializers.ModelSerializer):
+
         class Meta:
             model = IndicatorUnitSubgroup
             fields = ('unit','indicator')
+
+
+class UnitNameSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Unit
+            fields = "__all__"
 # class NiStDtbPolySerializer(serializers.Model

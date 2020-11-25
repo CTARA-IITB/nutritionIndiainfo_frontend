@@ -197,7 +197,7 @@ if(level === 1 || stateBoundary.features === undefined){
 
     return (
       <React.Fragment>
-        <Container >
+        <Container fluid>
           <Row className='mx-3'>
             <Col>
             <span>Select Area</span>

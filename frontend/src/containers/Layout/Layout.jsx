@@ -4,6 +4,7 @@ import Dropdown from "react-dropdown";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
+import { InfoCircleFill } from 'react-bootstrap-icons';
 
 
 // import Form from "../../components/Form/Form";
@@ -176,7 +177,6 @@ const Layout = ({tabId}) => {
         setUnitList(unitList)
       })
     },[])
-    console.log(unitList)
   const boundaries = useData();
   const Dboundaries= useDataDistrict();
   const stateBoundary=useDataState(areaParentName,Dboundaries);
@@ -209,6 +209,7 @@ if(level === 1 || stateBoundary.features === undefined){
   else{
     renderMap = renderedMap(Dboundaries);
     nutritionData = selStateData;
+    console.log(selStateData,"selstateData")
   }
 }else{
   renderMap = stateBoundary;
@@ -284,9 +285,9 @@ if(level === 1 || stateBoundary.features === undefined){
              
           </Row>
           {/* <Row className="d-flex justify-content-right mb-3"> */}
-          <Row className="d-flex flex-row-reverse mb-3 mr-5">
-
+          <Row className="d-flex justify-content-around mb-3 mr-5">
             {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}
+            <span><InfoCircleFill color="lightgreen" size={25} className="mr-2" />Click on Map to Drill down to District level</span>
           </Row>
 
           <Row>

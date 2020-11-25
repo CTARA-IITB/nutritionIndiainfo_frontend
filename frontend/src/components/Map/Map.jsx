@@ -1,8 +1,9 @@
 import React,{useState,useRef,useEffect} from 'react';
-import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateRdYlGn } from 'd3';
+import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
-import { legendColor } from 'd3-svg-legend'
+import { legendColor } from 'd3-svg-legend';
+
 
 import "./Map.css";
 
@@ -13,7 +14,7 @@ export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit})
 const svgRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
-
+const [colorScale,setColorScale] = useState();
 
 let color_range = _.map(data, d =>{
   return +d.data_value
@@ -23,19 +24,16 @@ let comp = (max - min)/3;
 let low = min + comp;
 let high = max - comp;
 
+// const colorScale1 = scaleQuantize().domain([min, max])
+//   .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
+
+const colorScale1 = scaleQuantize().domain([min, max]).range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
 
 
-const colorScale1 = scaleQuantize().domain([min, max])
-  .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
+// const colorScale3 = scaleSequential().domain([max,min])
+//   .interpolator(interpolateReds);
 
-
-const colorScale3 = scaleSequential().domain([max,min])
-  .interpolator(interpolateRdYlGn);
-
-
-const [colorScale,setColorScale] = useState();
-
-
+const colorScale3 = scaleQuantize().domain([min, max]).range(schemeReds[5]);
 
 // const colorScale = scaleSequential(interpolateRdYlGn).domain()
 
@@ -163,8 +161,20 @@ useEffect(() => {
   .attr("class", "legendQuant")
   .attr("transform", "translate(20,20)");
 
+  let formatter;
+  if(unit === 2){
+  //formatter = format(',.0f');
+  formatter = format('.2s');
+  }
+  else
+  {
+    // var p = Math.max(0, precisionFixed(0.05) - 2);
+    // formatter= format("." + p + "%");
+    formatter = format(".2f");
+  }
+
   let legend = legendColor()
-    .labelFormat(format(".2f"))
+     .labelFormat(formatter)
     .title("Legend")
     .titleWidth(100)
     .scale(colorScale);

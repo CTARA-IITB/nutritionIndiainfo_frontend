@@ -1,5 +1,5 @@
 import React,{useState,useRef,useEffect} from 'react';
-import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateRdYlGn } from 'd3';
+import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
@@ -30,7 +30,7 @@ const colorScale1 = scaleQuantize().domain([min, max])
 
 
 const colorScale3 = scaleSequential().domain([max,min])
-  .interpolator(interpolateRdYlGn);
+  .interpolator(interpolateOrRd);
 
 
 const [colorScale,setColorScale] = useState();

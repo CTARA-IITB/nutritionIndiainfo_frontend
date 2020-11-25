@@ -38,7 +38,8 @@ export const useData = (selArea) => {
 
   export const useDataState =(areaParentName,indiaDistrictGeojson) =>{
     let [data, setData] = useState(null);
-
+    console.log(areaParentName)
+    areaParentName = (areaParentName === "Telangana")?"Telengana":areaParentName; // hack.. will later change areaname in geojson data to Telangana
     useEffect(()=>{
       let features;
       if(indiaDistrictGeojson)
@@ -49,7 +50,6 @@ export const useData = (selArea) => {
       
 
     },[areaParentName])
-    
     return data;
 
   }

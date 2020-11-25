@@ -36,12 +36,6 @@ const colorScale3 = scaleSequential().domain([max,min])
 const [colorScale,setColorScale] = useState();
 
 
-useEffect(()=>{
-  console.log(unit)
-},[unit])
-
-// colorScale
-
 
 // const colorScale = scaleSequential(interpolateRdYlGn).domain()
 

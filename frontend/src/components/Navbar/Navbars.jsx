@@ -14,8 +14,8 @@ import {
   export const Navbars = ({id}) => {
         return(
             <div>
-                <div className="row">
-                    <div className="col-md-12">
+                <div className="">
+                    <div className="">
                         <Router>
                         <Navbar expand="lg">
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

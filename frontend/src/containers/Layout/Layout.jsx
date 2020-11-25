@@ -36,6 +36,7 @@ const Layout = ({tabId}) => {
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [areaList,setAreaList] = useState(null);
   const [areaParentName,setAreaParentName] = useState('IND');
+  const [unit,setUnit] = useState(null);
   useEffect(() => {
     const url = 'http://localhost:8000/api/area';
     json(url).then( options =>{
@@ -140,7 +141,6 @@ const Layout = ({tabId}) => {
 
     }, [selIndicator,selSubgroup,selTimeperiod,selArea])
 
-console.log(selStateData);
     // change selTimeperiod when indicator updated
     useEffect(() => {
     let flag = false;
@@ -155,6 +155,16 @@ console.log(selStateData);
    
     }, [timeperiodDropdownOpt])
 
+
+    //set Unit on timeperiod and subgroup change
+
+    useEffect(()=>{
+      const url = `http://localhost:8000/api/getUnit/${selIndicator}/${selSubgroup}`;
+      json(url).then(unit =>{
+        setUnit(unit[0].unit)
+      })
+      json()
+    },[selIndicator,selSubgroup])
   const boundaries = useData();
   const Dboundaries= useDataDistrict();
   const stateBoundary=useDataState(areaParentName,Dboundaries);
@@ -197,8 +207,8 @@ if(level === 1 || stateBoundary.features === undefined){
 
     return (
       <React.Fragment>
-        <Container className='container'>
-          <Row className='mx-3'>
+        <Container fluid>
+          <Row className='mb-5'>
             <Col>
             <span>Select Area</span>
             <TreeSelect
@@ -259,17 +269,15 @@ if(level === 1 || stateBoundary.features === undefined){
               </Col>
              
           </Row>
-          <Row className="d-flex justify-content-center">
-            {/* <ToggleButton></ToggleButton> */}
-            {/* <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> */}
+          {/* <Row className="d-flex justify-content-right mb-3"> */}
+          <Row className="d-flex flex-row-reverse mb-3 mr-5">
 
             {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}
-            {/* <Button onClick={handleClick}> {buttonText} </Button> */}
           </Row>
 
           <Row>
             <Col>
-              <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} />
+              <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} />
             </Col>
           </Row>
 

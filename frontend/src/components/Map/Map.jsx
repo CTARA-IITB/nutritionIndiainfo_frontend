@@ -1,4 +1,4 @@
-import React,{useRef,useEffect} from 'react';
+import React,{useState,useRef,useEffect} from 'react';
 import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateRdYlGn } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
@@ -8,13 +8,33 @@ import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit}) =>{
 
 const svgRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 
-// colorScale
+
+let color_range = _.map(data, d =>{
+  return +d.data_value
+});
+let [min,max] = extent(color_range);
+let comp = (max - min)/3;
+let low = min + comp;
+let high = max - comp;
+
+
+
+const colorScale1 = scaleQuantize().domain([min, max])
+  .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
+
+
+const colorScale3 = scaleSequential().domain([max,min])
+  .interpolator(interpolateRdYlGn);
+
+
+const [colorScale,setColorScale] = useState();
+
 
 
 // const colorScale = scaleSequential(interpolateRdYlGn).domain()
@@ -45,6 +65,7 @@ let tooltip = select("body").append("div")
 .attr("class", "tooltip")       
 .style("opacity", 0);
 
+
 useEffect(() => {
   const svg = select(svgRef.current);
 
@@ -55,26 +76,17 @@ useEffect(() => {
   let mergedGeometry = addProperties(geometry.features,data);
   let c1Value  = d => d.data_value;
   let c2Value  = d => d.dataValue;
-  console.log(mergedGeometry);
-  let color_range = _.map(data, d =>{
-    return +d.data_value
-  });
-  let [min,max] = extent(color_range);
-  let comp = (max - min)/3;
-  let low = min + comp;
-  let high = max - comp;
-  // console.log("minmax", min, max);
-  // console.log("lowhigh", low, high);
-
-  let colorScale3 = scaleSequential().domain([max,min])
-      .interpolator(interpolateRdYlGn);
-
-    let colorScale = scaleQuantize().domain([min, max])
-      .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
-
+  
   // let colorScale = scaleOrdinal();
   // colorScale.domain(c2Value)
   //     .range("red","yellow", "green");
+  let colorScale;
+  if(unit === 2){
+    colorScale = colorScale3;
+  }else{
+    colorScale = colorScale1;
+  }
+
   
   
   let colorScale2 = (v) =>{
@@ -131,16 +143,19 @@ useEffect(() => {
       let id = d.area_id
 
       if(level == 1){
-        setSelArea(''+d.area_id);
-        setLevel(2);
-        onMapClick(d.areaname);
+        
+        if(typeof c2Value(d) != "undefined"){
+          setSelArea(''+d.area_id);
+          setLevel(2);
+          onMapClick(d.areaname);
+        }
       }else if(level == 2){
         setSelArea("1");  //india
         setLevel(1);
       }
       tooltip.style('opacity',0);
   })
-  .transition().duration(1000)
+  // .transition().duration(1000)
   .attr("d" ,feature => pathGenerator(feature));
   
 
@@ -157,7 +172,7 @@ useEffect(() => {
   svg.select(".legendQuant")
     .call(legend);
     
-}, [geometry, dimensions, data])
+}, [geometry, dimensions, data,unit])
 
 
 

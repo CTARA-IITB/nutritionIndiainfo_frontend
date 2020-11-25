@@ -1,7 +1,7 @@
 
 from django.shortcuts import render
 from rest_framework import generics   
-from .serializers import IndicatorSerializer, IndicatorUnitSubgroupSerializer, SubgroupSerializer, UtDataSerializer, UtDatatimeSerializer, AreaEnSerializer, AreaEnDropSerializer, NiStDtbPolySerializer  
+from .serializers import IndicatorSerializer, IndicatorUnitSubgroupSerializer, SubgroupSerializer, UtDataSerializer, UtDatatimeSerializer, AreaEnSerializer, AreaEnDropSerializer, NiStDtbPolySerializer , UnitSerializer 
 from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, Timeperiod, NiStDtbPoly    
 # from drf_multiple_model.viewsets import ObjectMultipleModelAPIViewSet  
 from django.db.models import Q
@@ -84,4 +84,13 @@ class AreaMapView(generics.ListAPIView):
                         area_parentid =AreaEn.objects.filter(area_id=areaSelect).value('area_parent_id')
                         area_parent_name= AreaEn.objects.filter(area_parent_id=area_parentid).value('area_name')
                         area_geodata = NiStDtbPoly.objects.all().filter(st_name=area_parent_name)	
+                return queryset
+
+class GetUnitView(generics.ListAPIView):
+        serializer_class = UnitSerializer
+        queryset=[]
+        def get_queryset(self,*args,**kwargs):
+                selIndicator = self.kwargs.get('indicator',None)
+                selSubgroup = self.kwargs.get('subgroup',None)
+                queryset = IndicatorUnitSubgroup.objects.all().filter(Q(indicator=selIndicator)&Q(subgroup=selSubgroup))
                 return queryset

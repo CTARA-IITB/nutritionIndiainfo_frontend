@@ -2,9 +2,9 @@ import React,{useState,useRef,useEffect} from 'react';
 // import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
-import { legendColor } from 'd3-svg-legend'
+import { legendColor , locale} from 'd3-svg-legend'
 import { Row, Col } from 'react-bootstrap';
-import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
+import { geoMercator ,format,geoPath, scaleQuantize,extent,select,interpolateRdYlGn, interpolateReds, schemeReds, schemeRdYlGn, formatPrefix, formatDefaultLocale, formatLocale, formatSpecifier } from 'd3';
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
 
@@ -136,7 +136,7 @@ useEffect(() => {
     .on("mouseover", (i,d) => onMouseOver(i,d))
     .on("mouseout", function(d) {   
       tooltip.transition()    
-      .duration(500)    
+      .duration(10)    
       .style("opacity", 0); 
     }).on('click',(i,d) =>{
       let id = d.area_id
@@ -173,15 +173,15 @@ useEffect(() => {
   {
     // var p = Math.max(0, precisionFixed(0.05) - 2);
     // formatter= format("." + p + "%");
-    formatter = format(".2f");
+    formatter =format(".2f");
   }
 
-    console.log(format)
   let myLegend = legendColor()
-     .labelFormat(formatter)
+  .labelFormat(formatter)
     .title(`Legend (in ${unitName})`)
     .titleWidth(200)
     .scale(colorScale);
+    
 
     legend.select(".legendQuant")
     .call(myLegend);

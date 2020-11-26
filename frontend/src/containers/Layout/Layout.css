@@ -12,5 +12,5 @@
 } 
 
 .dropdown-title{
-  font-size: 1.2rem;
+  font-size: calc(50% + 0.5vw + 0.5vh);
 }

@@ -24,6 +24,7 @@
     "react-dropdown": "1.9.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-select": "^3.1.1",
     "reactstrap": "^8.6.0",
     "resize-observer-polyfill": "^1.5.1",
     "topojson": "3.0.2"

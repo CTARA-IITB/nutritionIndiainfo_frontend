@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import Dropdown from "react-dropdown";
-// import 'react-dropdown/style.css';
+import 'react-dropdown/style.css';
+import Select from 'react-select'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
@@ -59,6 +60,7 @@ const Layout = ({tabId}) => {
   const iniSelIndicator = '12';  
   const [selIndicator,setSelIndicator] = useState(iniSelIndicator);
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState(null);
+ 
 
   useEffect(() => {
     const url = 'http://localhost:8000/api/indicator/'+tab;
@@ -67,6 +69,8 @@ const Layout = ({tabId}) => {
     }
     )
   }, [tabId])
+
+  console.log("indicatorDropdownOpt", indicatorDropdownOpt);
 
    // change selIndicator when indicator updated
    useEffect(() => {
@@ -230,14 +234,14 @@ if(level === 1 || stateBoundary.features === undefined){
     return (
       <React.Fragment>
         <Container fluid>
-          <Row className='mb-5 mt-3 '>
+          <Row className='mb-2 mt-3 '>
             <Col>
             <span className="dropdown-title">Select Area</span>
             <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
                 value={selArea}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                dropdownStyle={{ maxHeight: 400, overflow: 'scroll' }}
                 treeData={areaDropdownOpt}
                 // treeDefaultExpandAll
                 onChange={ (value,title) =>  {
@@ -253,40 +257,42 @@ if(level === 1 || stateBoundary.features === undefined){
             <Col>
             <span className="dropdown-title">Select Indicator</span>
 
-            <TreeSelect
+            <Select
                 className='dropdown'
                 style={{ width: '100%' }}
-                value={selIndicator}
+                value={indicatorDropdownOpt.find(x => x.value === selIndicator)}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={indicatorDropdownOpt}
-                onChange={ value => setSelIndicator(value) }
+                options={indicatorDropdownOpt}
+                onChange={ value => setSelIndicator(value.value) }
+                getOptionLabel={option => option.title}
                 />
             </Col>
-
               
                 <Col>
             <span className="dropdown-title">Select subgroup</span>
 
-                <TreeSelect
+                <Select
                 className='dropdown'
                 style={{ width: '100%' }}
-                value={selSubgroup}
+                value={subgroupDropdownOpt.find(x => x.value === selSubgroup)}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={subgroupDropdownOpt}
-                onChange={ value => setSelSubgroup(value)}
+                options={subgroupDropdownOpt}
+                onChange={ value => setSelSubgroup(value.value)}
+                getOptionLabel={option => option.title}
                 />
                 </Col>
         
               <Col>
             <span className="dropdown-title"> Select timeperiod</span>
 
-                <TreeSelect
+                <Select
                 className='dropdown'
                 style={{ width: '100%' }}
-                value={selTimeperiod}
+                value={timeperiodDropdownOpt.find(x => x.value === selTimeperiod)}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={timeperiodDropdownOpt}
-                onChange={value => setSelTimeperiod(value) }
+                options={timeperiodDropdownOpt}
+                onChange={value => setSelTimeperiod(value.value) }
+                getOptionLabel={option => option.title}
                 />
               </Col>
              

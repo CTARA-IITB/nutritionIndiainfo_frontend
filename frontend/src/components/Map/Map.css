@@ -37,8 +37,8 @@
 
   button.ant-switch{
     background: rgb(194, 243, 190);
-    height: 40px;
-    padding: 10px 20px 10px 25px !important;
+    height: 30px;
+    padding: 5px 20px 10px 25px !important;
     /* border-radius: 30%; */
   }
 
@@ -47,24 +47,29 @@
 }
 
 .ant-switch-handle::before{
-  height: 40px !important;
-  width: 40px !important;
-  margin: 0%;
+  height: 30px !important;
+  width: 30px !important;
+  /* margin: 0%; */
   border-radius:50% !important;
-  box-shadow: 0 2px 4px 0 rgba(0, 35, 11, 0.2);
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+  /* box-shadow: 0 2px 4px 0 rgba(0, 35, 11, 0.2); */
+  /* -webkit-transition: all 0.2s ease-in-out; */
+  /* transition: all 0.2s ease-in-out; */
 }
 
 .ant-switch-inner {
-  display: block;
-  margin: 0 7px 0 25px;
-  color: rgb(150, 139, 139) !important;
-  font-size: 1.5rem !important;
+  /* display: block; */
+  /* margin: 0 7px 0 25px; */
+  color: rgb(0, 0, 0) !important;
+  font-weight: bold;
+  /* font-size: 1.5rem !important; */
 
-  color: rgb(73, 73, 73) !important;
-  -webkit-transition: margin 0.2s;
-  transition: margin 0.2s;
+  /* color: rgb(73, 73, 73) !important; */
+  /* -webkit-transition: margin 0.2s; */
+  /* transition: margin 0.2s; */
+}
+
+.legendTitle{
+  font-weight: bold;
 }
 
   

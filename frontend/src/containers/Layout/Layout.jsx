@@ -4,7 +4,6 @@ import Dropdown from "react-dropdown";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
-import { InfoCircleFill } from 'react-bootstrap-icons';
 
 
 // import Form from "../../components/Form/Form";
@@ -231,9 +230,9 @@ if(level === 1 || stateBoundary.features === undefined){
     return (
       <React.Fragment>
         <Container fluid>
-          <Row className='mb-5'>
+          <Row className='mb-5 mt-3 '>
             <Col>
-            <span>Select Area</span>
+            <span className="dropdown-title">Select Area</span>
             <TreeSelect
                 className='dropdown'
                 style={{ width: '100%' }}
@@ -252,7 +251,7 @@ if(level === 1 || stateBoundary.features === undefined){
             </Col>
 
             <Col>
-            <span>Select Indicator</span>
+            <span className="dropdown-title">Select Indicator</span>
 
             <TreeSelect
                 className='dropdown'
@@ -266,7 +265,7 @@ if(level === 1 || stateBoundary.features === undefined){
 
               
                 <Col>
-            <span>Select subgroup</span>
+            <span className="dropdown-title">Select subgroup</span>
 
                 <TreeSelect
                 className='dropdown'
@@ -279,7 +278,7 @@ if(level === 1 || stateBoundary.features === undefined){
                 </Col>
         
               <Col>
-            <span>Select timeperiod</span>
+            <span className="dropdown-title"> Select timeperiod</span>
 
                 <TreeSelect
                 className='dropdown'
@@ -293,17 +292,16 @@ if(level === 1 || stateBoundary.features === undefined){
              
           </Row>
           {/* <Row className="d-flex justify-content-right mb-3"> */}
-          <Row className="d-flex justify-content-around mb-3 mr-5">
+          <Row className="d-flex flex-row-reverse mb-3" style={{ marginRight:"500px"}}>
             {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}
-            <span><InfoCircleFill color="lightgreen" size={25} className="mr-2" />Click on Map to Drill down to District level</span>
           </Row>
 
           <Row>
-              <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/>
+              {/* <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/> */}
            
-            {/* {
-             nutritionData.length > 0?  <Col><Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} /></Col>
-            : <Col className="text-center"><h3> No data: please select another survey</h3></Col> } */}
+            {
+             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} />
+            : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
            
             
           </Row>

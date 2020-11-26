@@ -6,6 +6,7 @@ import { legendColor } from 'd3-svg-legend'
 import { Row, Col } from 'react-bootstrap';
 import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
 
+import { InfoCircleFill } from 'react-bootstrap-icons';
 
 import "./Map.css";
 
@@ -178,8 +179,8 @@ useEffect(() => {
     console.log(format)
   let myLegend = legendColor()
      .labelFormat(formatter)
-    .title(`Legend : ${unitName}`)
-    .titleWidth(100)
+    .title(`Legend (in ${unitName})`)
+    .titleWidth(200)
     .scale(colorScale);
 
     legend.select(".legendQuant")
@@ -196,8 +197,14 @@ return (
   <svg className = "svg-map" ref={svgRef} ></svg>
 </div>
 </Col>
-<Col className="d-flex justify-content-center">
-<svg className = "svg-legend" ref={svgLegRef}></svg>
+<Col className="">
+  <Row>
+  <svg className = "svg-legend" ref={svgLegRef}></svg>
+  </Row>
+  <Row>
+  <span><InfoCircleFill color="lightgreen" size={25} className="mr-2" />Click on Map to Drill down to District level</span>
+  </Row>
+
 </Col>
 </>
 )};

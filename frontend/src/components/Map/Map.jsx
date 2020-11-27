@@ -13,12 +13,24 @@ import "./Map.css";
 
 
 export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName}) =>{
+
+
 const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 const [colorScale,setColorScale] = useState();
-
+let statusMsg;
+if(level === data[0].area.area_level)
+{
+  statusMsg ="No data: please select another survey";
+}
+else if(level === 1){
+  statusMsg ="Click on Map to Drill down to District level";
+}
+else{
+  statusMsg ="Click on Map to go back to India Map";
+}
 
 let color_range = _.map(data, d =>{
   return +d.data_value
@@ -202,9 +214,10 @@ return (
   <svg className = "svg-legend" ref={svgLegRef}></svg>
   </Row>
   <Row>
-  <span><InfoCircleFill color="lightgreen" size={25} className="mr-2" />Click on Map to Drill down to District level</span>
+  <span><InfoCircleFill color="lightgreen" size={25} className="mr-2" />{statusMsg}</span>
   </Row>
 
 </Col>
 </>
+
 )};

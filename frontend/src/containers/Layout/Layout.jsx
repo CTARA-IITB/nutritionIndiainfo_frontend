@@ -211,6 +211,7 @@ const handleClick=()=>{
   let renderMap=null;
   let nutritionData = null;
   
+  
 
 if(level === 1 || stateBoundary.features === undefined){
   if(toggleState===true){
@@ -218,13 +219,24 @@ if(level === 1 || stateBoundary.features === undefined){
   nutritionData = selIndiaData;
   }
   else{
+    console.log("in else block");
     renderMap = renderedMap(Dboundaries);
     nutritionData = selStateData;
     console.log(selStateData,"selstateData")
   }
-}else{
-  renderMap = stateBoundary;
+}else 
+{
+  console.log("in else2 block", selStateData.length);
+  if(selStateData.length > 0)
+  {
   nutritionData = selStateData;
+  renderMap = stateBoundary;
+  }
+  else{
+    renderMap = renderedMap(boundaries);
+    nutritionData = selIndiaData;
+  }
+  console.log(selStateData,"selstateData")
   // console.log(stateBoundary);
 }
 
@@ -303,11 +315,11 @@ if(level === 1 || stateBoundary.features === undefined){
           </Row>
 
           <Row>
-              {/* <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/> */}
-           
+              <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/>
+{/*            
             {
              nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} />
-            : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
+            : <Col className="text-center"><span id="noMsg"><h3> No data: please select another survey</h3></span></Col> } */}
            
             
           </Row>

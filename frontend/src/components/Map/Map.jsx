@@ -112,9 +112,11 @@ useEffect(() => {
 
  
 
-  const onMouseOver = (event,d) =>{	
+  const onMouseMove = (event,d) =>{	
     if(typeof d.dataValue != 'undefined'){
-      tooltip.transition().duration(200).style("opacity", .9);		
+      // tooltip.style("opacity", .9);
+      tooltip.style("opacity",0)	;	
+      tooltip.style("opacity", .9);		
       tooltip.html("<b>"+d.areaname+"</b><br><b>Value:</b>"+d.dataValue)
       .style("left", event.clientX + "px")
       .style("top",  event.clientY - 30 + "px");	
@@ -133,13 +135,15 @@ useEffect(() => {
       else
         return "#A9A9B0";
     })
-    .on("mouseover", (i,d) => onMouseOver(i,d))
+    .on("mousemove", (i,d) => onMouseMove(i,d))
     .on("mouseout", function(d) {   
-      tooltip.transition()    
-      .duration(500)    
+      tooltip
+      // .transition()    
+      // .duration(500)    
       .style("opacity", 0); 
     }).on('click',(i,d) =>{
       let id = d.area_id
+      tooltip.remove();
       if(level == 1){
         
         if(typeof c2Value(d) != "undefined"){
@@ -151,7 +155,7 @@ useEffect(() => {
         setSelArea("1");  //india
         setLevel(1);
       }
-      tooltip.style('opacity',0);
+      // tooltip.style('opacity',1);
   })
   // .transition().duration(1000)
   .attr("d" ,feature => pathGenerator(feature));
@@ -176,7 +180,6 @@ useEffect(() => {
     formatter = format(".2f");
   }
 
-    console.log(format)
   let myLegend = legendColor()
      .labelFormat(formatter)
     .title(`Legend (in ${unitName})`)

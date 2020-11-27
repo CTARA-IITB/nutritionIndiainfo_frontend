@@ -78,16 +78,18 @@ const Layout = ({tabId}) => {
       let url;
       if(level === 1)
         url = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/3`
-      else if(level === 2)
-        url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
-      else if(level === 3)
-        url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
+      else if(level === 2){
+        if(isLevelThree)
+           url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
+        else
+          url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
+      }
       json(url).then( data =>{
         setSelStateData(data);
       }
       )
 
-    }, [selIndicator,selSubgroup,selTimeperiod,selArea])
+    }, [selIndicator,selSubgroup,selTimeperiod,selArea,parentArea])
 
 
 
@@ -127,6 +129,16 @@ const handleClick=()=>{
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
 
+
+  //set area name to parent when level is 3
+if(level === 3){
+  let areaParentId = areaList.filter(f => f.area_name === areaName)[0].area_parent_id; // loop 1
+  let parentName = areaList.filter(f=> f.area_id === areaParentId)[0].area_name;  //loop 2  later optimise this 
+  setAreaName(parentName);
+  setParentArea(areaParentId);
+  setIsLevelThree(true);
+  setLevel(2);
+}
   // if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList || !unitList){
   // 	return <pre>Loading...</pre>
   // }
@@ -154,14 +166,7 @@ if(level === 1 || stateBoundary.features === undefined){
   // console.log(stateBoundary);
 }
 
-//set area name to parent when level is 3
-if(level === 3){
-  let areaParentId = areaList.filter(f => f.area_name === areaName)[0].area_parent_id; // loop 1
-  let parentName = areaList.filter(f=> f.area_id === areaParentId)[0].area_name;  //loop 2  later optimise this 
-  setAreaName(parentName);
-  setParentArea(areaParentId);
-  setLevel(2);
-}
+
 // let unitName = unitList.filter(unitObj => unitObj.unit_id === unit)
 
     return (
@@ -181,6 +186,7 @@ if(level === 3){
               setLevel={setLevel}
               level={level}
               setAreaList={setAreaList}
+              setIsLevelThree={setIsLevelThree}
               />
       
           {/* <Row className="d-flex justify-content-right mb-3"> */}
@@ -189,10 +195,9 @@ if(level === 3){
           </Row>
 
           <Row>
-              {/* <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/> */}
            
             {
-             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} />
+             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree}/>
             : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
            
             

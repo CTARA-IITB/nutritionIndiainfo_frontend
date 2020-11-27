@@ -12,7 +12,7 @@ import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree}) =>{
 const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
@@ -69,6 +69,7 @@ function addProperties(geojson,data){
 }
 
 
+
 let tooltip = select("body").append("div") 
 .attr("class", "tooltip")       
 .style("opacity", 0);
@@ -82,6 +83,8 @@ useEffect(() => {
 
   const pathGenerator = geoPath(projection);
   let mergedGeometry = addProperties(geometry.features,data);
+
+
   let c1Value  = d => d.data_value;
   let c2Value  = d => d.dataValue;
   
@@ -134,6 +137,10 @@ useEffect(() => {
         return colorScale(c2Value(d))
       else
         return "#A9A9B0";
+    }).style("opacity",d =>{
+      if(d.area_id !== parseInt(selArea) && isLevelThree){
+        return ".2"
+      }
     })
     .on("mousemove", (i,d) => onMouseMove(i,d))
     .on("mouseout", function(d) {   

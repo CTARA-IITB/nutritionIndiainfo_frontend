@@ -18,7 +18,8 @@ export const Dropdown = ({
     setSelSubgroup,
     setAreaName,
     setLevel,
-    setAreaList}) =>{
+    setAreaList,
+    setIsLevelThree}) =>{
     
     let tab;
     if(tabId === undefined || tabId === 'section1')
@@ -136,7 +137,16 @@ export const Dropdown = ({
                 treeData={areaDropdownOpt}
                 // treeDefaultExpandAll
                 onChange={ (value,title) =>  {
-                    (value === "1")?setLevel(1):((stateID.indexOf(parseInt(value)) !== -1)?setLevel(2):setLevel(3));
+                    if(value === "1"){
+                        setLevel(1)
+                        setIsLevelThree(false);
+                    }
+                    else if(stateID.indexOf(parseInt(value)) !== -1){
+                        setIsLevelThree(false);
+                        setLevel(2)
+
+                    }
+                    else setLevel(3);
                         setSelArea(value);
                         setAreaName(title[0]);
                     // console.log(stateID.indexOf(parseInt(value)),'test');

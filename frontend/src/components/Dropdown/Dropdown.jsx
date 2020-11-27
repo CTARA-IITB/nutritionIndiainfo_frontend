@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from "react";
 
-// import {Dropdown as ReactDropdown} from "react-dropdown";
-import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
+import {Row, Col } from 'react-bootstrap';
 import { TreeSelect } from 'antd';
 import { json } from 'd3';
 
@@ -147,6 +146,7 @@ export const Dropdown = ({
 
             <TreeSelect
                 className='dropdown'
+                virtual={false}
                 style={{ width: '100%' }}
                 value={selIndicator}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
@@ -161,6 +161,7 @@ export const Dropdown = ({
 
                 <TreeSelect
                 className='dropdown'
+                virtual={false}
                 style={{ width: '100%' }}
                 value={selSubgroup}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
@@ -174,6 +175,7 @@ export const Dropdown = ({
 
                 <TreeSelect
                 className='dropdown'
+                virtual={false}
                 style={{ width: '100%' }}
                 value={selTimeperiod}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}

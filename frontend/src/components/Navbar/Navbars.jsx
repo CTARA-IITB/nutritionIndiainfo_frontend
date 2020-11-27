@@ -21,7 +21,7 @@ import {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto" >
-                        <NavLink exact activeClassName="navbar__link--active" className="navbar__link" to="/section1">Mainfestation</NavLink>
+                        <NavLink exact activeClassName="navbar__link--active" className="navbar__link" to="/section1">Manifestation</NavLink>
                             <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/section2">Immediate Causes</NavLink>
                             <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/section3">Underlying Causes</NavLink>
                             <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/section4">Basic Causes</NavLink>

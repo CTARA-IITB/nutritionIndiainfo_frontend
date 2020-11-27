@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import Dropdown from "react-dropdown";
+import {Dropdown} from "../../components/Dropdown/Dropdown";
 // import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -7,13 +7,11 @@ import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
 
 
 // import Form from "../../components/Form/Form";
-import { Marks } from "../../components/Marks/Marks";
 import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
 import { json } from 'd3';
-import { TreeSelect, Switch } from 'antd';
+import { Switch } from 'antd';
 
-import { fetchAreaCode,createHierarchy } from '../../utils';
 
 import "./Layout.css";
 
@@ -21,91 +19,27 @@ const renderedMap = (boundaries) => (boundaries.state);
 
 const Layout = ({tabId}) => {
 
-  let tab;
-  if(tabId === undefined || tabId === 'section1')
-  {
-    tab =8;
-  }
-  else if(tabId === 'section2'){
-    tab=1;
-  }
-  else if(tabId === 'section3'){
-    tab=3;
-  }
-  else if(tabId === 'section4'){ 
-    tab=6;
-  }
-
-
   const [level,setLevel] = useState(1);
-  //Area
+
+
   const iniSelArea = '1';  //india
   const [selArea,setSelArea] = useState(iniSelArea);
-  const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
-  const [areaList,setAreaList] = useState(null);
+
   const [areaParentName,setAreaParentName] = useState('IND');
+
+
   const [unit,setUnit] = useState(null);
   const [unitList,setUnitList] = useState(null);
-  useEffect(() => {
-    const url = 'http://localhost:8000/api/area';
-    json(url).then( options =>{
-      setAreaDropdownOpt(createHierarchy(options));
-      setAreaList(options);
-    }
-    )
-  }, [])
 
-  //Indicator
   const iniSelIndicator = '12';  
   const [selIndicator,setSelIndicator] = useState(iniSelIndicator);
-  const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState(null);
-
-  useEffect(() => {
-    const url = 'http://localhost:8000/api/indicator/'+tab;
-    json(url).then( options =>{
-      setIndicatorDropdownOpt(options);
-    }
-    )
-  }, [tabId])
-
-   // change selIndicator when indicator updated
-   useEffect(() => {
-    if(indicatorDropdownOpt){
-      setSelIndicator(indicatorDropdownOpt[0].value)
-    }
-   
-    }, [indicatorDropdownOpt])
-
-    //subgroup
-    const iniSelSubgroup = '6';  //All
-    const [selSubgroup,setSelSubgroup] = useState(iniSelSubgroup);
-    const [subgroupDropdownOpt, setSubgroupDropdownOpt] = useState(null);
   
-  
-    useEffect(() => {
-      const url = `http://localhost:8000/api/subgroup/${selIndicator}`;
-      json(url).then( options =>{
-        setSubgroupDropdownOpt(options);
-      }
-      )
-    }, [selIndicator])
 
+  const iniSelSubgroup = '6';  //All
+  const [selSubgroup,setSelSubgroup] = useState(iniSelSubgroup);
 
-    //timeperiod
-    const iniSelTimeperiod = '21';  //CNNS 2016-2018
-    const [selTimeperiod,setSelTimeperiod] = useState(iniSelTimeperiod);
-    const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState(null);
-  
-  
-    useEffect(() => {
-      const url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
-      json(url).then( options =>{
-        setTimeperiodDropdownOpt(options);
-      }
-      )
-
-    }, [selIndicator,selSubgroup,selArea])
- 
+  const iniSelTimeperiod = '21';  //CNNS 2016-2018
+  const [selTimeperiod,setSelTimeperiod] = useState(iniSelTimeperiod);
  
     //district data
     const [selDistrictData,setSelDistrictData] = useState(null);
@@ -150,19 +84,7 @@ const Layout = ({tabId}) => {
 
     }, [selIndicator,selSubgroup,selTimeperiod,selArea])
 
-    // change selTimeperiod when indicator updated
-    useEffect(() => {
-    let flag = false;
-    if(timeperiodDropdownOpt){
-      timeperiodDropdownOpt.forEach(timeperiod => {
-        if(timeperiod.value === selTimeperiod){
-          flag = true;
-        }
-      });
-      if(!flag) setSelTimeperiod(timeperiodDropdownOpt[0].value)
-    }
-   
-    }, [timeperiodDropdownOpt])
+
 
 
     //set Unit on indicator and subgroup change
@@ -200,7 +122,10 @@ const handleClick=()=>{
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
 
-  if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList || !unitList){
+  // if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList || !unitList){
+  // 	return <pre>Loading...</pre>
+  // }
+  if(!boundaries  || !stateBoundary  || !unitList){
   	return <pre>Loading...</pre>
   }
  
@@ -230,67 +155,20 @@ if(level === 1 || stateBoundary.features === undefined){
     return (
       <React.Fragment>
         <Container fluid>
-          <Row className='mb-5 mt-3 '>
-            <Col>
-            <span className="dropdown-title">Select Area</span>
-            <TreeSelect
-                className='dropdown'
-                style={{ width: '100%' }}
-                value={selArea}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={areaDropdownOpt}
-                // treeDefaultExpandAll
-                onChange={ (value,title) =>  {
-                    setSelArea(value);
-                    (value === "1")?setLevel(1):setLevel(2);
-                    // setAreaCode(fetchAreaCode(areaList, value));
-                    setAreaParentName(title[0]);
-                  } 
-                }
+            <Dropdown 
+              tabId={tabId}
+              selArea={selArea}
+              selIndicator={selIndicator}
+              selSubgroup={selSubgroup}
+              selTimeperiod={selTimeperiod}
+              setSelArea={setSelArea}
+              setAreaParentName={setAreaParentName}
+              setSelIndicator = {setSelIndicator} 
+              setSelSubgroup={setSelSubgroup} 
+              setSelTimeperiod={setSelTimeperiod}
+              setLevel={setLevel}
               />
-            </Col>
-
-            <Col>
-            <span className="dropdown-title">Select Indicator</span>
-
-            <TreeSelect
-                className='dropdown'
-                style={{ width: '100%' }}
-                value={selIndicator}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={indicatorDropdownOpt}
-                onChange={ value => setSelIndicator(value) }
-                />
-            </Col>
-
-              
-                <Col>
-            <span className="dropdown-title">Select subgroup</span>
-
-                <TreeSelect
-                className='dropdown'
-                style={{ width: '100%' }}
-                value={selSubgroup}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={subgroupDropdownOpt}
-                onChange={ value => setSelSubgroup(value)}
-                />
-                </Col>
-        
-              <Col>
-            <span className="dropdown-title"> Select timeperiod</span>
-
-                <TreeSelect
-                className='dropdown'
-                style={{ width: '100%' }}
-                value={selTimeperiod}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={timeperiodDropdownOpt}
-                onChange={value => setSelTimeperiod(value) }
-                />
-              </Col>
-             
-          </Row>
+      
           {/* <Row className="d-flex justify-content-right mb-3"> */}
           <Row className="d-flex flex-row-reverse mb-3" style={{ marginRight:"500px"}}>
             {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}

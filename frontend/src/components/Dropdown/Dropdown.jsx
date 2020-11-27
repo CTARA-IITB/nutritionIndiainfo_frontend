@@ -16,9 +16,10 @@ export const Dropdown = ({
     setSelIndicator,
     setSelTimeperiod,
     setSelSubgroup,
-    setAreaParentName,
-    setLevel}) =>{
-
+    setAreaName,
+    setLevel,
+    setAreaList}) =>{
+    
     let tab;
     if(tabId === undefined || tabId === 'section1')
     {
@@ -36,14 +37,16 @@ export const Dropdown = ({
     //Area
     
     const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
-    const [areaList,setAreaList] = useState(null);
+    const [stateID,setStateID] = useState(null);
 
-
+    // console.log(areaList.filter(d => d.area_level));
     useEffect(() => {
         const url = 'http://localhost:8000/api/area';
         json(url).then( options =>{
-          setAreaDropdownOpt(createHierarchy(options));
-          setAreaList(options);
+        const [country,statesID] = createHierarchy(options);
+        setStateID(statesID)
+        setAreaDropdownOpt(country);
+        setAreaList(options);
         }
         )
       }, [])
@@ -133,10 +136,11 @@ export const Dropdown = ({
                 treeData={areaDropdownOpt}
                 // treeDefaultExpandAll
                 onChange={ (value,title) =>  {
-                    setSelArea(value);
-                    (value === "1")?setLevel(1):setLevel(2);
+                    (value === "1")?setLevel(1):((stateID.indexOf(parseInt(value)) !== -1)?setLevel(2):setLevel(3));
+                        setSelArea(value);
+                        setAreaName(title[0]);
+                    // console.log(stateID.indexOf(parseInt(value)),'test');
                     // setAreaCode(fetchAreaCode(areaList, value));
-                    setAreaParentName(title[0]);
                   } 
                 }
               />

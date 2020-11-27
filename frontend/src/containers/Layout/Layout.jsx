@@ -20,13 +20,16 @@ const renderedMap = (boundaries) => (boundaries.state);
 const Layout = ({tabId}) => {
 
   const [level,setLevel] = useState(1);
+  const [isLevelThree , setIsLevelThree] = useState(false);
 
 
   const iniSelArea = '1';  //india
   const [selArea,setSelArea] = useState(iniSelArea);
+  const [areaList,setAreaList] = useState(null);
+  const [parentArea,setParentArea] = useState(null);
 
-  const [areaParentName,setAreaParentName] = useState('IND');
 
+  const [areaName,setAreaName] = useState('IND');
 
   const [unit,setUnit] = useState(null);
   const [unitList,setUnitList] = useState(null);
@@ -73,10 +76,12 @@ const Layout = ({tabId}) => {
   
     useEffect(() => {
       let url;
-      if(selArea == 1)
+      if(level === 1)
         url = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/3`
-      else
+      else if(level === 2)
         url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
+      else if(level === 3)
+        url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
       json(url).then( data =>{
         setSelStateData(data);
       }
@@ -108,7 +113,7 @@ const Layout = ({tabId}) => {
     },[])
   const boundaries = useData();
   const Dboundaries= useDataDistrict();
-  const stateBoundary=useDataState(areaParentName,Dboundaries);
+  const stateBoundary=useDataState(areaName,Dboundaries);
 const handleClick=()=>{
   setToggleState(!toggleState);
   let text=null;
@@ -149,8 +154,15 @@ if(level === 1 || stateBoundary.features === undefined){
   // console.log(stateBoundary);
 }
 
+//set area name to parent when level is 3
+if(level === 3){
+  let areaParentId = areaList.filter(f => f.area_name === areaName)[0].area_parent_id; // loop 1
+  let parentName = areaList.filter(f=> f.area_id === areaParentId)[0].area_name;  //loop 2  later optimise this 
+  setAreaName(parentName);
+  setParentArea(areaParentId);
+  setLevel(2);
+}
 // let unitName = unitList.filter(unitObj => unitObj.unit_id === unit)
-
 
     return (
       <React.Fragment>
@@ -162,11 +174,13 @@ if(level === 1 || stateBoundary.features === undefined){
               selSubgroup={selSubgroup}
               selTimeperiod={selTimeperiod}
               setSelArea={setSelArea}
-              setAreaParentName={setAreaParentName}
+              setAreaName={setAreaName}
               setSelIndicator = {setSelIndicator} 
               setSelSubgroup={setSelSubgroup} 
               setSelTimeperiod={setSelTimeperiod}
               setLevel={setLevel}
+              level={level}
+              setAreaList={setAreaList}
               />
       
           {/* <Row className="d-flex justify-content-right mb-3"> */}
@@ -175,10 +189,10 @@ if(level === 1 || stateBoundary.features === undefined){
           </Row>
 
           <Row>
-              {/* <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/> */}
+              {/* <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']}/> */}
            
             {
-             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaParentName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} />
+             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} />
             : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
            
             

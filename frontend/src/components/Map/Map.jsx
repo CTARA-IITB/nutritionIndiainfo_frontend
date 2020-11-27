@@ -12,7 +12,7 @@ import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree}) =>{
 const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
@@ -149,6 +149,7 @@ useEffect(() => {
       // .duration(500)    
       .style("opacity", 0); 
     }).on('click',(i,d) =>{
+      setIsLevelThree(false);
       let id = d.area_id
       tooltip.remove();
       if(level == 1){

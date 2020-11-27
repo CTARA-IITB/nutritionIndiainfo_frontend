@@ -126,6 +126,7 @@ export const Dropdown = ({
             <span className="dropdown-title">Select Area</span>
             <TreeSelect
                 className='dropdown'
+                virtual={false}
                 style={{ width: '100%' }}
                 value={selArea}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}

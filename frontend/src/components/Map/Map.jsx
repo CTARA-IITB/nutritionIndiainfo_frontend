@@ -7,12 +7,13 @@ import { Row, Col } from 'react-bootstrap';
 import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
+import { Switch } from 'antd';
 
 import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree,handleClick}) =>{
 const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
@@ -208,13 +209,17 @@ return (
   <svg className = "svg-map" ref={svgRef} ></svg>
 </div>
 </Col>
-<Col className="">
+<Col className="d-flex-column align-content-center align-content-center bg-warning">
+<Row>
+  <Switch className="mb-2"size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
+  </Row>
   <Row>
   <svg className = "svg-legend" ref={svgLegRef}></svg>
   </Row>
   <Row>
-  <span><InfoCircleFill color="lightgreen" size={25} className="mr-2" />Click on Map to Drill down to District level</span>
+  <span><InfoCircleFill color="lightgreen" size={25} />Click on Map to Drill down to District level</span>
   </Row>
+  
 
 </Col>
 </>

@@ -10,7 +10,6 @@ import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
 import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
 import { json } from 'd3';
-import { Switch } from 'antd';
 
 
 import "./Layout.css";
@@ -190,14 +189,14 @@ if(level === 1 || stateBoundary.features === undefined){
               />
       
           {/* <Row className="d-flex justify-content-right mb-3"> */}
-          <Row className="d-flex flex-row-reverse mb-3" style={{ marginRight:"500px"}}>
-            {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}
+          <Row className="d-flex flex-row-reverse mb-3">
+            {/* {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''} */}
           </Row>
 
           <Row>
            
             {
-             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree}/>
+             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick}/>
             : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
            
             

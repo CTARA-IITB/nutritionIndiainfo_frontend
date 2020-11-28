@@ -20,6 +20,17 @@ const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 const [colorScale,setColorScale] = useState();
 
+let statusMsg;
+if(level === data[0].area.area_level)
+{
+  statusMsg ="No data: please select another survey";
+}
+else if(level === 1){
+  statusMsg ="Click on Map to Drill down to District level";
+}
+else{
+  statusMsg ="Click on Map to go back to India Map";
+}
 
 let color_range = _.map(data, d =>{
   return +d.data_value
@@ -209,7 +220,7 @@ return (
   <svg className = "svg-map" ref={svgRef} ></svg>
 </div>
 </Col>
-<Col className="d-flex-column align-content-center align-content-center bg-warning">
+<Col className="d-flex-column align-content-center align-content-center ">
 <Row>
   <Switch className="mb-2"size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
   </Row>
@@ -217,7 +228,7 @@ return (
   <svg className = "svg-legend" ref={svgLegRef}></svg>
   </Row>
   <Row>
-  <span><InfoCircleFill color="lightgreen" size={25} />Click on Map to Drill down to District level</span>
+<span><InfoCircleFill color="lightgreen" size={25} />{statusMsg}</span>
   </Row>
   
 

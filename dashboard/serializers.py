@@ -3,9 +3,10 @@ from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, 
 from rest_framework_gis.serializers import (GeoFeatureModelSerializer, GeometryField)
 
 class AreaEnSerializer(serializers.ModelSerializer):
+    area_level= serializers.IntegerField()
     class Meta:
         model = AreaEn
-        fields = ('area_id', 'area_code', 'area_name')
+        fields = ('area_id', 'area_code', 'area_name', 'area_level')
 
 class AreaEnDropSerializer(serializers.ModelSerializer):
     area_parent_id= serializers.IntegerField()	

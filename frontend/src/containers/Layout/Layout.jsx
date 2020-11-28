@@ -160,8 +160,15 @@ if(level === 1 || stateBoundary.features === undefined){
     console.log(selStateData,"selstateData")
   }
 }else{
+
+  if(selStateData.length > 0)
+  {
   renderMap = stateBoundary;
   nutritionData = selStateData;
+  }else{
+    renderMap = renderedMap(boundaries);
+    nutritionData = selIndiaData;
+  }
   // console.log(stateBoundary);
 }
 

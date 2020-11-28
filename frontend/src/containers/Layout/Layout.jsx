@@ -285,16 +285,9 @@ if(level === 1 || stateBoundary.features === undefined){
              
           </Row>
           {/* <Row className="d-flex justify-content-right mb-3"> */}
-<<<<<<< HEAD
-          <Row className="d-flex flex-row-reverse mb-3 mr-3">
-              <Col>
-                {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}
-              </Col>
-=======
           <Row className="d-flex justify-content-around mb-3 mr-5">
             {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''}
             <span><InfoCircleFill color="lightgreen" size={25} className="mr-2" />Click on Map to Drill down to District level</span>
->>>>>>> 25117a5fbee5af66bd6e8ed7331f77d56302f4ae
           </Row>
 
           <Row>

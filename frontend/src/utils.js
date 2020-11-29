@@ -6,6 +6,7 @@ export const createHierarchy = (options) =>{
     let india = new Array(); 
     let state = new Array(); 
     let district = {};
+    let onlyDistrict = new Array();
   
     options.forEach(area => {
       let area_id = area.area_id.toString();
@@ -18,6 +19,7 @@ export const createHierarchy = (options) =>{
         india.push(temp);
       }else if(level === 2){
         state.push(temp)
+        onlyDistrict.push(area.area_id);
       }else if(level === 3){
         if(parent_id in district){
           district[parent_id].push(temp);
@@ -36,5 +38,5 @@ export const createHierarchy = (options) =>{
     //adding subs to india
     india[0]['children'] = state;
   
-    return india;
+    return [india,onlyDistrict];
   }

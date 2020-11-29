@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { json } from 'd3';
 import { feature } from 'topojson';
+
 const jsonIndianstate =
     'https://gist.githubusercontent.com/AnimeshN/da2cb5d197bdc0f811a2cda3eaf2e97d/raw/india_state_nfhs4.topojson';;
 const jsonIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/7dd993301b4fb2657a221e3f5e148069/raw/india_district_nfhs4.topojson';
@@ -36,19 +37,20 @@ export const useData = (selArea) => {
   return data;
   }
 
-  export const useDataState =(areaParentName,indiaDistrictGeojson) =>{
+  export const useDataState =(areaName,indiaDistrictGeojson) =>{
     let [data, setData] = useState(null);
-    areaParentName = (areaParentName === "Telangana")?"Telengana":areaParentName; // hack.. will later change areaname in geojson data to Telangana
+    areaName = (areaName === "Telangana")?"Telengana":areaName; // hack.. will later change areaname in geojson data to Telangana
+  
     useEffect(()=>{
       let features;
       if(indiaDistrictGeojson)
-        features = indiaDistrictGeojson.state.features.filter(feature => feature.properties.NAME2_ === areaParentName);
+        features = indiaDistrictGeojson.state.features.filter(feature => feature.properties.NAME2_ === areaName);
       
       const featureCollection = {type: "FeatureCollection",features}
       setData(featureCollection);
       
 
-    },[areaParentName])
+    },[areaName])
     return data;
 
   }

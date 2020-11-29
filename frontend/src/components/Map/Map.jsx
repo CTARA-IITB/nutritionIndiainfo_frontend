@@ -1,21 +1,36 @@
 import React,{useState,useRef,useEffect} from 'react';
-import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
+// import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Row, Col } from 'react-bootstrap';
+import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
+
+import { InfoCircleFill } from 'react-bootstrap-icons';
+import { Switch } from 'antd';
 
 import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree,handleClick}) =>{
 const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
+const [colorScale,setColorScale] = useState();
 
-
+let statusMsg;
+if(level === data[0].area.area_level)
+{
+  statusMsg ="No data: please select another survey";
+}
+else if(level === 1){
+  statusMsg ="Click on Map to Drill down to District level";
+}
+else{
+  statusMsg ="Click on Map to go back to India Map";
+}
 
 let color_range = _.map(data, d =>{
   return +d.data_value
@@ -25,19 +40,22 @@ let comp = (max - min)/3;
 let low = min + comp;
 let high = max - comp;
 
+// const colorScale1 = scaleQuantize().domain([min, max])
+//   .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
 
 
 const colorScale1 = scaleQuantize().domain([min, max])
   .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
 
 
-const colorScale3 = scaleSequential().domain([max,min])
-  .interpolator(interpolateOrRd);
+// const colorScale3 = scaleSequential().domain([max,min])
+//   .interpolator(interpolateOrRd);
 
 
-const [colorScale,setColorScale] = useState();
+// const colorScale3 = scaleSequential().domain([max,min])
+//   .interpolator(interpolateReds);
 
-
+const colorScale3 = scaleQuantize().domain([min, max]).range(schemeReds[5]);
 
 // const colorScale = scaleSequential(interpolateRdYlGn).domain()
 
@@ -63,6 +81,7 @@ function addProperties(geojson,data){
 }
 
 
+
 let tooltip = select("body").append("div") 
 .attr("class", "tooltip")       
 .style("opacity", 0);
@@ -76,6 +95,8 @@ useEffect(() => {
 
   const pathGenerator = geoPath(projection);
   let mergedGeometry = addProperties(geometry.features,data);
+
+
   let c1Value  = d => d.data_value;
   let c2Value  = d => d.dataValue;
   
@@ -105,9 +126,11 @@ useEffect(() => {
   };
 
 
-  const onMouseOver = (event,d) =>{	
+  const onMouseMove = (event,d) =>{	
     if(typeof d.dataValue != 'undefined'){
-      tooltip.transition().duration(200).style("opacity", .9);		
+      // tooltip.style("opacity", .9);
+      tooltip.style("opacity",0)	;	
+      tooltip.style("opacity", .9);		
       tooltip.html("<b>"+d.areaname+"</b><br><b>Value:</b>"+d.dataValue)
       .style("left", event.clientX + "px")
       .style("top",  event.clientY - 30 + "px");	
@@ -125,15 +148,21 @@ useEffect(() => {
         return colorScale(c2Value(d))
       else
         return "#A9A9B0";
+    }).style("opacity",d =>{
+      if(d.area_id !== parseInt(selArea) && isLevelThree){
+        return ".2"
+      }
     })
-    .on("mouseover", (i,d) => onMouseOver(i,d))
+    .on("mousemove", (i,d) => onMouseMove(i,d))
     .on("mouseout", function(d) {   
-      tooltip.transition()    
-      .duration(500)    
-      .style("opacity", 0);
-         }).on('click',(i,d) =>{
+      tooltip
+      // .transition()    
+      // .duration(500)    
+      .style("opacity", 0); 
+    }).on('click',(i,d) =>{
+      setIsLevelThree(false);
       let id = d.area_id
-
+      tooltip.remove();
       if(level == 1){
         
         if(typeof c2Value(d) != "undefined"){
@@ -145,7 +174,7 @@ useEffect(() => {
         setSelArea("1");  //india
         setLevel(1);
       }
-      tooltip.style('opacity',0);
+      // tooltip.style('opacity',1);
   })
   // .transition().duration(1000)
   .attr("d" ,feature => pathGenerator(feature));
@@ -155,10 +184,25 @@ useEffect(() => {
   .attr("class", "legendQuant")
   .attr("transform", "translate(20,20)");
 
+  // let myLegend = legendColor()
+  //   .labelFormat(format(".2f"))
+  //   .title(`Legend (${unitName})`)
+  let formatter;
+  if(unit === 2){
+  //formatter = format(',.0f');
+  formatter = format('.2s');
+  }
+  else
+  {
+    // var p = Math.max(0, precisionFixed(0.05) - 2);
+    // formatter= format("." + p + "%");
+    formatter = format(".2f");
+  }
+
   let myLegend = legendColor()
-    .labelFormat(format(".2f"))
-    .title(`Legend (${unitName})`)
-    .titleWidth(100)
+     .labelFormat(formatter)
+    .title(`Legend (in ${unitName})`)
+    .titleWidth(200)
     .scale(colorScale);
 
     legend.select(".legendQuant")
@@ -175,8 +219,18 @@ return (
   <svg className = "svg-map" ref={svgRef} ></svg>
 </div>
 </Col>
-<Col className="d-flex justify-content-center">
-<svg className = "svg-legend" ref={svgLegRef}></svg>
+<Col className="d-flex-column align-content-center align-content-center ">
+<Row>
+  <Switch className="mb-2"size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
+  </Row>
+  <Row>
+  <svg className = "svg-legend" ref={svgLegRef}></svg>
+  </Row>
+  <Row>
+<span><InfoCircleFill color="lightgreen" size={25} />{statusMsg}</span>
+  </Row>
+  
+
 </Col>
 </>
 )};

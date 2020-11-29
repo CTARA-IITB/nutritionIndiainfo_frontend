@@ -11,6 +11,6 @@
   color: dimgrey;
 }
 
-.container {
-  max-width: 2000px;
+.dropdown-title {
+  font-size: calc(50% + 0.5vw + 0.5vh);
 }

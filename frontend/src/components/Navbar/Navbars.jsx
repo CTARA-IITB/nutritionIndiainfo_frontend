@@ -21,10 +21,10 @@ import {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto" >
-                            <NavLink exact activeClassName="navbar__link--active" className="navbar__link" to="/">Mainfestation</NavLink>
-                            <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/1">Immediate Causes</NavLink>
-                            <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/3">Underlying Causes</NavLink>
-                            <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/6">Basic Causes</NavLink>
+                        <NavLink exact activeClassName="navbar__link--active" className="navbar__link" to="/section1">Manifestation</NavLink>
+                            <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/section2">Immediate Causes</NavLink>
+                            <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/section3">Underlying Causes</NavLink>
+                            <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/section4">Basic Causes</NavLink>
                         </Nav>
                         </Navbar.Collapse>
                         </Navbar>

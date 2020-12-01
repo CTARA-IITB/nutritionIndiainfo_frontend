@@ -8,6 +8,7 @@ import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThres
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
+import { AnimateOnChange } from 'react-animation';
 
 import "./Map.css";
 
@@ -133,7 +134,6 @@ useEffect(() => {
     }
   };
 
- 
 
   const onMouseMove = (event,d) =>{	
     if(typeof d.dataValue != 'undefined'){
@@ -236,7 +236,11 @@ return (
   <svg className = "svg-legend" ref={svgLegRef}></svg>
   </Row>
   <Row>
-<span><InfoCircleFill color="lightgreen" size={25}  /><h6 id="info-msg" >{statusMsg}</h6></span>
+
+<AnimateOnChange  durationOut="500">
+<span><InfoCircleFill color="lightgreen" size={25}  /><h6 id="info-msg" >{statusMsg}</h6></span>  
+</AnimateOnChange>
+
   </Row>
   
 

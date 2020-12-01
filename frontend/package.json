@@ -17,6 +17,8 @@
     "lodash": "4.17.20",
     "mdbreact": "^4.27.0",
     "react": "^16.13.1",
+    "react-animation": "^1.2.2",
+    "react-blink-text": "^1.0.5",
     "react-bootstrap": "1.4.0",
     "react-bootstrap-icons": "^1.1.0",
     "react-bootstrap-toggle": "^2.3.2",

@@ -6,11 +6,11 @@
   margin-top: 20px;
 }
 */
-.col{
+.col {
   font-size: 12px;
   color: dimgrey;
-} 
+}
 
-.dropdown-title{
+.dropdown-title {
   font-size: calc(50% + 0.5vw + 0.5vh);
 }

@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from "react";
 
 import {Row, Col } from 'react-bootstrap';
-import { TreeSelect } from 'antd';
+import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
 
 import { fetchAreaCode,createHierarchy } from '../../utils';
 
+const {Search} = Input;
 export const Dropdown = ({
     tabId,
     selArea,
@@ -21,6 +22,12 @@ export const Dropdown = ({
     setAreaList,
     setIsLevelThree}) =>{
     
+
+    const [expandedKeys,setExpandedKeys] = useState([]);
+    const [searchValue,setSearchValue] = useState("");
+    const [autoExpandParent,setAutoExpandParent] = useState(true);
+    const [filterDropdownValue,setFilterDropdownValue] = useState([]);
+    const [openDropdown,setOpenDropdown] = useState(false);
     let tab;
     if(tabId === undefined || tabId === 'section1')
     {
@@ -123,19 +130,69 @@ export const Dropdown = ({
        
         }, [timeperiodDropdownOpt])
 
+  if(!areaDropdownOpt){
+    return <pre>Loading</pre>
+  }
+
+
+  //AntDsearch expand tree
+
+const dataList = [];
+const generateList = (data) => {
+  for (let i = 0; i < data.length; i++) {
+    const node = data[i];
+    const { value , title} = node;
+    dataList.push({ value, title});
+    if (node.children) {
+      generateList(node.children);
+    }
+  }
+};
+generateList(areaDropdownOpt)
+
+
+const onChange = (e) =>{
+  const { value } = e.target;
+  if(value === ""){
+    setOpenDropdown(false);
+    setFilterDropdownValue(areaDropdownOpt)
+  }
+  else{
+    setOpenDropdown(true);
+    const expandedKeys = dataList
+    .map((item) => {
+      if (item.title.indexOf(value) > -1) {
+        return item;
+      }
+      return null;
+    }).filter((item, i, self) => item && self.indexOf(item) === i);
+
+    setFilterDropdownValue(expandedKeys)
+  }
+}
+
     return (
         <Row className='mb-5 mt-3 '>
     
         <Col>
             <span className="dropdown-title">Select Area</span>
+            <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  />
+
             <TreeSelect
+                // showSearch
+                // filterTreeNode={filterTree}
+                // treeNodeFilterProp ={'value'}
                 className='dropdown'
                 virtual={false}
                 style={{ width: '100%' }}
                 value={selArea}
+                onFocus={()=>setOpenDropdown(true)}
+                onBlur={() => setOpenDropdown(false)}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={areaDropdownOpt}
-                // treeDefaultExpandAll
+                treeData={(filterDropdownValue.length !=0)?filterDropdownValue:areaDropdownOpt}
+                treeDefaultExpandAll={false}
+                open={openDropdown}
+
                 onChange={ (value,title) =>  {
                     if(value === "1"){
                         setLevel(1)
@@ -160,12 +217,17 @@ export const Dropdown = ({
             <span className="dropdown-title">Select Indicator</span>
 
             <TreeSelect
+                showSearch
+                // onSearch={onSearch}
+                optionFilterProp="children"
                 className='dropdown'
                 virtual={false}
                 style={{ width: '100%' }}
                 value={selIndicator}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={indicatorDropdownOpt}
+                filterTreeNode
+                treeNodeFilterProp
                 onChange={ value => setSelIndicator(value) }
                 />
             </Col>

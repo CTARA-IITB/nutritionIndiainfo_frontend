@@ -8,7 +8,8 @@ import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThres
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
-import Blink from 'react-blink-text';
+import { AnimateOnChange } from 'react-animation';
+
 import "./Map.css";
 
 
@@ -20,9 +21,17 @@ const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 const [colorScale,setColorScale] = useState();
 
+
+function removeShake() {
+  var element = document.getElementById("info-msg");
+  element.classList.remove("shake");
+}
+
 let statusMsg;
 if(level === data[0].area.area_level)
 {
+  document.getElementById("info-msg").className += " shake";
+  setTimeout(removeShake,3000);
   statusMsg ="No data: please select another survey";
 }
 else if(level === 1){
@@ -162,7 +171,7 @@ useEffect(() => {
     }).on('click',(i,d) =>{
       setIsLevelThree(false);
       let id = d.area_id
-      tooltip.remove();
+      tooltip.style('opacity',0);
       if(level == 1){
         
         if(typeof c2Value(d) != "undefined"){
@@ -228,7 +237,10 @@ return (
   </Row>
   <Row>
 
-<span><InfoCircleFill color="lightgreen" size={25} />{statusMsg}</span>
+<AnimateOnChange  durationOut="500">
+<span><InfoCircleFill color="lightgreen" size={25}  /><h6 id="info-msg" >{statusMsg}</h6></span>  
+</AnimateOnChange>
+
   </Row>
   
 

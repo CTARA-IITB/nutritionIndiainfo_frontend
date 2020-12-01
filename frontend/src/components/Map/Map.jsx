@@ -8,7 +8,7 @@ import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThres
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
-
+import Blink from 'react-blink-text';
 import "./Map.css";
 
 
@@ -227,6 +227,7 @@ return (
   <svg className = "svg-legend" ref={svgLegRef}></svg>
   </Row>
   <Row>
+
 <span><InfoCircleFill color="lightgreen" size={25} />{statusMsg}</span>
   </Row>
   

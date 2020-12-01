@@ -68,3 +68,12 @@ button.ant-switch {
 .legendTitle {
   font-weight: bold;
 }
+.blink_me {
+  animation: blinker 1s linear 4;
+}
+
+@keyframes blinker {
+  70% {
+    opacity: 0;
+  }
+}

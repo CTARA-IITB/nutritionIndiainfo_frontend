@@ -163,6 +163,7 @@ useEffect(() => {
     }).on('click',(i,d) =>{
       setIsLevelThree(false);
       let id = d.area_id
+      if(level === 2)
       tooltip.remove();
       if(level == 1){
         

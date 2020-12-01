@@ -152,7 +152,8 @@ generateList(areaDropdownOpt)
 
 
 const onChange = (e) =>{
-  const { value } = e.target;
+  let { value } = e.target;
+  value = value.charAt(0).toUpperCase() + value.slice(1);
   if(value === ""){
     setOpenDropdown(false);
     setFilterDropdownValue(areaDropdownOpt)

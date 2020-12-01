@@ -238,7 +238,7 @@ return (
   <Row>
 
 <AnimateOnChange  durationOut="500">
-<span><InfoCircleFill color="lightgreen" size={25}  /><h6 id="info-msg" >{statusMsg}</h6></span>  
+<span className='d-flex'><InfoCircleFill color="lightgreen" size={18}  /><div id="info-msg" >{statusMsg}</div></span>  
 </AnimateOnChange>
 
   </Row>

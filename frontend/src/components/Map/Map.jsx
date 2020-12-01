@@ -20,9 +20,17 @@ const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 const [colorScale,setColorScale] = useState();
 
+
+function removeShake() {
+  var element = document.getElementById("info-msg");
+  element.classList.remove("shake");
+}
+
 let statusMsg;
 if(level === data[0].area.area_level)
 {
+  document.getElementById("info-msg").className += " shake";
+  setTimeout(removeShake,3000);
   statusMsg ="No data: please select another survey";
 }
 else if(level === 1){
@@ -228,7 +236,7 @@ return (
   <svg className = "svg-legend" ref={svgLegRef}></svg>
   </Row>
   <Row>
-<span><InfoCircleFill color="lightgreen" size={25} />{statusMsg}</span>
+<span><InfoCircleFill color="lightgreen" size={25}  /><h6 id="info-msg" >{statusMsg}</h6></span>
   </Row>
   
 

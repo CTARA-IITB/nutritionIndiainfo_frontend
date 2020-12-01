@@ -187,7 +187,7 @@ const onChange = (e) =>{
                 style={{ width: '100%' }}
                 value={selArea}
                 onFocus={()=>setOpenDropdown(true)}
-
+                onBlur={() => setOpenDropdown(false)}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={(filterDropdownValue.length !=0)?filterDropdownValue:areaDropdownOpt}
                 treeDefaultExpandAll={false}

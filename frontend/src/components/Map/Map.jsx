@@ -163,8 +163,7 @@ useEffect(() => {
     }).on('click',(i,d) =>{
       setIsLevelThree(false);
       let id = d.area_id
-      if(level === 2)
-      tooltip.remove();
+      tooltip.style('opacity',0);
       if(level == 1){
         
         if(typeof c2Value(d) != "undefined"){

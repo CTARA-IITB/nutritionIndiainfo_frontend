@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 import {Dropdown} from "../../components/Dropdown/Dropdown";
 // import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,6 +19,10 @@ const renderedMap = (boundaries) => (boundaries.state);
 const Layout = ({tabId}) => {
 
   const [level,setLevel] = useState(1);
+  const searchRef = useRef();
+  const [filterDropdownValue,setFilterDropdownValue] = useState([]);
+  const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
+
 
   useEffect(()=>{
     setLevel(1);
@@ -197,6 +201,11 @@ if(level === 1 || stateBoundary.features === undefined){
               level={level}
               setAreaList={setAreaList}
               setIsLevelThree={setIsLevelThree}
+              searchRef={searchRef}
+              filterDropdownValue={filterDropdownValue}
+              setFilterDropdownValue={setFilterDropdownValue}
+              areaDropdownOpt={areaDropdownOpt}
+              setAreaDropdownOpt={setAreaDropdownOpt}
               />
       
           {/* <Row className="d-flex justify-content-right mb-3"> */}
@@ -207,7 +216,7 @@ if(level === 1 || stateBoundary.features === undefined){
           <Row>
            
             {
-             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick}/>
+             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
             : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
            
             

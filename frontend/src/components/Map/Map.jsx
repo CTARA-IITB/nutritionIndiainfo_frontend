@@ -14,14 +14,14 @@ import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree,handleClick}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree,handleClick,searchRef,setFilterDropdownValue,areaDropdownOpt}) =>{
 const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 const [colorScale,setColorScale] = useState();
 
-
+console.log(searchRef)
 function removeShake() {
   var element = document.getElementById("info-msg");
   element.classList.remove("shake");
@@ -182,6 +182,8 @@ useEffect(() => {
       }else if(level == 2){
         setSelArea("1");  //india
         setLevel(1);
+        searchRef.current.state.value="";  //reset search to
+        setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
       }
       // tooltip.style('opacity',1);
   })
@@ -239,6 +241,7 @@ return (
 
 <AnimateOnChange  durationOut="500">
 <span className='d-flex'><InfoCircleFill color="lightgreen" size={18}  /><div id="info-msg" >{statusMsg}</div></span>  
+{/* <div><h1>{level}</h1></div> */}
 </AnimateOnChange>
 
   </Row>

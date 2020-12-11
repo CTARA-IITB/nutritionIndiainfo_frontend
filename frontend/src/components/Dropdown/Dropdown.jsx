@@ -20,13 +20,17 @@ export const Dropdown = ({
     setAreaName,
     setLevel,
     setAreaList,
-    setIsLevelThree}) =>{
+    setIsLevelThree,
+    searchRef,
+    filterDropdownValue,
+    setFilterDropdownValue,
+    areaDropdownOpt,
+    setAreaDropdownOpt}) =>{
     
 
     const [expandedKeys,setExpandedKeys] = useState([]);
     const [searchValue,setSearchValue] = useState("");
     const [autoExpandParent,setAutoExpandParent] = useState(true);
-    const [filterDropdownValue,setFilterDropdownValue] = useState([]);
     const [openDropdown,setOpenDropdown] = useState(false);
     const treeRef = useRef();
     let tab;
@@ -45,7 +49,6 @@ export const Dropdown = ({
     }
     //Area
     
-    const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
     const [stateID,setStateID] = useState(null);
 
     // console.log(areaList.filter(d => d.area_level));
@@ -178,7 +181,7 @@ const onChange = (e) =>{
     
         <Col>
             <span className="dropdown-title">Select Area</span>
-            <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  />
+            <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  ref={searchRef}/>
 
             <TreeSelect
                 // showSearch

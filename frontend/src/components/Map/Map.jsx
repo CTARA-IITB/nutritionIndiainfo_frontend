@@ -240,8 +240,7 @@ return (
 <AnimateOnChange  durationOut="500">
 <span className='d-flex'><InfoCircleFill color="lightgreen" size={18}  /><div id="info-msg" >{statusMsg}</div></span>  
 </AnimateOnChange>
-
-  </Row>
+</Row>
   
 
 </Col>

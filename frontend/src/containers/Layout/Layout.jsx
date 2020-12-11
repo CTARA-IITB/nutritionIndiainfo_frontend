@@ -12,6 +12,8 @@ import { useData , useDataDistrict ,useDataState} from '../../containers/UseData
 import { json } from 'd3';
 
 
+import { CardSlide } from 'react-card-slide/dist';
+import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
 
 const renderedMap = (boundaries) => (boundaries.state);
@@ -177,6 +179,7 @@ if(level === 1 || stateBoundary.features === undefined){
 
     return (
       <React.Fragment>
+
         <Container fluid>
             <Dropdown 
               tabId={tabId}
@@ -201,12 +204,57 @@ if(level === 1 || stateBoundary.features === undefined){
           </Row>
 
           <Row>
-           
-            {
-             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick}/>
-            : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
-           
-            
+            <SplitPane split="vertical">
+              <div  className="cardslider__cards">
+                <SplitPane split="vertical">
+                  <div>
+                    <SplitPane split="horizontal">
+                      <div/>
+                          <CardSlide items={[{
+                              cardName: 'Card Name',
+                              },{
+                              cardName: 'Card Name 2',
+                              }]}/>
+                      <div/>
+                                  <CardSlide items={[{
+                              cardName: 'Card Name',
+                              },{
+                              cardName: 'Card Name 2',
+                              }]}/>
+                    </SplitPane>
+
+
+                  </div>
+                  <div>
+                    <SplitPane split="horizontal">
+                      <div/>
+                        <CardSlide items={[{
+                          cardName: 'Card Name',
+                          },{
+                          cardName: 'Card Name 2',
+                          },{
+                            cardName: 'Card Name 2',
+                            },{
+                              cardName: 'Card Name 2',
+                              }]}/>
+                              <div/>
+                              <CardSlide items={[{
+                          cardName: 'Card Name',
+                          },{
+                          cardName: 'Card Name 2',
+                          }]}/>
+                    </SplitPane>
+                  </div>     
+                </SplitPane>
+              </div>
+              <div>
+              {
+              nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick}/>
+              : <Col className="text-center"><h3> No data: please select another survey</h3></Col> 
+              }
+              </div>
+          
+            </SplitPane>                       
           </Row>
 
         </Container>

@@ -14,3 +14,9 @@
 .dropdown-title {
   font-size: calc(50% + 0.5vw + 0.5vh);
 }
+
+.cardslider__cards {
+  width: 70%;
+  height: 70%;
+  padding-left: 2em;
+}

@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 
 import {Row, Col } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
@@ -28,6 +28,7 @@ export const Dropdown = ({
     const [autoExpandParent,setAutoExpandParent] = useState(true);
     const [filterDropdownValue,setFilterDropdownValue] = useState([]);
     const [openDropdown,setOpenDropdown] = useState(false);
+    const treeRef = useRef();
     let tab;
     if(tabId === undefined || tabId === 'section1')
     {
@@ -192,6 +193,7 @@ const onChange = (e) =>{
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={(filterDropdownValue.length !=0)?filterDropdownValue:areaDropdownOpt}
                 treeDefaultExpandAll={false}
+                ref = {treeRef}
                 open={openDropdown}
 
                 onChange={ (value,title) =>  {
@@ -207,8 +209,7 @@ const onChange = (e) =>{
                     else setLevel(3);
                         setSelArea(value);
                         setAreaName(title[0]);
-                    // console.log(stateID.indexOf(parseInt(value)),'test');
-                    // setAreaCode(fetchAreaCode(areaList, value));
+                    treeRef.current.blur()
                   } 
                 }
               />

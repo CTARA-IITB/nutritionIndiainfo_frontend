@@ -21,6 +21,10 @@ const renderedMap = (boundaries) => (boundaries.state);
 const Layout = ({tabId}) => {
 
   const [level,setLevel] = useState(1);
+
+  useEffect(()=>{
+    setLevel(1);
+  },[tabId])
   const [isLevelThree , setIsLevelThree] = useState(false);
 
 

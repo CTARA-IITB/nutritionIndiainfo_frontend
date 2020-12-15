@@ -1,7 +1,7 @@
 
 from django.shortcuts import render
 from rest_framework import generics   
-from .serializers import IndicatorSerializer, IndicatorUnitSubgroupSerializer, SubgroupSerializer, UtDataSerializer, UtDatatimeSerializer, AreaEnSerializer, AreaEnDropSerializer, NiStDtbPolySerializer , UnitSerializer,UnitNameSerializer                        
+from .serializers import IndicatorSerializer, UtDataAllSerializer, IndicatorUnitSubgroupSerializer, SubgroupSerializer, UtDataSerializer, UtDatatimeSerializer, AreaEnSerializer, AreaEnDropSerializer, NiStDtbPolySerializer , UnitSerializer,UnitNameSerializer                        
 from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, Timeperiod, NiStDtbPoly  ,Unit  
 # from drf_multiple_model.viewsets import ObjectMultipleModelAPIViewSet  
 from django.db.models import Q
@@ -100,4 +100,11 @@ class GetUnitNameView(generics.ListAPIView):
         queryset=[]
         def get_queryset(self,*args,**kwargs):
                 queryset = Unit.objects.all()
+                return queryset
+
+class IndicatorDetailView(generics.ListAPIView): 
+        serializer_class =  UtDataAllSerializer
+        def get_queryset(self,*args, **kwargs):
+                selectedTab = self.kwargs.get('tab', None)
+                queryset= UtData.objects.raw('select * from ut_data join (select ut_data.indicator_id, Max(ut_data.timeperiod_id) as maxt from ut_data join indicator on ut_data.indicator_id = indicator.indicator_id and indicator.classification_id = %s where ut_data.area_id=1 and ut_data.subgroup_id=6 group by ut_data.indicator_id order by ut_data.indicator_id) max on ut_data.indicator_id=max.indicator_id and ut_data.timeperiod_id=max.maxt where area_id=1 and subgroup_id=6 order by ut_data.indicator_id', [selectedTab])
                 return queryset

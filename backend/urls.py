@@ -13,5 +13,5 @@ urlpatterns = [
     path('api/areaMap/<int:area>', AreaMapView.as_view(), name='areaMap'),
     path('api/getUnit/<int:indicator>/<int:subgroup>', GetUnitView.as_view(), name='unit'),
     path('api/getUnitName', GetUnitNameView.as_view(), name='unit')
-
+    path('api/getIndicatorDetails/<int:tab>', IndicatorDetailView.as_view(), name='indicatorDetails')
 ]

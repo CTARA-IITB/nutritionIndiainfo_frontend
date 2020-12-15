@@ -206,6 +206,9 @@ if(level === 1 || stateBoundary.features === undefined){
               setFilterDropdownValue={setFilterDropdownValue}
               areaDropdownOpt={areaDropdownOpt}
               setAreaDropdownOpt={setAreaDropdownOpt}
+              parentArea={parentArea}
+              isLevelThree={isLevelThree}
+              
               />
       
           {/* <Row className="d-flex justify-content-right mb-3"> */}

@@ -25,7 +25,9 @@ export const Dropdown = ({
     filterDropdownValue,
     setFilterDropdownValue,
     areaDropdownOpt,
-    setAreaDropdownOpt}) =>{
+    setAreaDropdownOpt,
+    parentArea,
+    isLevelThree}) =>{
     
 
     const [expandedKeys,setExpandedKeys] = useState([]);
@@ -111,7 +113,13 @@ export const Dropdown = ({
 
 
    useEffect(() => {
-    const url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
+    let url;
+    // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
+    if(isLevelThree)
+    url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${parentArea}`;
+    else
+    url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
+    console.log(url)
     json(url).then( options =>{
       setTimeperiodDropdownOpt(options);
     }

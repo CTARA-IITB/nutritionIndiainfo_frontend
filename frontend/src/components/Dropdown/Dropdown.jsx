@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 
 import {Row, Col } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
@@ -20,14 +20,21 @@ export const Dropdown = ({
     setAreaName,
     setLevel,
     setAreaList,
-    setIsLevelThree}) =>{
+    setIsLevelThree,
+    searchRef,
+    filterDropdownValue,
+    setFilterDropdownValue,
+    areaDropdownOpt,
+    setAreaDropdownOpt,
+    parentArea,
+    isLevelThree}) =>{
     
 
     const [expandedKeys,setExpandedKeys] = useState([]);
     const [searchValue,setSearchValue] = useState("");
     const [autoExpandParent,setAutoExpandParent] = useState(true);
-    const [filterDropdownValue,setFilterDropdownValue] = useState([]);
     const [openDropdown,setOpenDropdown] = useState(false);
+    const treeRef = useRef();
     let tab;
     if(tabId === undefined || tabId === 'section1')
     {
@@ -44,7 +51,6 @@ export const Dropdown = ({
     }
     //Area
     
-    const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
     const [stateID,setStateID] = useState(null);
 
     // console.log(areaList.filter(d => d.area_level));
@@ -107,7 +113,13 @@ export const Dropdown = ({
 
 
    useEffect(() => {
-    const url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
+    let url;
+    // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
+    if(isLevelThree)
+    url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${parentArea}`;
+    else
+    url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
+    console.log(url)
     json(url).then( options =>{
       setTimeperiodDropdownOpt(options);
     }
@@ -177,7 +189,7 @@ const onChange = (e) =>{
     
         <Col>
             <span className="dropdown-title">Select Area</span>
-            <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  />
+            <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  ref={searchRef}/>
 
             <TreeSelect
                 // showSearch
@@ -192,6 +204,7 @@ const onChange = (e) =>{
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={(filterDropdownValue.length !=0)?filterDropdownValue:areaDropdownOpt}
                 treeDefaultExpandAll={false}
+                ref = {treeRef}
                 open={openDropdown}
 
                 onChange={ (value,title) =>  {
@@ -207,8 +220,7 @@ const onChange = (e) =>{
                     else setLevel(3);
                         setSelArea(value);
                         setAreaName(title[0]);
-                    // console.log(stateID.indexOf(parseInt(value)),'test');
-                    // setAreaCode(fetchAreaCode(areaList, value));
+                    treeRef.current.blur()
                   } 
                 }
               />

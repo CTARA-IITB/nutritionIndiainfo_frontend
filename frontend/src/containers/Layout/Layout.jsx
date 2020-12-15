@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 import {Dropdown} from "../../components/Dropdown/Dropdown";
 // import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,6 +22,17 @@ const renderedMap = (boundaries) => (boundaries.state);
 const Layout = ({tabId}) => {
 
   const [level,setLevel] = useState(1);
+<<<<<<< HEAD
+=======
+  const searchRef = useRef();
+  const [filterDropdownValue,setFilterDropdownValue] = useState([]);
+  const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
+
+
+  useEffect(()=>{
+    setLevel(1);
+  },[tabId])
+>>>>>>> 88d4ce4098c0c148adaca4f0692a24c8b2abef57
   const [isLevelThree , setIsLevelThree] = useState(false);
 
 
@@ -197,12 +208,21 @@ if(level === 1 || stateBoundary.features === undefined){
               level={level}
               setAreaList={setAreaList}
               setIsLevelThree={setIsLevelThree}
+              searchRef={searchRef}
+              filterDropdownValue={filterDropdownValue}
+              setFilterDropdownValue={setFilterDropdownValue}
+              areaDropdownOpt={areaDropdownOpt}
+              setAreaDropdownOpt={setAreaDropdownOpt}
+              parentArea={parentArea}
+              isLevelThree={isLevelThree}
+              
               />
       
           {/* <Row className="d-flex justify-content-right mb-3"> */}
           <Row className="d-flex flex-row-reverse mb-3">
             {/* {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''} */}
           </Row>
+<<<<<<< HEAD
 <Row>
 <Col>
   <Col className="col12">  
@@ -248,6 +268,16 @@ if(level === 1 || stateBoundary.features === undefined){
               }
        
           </Col>
+=======
+
+          <Row>
+           
+            {
+             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
+            : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
+           
+            
+>>>>>>> 88d4ce4098c0c148adaca4f0692a24c8b2abef57
           </Row>
         </Container>
 

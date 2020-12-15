@@ -11,7 +11,8 @@ import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
 import { json } from 'd3';
 
-
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
 import { CardSlide } from 'react-card-slide/dist';
 import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
@@ -21,10 +22,6 @@ const renderedMap = (boundaries) => (boundaries.state);
 const Layout = ({tabId}) => {
 
   const [level,setLevel] = useState(1);
-
-  useEffect(()=>{
-    setLevel(1);
-  },[tabId])
   const [isLevelThree , setIsLevelThree] = useState(false);
 
 
@@ -206,61 +203,52 @@ if(level === 1 || stateBoundary.features === undefined){
           <Row className="d-flex flex-row-reverse mb-3">
             {/* {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''} */}
           </Row>
+<Row>
+<Col>
+  <Col className="col12">  
+  <AwesomeSlider className="cardslider__cards">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </AwesomeSlider>
+</Col>
+  <Col className="col12">  
+  <AwesomeSlider className="cardslider__cards">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </AwesomeSlider>
+</Col>
+</Col>
+<Col>
+<Col className="col12">  
+  <AwesomeSlider className="cardslider__cards">
+    <div >1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </AwesomeSlider>
+</Col>
+  <Col className="col12">  
+  <AwesomeSlider className="cardslider__cards">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </AwesomeSlider>
+</Col>
+</Col>
 
-          <Row>
-            <SplitPane split="vertical">
-              <div  className="cardslider__cards">
-                <SplitPane split="vertical">
-                  <div>
-                    <SplitPane split="horizontal">
-                      <div/>
-                          <CardSlide items={[{
-                              cardName: 'Card Name',
-                              },{
-                              cardName: 'Card Name 2',
-                              }]}/>
-                      <div/>
-                                  <CardSlide items={[{
-                              cardName: 'Card Name',
-                              },{
-                              cardName: 'Card Name 2',
-                              }]}/>
-                    </SplitPane>
-
-
-                  </div>
-                  <div>
-                    <SplitPane split="horizontal">
-                      <div/>
-                        <CardSlide items={[{
-                          cardName: 'Card Name',
-                          },{
-                          cardName: 'Card Name 2',
-                          },{
-                            cardName: 'Card Name 2',
-                            },{
-                              cardName: 'Card Name 2',
-                              }]}/>
-                              <div/>
-                              <CardSlide items={[{
-                          cardName: 'Card Name',
-                          },{
-                          cardName: 'Card Name 2',
-                          }]}/>
-                    </SplitPane>
-                  </div>     
-                </SplitPane>
-              </div>
-              <div>
-              {
+<Col className="col3">
+          {
               nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick}/>
               : <Col className="text-center"><h3> No data: please select another survey</h3></Col> 
               }
-              </div>
-          
-            </SplitPane>                       
+       
+          </Col>
           </Row>
-
         </Container>
 
       </React.Fragment>

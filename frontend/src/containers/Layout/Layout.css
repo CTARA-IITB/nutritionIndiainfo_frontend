@@ -20,3 +20,10 @@
   height: 70%;
   padding-left: 2em;
 }
+.col12 {
+  column-width: 240px;
+  color: aliceblue;
+}
+.col3 {
+  column-width: 2000px;
+}

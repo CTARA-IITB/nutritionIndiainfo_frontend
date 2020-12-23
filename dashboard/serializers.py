@@ -29,12 +29,22 @@ class IndicatorSerializer(serializers.ModelSerializer):
 class SubgroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subgroup
-        fields = ('subgroup_id','subgroup_name')  
+        fields = ('subgroup_id','subgroup_name') 
+
+class IndicatorAllSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Indicator
+        fields = ('indicator_id','indicator_name')  
 
 class TimeperiodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timeperiod
         fields = ('timeperiod_id','timeperiod')
+
+class UnitNameSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Unit
+            fields = "__all__"
 
 class IndicatorUnitSubgroupSerializer(serializers.ModelSerializer):
     value = serializers.CharField(source='subgroup.subgroup_id')
@@ -58,6 +68,16 @@ class UtDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = UtData
         fields = ('area' , 'data_value')
+
+class UtDataAllSerializer(serializers.ModelSerializer):
+    indicator = IndicatorAllSerializer()
+    timeperiod = TimeperiodSerializer()
+    unit = UnitNameSerializer()
+    data_value = serializers.DecimalField(max_digits=255, decimal_places=2)
+  
+    class Meta:
+        model = UtData
+        fields =  ('indicator' , 'timeperiod', 'unit' ,'data_value')
 
 class NiStDtbPolySerializer(GeoFeatureModelSerializer):
     wkb_geometry = GeometryField()
@@ -85,10 +105,4 @@ class UnitSerializer(serializers.ModelSerializer):
         class Meta:
             model = IndicatorUnitSubgroup
             fields = ('unit','indicator')
-
-
-class UnitNameSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Unit
-            fields = "__all__"
 # class NiStDtbPolySerializer(serializers.Model

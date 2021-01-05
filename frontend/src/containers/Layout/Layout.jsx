@@ -139,8 +139,10 @@ const handleClick=()=>{
 
   //set area name to parent when level is 3
 if(level === 3){
-  let areaParentId = areaList.filter(f => f.area_name === areaName)[0].area_parent_id; // loop 1
-  let parentName = areaList.filter(f=> f.area_id === areaParentId)[0].area_name;  //loop 2  later optimise this 
+  
+  let areaParentId = areaList.filter(f => f.area_id === parseInt(selArea))[0].area_parent_id; // loop 1
+  let parentName = areaList.filter(f=> f.area_id === areaParentId)[0].area_name;  //loop 2  later optimise this
+
   setAreaName(parentName);
   setParentArea(areaParentId);
   setIsLevelThree(true);

@@ -184,7 +184,10 @@ if(level === 1 || stateBoundary.features === undefined){
 
 
 // let unitName = unitList.filter(unitObj => unitObj.unit_id === unit)
-
+// to check if nutritionData is not null
+if(!nutritionData){
+  return <pre>Loading...</pre>
+}
     return (
       <React.Fragment>
         <Container fluid>

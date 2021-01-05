@@ -3,7 +3,7 @@ import {Dropdown} from "../../components/Dropdown/Dropdown";
 // import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
+import {Container, Row, Col } from 'react-bootstrap';
 
 
 // import Form from "../../components/Form/Form";
@@ -52,16 +52,16 @@ const Layout = ({tabId}) => {
   const [selTimeperiod,setSelTimeperiod] = useState(iniSelTimeperiod);
  
     //district data
-    const [selDistrictData,setSelDistrictData] = useState(null);
+    // const [selDistrictData,setSelDistrictData] = useState(null);
   
-    useEffect(() => {
-      const url = `http://localhost:8000/api/indiaMap/12/6/19/3`;
-      json(url).then( data =>{
-        setSelDistrictData(data);
+    // useEffect(() => {
+    //   const url = `http://localhost:8000/api/indiaMap/12/6/19/3`;
+    //   json(url).then( data =>{
+    //     setSelDistrictData(data);
       
-      }
-      )
-    },['3'])
+    //   }
+    //   )
+    // },[])
 
 
     //india data
@@ -95,7 +95,7 @@ const Layout = ({tabId}) => {
         setSelStateData(data);
       }
       )
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selIndicator,selSubgroup,selTimeperiod,selArea,parentArea])
 
 

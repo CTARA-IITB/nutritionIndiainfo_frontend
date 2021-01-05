@@ -10,7 +10,7 @@ export const useData = (selArea) => {
     let [data, setData] = useState(null);
   	// console.log(selectedArea)
     useEffect(() => {
-    const bundle = {}
+    // const bundle = {}
     json(jsonIndianstate).then(stateTopology => {
       const state = stateTopology.objects.india;
       json(jsonIndiaDistrict).then(districtTopology =>{
@@ -26,7 +26,6 @@ export const useData = (selArea) => {
     let [data, setData] = useState(null);
     // console.log(selectedArea)
     useEffect(() => {
-    const bundle = {}
     json(jsonIndiaDistrict).then(districtTopology => {
       const states = districtTopology.objects.india;
         setData({'state':feature(districtTopology,states)})
@@ -49,7 +48,7 @@ export const useData = (selArea) => {
       const featureCollection = {type: "FeatureCollection",features}
       setData(featureCollection);
       
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[areaName])
     return data;
 

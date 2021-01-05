@@ -4,7 +4,8 @@ import {Row, Col } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
 
-import { fetchAreaCode,createHierarchy } from '../../utils';
+// import { fetchAreaCode,createHierarchy } from '../../utils';
+import { createHierarchy } from '../../utils';
 
 const {Search} = Input;
 export const Dropdown = ({
@@ -30,9 +31,9 @@ export const Dropdown = ({
     isLevelThree}) =>{
     
 
-    const [expandedKeys,setExpandedKeys] = useState([]);
-    const [searchValue,setSearchValue] = useState("");
-    const [autoExpandParent,setAutoExpandParent] = useState(true);
+    // const [expandedKeys,setExpandedKeys] = useState([]);
+    // const [searchValue,setSearchValue] = useState("");
+    // const [autoExpandParent,setAutoExpandParent] = useState(true);
     const [openDropdown,setOpenDropdown] = useState(false);
     const treeRef = useRef();
     let tab;
@@ -63,6 +64,7 @@ export const Dropdown = ({
         setAreaList(options);
         }
         )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 
 
@@ -78,6 +80,7 @@ export const Dropdown = ({
       setIndicatorDropdownOpt(options);
     }
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tabId])
 
    // change selIndicator when indicator updated
@@ -85,7 +88,7 @@ export const Dropdown = ({
     if(indicatorDropdownOpt){
       setSelIndicator(indicatorDropdownOpt[0].value)
     }
-   
+   // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [indicatorDropdownOpt])
 
 
@@ -124,7 +127,7 @@ export const Dropdown = ({
       setTimeperiodDropdownOpt(options);
     }
     )
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selIndicator,selSubgroup,selArea])
 
 
@@ -139,7 +142,7 @@ export const Dropdown = ({
           });
           if(!flag) setSelTimeperiod(timeperiodDropdownOpt[0].value)
         }
-       
+       // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [timeperiodDropdownOpt])
 
   if(!areaDropdownOpt){
@@ -202,7 +205,7 @@ const onChange = (e) =>{
                 onFocus={()=>setOpenDropdown(true)}
                 onBlur={() => setOpenDropdown(false)}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={(filterDropdownValue.length !=0)?filterDropdownValue:areaDropdownOpt}
+                treeData={(filterDropdownValue.length !==0)?filterDropdownValue:areaDropdownOpt}
                 treeDefaultExpandAll={false}
                 ref = {treeRef}
                 open={openDropdown}

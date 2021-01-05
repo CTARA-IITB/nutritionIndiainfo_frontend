@@ -225,9 +225,10 @@ if(!nutritionData){
            
             {
              nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
-            : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
-           
+            : <Col className="text-center"></Col> 
             
+            }
+           
           </Row>
 
         </Container>

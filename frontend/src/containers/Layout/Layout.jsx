@@ -4,6 +4,7 @@ import {Dropdown} from "../../components/Dropdown/Dropdown";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Button, Container, Row, Col, ToggleButton } from 'react-bootstrap';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 // import Form from "../../components/Form/Form";
@@ -22,8 +23,6 @@ const renderedMap = (boundaries) => (boundaries.state);
 const Layout = ({tabId}) => {
 
   const [level,setLevel] = useState(1);
-<<<<<<< HEAD
-=======
   const searchRef = useRef();
   const [filterDropdownValue,setFilterDropdownValue] = useState([]);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
@@ -32,7 +31,6 @@ const Layout = ({tabId}) => {
   useEffect(()=>{
     setLevel(1);
   },[tabId])
->>>>>>> 88d4ce4098c0c148adaca4f0692a24c8b2abef57
   const [isLevelThree , setIsLevelThree] = useState(false);
 
 
@@ -96,7 +94,8 @@ const Layout = ({tabId}) => {
            url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
         else
           url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
-      }
+          console.log('url.......',url);
+        }
       json(url).then( data =>{
         setSelStateData(data);
       }
@@ -222,62 +221,14 @@ if(level === 1 || stateBoundary.features === undefined){
           <Row className="d-flex flex-row-reverse mb-3">
             {/* {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''} */}
           </Row>
-<<<<<<< HEAD
-<Row>
-<Col>
-  <Col className="col12">  
-  <AwesomeSlider className="cardslider__cards">
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-  </AwesomeSlider>
-</Col>
-  <Col className="col12">  
-  <AwesomeSlider className="cardslider__cards">
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-  </AwesomeSlider>
-</Col>
-</Col>
-<Col>
-<Col className="col12">  
-  <AwesomeSlider className="cardslider__cards">
-    <div >1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-  </AwesomeSlider>
-</Col>
-  <Col className="col12">  
-  <AwesomeSlider className="cardslider__cards">
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-  </AwesomeSlider>
-</Col>
-</Col>
-
-<Col className="col3">
-          {
-              nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick}/>
-              : <Col className="text-center"><h3> No data: please select another survey</h3></Col> 
-              }
-       
-          </Col>
-=======
 
           <Row>
-           
+          <ClipLoader size={150} />
             {
              nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
             : <Col className="text-center"><h3> No data: please select another survey</h3></Col> }
            
             
->>>>>>> 88d4ce4098c0c148adaca4f0692a24c8b2abef57
           </Row>
         </Container>
 

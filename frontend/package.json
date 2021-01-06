@@ -34,6 +34,7 @@
     "react-simple-card": "^2.0.2",
     "react-slick": "^0.27.13",
     "react-slide-routes": "^0.14.0",
+    "react-spinners": "^0.10.4",
     "react-split-pane": "^2.0.3",
     "reactstrap": "^8.6.0",
     "resize-observer-polyfill": "^1.5.1",

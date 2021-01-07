@@ -1,10 +1,11 @@
-import React,{useState,useRef,useEffect} from 'react';
+import React,{useRef,useEffect} from 'react';
 // import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Row, Col } from 'react-bootstrap';
-import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
+// import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
+import { geoMercator, format, geoPath, scaleQuantize,extent,select, schemeReds } from 'd3';
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
@@ -19,7 +20,7 @@ const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
-const [colorScale,setColorScale] = useState();
+// const [colorScale,setColorScale] = useState();
 
 console.log(searchRef)
 function removeShake() {
@@ -45,9 +46,9 @@ let color_range = _.map(data, d =>{
   return +d.data_value
 });
 let [min,max] = extent(color_range);
-let comp = (max - min)/3;
-let low = min + comp;
-let high = max - comp;
+// let comp = (max - min)/3;
+// let low = min + comp;
+// let high = max - comp;
 
 // const colorScale1 = scaleQuantize().domain([min, max])
 //   .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
@@ -106,7 +107,7 @@ useEffect(() => {
   let mergedGeometry = addProperties(geometry.features,data);
 
 
-  let c1Value  = d => d.data_value;
+  // let c1Value  = d => d.data_value;
   let c2Value  = d => d.dataValue;
   
   // let colorScale = scaleOrdinal();
@@ -121,18 +122,18 @@ useEffect(() => {
 
   
   
-  let colorScale2 = (v) =>{
-    if (typeof v != "undefined") {
-        let selectedColor;
-          if (v < low) {selectedColor =  "#24562B";}//matte green
-          else if (v >= low && v <= high) {selectedColor =  "#FFE338";}//matte yellow
-          else if (v > high) {selectedColor =  "#B2022F";} //matte red
-        return selectedColor;
-    }
-    else {
-      return "#A9A9B0";
-    }
-  };
+  // let colorScale2 = (v) =>{
+  //   if (typeof v != "undefined") {
+  //       let selectedColor;
+  //         if (v < low) {selectedColor =  "#24562B";}//matte green
+  //         else if (v >= low && v <= high) {selectedColor =  "#FFE338";}//matte yellow
+  //         else if (v > high) {selectedColor =  "#B2022F";} //matte red
+  //       return selectedColor;
+  //   }
+  //   else {
+  //     return "#A9A9B0";
+  //   }
+  // };
 
 
   const onMouseMove = (event,d) =>{	
@@ -170,16 +171,27 @@ useEffect(() => {
       .style("opacity", 0); 
     }).on('click',(i,d) =>{
       setIsLevelThree(false);
-      let id = d.area_id
+      // let id = d.area_id
       tooltip.style('opacity',0);
-      if(level == 1){
-        
-        if(typeof c2Value(d) != "undefined"){
-          setSelArea(''+d.area_id);
-          setLevel(2);
-          onMapClick(d.areaname);
+      if(level === 1){
+        if(Switch.checkedChildren="District Level"){
+          if(typeof c2Value(d) != "undefined"){
+            setSelArea(''+d.area_id);
+            setLevel(1);
+            onMapClick(d.areaname);
+            // console.log("/////.......",d);
+          }  
         }
-      }else if(level == 2){
+          
+        else{
+          if(typeof c2Value(d) != "undefined"){
+            setSelArea(''+d.area_id);
+            setLevel(2);
+            onMapClick(d.areaname);
+            // console.log("/////.......",d);
+          }
+        }
+      }else if(level === 2){
         setSelArea("1");  //india
         setLevel(1);
         searchRef.current.state.value="";  //reset search to
@@ -218,7 +230,7 @@ useEffect(() => {
 
     legend.select(".legendQuant")
     .call(myLegend);
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [geometry, dimensions, data,unit])
 
 
@@ -232,7 +244,9 @@ return (
 </Col>
 <Col className="d-flex-column align-content-center align-content-center ">
 <Row>
-  <Switch className="mb-2"size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
+{level===1 ?
+  <Switch className="mb-2"size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> :
+  ''}
   </Row>
   <Row>
   <svg className = "svg-legend" ref={svgLegRef}></svg>

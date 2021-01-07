@@ -1,12 +1,12 @@
 export const fetchAreaCode = (areaList,areaID) =>{
-    return(areaList.filter(area => parseInt(area.area_id) == areaID)[0]['area_code']);
+    return(areaList.filter(area => parseInt(area.area_id) === areaID)[0]['area_code']);
 }
 
 export const createHierarchy = (options) =>{
-    let india = new Array(); 
-    let state = new Array(); 
+    let india = []; 
+    let state = []; 
     let district = {};
-    let onlyDistrict = new Array();
+    let onlyDistrict = [];
   
     options.forEach(area => {
       let area_id = area.area_id.toString();

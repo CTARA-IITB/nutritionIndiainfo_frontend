@@ -4,14 +4,18 @@ import {Dropdown} from "../../components/Dropdown/Dropdown";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {Container, Row, Col } from 'react-bootstrap';
-
+// import ClipLoader from "react-spinners/ClipLoader";
+import SkeletonCard from "../../containers/SkeletonCard";
 
 // import Form from "../../components/Form/Form";
 import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
 import { json } from 'd3';
 
-
+// import AwesomeSlider from 'react-awesome-slider';
+// import 'react-awesome-slider/dist/styles.css';
+// import { CardSlide } from 'react-card-slide/dist';
+import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
 
 const renderedMap = (boundaries) => (boundaries.state);
@@ -90,7 +94,8 @@ const Layout = ({tabId}) => {
            url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
         else
           url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
-      }
+          console.log('url.......',url);
+        }
       json(url).then( data =>{
         setSelStateData(data);
       }
@@ -135,7 +140,15 @@ const handleClick=()=>{
   const [buttonText, setButtonText] = useState("District");
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
-
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+    // Cancel the timer while unmounting
+    return () => clearTimeout(timer);
+  }, []);
 
   //set area name to parent when level is 3
 if(level === 3){
@@ -163,11 +176,15 @@ if(level === 1 || stateBoundary.features === undefined){
   if(toggleState===true){
   renderMap = renderedMap(boundaries);
   nutritionData = selIndiaData;
-  }
+//  console.log("nutritionData",nutritionData)
+  
+}
   else{
     renderMap = renderedMap(Dboundaries);
     nutritionData = selStateData;
     console.log(selStateData,"selstateData")
+    // console.log("dboundaries",Dboundaries)
+ 
   }
 }else{
 
@@ -175,9 +192,12 @@ if(level === 1 || stateBoundary.features === undefined){
   {
   renderMap = stateBoundary;
   nutritionData = selStateData;
-  }else{
+  // console.log("stateboundaries",renderMap)
+   
+}else{
     renderMap = renderedMap(boundaries);
     nutritionData = selIndiaData;
+    // console.log("nutritionData",nutritionData)
   }
   // console.log(stateBoundary);
 }
@@ -190,7 +210,10 @@ if(!nutritionData){
 }
     return (
       <React.Fragment>
+
         <Container fluid>
+        {loading && <SkeletonCard />}
+      {!loading &&
             <Dropdown 
               tabId={tabId}
               selArea={selArea}
@@ -215,22 +238,26 @@ if(!nutritionData){
               isLevelThree={isLevelThree}
               
               />
-      
+}
           {/* <Row className="d-flex justify-content-right mb-3"> */}
           <Row className="d-flex flex-row-reverse mb-3">
             {/* {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''} */}
           </Row>
-
-          <Row>
-           
-            {
-             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
-            : <Col className="text-center"></Col> 
+          <SplitPane split="vertical">
+            <div/>  
+            <Row>
+              {/* <ClipLoader size={150} /> */}
+                {loading && <SkeletonCard />}
+                {!loading &&
+                  nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
+                  : <Col className="text-center"></Col> 
+         
+              }
+           </Row>
+       
             
-            }
-           
-          </Row>
-
+          </SplitPane>
+         
         </Container>
 
       </React.Fragment>

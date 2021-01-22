@@ -214,7 +214,7 @@ useEffect(() => {
   let myLegend = legendColor()
      .labelFormat(formatter)
     .title(`Legend (in ${unitName})`)
-    .titleWidth(200)
+    .titleWidth(180)
     .scale(colorScale);
 
     legend.select(".legendQuant")

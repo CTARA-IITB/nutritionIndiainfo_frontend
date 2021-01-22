@@ -3,20 +3,20 @@ import {Dropdown} from "../../components/Dropdown/Dropdown";
 // import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {Container, Row, Col } from 'react-bootstrap';
+import {Container, Row, Col, Table } from 'react-bootstrap';
 // import ClipLoader from "react-spinners/ClipLoader";
-import SkeletonCard from "../../containers/SkeletonCard";
+import {SkeletonCard,SkeletonDropdown,SkeletonMapCard} from "../../containers/SkeletonCard";
 
 // import Form from "../../components/Form/Form";
 import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
-import { json } from 'd3';
+import { color, json } from 'd3';
 
-// import AwesomeSlider from 'react-awesome-slider';
-// import 'react-awesome-slider/dist/styles.css';
-// import { CardSlide } from 'react-card-slide/dist';
+import Card from '../../containers/Layout/card';
 import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
+import ItemsCarousel from 'react-items-carousel';
+
 
 const renderedMap = (boundaries) => (boundaries.state);
 
@@ -42,6 +42,7 @@ const Layout = ({tabId}) => {
 
   const [areaName,setAreaName] = useState('IND');
 
+  const [indicatorDetail,setIndicatorDetail] = useState(null);
   const [unit,setUnit] = useState(null);
   const [unitList,setUnitList] = useState(null);
 
@@ -116,6 +117,14 @@ const Layout = ({tabId}) => {
       json()
     },[selIndicator,selSubgroup])
 
+    // get indicatorDetails-1-immediate cause,3-underlying cause,6-basic cause,8-manifest-tabid
+    useEffect(()=>{
+      const url = `http://127.0.0.1:8000/api/getIndicatorDetails/8`;
+      json(url).then(indicatorDetail =>{
+        setIndicatorDetail(indicatorDetail)
+        })
+    },[])
+    console.log("iiiiiiiddddddddddd",tabId,"iiiiiiiiidddddddddd");   
 
     //get Units Name
 
@@ -137,6 +146,10 @@ const handleClick=()=>{
     text='District';
   changeText(text);
   }
+
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const chevronWidth = 40;
+
   const [buttonText, setButtonText] = useState("District");
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
@@ -202,9 +215,94 @@ if(level === 1 || stateBoundary.features === undefined){
   // console.log(stateBoundary);
 }
 
+// if(indicatorDetail){
+//   indicatorDetail.map(indi => {
+//     indicatorcount++;
+//   });
+// }
+//   if(indicatorDetail){
+//         indicatorDetail.map(indi => {
+//           elements.push(
+//             <div className="left-card pink-card"> <Card
+//                       title={indi.indicator.indicator_name}
+//                       value={indi.data_value}
+//                       value_type={indi.unit.unit_name}
+//                       deff='underweight'
+//                       /></div>
+          
+//                       );
+//           
+//         });
+//       }
+let card1;
+// let arr=["stunting","underweight","wasting","severe wasting","severe stunting","severe underweight"];
 
-// let unitName = unitList.filter(unitObj => unitObj.unit_id === unit)
-// to check if nutritionData is not null
+// if(indicatorDetail.length != null)
+// {  
+  card1=Math.floor((indicatorDetail.length)/2);
+// } 
+let colorvar1=true;
+  if(indicatorDetail){
+              var element1=[];
+              for(var i=0;i<card1;i++){
+                      if(colorvar1==true){
+                      element1.push(      <div className="left-card green-card"> <Card
+                      title={indicatorDetail[i].indicator.indicator_name}
+                      value={indicatorDetail[i].data_value}
+                      value_type={indicatorDetail[i].unit.unit_name}
+                      deff='underweight'
+                      source={indicatorDetail[i].timeperiod.timeperiod}
+                      
+                      /></div>
+                      );
+                    colorvar1=false;
+                    }
+                      else{
+                        element1.push(      <div className="left-card pink-card"> <Card
+                        title={indicatorDetail[i].indicator.indicator_name}
+                        value={indicatorDetail[i].data_value}
+                        value_type={indicatorDetail[i].unit.unit_name}
+                        deff='underweight'
+                        source={indicatorDetail[i].timeperiod.timeperiod}
+                        /></div>
+                        );
+                      colorvar1=true;
+                      }
+                        
+              }
+              var element2=[];
+              let colorvar2=true;
+              for(var i=card1;i<(indicatorDetail.length);i++){
+                    if(colorvar2==true){
+                      element2.push(      <div className="right-card pink-card"> <Card
+                      title={indicatorDetail[i].indicator.indicator_name}
+                      value={indicatorDetail[i].data_value}
+                      value_type={indicatorDetail[i].unit.unit_name}
+                      deff='underweight'
+                      source={indicatorDetail[i].timeperiod.timeperiod}
+                      
+                      /></div>
+                      );
+                    colorvar2=false;
+                      }
+                      else{
+                        element2.push(      <div className="right-card green-card"> <Card
+                        title={indicatorDetail[i].indicator.indicator_name}
+                        value={indicatorDetail[i].data_value}
+                        value_type={indicatorDetail[i].unit.unit_name}
+                        deff='underweight'
+                        source={indicatorDetail[i].timeperiod.timeperiod}
+                        /></div>
+                        );
+                      colorvar2=true;
+                      }
+                    }
+    }
+
+console.log("i=",i);
+console.log("timeperiod",indicatorDetail[0].timeperiod.timeperiod)
+
+
 if(!nutritionData){
   return <pre>Loading...</pre>
 }
@@ -212,7 +310,7 @@ if(!nutritionData){
       <React.Fragment>
 
         <Container fluid>
-        {loading && <SkeletonCard />}
+        {loading && <SkeletonDropdown />}
       {!loading &&
             <Dropdown 
               tabId={tabId}
@@ -239,25 +337,52 @@ if(!nutritionData){
               
               />
 }
-          {/* <Row className="d-flex justify-content-right mb-3"> */}
+           {/* <Row className="d-flex justify-content-right mb-3"> */}
           <Row className="d-flex flex-row-reverse mb-3">
             {/* {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''} */}
-          </Row>
-          <SplitPane split="vertical">
-            <div/>  
-            <Row>
-              {/* <ClipLoader size={150} /> */}
-                {loading && <SkeletonCard />}
-                {!loading &&
-                  nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
-                  : <Col className="text-center"></Col> 
-         
-              }
-           </Row>
-       
-            
+          </Row>          
+          <SplitPane split="vertical" defaultSize={610}>
+          <Pane>
+
+                    <div style={{ padding: `0 ${chevronWidth}px` }}>
+                  
+                    <ItemsCarousel
+                      requestToChangeActive={setActiveItemIndex}
+                      activeItemIndex={activeItemIndex}
+                      numberOfCards={1}
+                      gutter={20}
+                      leftChevron={<button className=' w3-button w3-black arrow left'></button>}
+                      rightChevron={<button className='w3-button w3-black arrow right'></button>}
+                      outsideChevron
+                      chevronWidth={chevronWidth}
+                    >
+   
+   {loading && <SkeletonCard />}
+      {!loading &&
+                      <div style={{ height: 600, width: 500, background: 'white' }}> 
+                      <Table >
+                        <tr >
+                        <td style={{ paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}}>{element1}</td>
+                      <td style={{ paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0}}>{element2}</td>
+                        </tr>
+                       </Table>
+                      </div>
+}   
+                      </ItemsCarousel>
+                  </div>
+              </Pane> 
+              <Pane>
+                  <Row >       
+                    {/* <ClipLoader size={150} /> */}
+                    {loading && <SkeletonMapCard />}
+                    {!loading &&
+                    nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
+                    : <Col className="text-center"></Col> 
+                  }
+                
+                  </Row> 
+              </Pane>
           </SplitPane>
-         
         </Container>
 
       </React.Fragment>

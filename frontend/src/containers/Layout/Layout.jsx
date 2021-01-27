@@ -116,16 +116,30 @@ const Layout = ({tabId}) => {
       })
       json()
     },[selIndicator,selSubgroup])
-
-    // get indicatorDetails-1-immediate cause,3-underlying cause,6-basic cause,8-manifest-tabid
+    let tab;
+    if(tabId === undefined || tabId === 'section1')
+    {
+      tab =8;
+    }
+    else if(tabId === 'section2'){
+      tab=1;
+    }
+    else if(tabId === 'section3'){
+      tab=3;
+    }
+    else if(tabId === 'section4'){ 
+      tab=6;
+    }
+    // get indicatorDetails-1-immediate cause,3-underlying cause,6-basic cause,8-manifest-tab
     useEffect(()=>{
-      const url = `http://127.0.0.1:8000/api/getIndicatorDetails/8`;
+      const url = `http://127.0.0.1:8000/api/getIndicatorDetails/${tab}`;
       json(url).then(indicatorDetail =>{
         setIndicatorDetail(indicatorDetail)
-        })
-    },[])
-    console.log("iiiiiiiddddddddddd",tabId,"iiiiiiiiidddddddddd");   
-
+           
+      })
+    },[tab])
+    // console.log(indicatorDetail,"ind detail");
+    console.log("iiiiiiiddddddddddd",tab,"iiiiiiiiidddddddddd");
     //get Units Name
 
     useEffect(()=>{
@@ -235,8 +249,6 @@ if(level === 1 || stateBoundary.features === undefined){
 //         });
 //       }
 let card1;
-// let arr=["stunting","underweight","wasting","severe wasting","severe stunting","severe underweight"];
-
 // if(indicatorDetail.length != null)
 // {  
   card1=Math.floor((indicatorDetail.length)/2);
@@ -268,7 +280,7 @@ let colorvar1=true;
                         );
                       colorvar1=true;
                       }
-                        
+
               }
               var element2=[];
               let colorvar2=true;
@@ -300,8 +312,7 @@ let colorvar1=true;
     }
 
 console.log("i=",i);
-console.log("timeperiod",indicatorDetail[0].timeperiod.timeperiod)
-
+console.log(indicatorDetail[0].indicator.indicator_name,"ind name");
 
 if(!nutritionData){
   return <pre>Loading...</pre>

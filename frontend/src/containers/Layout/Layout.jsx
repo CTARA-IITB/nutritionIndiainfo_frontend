@@ -12,7 +12,7 @@ import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
 import { color, json } from 'd3';
 
-import Card from '../../containers/Layout/card';
+import Card from '../../containers/Layout/Card';
 import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
 import ItemsCarousel from 'react-items-carousel';
@@ -95,7 +95,6 @@ const Layout = ({tabId}) => {
            url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
         else
           url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
-          console.log('url.......',url);
         }
       json(url).then( data =>{
         setSelStateData(data);
@@ -138,8 +137,6 @@ const Layout = ({tabId}) => {
            
       })
     },[tab])
-    // console.log(indicatorDetail,"ind detail");
-    console.log("iiiiiiiddddddddddd",tab,"iiiiiiiiidddddddddd");
     //get Units Name
 
     useEffect(()=>{
@@ -191,7 +188,7 @@ if(level === 3){
   // if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList || !unitList){
   // 	return <pre>Loading...</pre>
   // }
-  if(!boundaries  || !stateBoundary  || !unitList){
+  if(!boundaries  || !stateBoundary  || !unitList || !indicatorDetail){
   	return <pre>Loading...</pre>
   }
  
@@ -209,7 +206,6 @@ if(level === 1 || stateBoundary.features === undefined){
   else{
     renderMap = renderedMap(Dboundaries);
     nutritionData = selStateData;
-    console.log(selStateData,"selstateData")
     // console.log("dboundaries",Dboundaries)
  
   }
@@ -229,25 +225,6 @@ if(level === 1 || stateBoundary.features === undefined){
   // console.log(stateBoundary);
 }
 
-// if(indicatorDetail){
-//   indicatorDetail.map(indi => {
-//     indicatorcount++;
-//   });
-// }
-//   if(indicatorDetail){
-//         indicatorDetail.map(indi => {
-//           elements.push(
-//             <div className="left-card pink-card"> <Card
-//                       title={indi.indicator.indicator_name}
-//                       value={indi.data_value}
-//                       value_type={indi.unit.unit_name}
-//                       deff='underweight'
-//                       /></div>
-          
-//                       );
-//           
-//         });
-//       }
 let card1;
 // if(indicatorDetail.length != null)
 // {  
@@ -255,64 +232,62 @@ let card1;
 // } 
 let colorvar1=true;
   if(indicatorDetail){
-              var element1=[];
-              for(var i=0;i<card1;i++){
-                      if(colorvar1==true){
-                      element1.push(      <div className="left-card green-card"> <Card
-                      title={indicatorDetail[i].indicator.indicator_name}
-                      value={indicatorDetail[i].data_value}
-                      value_type={indicatorDetail[i].unit.unit_name}
-                      deff='underweight'
-                      source={indicatorDetail[i].timeperiod.timeperiod}
-                      
-                      /></div>
-                      );
-                    colorvar1=false;
-                    }
-                      else{
-                        element1.push(      <div className="left-card pink-card"> <Card
-                        title={indicatorDetail[i].indicator.indicator_name}
-                        value={indicatorDetail[i].data_value}
-                        value_type={indicatorDetail[i].unit.unit_name}
-                        deff='underweight'
-                        source={indicatorDetail[i].timeperiod.timeperiod}
-                        /></div>
-                        );
-                      colorvar1=true;
-                      }
+var element1=[];
+for(var i=0;i<card1;i++){
+        if(colorvar1==true){
+        element1.push(      <div className="left-card green-card"> <Card
+        title={indicatorDetail[i].indicator.indicator_name}
+        value={indicatorDetail[i].data_value}
+        value_type={indicatorDetail[i].unit.unit_name}
+        deff='underweight'
+        source={indicatorDetail[i].timeperiod.timeperiod}
+        
+        /></div>
+        );
+      colorvar1=false;
+      }
+        else{
+          element1.push(      <div className="left-card pink-card"> <Card
+          title={indicatorDetail[i].indicator.indicator_name}
+          value={indicatorDetail[i].data_value}
+          value_type={indicatorDetail[i].unit.unit_name}
+          deff='underweight'
+          source={indicatorDetail[i].timeperiod.timeperiod}
+          /></div>
+          );
+        colorvar1=true;
+        }
 
-              }
-              var element2=[];
-              let colorvar2=true;
-              for(var i=card1;i<(indicatorDetail.length);i++){
-                    if(colorvar2==true){
-                      element2.push(      <div className="right-card pink-card"> <Card
-                      title={indicatorDetail[i].indicator.indicator_name}
-                      value={indicatorDetail[i].data_value}
-                      value_type={indicatorDetail[i].unit.unit_name}
-                      deff='underweight'
-                      source={indicatorDetail[i].timeperiod.timeperiod}
-                      
-                      /></div>
-                      );
-                    colorvar2=false;
-                      }
-                      else{
-                        element2.push(      <div className="right-card green-card"> <Card
-                        title={indicatorDetail[i].indicator.indicator_name}
-                        value={indicatorDetail[i].data_value}
-                        value_type={indicatorDetail[i].unit.unit_name}
-                        deff='underweight'
-                        source={indicatorDetail[i].timeperiod.timeperiod}
-                        /></div>
-                        );
-                      colorvar2=true;
-                      }
-                    }
+}
+var element2=[];
+let colorvar2=true;
+for(var i=card1;i<(indicatorDetail.length);i++){
+      if(colorvar2==true){
+        element2.push(      <div className="right-card pink-card"> <Card
+        title={indicatorDetail[i].indicator.indicator_name}
+        value={indicatorDetail[i].data_value}
+        value_type={indicatorDetail[i].unit.unit_name}
+        deff='underweight'
+        source={indicatorDetail[i].timeperiod.timeperiod}
+        
+        /></div>
+        );
+      colorvar2=false;
+        }
+        else{
+          element2.push(      <div className="right-card green-card"> <Card
+          title={indicatorDetail[i].indicator.indicator_name}
+          value={indicatorDetail[i].data_value}
+          value_type={indicatorDetail[i].unit.unit_name}
+          deff='underweight'
+          source={indicatorDetail[i].timeperiod.timeperiod}
+          /></div>
+          );
+        colorvar2=true;
+        }
+      }
     }
 
-console.log("i=",i);
-console.log(indicatorDetail[0].indicator.indicator_name,"ind name");
 
 if(!nutritionData){
   return <pre>Loading...</pre>

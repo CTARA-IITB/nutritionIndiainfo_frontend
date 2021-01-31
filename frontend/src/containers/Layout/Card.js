@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './card.css'
-function card({title,value,value_type,deff,source}) {
+function Card({title,value,value_type,deff,source}) {
     return (
         <div className='card-container'>
             <div className="card-content">
@@ -22,4 +22,4 @@ function card({title,value,value_type,deff,source}) {
     )
 }
 
-export default card
+export default Card

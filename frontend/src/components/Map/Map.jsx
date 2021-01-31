@@ -22,7 +22,6 @@ const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 // const [colorScale,setColorScale] = useState();
 
-console.log(searchRef)
 function removeShake() {
   var element = document.getElementById("info-msg");
   element.classList.remove("shake");

@@ -22,7 +22,6 @@ const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 // const [colorScale,setColorScale] = useState();
 
-console.log(searchRef)
 function removeShake() {
   var element = document.getElementById("info-msg");
   element.classList.remove("shake");
@@ -214,7 +213,7 @@ useEffect(() => {
   let myLegend = legendColor()
      .labelFormat(formatter)
     .title(`Legend (in ${unitName})`)
-    .titleWidth(200)
+    .titleWidth(180)
     .scale(colorScale);
 
     legend.select(".legendQuant")

@@ -4,14 +4,17 @@ import {Dropdown} from "../../components/Dropdown/Dropdown";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {Container, Row, Col } from 'react-bootstrap';
+// import ClipLoader from "react-spinners/ClipLoader";
+import {SkeletonCard,SkeletonDropdown,SkeletonMapCard} from "../../containers/SkeletonCard";
 
 
 // import Form from "../../components/Form/Form";
 import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
-import { json } from 'd3';
+import {  json } from 'd3';
 
-
+import Cards from '../../components/Cards/Cards.jsx';
+import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
 
 const renderedMap = (boundaries) => (boundaries.state);
@@ -38,6 +41,7 @@ const Layout = ({tabId}) => {
 
   const [areaName,setAreaName] = useState('IND');
 
+  const [indicatorDetail,setIndicatorDetail] = useState(null);
   const [unit,setUnit] = useState(null);
   const [unitList,setUnitList] = useState(null);
 
@@ -90,7 +94,7 @@ const Layout = ({tabId}) => {
            url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
         else
           url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
-      }
+        }
       json(url).then( data =>{
         setSelStateData(data);
       }
@@ -110,8 +114,28 @@ const Layout = ({tabId}) => {
       })
       json()
     },[selIndicator,selSubgroup])
-
-
+    let tab;
+    if(tabId === undefined || tabId === 'section1')
+    {
+      tab =8;
+    }
+    else if(tabId === 'section2'){
+      tab=1;
+    }
+    else if(tabId === 'section3'){
+      tab=3;
+    }
+    else if(tabId === 'section4'){ 
+      tab=6;
+    }
+    // get indicatorDetails-1-immediate cause,3-underlying cause,6-basic cause,8-manifest-tab
+    useEffect(()=>{
+      const url = `http://127.0.0.1:8000/api/getIndicatorDetails/${tab}`;
+      json(url).then(indicatorDetail =>{
+        setIndicatorDetail(indicatorDetail)
+           
+      })
+    },[tab])
     //get Units Name
 
     useEffect(()=>{
@@ -132,10 +156,22 @@ const handleClick=()=>{
     text='District';
   changeText(text);
   }
+
+
+  const chevronWidth = 40;
+
   const [buttonText, setButtonText] = useState("District");
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
-
+  // const [loading, setLoading] = useState(false);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 5000);
+  //   // Cancel the timer while unmounting
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   //set area name to parent when level is 3
 if(level === 3){
@@ -152,7 +188,7 @@ if(level === 3){
   // 	return <pre>Loading...</pre>
   // }
   if(!boundaries  || !stateBoundary  || !unitList){
-  	return <pre>Loading...</pre>
+  	return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
   }
  
   let renderMap=null;
@@ -163,11 +199,14 @@ if(level === 1 || stateBoundary.features === undefined){
   if(toggleState===true){
   renderMap = renderedMap(boundaries);
   nutritionData = selIndiaData;
-  }
+//  console.log("nutritionData",nutritionData)
+  
+}
   else{
     renderMap = renderedMap(Dboundaries);
     nutritionData = selStateData;
-    console.log(selStateData,"selstateData")
+    // console.log("dboundaries",Dboundaries)
+ 
   }
 }else{
 
@@ -175,23 +214,26 @@ if(level === 1 || stateBoundary.features === undefined){
   {
   renderMap = stateBoundary;
   nutritionData = selStateData;
-  }else{
+  // console.log("stateboundaries",renderMap)
+   
+}else{
     renderMap = renderedMap(boundaries);
     nutritionData = selIndiaData;
+    // console.log("nutritionData",nutritionData)
   }
   // console.log(stateBoundary);
 }
 
 
-// let unitName = unitList.filter(unitObj => unitObj.unit_id === unit)
-// to check if nutritionData is not null
 if(!nutritionData){
-  return <pre>Loading...</pre>
+  return 
 }
     return (
       <React.Fragment>
-        <Container fluid>
-            <Dropdown 
+
+        <Container fluid >
+
+             <Dropdown 
               tabId={tabId}
               selArea={selArea}
               selIndicator={selIndicator}
@@ -215,25 +257,46 @@ if(!nutritionData){
               isLevelThree={isLevelThree}
               
               />
-      
-          {/* <Row className="d-flex justify-content-right mb-3"> */}
+
+           {/* <Row className="d-flex justify-content-right mb-3"> */}
           <Row className="d-flex flex-row-reverse mb-3">
             {/* {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''} */}
-          </Row>
+          </Row>          
+          <SplitPane split="vertical" defaultSize={610}>
+          <Pane>
 
-          <Row>
-           
-            {
-             nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
-            : <Col className="text-center"></Col> 
-            
-            }
-           
-          </Row>
+                    <div style={{ padding: `0 ${chevronWidth}px` }}>
+                     <Cards
+                     indicatorDetail={indicatorDetail}
+                     chevronWidth={chevronWidth}
+                     />
+                     </div>
+              </Pane> 
+              <Pane>
+                  <Row >       
+                    {/* <ClipLoader size={150} /> */}
+                    { nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}/>
+                    : <Col className="text-center"></Col> }
+                  </Row> 
+       
+              </Pane>
+
+          </SplitPane>
 
         </Container>
+        <Container fluid> 
+        {/* <BarChart width={300} height={140} data={data}>
+                      <Bar dataKey="uv" fill="#8884d8" />
+                    </BarChart>
+             */}
 
-      </React.Fragment>
+          <div style={{height: '100vh'}}>     </div>      
+          <div>        
+        
+        
+          </div>
+        </Container>
+         </React.Fragment>
     );
 }
 

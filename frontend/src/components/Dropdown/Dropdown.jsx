@@ -3,7 +3,7 @@ import React,{useState,useEffect,useRef} from "react";
 import {Row, Col } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
-
+import {SkeletonDropdown} from "../../containers/SkeletonCard";
 // import { fetchAreaCode,createHierarchy } from '../../utils';
 import { createHierarchy } from '../../utils';
 
@@ -146,7 +146,9 @@ export const Dropdown = ({
         }, [timeperiodDropdownOpt])
 
   if(!areaDropdownOpt){
-    return <pre>Loading</pre>
+
+    return <SkeletonDropdown />
+    
   }
 
 

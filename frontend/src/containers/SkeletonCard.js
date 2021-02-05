@@ -1,6 +1,6 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
-import {Table, Row, Col } from 'react-bootstrap';
+import {Row } from 'react-bootstrap';
 const SkeletonDropdown = () => {
 
     return (

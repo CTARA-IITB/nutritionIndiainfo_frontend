@@ -1,6 +1,5 @@
 import React from "react";
 import { Table } from 'react-bootstrap';
-import { json } from 'd3';
 import Card from '../../components/Cards/Card/Card';
 import ItemsCarousel from 'react-items-carousel';
 import {useState} from "react";
@@ -21,7 +20,7 @@ let colorvar1=true;
   if(indicatorDetail){
               var element1=[];
               for(var i=0;i<card1;i++){
-                      if(colorvar1==true){
+                      if(colorvar1===true){
                       element1.push(      <div className="left-card green-card"> <Card
                       title={indicatorDetail[i].indicator.indicator_name}
                       value={indicatorDetail[i].data_value}
@@ -48,8 +47,8 @@ let colorvar1=true;
               }
               var element2=[];
               let colorvar2=true;
-              for(var i=card1;i<(indicatorDetail.length);i++){
-                    if(colorvar2==true){
+              for( i=card1;i<(indicatorDetail.length);i++){
+                    if(colorvar2===true){
                       element2.push(      <div className="right-card pink-card"> <Card
                       title={indicatorDetail[i].indicator.indicator_name}
                       value={indicatorDetail[i].data_value}

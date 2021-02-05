@@ -3,23 +3,19 @@ import {Dropdown} from "../../components/Dropdown/Dropdown";
 // import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {Container, Row, Col, Table } from 'react-bootstrap';
+import {Container, Row, Col } from 'react-bootstrap';
 // import ClipLoader from "react-spinners/ClipLoader";
 import {SkeletonCard,SkeletonDropdown,SkeletonMapCard} from "../../containers/SkeletonCard";
-import { useMediaQuery } from 'react-responsive'
 
 
 // import Form from "../../components/Form/Form";
 import { Map } from "../../components/Map/Map";
 import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
-import { color, json } from 'd3';
+import {  json } from 'd3';
 
-import Card from '../../components/Cards/Card/Card.js';
 import Cards from '../../components/Cards/Cards.jsx';
 import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
-import ItemsCarousel from 'react-items-carousel';
-import {  Tooltip,LineChart, Line, BarChart, CartesianGrid, XAxis, YAxis, Bar} from 'recharts'
 
 const renderedMap = (boundaries) => (boundaries.state);
 
@@ -167,15 +163,15 @@ const handleClick=()=>{
   const [buttonText, setButtonText] = useState("District");
   const changeText = (text) => setButtonText(text);
   const [toggleState,setToggleState] = useState(true)
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 5000);
-    // Cancel the timer while unmounting
-    return () => clearTimeout(timer);
-  }, []);
+  // const [loading, setLoading] = useState(false);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 5000);
+  //   // Cancel the timer while unmounting
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   //set area name to parent when level is 3
 if(level === 3){
@@ -228,20 +224,6 @@ if(level === 1 || stateBoundary.features === undefined){
   // console.log(stateBoundary);
 }
 
-const Bdata = [
-  { 
-    time: selSubgroup,
-    users: 1,
-  },
-  {
-    time: "wt",
-    users: 3,
-  },{
-    time: "śr",
-    users: 7,
-  }
-]
-const Ldata = [{name: selTimeperiod, uv: 400, pv: 2400, amt: 2400},{name: 'Page B', uv: 600, pv: 200, amt: 2400},{name: 'Page C', uv: 40, pv: 240, amt: 2400}];
 
 if(!nutritionData){
   return 
@@ -310,23 +292,7 @@ if(!nutritionData){
 
           <div style={{height: '100vh'}}>     </div>      
           <div>        
-          <LineChart width={600} height={300} data={Ldata} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-          </LineChart>
-          <BarChart width={730} height={250} data={Bdata}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              {/* <YAxis type="number" domain={[0, 'dataMax + 10']} /> */}
-
-              <YAxis type="number" domain={[0, 60]}/>
-              {/* <YAxis/> */}
-              {/* interval={2} dataMin={0} dataMax={60} */}
-              <Bar label={true} dataKey="users" fill="#8884d8" />
-            </BarChart>
+        
         
           </div>
         </Container>

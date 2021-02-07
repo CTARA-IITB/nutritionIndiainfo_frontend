@@ -15,31 +15,31 @@ import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree,handleClick,searchRef,setFilterDropdownValue,areaDropdownOpt}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree,handleClick,searchRef,setFilterDropdownValue,areaDropdownOpt, selIndicator}) =>{
 const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 // const [colorScale,setColorScale] = useState();
-
+console.log("selIndicator", selIndicator);
 function removeShake() {
   var element = document.getElementById("info-msg");
   element.classList.remove("shake");
 }
 
-let statusMsg;
-if(level === data[0].area.area_level)
-{
-  document.getElementById("info-msg").className += " shake";
-  setTimeout(removeShake,3000);
-  statusMsg ="No data: please select another survey";
-}
-else if(level === 1){
-  statusMsg ="Click on Map to Drill down to District level";
-}
-else{
-  statusMsg ="Click on Map to go back to India Map";
-}
+// let statusMsg;
+// if(level === data[0].area.area_level)
+// {
+//   document.getElementById("info-msg").className += " shake";
+//   setTimeout(removeShake,3000);
+//   statusMsg ="No data: please select another survey";
+// }
+// else if(level === 1){
+//   statusMsg ="Click on Map to Drill down to District level";
+// }
+// else{
+//   statusMsg ="Click on Map to go back to India Map";
+// }
 
 let color_range = _.map(data, d =>{
   return +d.data_value
@@ -89,6 +89,36 @@ function addProperties(geojson,data){
     return mergedGeoJson;
 }
 
+let low = 10.0;
+let medium= 20.0;
+let high= 30.0;
+if(selIndicator == 12)
+{
+  low = 20.0;
+  medium = 30.0;
+  high = 40.0;
+} else if(selIndicator == 19)
+{
+   low = 5.0;
+   medium = 10.0;
+   high = 15.0;
+}
+
+
+
+let colorScale2 = (v) =>{
+  if (typeof v != "undefined") {
+      let selectedColor;
+        if (v < low) {selectedColor =  "#24562B";}//matte green
+        else if (v >= low && v < medium) {selectedColor =  "#FFE338";}//matte yellow
+        else if (v >= medium && v < high) {selectedColor =  "#E26313";} //matte orange
+        else if (v >= high) {selectedColor =  "#B2022F";} //matte red
+      return selectedColor;
+  }
+  else {
+    return "#A9A9B0";
+  }
+};
 
 
 let tooltip = select("body").append("div") 
@@ -119,21 +149,6 @@ useEffect(() => {
     colorScale = colorScale1;
   }
 
-  
-  
-  // let colorScale2 = (v) =>{
-  //   if (typeof v != "undefined") {
-  //       let selectedColor;
-  //         if (v < low) {selectedColor =  "#24562B";}//matte green
-  //         else if (v >= low && v <= high) {selectedColor =  "#FFE338";}//matte yellow
-  //         else if (v > high) {selectedColor =  "#B2022F";} //matte red
-  //       return selectedColor;
-  //   }
-  //   else {
-  //     return "#A9A9B0";
-  //   }
-  // };
-
 
   const onMouseMove = (event,d) =>{	
     if(typeof d.dataValue != 'undefined'){
@@ -153,11 +168,15 @@ useEffect(() => {
     .data(mergedGeometry)
     .join("path").attr("class", "polygon")
     .style("fill", d =>{
-      if (typeof c2Value(d) != "undefined")
-        return colorScale(c2Value(d))
-      else
-        return "#A9A9B0";
-    }).style("opacity",d =>{
+          return colorScale2(c2Value(d))
+      })
+    // .style("fill", d =>{
+    //   if (typeof c2Value(d) != "undefined")
+    //     return colorScale(c2Value(d))
+    //   else
+    //     return "#A9A9B0";
+    // })
+    .style("opacity",d =>{
       if(d.area_id !== parseInt(selArea) && isLevelThree){
         return ".2"
       }
@@ -239,10 +258,10 @@ return (
   </Row>
   <Row>
 
-<AnimateOnChange  durationOut="500">
+{/* <AnimateOnChange  durationOut="500">
 <span className='d-flex'><InfoCircleFill color="lightgreen" size={18}  /><div id="info-msg" >{statusMsg}</div></span>  
 {/* <div><h1>{level}</h1></div> */}
-</AnimateOnChange>
+{/* </AnimateOnChange> */} */}
 
   </Row>
   

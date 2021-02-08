@@ -68,3 +68,10 @@
     background-color: pink;
   } */
 }
+table,
+tr,
+th,
+td {
+  border: none;
+  border-top: 2px solid white;
+}

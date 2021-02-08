@@ -257,9 +257,49 @@ let color_range_bubble_ = _.map(centroids_obj, d =>{
 });
 let [min_b,max_b] = extent(color_range_bubble_);
 
-var color = scaleOrdinal()
+//wasting
+var color0 = scaleOrdinal()
 .domain([min_b,max_b])
 .range([ "#faafb3","#f76870","#f53d47","#9c1017"])
+
+//stunting
+var color1 = scaleOrdinal()
+.domain([min_b,max_b])
+.range([ "#d4f5a6","#b7fa5a","#6cad11","#3a5219"])
+
+
+//underweight
+var color2 = scaleOrdinal()
+.domain([min_b,max_b])
+.range([ "#c6e2f7","#5cb6fa","#1c69a3","#0b436e"])
+
+//overwieght
+var color3 = scaleOrdinal()
+.domain([min_b,max_b])
+.range([ "#dbb3f2","#c17aeb","#8b34bf","#321345"])
+
+//everythin else
+let color4= scaleOrdinal()
+    .domain([min,max])
+    .range([ "#24562B","#FFE338","#B2022F","#7d0a1f"])
+
+let color_b;
+if(selIndicator==156){
+  color_b=color1;
+}else if(selIndicator==160){
+  color_b=color0;
+}else if(selIndicator==158){
+  color_b=color2;
+}else if(selIndicator==167){
+  color_b=color3;
+}else{
+  color_b=color4;
+}
+
+
+// var color = scaleOrdinal()
+// .domain([min_b,max_b])
+// .range([ "#faafb3","#f76870","#f53d47","#9c1017"])
 
 console.log(centroids_obj)
   svg  
@@ -267,7 +307,7 @@ console.log(centroids_obj)
     .data(centroids_obj)
     .enter().append("circle")
       .attr("class", "geoCentroid")
-      .style("fill", function(d){ return color(d.data_value) })
+      .style("fill", function(d){ return color_b(d.data_value) })
       .style("opacity",0.5)
       .attr("r",function (d) { return (Math.cbrt(d.data_value/100)); })
 		  .attr("cx", d =>projection([d.latitude,d.longitude])[0])

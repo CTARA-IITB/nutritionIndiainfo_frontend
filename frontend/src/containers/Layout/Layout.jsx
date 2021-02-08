@@ -52,7 +52,7 @@ const Layout = ({tabId}) => {
   const iniSelSubgroup = '6';  //All
   const [selSubgroup,setSelSubgroup] = useState(iniSelSubgroup);
 
-  const iniSelTimeperiod = '21';  //CNNS 2016-2018
+  const iniSelTimeperiod = '22';  //NHHS5
   const [selTimeperiod,setSelTimeperiod] = useState(iniSelTimeperiod);
  
     //district data

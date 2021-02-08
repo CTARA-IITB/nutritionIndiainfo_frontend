@@ -10,14 +10,14 @@ import {SkeletonCard,SkeletonDropdown,SkeletonMapCard} from "../../containers/Sk
 
 // import Form from "../../components/Form/Form";
 import { Map } from "../../components/Map/Map";
-import { useData , useDataDistrict ,useDataState} from '../../containers/UseData'
+import { useData , useDataDistrict ,useDataState, useNewBoundaries} from '../../containers/UseData'
 import {  json } from 'd3';
 
 import Cards from '../../components/Cards/Cards.jsx';
 import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
 
-const renderedMap = (boundaries) => (boundaries.state);
+// const renderedMap = (boundaries) => (boundaries.state);
 
 const Layout = ({tabId}) => {
 
@@ -145,6 +145,7 @@ const Layout = ({tabId}) => {
       })
     },[])
   const boundaries = useData();
+  const newBoundaries = useNewBoundaries();
   const Dboundaries= useDataDistrict();
   const stateBoundary=useDataState(areaName,Dboundaries);
 const handleClick=()=>{
@@ -187,25 +188,28 @@ if(level === 3){
   // if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList || !unitList){
   // 	return <pre>Loading...</pre>
   // }
-  if(!boundaries  || !stateBoundary  || !unitList){
+  if(!boundaries  || !stateBoundary  || !unitList || !newBoundaries){
   	return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
   }
  
   let renderMap=null;
   let nutritionData = null;
-  
+  console.log(newBoundaries,selTimeperiod)
 
 if(level === 1 || stateBoundary.features === undefined){
   if(toggleState===true){
-  renderMap = renderedMap(boundaries);
-  nutritionData = selIndiaData;
-//  console.log("nutritionData",nutritionData)
-  
+  if(selTimeperiod === '22')    // change state boundaries when timeperiod is NFHS5
+    renderMap = newBoundaries.new_state;
+  else
+    renderMap = boundaries.state;
+    nutritionData = selIndiaData;
 }
   else{
-    renderMap = renderedMap(Dboundaries);
+    // if(selTimeperiod === '22')
+      // renderMap = newBoundaries.new_dist;
+    // else
+      renderMap = Dboundaries.state;
     nutritionData = selStateData;
-    // console.log("dboundaries",Dboundaries)
  
   }
 }else{
@@ -217,9 +221,9 @@ if(level === 1 || stateBoundary.features === undefined){
   // console.log("stateboundaries",renderMap)
    
 }else{
-    renderMap = renderedMap(boundaries);
+    renderMap = boundaries.state;
+
     nutritionData = selIndiaData;
-    // console.log("nutritionData",nutritionData)
   }
   // console.log(stateBoundary);
 }

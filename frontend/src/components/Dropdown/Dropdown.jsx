@@ -190,7 +190,7 @@ const onChange = (e) =>{
 }
 
     return (
-        <Row className='mb-5 mt-3 '>
+        <Row className=' mt-3 '>
     
         <Col>
             <span className="dropdown-title">Select Area</span>

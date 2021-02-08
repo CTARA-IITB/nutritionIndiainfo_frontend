@@ -5,7 +5,7 @@ import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Row, Col } from 'react-bootstrap';
 // import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
-import { geoMercator, format, geoPath, scaleQuantize,extent,select, schemeReds } from 'd3';
+import { geoMercator, format, geoPath, scaleQuantize,extent,select, schemeReds,geoCentroid,scaleOrdinal } from 'd3';
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
@@ -168,6 +168,9 @@ useEffect(() => {
     .data(mergedGeometry)
     .join("path").attr("class", "polygon")
     .style("fill", d =>{
+          if(unit === 2)
+            return "#fff";
+          else
           return colorScale2(c2Value(d))
       })
     // .style("fill", d =>{
@@ -208,6 +211,92 @@ useEffect(() => {
   })
   // .transition().duration(1000)
   .attr("d" ,feature => pathGenerator(feature));
+
+console.log('>>>',svg.selectAll(".geoCentroid"))
+svg  
+    .selectAll(".geoCentroid").remove();
+
+  // bubbles for numeric unit values
+if(unit === 2){
+  svg  
+    .selectAll(".geoCentroid").remove();
+  var centroids_obj = [];
+  var features = geometry.features;
+
+  var centroids = features.map(function (feature){
+    return [geoCentroid(feature),feature.properties.ID_];
+  });
+  //centroid_obj is like merged geometry for polygon
+  
+var len = centroids.length;
+for (var i = 0; i < len; i++) {
+  centroids_obj.push({
+        latitude: centroids[i][0][0],
+        longitude: centroids[i][0][1],
+        area_id: centroids[i][1],
+        area_name: '',
+        data_value:''
+    });
+}
+
+
+var len1 = data.length;
+for(var i=0; i<len1;i++){
+    for(var j=0;j<len;j++){
+      if(data[i].area.area_code==centroids_obj[j].area_id){
+          centroids_obj[j].area_name=data[i].area.area_name;
+          centroids_obj[j].data_value=data[i].data_value;
+          
+      }
+}
+}
+let c3value = d=> d.data_value;
+
+let color_range_bubble_ = _.map(centroids_obj, d =>{
+  return +d.data_value
+});
+let [min_b,max_b] = extent(color_range_bubble_);
+
+var color = scaleOrdinal()
+.domain([min_b,max_b])
+.range([ "#faafb3","#f76870","#f53d47","#9c1017"])
+
+console.log(centroids_obj)
+  svg  
+    .selectAll(".geoCentroid")
+    .data(centroids_obj)
+    .enter().append("circle")
+      .attr("class", "geoCentroid")
+      .style("fill", function(d){ return color(d.data_value) })
+      .style("opacity",0.5)
+      .attr("r",function (d) { return (Math.cbrt(d.data_value/100)); })
+		  .attr("cx", d =>projection([d.latitude,d.longitude])[0])
+		  .attr("cy", d =>projection([d.latitude,d.longitude])[1])
+      .on("mousemove", (i,d) => onMouseMove(i,d))
+      .on("mouseout", function(d) {   
+        tooltip   
+        .style("opacity", 0); 
+      }).on('click',(i,d) =>{
+        setIsLevelThree(false);
+        tooltip.style('opacity',0);
+        if(level === 1){
+          
+          if(typeof c3value(d) != "undefined"){
+            setSelArea(''+d.area_code);
+            setLevel(2);
+            onMapClick(d.area_name);
+          }
+        }else if(level === 2){
+          setSelArea("1");  //india
+          setLevel(1);
+          searchRef.current.state.value="";  //reset search to
+          setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
+        }
+        // tooltip.style('opacity',1);
+    })
+}
+  
+    
   
 
     legend.append("g")

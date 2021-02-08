@@ -1,9 +1,10 @@
+
 import React,{useState,useEffect,useRef} from "react";
 import {Dropdown} from "../../components/Dropdown/Dropdown";
 // import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {Container, Row, Col } from 'react-bootstrap';
+import {Container, Row, Col,Table } from 'react-bootstrap';
 // import ClipLoader from "react-spinners/ClipLoader";
 import {SkeletonCard,SkeletonDropdown,SkeletonMapCard} from "../../containers/SkeletonCard";
 
@@ -262,27 +263,23 @@ if(!nutritionData){
               
               />
 
-          <Row className="d-flex flex-row-reverse mb-3">
-          </Row>          
-          <SplitPane split="vertical" defaultSize={610}>
-          <Pane>
-
-                    <div style={{ padding: `0 ${chevronWidth}px` }}>
-                     <Cards
-                     indicatorDetail={indicatorDetail}
-                     chevronWidth={chevronWidth}
-                     />
-                     </div>
-              </Pane> 
-              <Pane>
+          <Table border="none" >
+          <tr >
+              <td width="560px" align ="left"   >
+                        <Cards
+                        indicatorDetail={indicatorDetail}
+                        chevronWidth={chevronWidth}
+                        />
+              </td>
+              <td >
                   <Row >       
                     { nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}  selIndicator={selIndicator}/>
                     : <Col className="text-center"></Col> }
                   </Row> 
        
-              </Pane>
-
-          </SplitPane>
+              </td>
+              </tr>
+              </Table>
 
         </Container>
         <Container fluid> 

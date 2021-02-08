@@ -262,9 +262,7 @@ if(!nutritionData){
               
               />
 
-           {/* <Row className="d-flex justify-content-right mb-3"> */}
           <Row className="d-flex flex-row-reverse mb-3">
-            {/* {level===1 ? <Switch size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} /> : ''} */}
           </Row>          
           <SplitPane split="vertical" defaultSize={610}>
           <Pane>
@@ -278,7 +276,6 @@ if(!nutritionData){
               </Pane> 
               <Pane>
                   <Row >       
-                    {/* <ClipLoader size={150} /> */}
                     { nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}  selIndicator={selIndicator}/>
                     : <Col className="text-center"></Col> }
                   </Row> 
@@ -289,10 +286,7 @@ if(!nutritionData){
 
         </Container>
         <Container fluid> 
-        {/* <BarChart width={300} height={140} data={data}>
-                      <Bar dataKey="uv" fill="#8884d8" />
-                    </BarChart>
-             */}
+       
 
           <div style={{height: '100vh'}}>     </div>      
           <div>        

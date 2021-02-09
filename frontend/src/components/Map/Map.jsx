@@ -174,7 +174,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
       // .style("fill", d =>{
       //   if (typeof c2Value(d) != "undefined")
       //     return colorScale(c2Value(d))
-      //   else
+      //   elsevalue
       //     return "#A9A9B0";
       // })
       .style("opacity", d => {
@@ -370,29 +370,11 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
 
   return (
     <>
-      <Col xs={12} lg={8}>
-        <div ref={wrapperRef} style={{ marginBottom: "2rem" }}>
-          <svg className="svg-map" ref={svgRef} ></svg>
-        </div>
-      </Col>
-      <Col className="d-flex-column align-content-center align-content-center ">
-        <Row>
-          <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
-        </Row>
-        <Row>
-          <svg className="svg-legend" ref={svgLegRef}></svg>
-        </Row>
-        <Row>
-
-          {/* <AnimateOnChange  durationOut="500">
-<span className='d-flex'><InfoCircleFill color="lightgreen" size={18}  /><div id="info-msg" >{statusMsg}</div></span>  
-{/* <div><h1>{level}</h1></div> */}
-          {/* </AnimateOnChange> */}
-
-        </Row>
-
-
-      </Col>
+      <div ref={wrapperRef} style={{ marginBottom: "2rem" }}>
+        <svg className="svg-map" ref={svgRef} ></svg>
+      </div>
+      <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
+      <svg className="svg-legend" ref={svgLegRef}></svg>
     </>
   )
 };

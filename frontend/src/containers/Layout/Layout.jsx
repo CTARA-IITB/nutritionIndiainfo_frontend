@@ -207,8 +207,8 @@ const Layout = ({ tabId }) => {
       // if(selTimeperiod === '22')
       // renderMap = newBoundaries.new_dist;
       // else
-      renderMap = newBoundaries.new_dist;
-      // renderMap = Dboundaries.state;
+      // renderMap = newBoundaries.new_dist;
+      renderMap = Dboundaries.state;
       console.table(newBoundaries.new_dist.features[0].properties, 'newBoundaries')
       console.table(Dboundaries.state.features[0].properties, 'oldBoundaries')
       nutritionData = selStateData;
@@ -236,52 +236,45 @@ const Layout = ({ tabId }) => {
   return (
     <React.Fragment>
 
-      <Container fluid >
+      <div className="layout">
+        <div className="layout__header">
+          <Dropdown
+            tabId={tabId}
+            selArea={selArea}
+            selIndicator={selIndicator}
+            selSubgroup={selSubgroup}
+            selTimeperiod={selTimeperiod}
+            setSelArea={setSelArea}
+            setAreaName={setAreaName}
+            setSelIndicator={setSelIndicator}
+            setSelSubgroup={setSelSubgroup}
+            setSelTimeperiod={setSelTimeperiod}
+            setLevel={setLevel}
+            level={level}
+            setAreaList={setAreaList}
+            setIsLevelThree={setIsLevelThree}
+            searchRef={searchRef}
+            filterDropdownValue={filterDropdownValue}
+            setFilterDropdownValue={setFilterDropdownValue}
+            areaDropdownOpt={areaDropdownOpt}
+            setAreaDropdownOpt={setAreaDropdownOpt}
+            parentArea={parentArea}
+            isLevelThree={isLevelThree}
 
-        <Dropdown
-          tabId={tabId}
-          selArea={selArea}
-          selIndicator={selIndicator}
-          selSubgroup={selSubgroup}
-          selTimeperiod={selTimeperiod}
-          setSelArea={setSelArea}
-          setAreaName={setAreaName}
-          setSelIndicator={setSelIndicator}
-          setSelSubgroup={setSelSubgroup}
-          setSelTimeperiod={setSelTimeperiod}
-          setLevel={setLevel}
-          level={level}
-          setAreaList={setAreaList}
-          setIsLevelThree={setIsLevelThree}
-          searchRef={searchRef}
-          filterDropdownValue={filterDropdownValue}
-          setFilterDropdownValue={setFilterDropdownValue}
-          areaDropdownOpt={areaDropdownOpt}
-          setAreaDropdownOpt={setAreaDropdownOpt}
-          parentArea={parentArea}
-          isLevelThree={isLevelThree}
-
-        />
-
-        <Table border="none" >
-          <tr >
-            <td width="560px" align="left"   >
-              <Cards
-                indicatorDetail={indicatorDetail}
-                chevronWidth={chevronWidth}
-              />
-            </td>
-            <td >
-              <Row >
-                {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} />
-                  : <Col className="text-center"></Col>}
-              </Row>
-
-            </td>
-          </tr>
-        </Table>
-
-      </Container>
+          />
+        </div>
+        <div className="layout__left">
+          <Cards
+            indicatorDetail={indicatorDetail}
+            chevronWidth={chevronWidth}
+          />
+        </div>
+        <div className="layout__right">
+          {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} />
+            : <div className="text-center"></div>
+          }
+        </div>
+      </div>
     </React.Fragment>
   );
 }

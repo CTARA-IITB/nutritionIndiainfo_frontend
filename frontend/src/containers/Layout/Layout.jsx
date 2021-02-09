@@ -16,6 +16,7 @@ import { json } from 'd3';
 
 import Cards from '../../components/Cards/Cards.jsx';
 import "./Layout.css";
+import { render } from "react-dom";
 
 
 const Layout = ({ tabId }) => {
@@ -206,7 +207,10 @@ const Layout = ({ tabId }) => {
       // if(selTimeperiod === '22')
       // renderMap = newBoundaries.new_dist;
       // else
-      renderMap = Dboundaries.state;
+      renderMap = newBoundaries.new_dist;
+      // renderMap = Dboundaries.state;
+      console.table(newBoundaries.new_dist.features[0].properties, 'newBoundaries')
+      console.table(Dboundaries.state.features[0].properties, 'oldBoundaries')
       nutritionData = selStateData;
 
     }
@@ -277,14 +281,6 @@ const Layout = ({ tabId }) => {
           </tr>
         </Table>
 
-      </Container>
-      <Container fluid>
-
-
-        <div>
-
-
-        </div>
       </Container>
     </React.Fragment>
   );

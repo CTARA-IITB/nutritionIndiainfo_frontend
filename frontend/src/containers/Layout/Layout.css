@@ -57,21 +57,10 @@
   width: 100%;
   margin: 0 auto;
 
-  /* Small Devices, Tablets */
-  /* @media only screen and (max-width: 768px) {
-    width: 75%;
-    background-color: green;
-  } */
-  /* Medium Devices, Desktops */
-  /* @media only screen and (min-width: 800px) {
-    width: 50%;
-    background-color: pink;
-  } */
+
 }
-table,
-tr,
-th,
-td {
-  border: none;
-  border-top: 2px solid white;
+
+.viz{
+  display: flex;
 }
+

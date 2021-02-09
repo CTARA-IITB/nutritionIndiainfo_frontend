@@ -51,7 +51,7 @@ p {
   color: white;
 }
 .Resizer {
-  background: #000;
+  /* background: #000; */
   opacity: 0.2;
   z-index: 1;
   -moz-box-sizing: border-box;

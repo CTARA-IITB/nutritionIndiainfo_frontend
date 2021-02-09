@@ -370,7 +370,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
 
   return (
     <>
-      <div ref={wrapperRef} style={{ marginBottom: "2rem" }}>
+      <div ref={wrapperRef}>
         <svg className="svg-map" ref={svgRef} ></svg>
       </div>
       <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />

@@ -263,17 +263,19 @@ const Layout = ({ tabId }) => {
 
           />
         </div>
-        <div className="layout__left">
-          <Cards
-            indicatorDetail={indicatorDetail}
-            chevronWidth={chevronWidth}
-          />
+        <div className="viz">
+          <div className="layout__left">
+            <Cards
+              indicatorDetail={indicatorDetail}
+            />
+          </div>
+          <div className="layout__right">
+            {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} />
+              : <div className="text-center"></div>
+            }
+          </div>
         </div>
-        <div className="layout__right">
-          {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} />
-            : <div className="text-center"></div>
-          }
-        </div>
+
       </div>
     </React.Fragment>
   );

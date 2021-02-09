@@ -15,9 +15,10 @@ import { useData, useDataDistrict, useDataState, useNewBoundaries } from '../../
 import { json } from 'd3';
 
 import Cards from '../../components/Cards/Cards.jsx';
+import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
-import { render } from "react-dom";
 
+// const renderedMap = (boundaries) => (boundaries.state);
 
 const Layout = ({ tabId }) => {
 
@@ -44,6 +45,7 @@ const Layout = ({ tabId }) => {
   const [indicatorDetail, setIndicatorDetail] = useState(null);
   const [unit, setUnit] = useState(null);
   const [unitList, setUnitList] = useState(null);
+  const [indicatorSense, setIndicatorSense] = useState(null);
 
   const iniSelIndicator = '12';
   const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
@@ -143,6 +145,17 @@ const Layout = ({ tabId }) => {
       setUnitList(unitList)
     })
   }, [])
+
+
+  //getting indicator sense
+  useEffect(() => {
+    const url = `http://localhost:8000/api/getIndicatorType/${selIndicator}`;
+    json(url).then(indicatorSense => {
+      setIndicatorSense(indicatorSense)
+    })
+  }, [selIndicator])
+
+
   const boundaries = useData();
   const newBoundaries = useNewBoundaries();
   const Dboundaries = useDataDistrict();
@@ -207,10 +220,7 @@ const Layout = ({ tabId }) => {
       // if(selTimeperiod === '22')
       // renderMap = newBoundaries.new_dist;
       // else
-      renderMap = newBoundaries.new_dist;
-      // renderMap = Dboundaries.state;
-      console.table(newBoundaries.new_dist.features[0].properties, 'newBoundaries')
-      console.table(Dboundaries.state.features[0].properties, 'oldBoundaries')
+      renderMap = Dboundaries.state;
       nutritionData = selStateData;
 
     }
@@ -242,6 +252,7 @@ const Layout = ({ tabId }) => {
           tabId={tabId}
           selArea={selArea}
           selIndicator={selIndicator}
+          indicatorSense={indicatorSense}
           selSubgroup={selSubgroup}
           selTimeperiod={selTimeperiod}
           setSelArea={setSelArea}
@@ -273,7 +284,7 @@ const Layout = ({ tabId }) => {
             </td>
             <td >
               <Row >
-                {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} />
+                {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} indicatorSense={indicatorSense} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} />
                   : <Col className="text-center"></Col>}
               </Row>
 
@@ -281,6 +292,15 @@ const Layout = ({ tabId }) => {
           </tr>
         </Table>
 
+      </Container>
+      <Container fluid>
+
+
+        <div style={{ height: '100vh' }}>     </div>
+        <div>
+
+
+        </div>
       </Container>
     </React.Fragment>
   );

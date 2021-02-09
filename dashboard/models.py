@@ -135,6 +135,7 @@ class Indicator(models.Model):
     indicator_name = models.CharField(max_length=255, blank=True, null=True)
     classification = models.ForeignKey('IndicatorClassification', models.DO_NOTHING, blank=True, null=True)
     indicator_order = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    indi_sense = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False

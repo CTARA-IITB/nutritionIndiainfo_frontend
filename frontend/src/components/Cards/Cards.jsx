@@ -47,33 +47,6 @@ const Cards = ({ indicatorDetail }) => {
       }
 
     }
-    // var element2 = [];
-    // let colorvar2 = true;
-    // for (i = card1; i < (indicatorDetail.length); i++) {
-    //   if (colorvar2 === true) {
-    //     element2.push(<div className="right-card pink-card"> <Card
-    //       title={indicatorDetail[i].indicator.indicator_name}
-    //       value={indicatorDetail[i].data_value}
-    //       value_type={indicatorDetail[i].unit.unit_name}
-    //       deff='underweight'
-    //       source={indicatorDetail[i].timeperiod.timeperiod}
-
-    //     /></div>
-    //     );
-    //     colorvar2 = false;
-    //   }
-    //   else {
-    //     element2.push(<div className="right-card green-card"> <Card
-    //       title={indicatorDetail[i].indicator.indicator_name}
-    //       value={indicatorDetail[i].data_value}
-    //       value_type={indicatorDetail[i].unit.unit_name}
-    //       deff='underweight'
-    //       source={indicatorDetail[i].timeperiod.timeperiod}
-    //     /></div>
-    //     );
-    //     colorvar2 = true;
-    //   }
-    // }
   }
   return (
     <React.Fragment>

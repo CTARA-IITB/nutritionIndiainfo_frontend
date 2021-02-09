@@ -370,11 +370,21 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
 
   return (
     <>
-      <div ref={wrapperRef}>
-        <svg className="svg-map" ref={svgRef} ></svg>
+      <div className="map">
+        <div ref={wrapperRef} className="map__svg">
+          <svg className="svg-map" ref={svgRef} ></svg>
+        </div>
+        <div className="map__requirements">
+          <div className="map__requirements__switch">
+            <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
+          </div>
+          <div className="map__requirements__legend">
+            <svg className="svg-legend" ref={svgLegRef}></svg>
+          </div>
+        </div>
+
       </div>
-      <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
-      <svg className="svg-legend" ref={svgLegRef}></svg>
+
     </>
   )
 };

@@ -60,7 +60,38 @@
 
 }
 
-.viz{
-  display: flex;
+.layout{
+  height: 85vh; /* specific */
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+  /* background:red; */
 }
+
+.layout__header{
+  flex:.1;
+  /* background-color:blue; */
+}
+
+.layout__body{
+  flex:.9;
+  /* background:yellow; */
+  display:flex;
+}
+.layout__body__left{
+  /* background:green; */
+  flex:.3;
+  overflow-y:scroll;
+  width: 100%;
+  height: 79vh;
+}
+
+
+.layout__body__right{
+  display:flex;
+  /* background:cyan; */
+  flex:.7;
+}
+
+
 

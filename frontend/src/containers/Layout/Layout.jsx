@@ -45,6 +45,7 @@ const Layout = ({tabId}) => {
   const [indicatorDetail,setIndicatorDetail] = useState(null);
   const [unit,setUnit] = useState(null);
   const [unitList,setUnitList] = useState(null);
+  const [indicatorSense, setIndicatorSense]= useState(null);
 
   const iniSelIndicator = '12';  
   const [selIndicator,setSelIndicator] = useState(iniSelIndicator);
@@ -145,6 +146,17 @@ const Layout = ({tabId}) => {
         setUnitList(unitList)
       })
     },[])
+
+
+    //getting indicator sense
+    useEffect(()=>{
+      const url = `http://localhost:8000/api/getIndicatorType/${selIndicator}`;
+      json(url).then(indicatorSense =>{
+        setIndicatorSense(indicatorSense)
+      })
+    },[selIndicator])
+    
+    
   const boundaries = useData();
   const newBoundaries = useNewBoundaries();
   const Dboundaries= useDataDistrict();
@@ -242,6 +254,7 @@ if(!nutritionData){
               tabId={tabId}
               selArea={selArea}
               selIndicator={selIndicator}
+              indicatorSense={indicatorSense}
               selSubgroup={selSubgroup}
               selTimeperiod={selTimeperiod}
               setSelArea={setSelArea}
@@ -273,7 +286,7 @@ if(!nutritionData){
               </td>
               <td >
                   <Row >       
-                    { nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}  selIndicator={selIndicator}/>
+                    { nutritionData.length > 0?  <Map geometry={renderMap}  data = {nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} indicatorSense={indicatorSense} unit={unit} unitName = {unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt}  selIndicator={selIndicator}/>
                     : <Col className="text-center"></Col> }
                   </Row> 
        

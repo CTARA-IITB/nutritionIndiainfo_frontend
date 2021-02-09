@@ -15,13 +15,12 @@ import "./Map.css";
 
 
 
-export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree,handleClick,searchRef,setFilterDropdownValue,areaDropdownOpt, selIndicator}) =>{
+export const Map = ({geometry, data, onMapClick,setLevel,level,setSelArea,unit,unitName,selArea,isLevelThree,setIsLevelThree,handleClick,searchRef,setFilterDropdownValue,areaDropdownOpt, selIndicator, indicatorSense}) =>{
 const svgRef = useRef();
 const svgLegRef = useRef();
 const wrapperRef = useRef();
 const dimensions = useResizeObserver(wrapperRef);
 // const [colorScale,setColorScale] = useState();
-console.log("selIndicator", selIndicator);
 function removeShake() {
   var element = document.getElementById("info-msg");
   element.classList.remove("shake");
@@ -150,6 +149,47 @@ useEffect(() => {
   }
 
 
+
+
+
+  
+  let colorScale4= scaleOrdinal()
+    .domain([min,max])
+    .range([ "#24562B","#FFE338","#B2022F","#7d0a1f"])
+
+  let colorScale4_p= scaleOrdinal()
+    .domain([min,max])
+    .range([ "#7d0a1f","#B2022F","#FFE338","#24562B"])  
+
+
+  if(selIndicator === 12 || selIndicator === 19){
+    colorScale = colorScale2;
+  }
+  else if(indicatorSense[0].type === 'Negative'){
+    colorScale = colorScale4;
+  
+  }else if(indicatorSense[0].type ==='Positive'){
+    colorScale = colorScale4_p;
+  
+  }
+
+
+
+  // if (typeof c2Value != "undefined"){
+  //   if(selIndicator === 12 || selIndicator === 19){
+  //     colorScale = colorScale2;
+  //   }
+  //   else if(indicatorSense[0].type === 'Negative'){
+  //     colorScale = colorScale4;
+    
+  //   }else if(indicatorSense[0].type ==='Positive'){
+  //     colorScale = colorScale4_p;
+    
+  //   }
+  // }else
+  //     return colorScale="#A9A9B0";
+    
+
   const onMouseMove = (event,d) =>{	
     if(typeof d.dataValue != 'undefined'){
       // tooltip.style("opacity", .9);
@@ -170,8 +210,10 @@ useEffect(() => {
     .style("fill", d =>{
           if(unit === 2)
             return "#fff";
+          else if (typeof c2Value(d) != "undefined")
+            return colorScale(c2Value(d));  
           else
-          return colorScale2(c2Value(d))
+            return "#A9A9B0";
       })
     // .style("fill", d =>{
     //   if (typeof c2Value(d) != "undefined")
@@ -281,35 +323,50 @@ var color3 = scaleOrdinal()
 //everythin else
 let color4= scaleOrdinal()
     .domain([min,max])
-    .range([ "#24562B","#FFE338","#B2022F","#7d0a1f"])
+    .range([ "#fcc09f","#f5a071","#f77025","#b3470b"])
+
+let color4_p= scaleOrdinal()
+    .domain([min,max])
+    .range([ "#b3470b","#f77025","#f5a071","#fcc09f"])    
 
 let color_b;
-if(selIndicator==156){
+if(selIndicator === '156'){
   color_b=color1;
-}else if(selIndicator==160){
+  
+}else if(selIndicator === '160'){
   color_b=color0;
-}else if(selIndicator==158){
+}else if(selIndicator === '158'){
   color_b=color2;
-}else if(selIndicator==167){
+  
+}else if(selIndicator === '167'){
   color_b=color3;
-}else{
+}else if(indicatorSense[0].type === 'Negative'){
   color_b=color4;
+}else if(indicatorSense[0].type === 'Positive'){
+  color_b=color4_p;
 }
-
 
 // var color = scaleOrdinal()
 // .domain([min_b,max_b])
 // .range([ "#faafb3","#f76870","#f53d47","#9c1017"])
 
-console.log(centroids_obj)
   svg  
     .selectAll(".geoCentroid")
     .data(centroids_obj)
     .enter().append("circle")
       .attr("class", "geoCentroid")
-      .style("fill", function(d){ return color_b(d.data_value) })
-      .style("opacity",0.5)
-      .attr("r",function (d) { return (Math.cbrt(d.data_value/100)); })
+      .style("fill", function(d){ 
+        if (typeof d.data_value != "undefined")
+          return color_b(d.data_value) ;  
+        else
+          return "#A9A9B0";
+        })
+      .style("opacity",0.8)
+      .attr("r",function (d) { 
+        if (typeof d.data_value != "undefined")
+          return (Math.cbrt(d.data_value/100));
+        else
+          return 4; })
 		  .attr("cx", d =>projection([d.latitude,d.longitude])[0])
 		  .attr("cy", d =>projection([d.latitude,d.longitude])[1])
       .on("mousemove", (i,d) => onMouseMove(i,d))

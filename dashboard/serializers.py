@@ -106,3 +106,9 @@ class UnitSerializer(serializers.ModelSerializer):
             model = IndicatorUnitSubgroup
             fields = ('unit','indicator')
 # class NiStDtbPolySerializer(serializers.Model
+
+class IndicatorTypeSerializer(serializers.ModelSerializer):
+    type = serializers.CharField(source='indi_sense')
+    class Meta:
+        model = Indicator
+        fields = ('type',) 

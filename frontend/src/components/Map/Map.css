@@ -22,20 +22,16 @@ svg .geoCentroid {
 } */
 
 div.tooltip {
+  padding: 10px;
   position: absolute;
   text-align: center;
   width: 150px;
-  height: 50px;
-  padding: 2px;
-  font: 15px sans-serif;
-  font-weight: bold;
-  background: rgb(255, 255, 255);
-  border-bottom-style: solid;
-  border-width: 5px;
-  border-left-style: solid;
-  border-color: rgb(185, 212, 185);
+  height: 70px;       
+  background-color: white;
   border-radius: 10px;
   pointer-events: none;
+  border-bottom: solid;
+  border-left: solid;
 }
 
 button.ant-switch {
@@ -107,4 +103,28 @@ button.ant-switch {
   60% {
     transform: translate3d(4px, 0, 0);
   }
+}
+
+.map{
+  /* background-color: red; */
+  width: 100%;
+  display: flex;
+} 
+
+.map__svg{
+  /* background-color: darkgray; */
+  flex:.8;
+}
+.map__requirements{
+  /* background-color: darkorchid; */
+  flex:.2;
+  display:flex;
+  flex-direction: column;
+}
+
+.map__requirements_switch{
+  flex:.2;
+}
+.map__requirements_legend{
+  flex:.8;
 }

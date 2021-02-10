@@ -14,24 +14,7 @@
 .dropdown-title {
   font-size: calc(50% + 0.5vw + 0.5vh);
 }
-.left-card {
-  margin-bottom: 40px;
-  margin-right: -5px;
-  margin-left: -7px;
-  margin-top: 20px;
-}
-.right-card {
-  margin-bottom: 40px;
-  margin-right: 10px;
-  margin-left: 20px;
-  margin-top: 20px;
-}
-.pink-card {
-  background-color: #c74b08;
-}
-.green-card {
-  background-color: #295c40;
-}
+
 .row {
   margin-left: 10px;
 }
@@ -80,17 +63,20 @@
 }
 .layout__body__left{
   /* background:green; */
-  flex:.3;
+  flex:.4;
   overflow-y:scroll;
   width: 100%;
   height: 79vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap:10px;
 }
 
 
 .layout__body__right{
   display:flex;
   /* background:cyan; */
-  flex:.7;
+  flex:.6;
 }
 
 

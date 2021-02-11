@@ -55,7 +55,7 @@ export const useData = (selArea) => {
   }
   
 const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/8ee87a2d19b3683253faaa27b168250b/raw/8c978e5914365982438314ded456db27e2008736/india_state_updated_topojsonv1.json';
-const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/d4ac518f4124bd2b31bf9746785f2ade/raw/f3860f35d6922e1d2db0f1ffc1473f6c12732033/india_district_updated_topojson.json';
+const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/e2329a92b954edc40557a1f9cbe8e20e/raw/b733dab71d3321225da54a824deb147b7e6cbe46/india_district_topojson_updated.json';
 
 export const useNewBoundaries = () => {
     let [data, setData] = useState(null);
@@ -63,7 +63,7 @@ export const useNewBoundaries = () => {
     json(jsonNewIndianstate).then(stateTopology => {
       const state = stateTopology.objects.state
       json(jsonNewIndiaDistrict).then(districtTopology =>{
-        const dist = districtTopology.objects.district;
+        const dist = districtTopology.objects.india_district_geojson;
       	setData({'new_state':feature(stateTopology,state),'new_dist':feature(districtTopology,dist)})
       })
     });  

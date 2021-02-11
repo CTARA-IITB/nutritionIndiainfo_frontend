@@ -15,7 +15,7 @@ import "./Map.css";
 
 
 
-export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, unit, unitName, selArea, isLevelThree, setIsLevelThree, handleClick, searchRef, setFilterDropdownValue, areaDropdownOpt, selIndicator, indicatorSense }) => {
+export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, unit, unitName, selArea, isLevelThree, setIsLevelThree, handleClick, searchRef, setFilterDropdownValue, areaDropdownOpt, selIndicator, indicatorSense ,switchDisplay}) => {
   const svgRef = useRef();
   const svgLegRef = useRef();
   const wrapperRef = useRef();
@@ -424,6 +424,13 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geometry, dimensions, data, unit])
 
+  let switchButton;
+  if(switchDisplay && level === 1){
+    switchButton = <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
+  }else{
+    switchButton= null;
+  }
+  
 
 
   return (
@@ -433,9 +440,12 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
           <svg className="svg-map" ref={svgRef} ></svg>
         </div>
         <div className="map__requirements">
-          <div className="map__requirements__switch">
-            <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
-          </div>
+          
+              <div className="map__requirements__switch">
+              {switchButton}
+            </div>
+          
+          
           <div className="map__requirements__legend">
             <svg className="svg-legend" ref={svgLegRef}></svg>
           </div>

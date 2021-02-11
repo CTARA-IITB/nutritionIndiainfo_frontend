@@ -26,6 +26,7 @@ const Layout = ({ tabId }) => {
   const searchRef = useRef();
   const [filterDropdownValue, setFilterDropdownValue] = useState([]);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
+  const [switchDisplay,setSwitchDisplay] = useState(true);
 
 
   useEffect(() => {
@@ -79,6 +80,15 @@ const Layout = ({ tabId }) => {
       setSelIndiaData(data);
     }
     )
+
+    //switch Display
+    const switchurl=`http://localhost:8000/api/getDistrictDetails/${selIndicator}/${selSubgroup}/${selTimeperiod}`;
+    json(switchurl).then(data =>{
+      if(data.length)
+        setSwitchDisplay(true);
+      else
+        setSwitchDisplay(false);
+    })
 
   }, [selIndicator, selSubgroup, selTimeperiod])
 
@@ -220,8 +230,8 @@ const Layout = ({ tabId }) => {
       // if(selTimeperiod === '22')
       // renderMap = newBoundaries.new_dist;
       // else
-      // renderMap = newBoundaries.new_dist;
-      renderMap = Dboundaries.state;
+      renderMap = newBoundaries.new_dist;
+      // renderMap = Dboundaries.state;
       console.table(newBoundaries.new_dist.features[0].properties, 'newBoundaries')
       console.table(Dboundaries.state.features[0].properties, 'oldBoundaries')
       nutritionData = selStateData;
@@ -282,7 +292,7 @@ const Layout = ({ tabId }) => {
           </div>
           <div className="layout__body__right">
 
-            {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} indicatorSense={indicatorSense} />
+            {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} indicatorSense={indicatorSense} switchDisplay={switchDisplay}/>
               : <div className="text-center"></div>
             }
           </div>

@@ -28,7 +28,7 @@ export const useData = (selArea) => {
     useEffect(() => {
     json(jsonIndiaDistrict).then(districtTopology => {
       const states = districtTopology.objects.india;
-        setData({'state':feature(districtTopology,states)})
+        setData({'dist':feature(districtTopology,states)})
   
     });  
   }, []);
@@ -43,7 +43,7 @@ export const useData = (selArea) => {
     useEffect(()=>{
       let features;
       if(indiaDistrictGeojson)
-        features = indiaDistrictGeojson.state.features.filter(feature => feature.properties.NAME2_ === areaName);
+        features = indiaDistrictGeojson.dist.features.filter(feature => feature.properties.NAME2_ === areaName);
       
       const featureCollection = {type: "FeatureCollection",features}
       setData(featureCollection);
@@ -55,7 +55,7 @@ export const useData = (selArea) => {
   }
   
 const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/8ee87a2d19b3683253faaa27b168250b/raw/8c978e5914365982438314ded456db27e2008736/india_state_updated_topojsonv1.json';
-const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/e2329a92b954edc40557a1f9cbe8e20e/raw/b733dab71d3321225da54a824deb147b7e6cbe46/india_district_topojson_updated.json';
+const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/9112826520d38c6091733bc8abc1e280/raw/96fa05a0f6874741416e521b4e49c5aed0c5d2da/ind_dist_nfhs5_topo_v2.json'
 
 export const useNewBoundaries = () => {
     let [data, setData] = useState(null);
@@ -63,7 +63,7 @@ export const useNewBoundaries = () => {
     json(jsonNewIndianstate).then(stateTopology => {
       const state = stateTopology.objects.state
       json(jsonNewIndiaDistrict).then(districtTopology =>{
-        const dist = districtTopology.objects.india_district_geojson;
+        const dist = districtTopology.objects.ind_dist_nfhs5;
       	setData({'new_state':feature(stateTopology,state),'new_dist':feature(districtTopology,dist)})
       })
     });  
@@ -71,3 +71,12 @@ export const useNewBoundaries = () => {
 
   return data;
   } 
+
+  export const useNewDistrictBoundaries = () => {
+    let [data, setData] = useState(null);
+    useEffect( async () => {
+    const distTopo = await json(jsonNewIndiaDistrict)
+      setData({'dist':feature(distTopo,distTopo.objects.ind_dist_nfhs5)})
+  }, []);
+  return data;
+  }

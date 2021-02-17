@@ -11,7 +11,7 @@ import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../../container
 
 // import Form from "../../components/Form/Form";
 import { Map } from "../../components/Map/Map";
-import { useData, useDataDistrict, useDataState, useNewBoundaries } from '../../containers/UseData'
+import { useData, useDataDistrict, useDataState, useNewBoundaries ,useNewDistrictBoundaries} from '../../containers/UseData'
 import { json } from 'd3';
 
 import Cards from '../../components/Cards/Cards.jsx';
@@ -169,7 +169,11 @@ const Layout = ({ tabId }) => {
   const boundaries = useData();
   const newBoundaries = useNewBoundaries();
   const Dboundaries = useDataDistrict();
+  const NewDboundaries = useNewDistrictBoundaries();
+  // console.log("NEWDBOUND",NewDboundaries)
   const stateBoundary = useDataState(areaName, Dboundaries);
+  const newDistrictBoundaries = useDataState(areaName,NewDboundaries)
+  console.log("NEWDISTBOUND",newDistrictBoundaries)
   const handleClick = () => {
     setToggleState(!toggleState);
     let text = null;
@@ -227,19 +231,22 @@ const Layout = ({ tabId }) => {
       nutritionData = selIndiaData;
     }
     else {
-      // if(selTimeperiod === '22')
-      // renderMap = newBoundaries.new_dist;
-      // else
+      if(selTimeperiod === '22')
       renderMap = newBoundaries.new_dist;
-      // renderMap = Dboundaries.state;
+      else
+      renderMap = Dboundaries.dist;
+
       console.table(newBoundaries.new_dist.features[0].properties, 'newBoundaries')
-      console.table(Dboundaries.state.features[0].properties, 'oldBoundaries')
+      console.table(Dboundaries.dist.features[0].properties, 'oldBoundaries')
       nutritionData = selStateData;
 
     }
   } else {
 
     if (selStateData.length > 0) {
+      if(selTimeperiod === '22')
+      renderMap = newDistrictBoundaries;
+      else
       renderMap = stateBoundary;
       nutritionData = selStateData;
       // console.log("stateboundaries",renderMap)

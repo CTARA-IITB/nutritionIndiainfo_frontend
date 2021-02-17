@@ -50,7 +50,6 @@ const Layout = ({ tabId }) => {
   const iniSelIndicator = '12';
   const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
 
-
   const iniSelSubgroup = '6';  //All
   const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
 
@@ -70,6 +69,8 @@ const Layout = ({ tabId }) => {
   // },[])
 
 
+
+  
   //india data
   const [selIndiaData, setSelIndiaData] = useState(null);
 
@@ -278,7 +279,10 @@ const Layout = ({ tabId }) => {
         </div>
         <div className="layout__body">
           <div className="layout__body__left">
-            <Cards indicatorDetail={indicatorDetail} />
+            <Cards 
+            indicatorDetail={indicatorDetail}
+            setSelIndicator={setSelIndicator}
+            />
           </div>
           <div className="layout__body__right">
 

@@ -4,7 +4,7 @@ import Card from '../../components/Cards/Card/Card';
 import ItemsCarousel from 'react-items-carousel';
 import { useState } from "react";
 import "./Cards.css"
-const Cards = ({ indicatorDetail }) => {
+const Cards = ({ indicatorDetail,setSelIndicator }) => {
 
   let indicatorcount = 0;
   if (indicatorDetail) {
@@ -27,6 +27,8 @@ const Cards = ({ indicatorDetail }) => {
           value={indicatorDetail[i].data_value}
           value_type={indicatorDetail[i].unit.unit_name}
           deff='underweight'
+          setSelIndicator={setSelIndicator}
+          indicator_id={indicatorDetail[i].indicator.indicator_id}
           source={indicatorDetail[i].timeperiod.timeperiod}
           style="pink-card"
 
@@ -40,6 +42,8 @@ const Cards = ({ indicatorDetail }) => {
           value={indicatorDetail[i].data_value}
           value_type={indicatorDetail[i].unit.unit_name}
           deff='underweight'
+          setSelIndicator={setSelIndicator}
+          indicator_id={indicatorDetail[i].indicator.indicator_id}
           source={indicatorDetail[i].timeperiod.timeperiod}
           style="green-card"
         /></div>

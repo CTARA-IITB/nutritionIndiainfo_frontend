@@ -162,8 +162,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
 
     if (selIndicator === 12 || selIndicator === 19) {
       colorScale = colorScale2;
-    }
-    else if (indicatorSense[0].type === 'Negative') {
+    } else if (indicatorSense[0].type === 'Negative') {
       colorScale = colorScale4;
 
     } else if (indicatorSense[0].type === 'Positive') {

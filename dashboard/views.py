@@ -1,7 +1,9 @@
 
 from django.shortcuts import render
 from rest_framework import generics   
-from .serializers import IndicatorSerializer, UtDataAllSerializer, IndicatorUnitSubgroupSerializer, SubgroupSerializer, UtDataSerializer, UtDatatimeSerializer, AreaEnSerializer, AreaEnDropSerializer, NiStDtbPolySerializer , UnitSerializer,UnitNameSerializer,IndicatorTypeSerializer                        
+from .serializers import (IndicatorSerializer, UtDataAllSerializer, IndicatorUnitSubgroupSerializer, 
+SubgroupSerializer, UtDataSerializer, UtDatatimeSerializer, AreaEnSerializer, AreaEnDropSerializer, NiStDtbPolySerializer , 
+UnitSerializer,UnitNameSerializer,IndicatorTypeSerializer,UtDataTrendSerializer,UtDataBarSerializer )                       
 from .models import UtData, AreaEn, Indicator, IndicatorUnitSubgroup, Subgroup, Timeperiod, NiStDtbPoly  ,Unit  
 # from drf_multiple_model.viewsets import ObjectMultipleModelAPIViewSet  
 from django.db.models import Q
@@ -123,4 +125,22 @@ class DistrictDataView(generics.ListAPIView):
                 subgroupSelect = self.kwargs.get('subgroup', None)
                 timeperiodSelect = self.kwargs.get('timeperiod', None)
                 queryset= UtData.objects.raw('select * from ut_data join area_en on ut_data.area_id=area_en.area_id and area_level=3 where ut_data.timeperiod_id = %s and ut_data.indicator_id = %s and ut_data.subgroup_id = %s limit 1', [timeperiodSelect, indicatorSelect, subgroupSelect])
+                return queryset
+
+class IndicatorTrendView(generics.ListAPIView): 
+        serializer_class = UtDataTrendSerializer
+        def get_queryset(self,*args, **kwargs):
+                indicatorSelect = self.kwargs.get('indicator',None)
+                areaSelect = self.kwargs.get('area', None)
+                subgroupSelect = self.kwargs.get('subgroup', None)
+                queryset = UtData.objects.filter(Q(indicator=indicatorSelect) & Q(subgroup=subgroupSelect) & Q(area=areaSelect)).order_by('timeperiod')
+                return queryset
+
+class IndicatorBarView(generics.ListAPIView): 
+        serializer_class = UtDataBarSerializer
+        def get_queryset(self,*args, **kwargs):
+                indicatorSelect = self.kwargs.get('indicator',None)
+                areaSelect = self.kwargs.get('area', None)
+                timeperiodSelect = self.kwargs.get('timeperiod', None)
+                queryset = UtData.objects.filter(Q(indicator=indicatorSelect) & Q(timeperiod=timeperiodSelect) & Q(area=areaSelect)).order_by('subgroup__subgroup_order')
                 return queryset            

@@ -111,4 +111,22 @@ class IndicatorTypeSerializer(serializers.ModelSerializer):
     type = serializers.CharField(source='indi_sense')
     class Meta:
         model = Indicator
-        fields = ('type',) 
+        fields = ('type',)
+
+class UtDataTrendSerializer(serializers.ModelSerializer):
+    timeperiod = TimeperiodSerializer()
+    unit = UnitNameSerializer()
+    data_value = serializers.DecimalField(max_digits=255, decimal_places=2)
+  
+    class Meta:
+        model = UtData
+        fields =  ('timeperiod', 'unit' ,'data_value')
+
+class UtDataBarSerializer(serializers.ModelSerializer):
+    subgroup = SubgroupSerializer()
+    unit = UnitNameSerializer()
+    data_value = serializers.DecimalField(max_digits=255, decimal_places=2)
+  
+    class Meta:
+        model = UtData
+        fields =  ('subgroup', 'unit' ,'data_value')

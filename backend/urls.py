@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include  
 from dashboard.views import (IndicatorListView, SubgroupListView, IndicatorDetailView, TimeperiodListView, AreaListView, IndiaMapView, AreaDataView, 
-AreaMapView, GetUnitView ,GetUnitNameView, IndicatorTypeView,DistrictDataView)                              
+AreaMapView, GetUnitView ,GetUnitNameView, IndicatorTypeView,DistrictDataView,IndicatorTrendView,IndicatorBarView)                              
 
 
 urlpatterns = [
@@ -16,5 +16,7 @@ urlpatterns = [
     path('api/getUnitName', GetUnitNameView.as_view(), name='unit'),
     path('api/getIndicatorDetails/<int:tab>', IndicatorDetailView.as_view(), name='indicatorDetails'),
     path('api/getIndicatorType/<int:indicator>', IndicatorTypeView.as_view(), name='indicatorType'),
-    path('api/getDistrictDetails/<int:indicator>/<int:subgroup>/<int:timeperiod>', DistrictDataView.as_view(), name='districtData')
+    path('api/getDistrictDetails/<int:indicator>/<int:subgroup>/<int:timeperiod>', DistrictDataView.as_view(), name='districtData'),
+    path('api/getIndicatorTrend/<int:indicator>/<int:subgroup>/<int:area>', IndicatorTrendView.as_view(), name='indicatorTrend'),
+    path('api/getIndicatorBar/<int:indicator>/<int:timeperiod>/<int:area>', IndicatorBarView.as_view(), name='indicatorBar')
 ]

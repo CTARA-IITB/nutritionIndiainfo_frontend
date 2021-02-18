@@ -12,6 +12,8 @@ import { Switch } from 'antd';
 import { AnimateOnChange } from 'react-animation';
 
 import "./Map.css";
+import * as d3 from 'd3';
+
 
 
 
@@ -258,138 +260,136 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
 
     // bubbles for numeric unit values
     if (unit === 2) {
-      svg
-        .selectAll(".geoCentroid").remove();
-      var centroids_obj = [];
-      var features = geometry.features;
 
-      var centroids = features.map(function (feature) {
-        return [geoCentroid(feature), feature.properties.ID_];
-      });
-      //centroid_obj is like merged geometry for polygon
+      svg.selectAll(".mask")
+      .data(mergedGeometry)
+      .enter()
+      .append("clipPath")
+      .attr("class","mask")
+      .attr("id",function(d){return d.areacode;})
+      .append("path")
+      .attr("d", pathGenerator);
+  
 
-      var len = centroids.length;
-      for (var i = 0; i < len; i++) {
-        centroids_obj.push({
-          latitude: centroids[i][0][0],
-          longitude: centroids[i][0][1],
-          area_id: centroids[i][1],
-          area_name: '',
-          data_value: ''
-        });
-      }
+   svg.selectAll(".points")
+    .data(mergedGeometry)
+    .enter()
+    .append("g")
+    .attr("class","points")
+    .attr("clip-path", function(d){return "url(#"+d.areacode+")";})
+    .each(draw_circles);
 
 
-      var len1 = data.length;
-      for (var i = 0; i < len1; i++) {
-        for (var j = 0; j < len; j++) {
-          if (data[i].area.area_code == centroids_obj[j].area_id) {
-            centroids_obj[j].area_name = data[i].area.area_name;
-            centroids_obj[j].data_value = data[i].data_value;
+      function draw_circles(d) {
+        let bounds = pathGenerator.bounds(d);
+        let width_d = bounds[1][0] - bounds[0][0];
+        let height_d = bounds[1][1] - bounds[0][1];
+        let x = bounds[0][0];
+        let y = bounds[0][1];
 
-          }
+        let p = d.properties.AREA_ / (width_d * height_d);
+        let p_ = d.properties.AREA_
+        let n = d.dataValue / (min);
+
+        if (typeof d.dataValue !== 'undefined')
+        {
+        var points = createPoints(width_d, height_d, p_, n);
+
+        // console.log("points", min, d.dataValue, n,  points.length);
+
+        for(var i=0; i< points.length; i++)
+        {
+          d3.select(this).append("circle")
+          .attr("r", 1)
+          .attr("cx", x+points[i][0])
+          .attr("cy", y+points[i][1])
+          .attr("fill", 'red');
+
+        }
         }
       }
-      let c3value = d => d.data_value;
-
-      let color_range_bubble_ = _.map(centroids_obj, d => {
-        return +d.data_value
-      });
-      let [min_b, max_b] = extent(color_range_bubble_);
-
-      //wasting
-      var color0 = scaleOrdinal()
-        .domain([min_b, max_b])
-        .range(["#faafb3", "#f76870", "#f53d47", "#9c1017"])
-
-      //stunting
-      var color1 = scaleOrdinal()
-        .domain([min_b, max_b])
-        .range(["#d4f5a6", "#b7fa5a", "#6cad11", "#3a5219"])
-
-
-      //underweight
-      var color2 = scaleOrdinal()
-        .domain([min_b, max_b])
-        .range(["#c6e2f7", "#5cb6fa", "#1c69a3", "#0b436e"])
-
-      //overwieght
-      var color3 = scaleOrdinal()
-        .domain([min_b, max_b])
-        .range(["#dbb3f2", "#c17aeb", "#8b34bf", "#321345"])
-
-      //everythin else
-      let color4 = scaleOrdinal()
-        .domain([min, max])
-        .range(["#fcc09f", "#f5a071", "#f77025", "#b3470b"])
-
-      let color4_p = scaleOrdinal()
-        .domain([min, max])
-        .range(["#b3470b", "#f77025", "#f5a071", "#fcc09f"])
-
-      let color_b;
-      if (selIndicator === '156') {
-        color_b = color1;
-
-      } else if (selIndicator === '160') {
-        color_b = color0;
-      } else if (selIndicator === '158') {
-        color_b = color2;
-
-      } else if (selIndicator === '167') {
-        color_b = color3;
-      } else if (indicatorSense[0].type === 'Negative') {
-        color_b = color4;
-      } else if (indicatorSense[0].type === 'Positive') {
-        color_b = color4_p;
+      function createPoints(width, height, area, n)
+      {
+        // var area = width * height * p;
+        //var radius = 10;
+        var radius = Math.sqrt(area / (1.62*n));
+        //  console.log("widthher",width, height, area, radius);
+         var sample = poissonDiscSampler(width, height, radius);
+         for (var data = [], d; d = sample();) { data.push(d); }
+         return data;
+      
       }
-
-      // var color = scaleOrdinal()
-      // .domain([min_b,max_b])
-      // .range([ "#faafb3","#f76870","#f53d47","#9c1017"])
-
-      svg
-        .selectAll(".geoCentroid")
-        .data(centroids_obj)
-        .enter().append("circle")
-        .attr("class", "geoCentroid")
-        .style("fill", function (d) {
-          if (typeof d.data_value != "undefined")
-            return color_b(d.data_value);
-          else
-            return "#A9A9B0";
-        })
-        .style("opacity", 0.8)
-        .attr("r", function (d) {
-          if (typeof d.data_value != "undefined")
-            return (Math.cbrt(d.data_value / 100));
-          else
-            return 4;
-        })
-        .attr("cx", d => projection([d.latitude, d.longitude])[0])
-        .attr("cy", d => projection([d.latitude, d.longitude])[1])
-        .on("mousemove", (i, d) => onMouseMove(i, d))
-        .on("mouseout", function (d) {
-          tooltip
-            .style("opacity", 0);
-        }).on('click', (i, d) => {
-          setIsLevelThree(false);
-          tooltip.style('opacity', 0);
-          if (level === 1) {
-
-            if (typeof c3value(d) != "undefined") {
-              setSelArea('' + d.area_code);
-              setLevel(2);
-              onMapClick(d.area_name);
+      
+      
+      function poissonDiscSampler(width, height, radius) {
+              var k = 30, // maximum number of samples before rejection
+                  radius2 = radius * radius,
+                  R = 3 * radius2,
+                  cellSize = radius * Math.SQRT1_2,
+                  gridWidth = Math.ceil(width / cellSize),
+                  gridHeight = Math.ceil(height / cellSize),
+                  grid = new Array(gridWidth * gridHeight),
+                  queue = [],
+                  queueSize = 0,
+                  sampleSize = 0;
+      
+              return function() {
+                if (!sampleSize) return sample(Math.random() * width, Math.random() * height);
+      
+                // Pick a random existing sample and remove it from the queue.
+                while (queueSize) {
+                  var i = Math.random() * queueSize | 0,
+                      s = queue[i];
+      
+                  // Make a new candidate between [radius, 2 * radius] from the existing sample.
+                  for (var j = 0; j < k; ++j) {
+                    var a = 2 * Math.PI * Math.random(),
+                        r = Math.sqrt(Math.random() * R + radius2),
+                        x = s[0] + r * Math.cos(a),
+                        y = s[1] + r * Math.sin(a);
+      
+                    // Reject candidates that are outside the allowed extent,
+                    // or closer than 2 * radius to any existing sample.
+                    if (0 <= x && x < width && 0 <= y && y < height && far(x, y)) return sample(x, y);
+                  }
+      
+                  queue[i] = queue[--queueSize];
+                  queue.length = queueSize;
+                }
+              };
+      
+              function far(x, y) {
+                var i = x / cellSize | 0,
+                    j = y / cellSize | 0,
+                    i0 = Math.max(i - 2, 0),
+                    j0 = Math.max(j - 2, 0),
+                    i1 = Math.min(i + 3, gridWidth),
+                    j1 = Math.min(j + 3, gridHeight);
+      
+                for (j = j0; j < j1; ++j) {
+                  var o = j * gridWidth;
+                  for (i = i0; i < i1; ++i) {
+                    if (s = grid[o + i]) {
+                      var s,
+                          dx = s[0] - x,
+                          dy = s[1] - y;
+                      if (dx * dx + dy * dy < radius2) return false;
+                    }
+                  }
+                }
+      
+                return true;
+              }
+      
+              function sample(x, y) {
+                var s = [x, y];
+                queue.push(s);
+                grid[gridWidth * (y / cellSize | 0) + (x / cellSize | 0)] = s;
+                ++sampleSize;
+                ++queueSize;
+                return s;
+              }
             }
-          } else if (level === 2) {
-            setSelArea("1");  //india
-            setLevel(1);
-            searchRef.current.state.value = "";  //reset search to
-            setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
-          }
-          // tooltip.style('opacity',1);
-        })
     }
 
 
@@ -399,17 +399,12 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
       .attr("class", "legendQuant")
       .attr("transform", "translate(20,20)");
 
-    // let myLegend = legendColor()
-    //   .labelFormat(format(".2f"))
-    //   .title(`Legend (${unitName})`)
     let formatter;
     if (unit === 2) {
       //formatter = format(',.0f');
       formatter = format('.2s');
     }
     else {
-      // var p = Math.max(0, precisionFixed(0.05) - 2);
-      // formatter= format("." + p + "%");
       formatter = format(".2f");
     }
 

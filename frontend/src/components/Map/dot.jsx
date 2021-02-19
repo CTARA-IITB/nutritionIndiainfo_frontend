@@ -12,11 +12,12 @@ import { Switch } from 'antd';
 import { AnimateOnChange } from 'react-animation';
 
 import "./Map.css";
+import * as d3 from 'd3';
+
 
 
 
 export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, unit, unitName, selArea, isLevelThree, setIsLevelThree, handleClick, searchRef, setFilterDropdownValue, areaDropdownOpt, selIndicator, indicatorSense ,switchDisplay}) => {
-  console.log(geometry);
   const svgRef = useRef();
   const svgLegRef = useRef();
   const wrapperRef = useRef();
@@ -146,6 +147,12 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
     } else {
       colorScale = colorScale1;
     }
+
+
+
+
+
+
     let colorScale4 = scaleOrdinal()
       .domain([min, max])
       .range(["#24562B", "#FFE338", "#B2022F", "#7d0a1f"])
@@ -247,10 +254,11 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature));
 
-    svg.selectAll(".points").remove();
+    console.log('>>>', svg.selectAll(".geoCentroid"))
+    svg
+      .selectAll(".geoCentroid").remove();
 
     // bubbles for numeric unit values
-   
     if (unit === 2) {
 
       svg.selectAll(".mask")
@@ -291,7 +299,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
 
         for(var i=0; i< points.length; i++)
         {
-          select(this).append("circle")
+          d3.select(this).append("circle")
           .attr("r", 1)
           .attr("cx", x+points[i][0])
           .attr("cy", y+points[i][1])
@@ -386,21 +394,17 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
 
 
 
+
     legend.append("g")
       .attr("class", "legendQuant")
       .attr("transform", "translate(20,20)");
 
-    // let myLegend = legendColor()
-    //   .labelFormat(format(".2f"))
-    //   .title(`Legend (${unitName})`)
     let formatter;
     if (unit === 2) {
       //formatter = format(',.0f');
       formatter = format('.2s');
     }
     else {
-      // var p = Math.max(0, precisionFixed(0.05) - 2);
-      // formatter= format("." + p + "%");
       formatter = format(".2f");
     }
 

@@ -4,7 +4,7 @@ import { feature } from 'topojson';
 
 const jsonIndianstate =
     'https://gist.githubusercontent.com/AnimeshN/b705d4f1a910a16013348e6743d597f4/raw/13ff136e1cd3a90b2fcca370158960dddf74fbee/india_state_old.json';;
-const jsonIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/7dd993301b4fb2657a221e3f5e148069/raw/india_district_nfhs4.topojson';
+const jsonIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/9b27088c28f134b51983f1a25012474e/raw/7d551013cc70a2b4f08bc1bebd092f3e53a9ceca/india_district_old_v2.json';
 
 export const useData = (selArea) => {
     let [data, setData] = useState(null);
@@ -15,7 +15,7 @@ export const useData = (selArea) => {
       console.log("JSONINDIASTATE",stateTopology)
       const state = stateTopology.objects.india_state_old;
       json(jsonIndiaDistrict).then(districtTopology =>{
-      	const dist = districtTopology.objects.india;
+      	const dist = districtTopology.objects.india_district_old_v2;
       	setData({'state':feature(stateTopology,state),'dist':feature(districtTopology,dist)})
       })
     });  
@@ -28,7 +28,8 @@ export const useData = (selArea) => {
     // console.log(selectedArea)
     useEffect(() => {
     json(jsonIndiaDistrict).then(districtTopology => {
-      const states = districtTopology.objects.india;
+      console.log("OLDDistrict",districtTopology)
+      const states = districtTopology.objects.india_district_old_v2;
         setData({'dist':feature(districtTopology,states)})
   
     });  

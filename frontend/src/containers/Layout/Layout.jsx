@@ -70,6 +70,16 @@ const Layout = ({ tabId }) => {
   //   )
   // },[])
 
+   //get Units Name
+
+   useEffect(() => {
+    json(`http://localhost:8000/api/getUnitName`)
+    .then(units => {setUnitList(units)})
+  },[])
+
+
+
+
 
   //india data
   const [selIndiaData, setSelIndiaData] = useState(null);
@@ -147,14 +157,7 @@ const Layout = ({ tabId }) => {
 
     })
   }, [tab])
-  //get Units Name
-
-  useEffect(() => {
-    const url = "http://localhost:8000/api/getUnitName";
-    json(url).then(unitList => {
-      setUnitList(unitList)
-    })
-  }, [])
+ 
 
 
   //getting indicator sense

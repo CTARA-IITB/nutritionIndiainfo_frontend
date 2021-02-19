@@ -42,7 +42,7 @@ export const useData = (selArea) => {
   
     useEffect(()=>{
       let features;
-      if(indiaDistrictGeojson)
+      if(indiaDistrictGeojson )
         features = indiaDistrictGeojson.dist.features.filter(feature => feature.properties.NAME2_ === areaName);
       
       const featureCollection = {type: "FeatureCollection",features}
@@ -64,7 +64,9 @@ export const useNewBoundaries = () => {
       const state = stateTopology.objects.state
       json(jsonNewIndiaDistrict).then(districtTopology =>{
         const dist = districtTopology.objects.ind_dist_nfhs5;
-      	setData({'new_state':feature(stateTopology,state),'new_dist':feature(districtTopology,dist)})
+        let new_state = feature(stateTopology,state);
+        let new_dist = feature(districtTopology,dist);
+      	setData({'new_state': new_state,'new_dist': new_dist})
       })
     });  
   }, []);

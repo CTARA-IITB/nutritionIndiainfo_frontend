@@ -16,6 +16,7 @@ import "./Map.css";
 
 
 export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, unit, unitName, selArea, isLevelThree, setIsLevelThree, handleClick, searchRef, setFilterDropdownValue, areaDropdownOpt, selIndicator, indicatorSense ,switchDisplay}) => {
+  console.log(geometry);
   const svgRef = useRef();
   const svgLegRef = useRef();
   const wrapperRef = useRef();

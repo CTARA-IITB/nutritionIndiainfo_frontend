@@ -79,8 +79,11 @@ export const useNewBoundaries = () => {
   export const useNewDistrictBoundaries = () => {
     let [data, setData] = useState(null);
     useEffect( async () => {
-    const distTopo = await json(jsonNewIndiaDistrict)
-      setData({'dist':feature(distTopo,distTopo.objects.india_dist_v2)})
+      async function fetchData(){
+        const distTopo = await json(jsonNewIndiaDistrict)
+        setData({'dist':feature(distTopo,distTopo.objects.india_dist_v2)})
+      }
+      fetchData();
   }, []);
   return data;
   }

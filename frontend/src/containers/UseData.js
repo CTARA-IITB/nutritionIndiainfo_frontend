@@ -57,7 +57,7 @@ export const useData = (selArea) => {
   }
   
 const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/8ee87a2d19b3683253faaa27b168250b/raw/8c978e5914365982438314ded456db27e2008736/india_state_updated_topojsonv1.json';
-const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/2ccb4212bc27490b5ef6a06d5d6461d9/raw/e014a11d3f11b51e4842f0105646a6bfb9494b99/india_dist_v2.json'
+const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/262881c21197aa8da0524550b128d639/raw/ffd5cb39d90469934c1072ab7399c16e823fc82e/india_district_new_v3.json'
 
 export const useNewBoundaries = () => {
     let [data, setData] = useState(null);
@@ -65,7 +65,7 @@ export const useNewBoundaries = () => {
     json(jsonNewIndianstate).then(stateTopology => {
       const state = stateTopology.objects.state
       json(jsonNewIndiaDistrict).then(districtTopology =>{
-        const dist = districtTopology.objects.india_dist_v2;
+        const dist = districtTopology.objects.india_district_new_v3;
         let new_state = feature(stateTopology,state);
         let new_dist = feature(districtTopology,dist);
       	setData({'new_state': new_state,'new_dist': new_dist})
@@ -81,7 +81,7 @@ export const useNewBoundaries = () => {
     useEffect( async () => {
       async function fetchData(){
         const distTopo = await json(jsonNewIndiaDistrict)
-        setData({'dist':feature(distTopo,distTopo.objects.india_dist_v2)})
+        setData({'dist':feature(distTopo,distTopo.objects.india_district_new_v3)})
       }
       fetchData();
   }, []);

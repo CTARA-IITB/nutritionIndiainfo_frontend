@@ -79,6 +79,7 @@ export const Dropdown = ({
     json(url).then( options =>{
       setIndicatorDropdownOpt(options);
     }
+    
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tabId])
@@ -86,6 +87,7 @@ export const Dropdown = ({
    // change selIndicator when indicator updated
    useEffect(() => {
     if(indicatorDropdownOpt){
+      // console.log(indicatorDropdownOpt[0],"indidrop");
       setSelIndicator(indicatorDropdownOpt[0].value)
     }
    // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -10,6 +10,7 @@ const Cards = ({ indicatorDetail }) => {
   if (indicatorDetail) {
     indicatorDetail.map(indi => {
       indicatorcount++;
+
     });
   }
   let card1;

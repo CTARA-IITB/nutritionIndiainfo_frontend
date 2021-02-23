@@ -15,7 +15,27 @@ import "./Map.css";
 
 
 
-export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, unit, unitName, selArea, isLevelThree, setIsLevelThree, handleClick, searchRef, setFilterDropdownValue, areaDropdownOpt, selIndicator, indicatorSense ,switchDisplay}) => {
+export const Map = ({ 
+  geometry, 
+  data, 
+  onMapClick, 
+  setLevel, 
+  level, 
+  setSelArea, 
+  unit, 
+  unitName, 
+  selArea, 
+  isLevelThree, 
+  setIsLevelThree, 
+  handleClick, 
+  searchRef, 
+  setFilterDropdownValue, 
+  areaDropdownOpt, 
+  selIndicator, 
+  indicatorSense ,
+  switchDisplay,
+  toggleState
+}) => {
   console.log(geometry);
   const svgRef = useRef();
   const svgLegRef = useRef();
@@ -226,23 +246,25 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
           // .duration(500)    
           .style("opacity", 0);
       }).on('click', (i, d) => {
-        setIsLevelThree(false);
-        // let id = d.area_id
-        tooltip.style('opacity', 0);
-        if (level === 1) {
-
-          if (typeof c2Value(d) != "undefined") {
-            setSelArea('' + d.area_id);
-            setLevel(2);
-            onMapClick(d.areaname);
+        if(toggleState){
+          setIsLevelThree(false);
+          // let id = d.area_id
+          tooltip.style('opacity', 0);
+          if (level === 1) {
+  
+            if (typeof c2Value(d) != "undefined") {
+              setSelArea('' + d.area_id);
+              setLevel(2);
+              onMapClick(d.areaname);
+            }
+          } else if (level === 2) {
+            setSelArea("1");  //india
+            setLevel(1);
+            searchRef.current.state.value = "";  //reset search to
+            setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
           }
-        } else if (level === 2) {
-          setSelArea("1");  //india
-          setLevel(1);
-          searchRef.current.state.value = "";  //reset search to
-          setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
         }
-        // tooltip.style('opacity',1);
+    
       })
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature));

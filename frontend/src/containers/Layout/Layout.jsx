@@ -176,7 +176,6 @@ const Layout = ({ tabId }) => {
   // console.log("NEWDBOUND",NewDboundaries)
   const stateBoundary = useDataState(areaName, Dboundaries);
   const newDistrictBoundaries = useDataState(areaName,NewDboundaries)
-  console.log("NEWDISTBOUND",newDistrictBoundaries)
   const handleClick = () => {
     setToggleState(!toggleState);
     let text = null;
@@ -302,10 +301,33 @@ const Layout = ({ tabId }) => {
           </div>
           <div className="layout__body__right">
 
-            {nutritionData.length > 0 ? <Map geometry={renderMap} data={nutritionData} onMapClick={setAreaName} setLevel={setLevel} level={level} setSelArea={setSelArea} unit={unit} unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} selArea={selArea} isLevelThree={isLevelThree} setIsLevelThree={setIsLevelThree} handleClick={handleClick} searchRef={searchRef} setFilterDropdownValue={setFilterDropdownValue} areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator} indicatorSense={indicatorSense} switchDisplay={switchDisplay}/>
+            {
+            nutritionData.length > 0 ? 
+            <Map geometry={renderMap} 
+            data={nutritionData} 
+            onMapClick={setAreaName} 
+            setLevel={setLevel} 
+            level={level} 
+            setSelArea={setSelArea} 
+            unit={unit} 
+            unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} 
+            selArea={selArea} 
+            isLevelThree={isLevelThree} 
+            setIsLevelThree={setIsLevelThree} 
+            handleClick={handleClick} 
+            searchRef={searchRef} 
+            setFilterDropdownValue={setFilterDropdownValue} 
+            areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator}
+            indicatorSense={indicatorSense} 
+            switchDisplay={switchDisplay}
+            toggleState={toggleState}
+            />
               : <div className="text-center"></div>
             }
           </div>
+
+
+
         </div>
 
       </div>

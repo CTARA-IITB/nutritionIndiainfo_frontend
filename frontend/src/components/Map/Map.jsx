@@ -5,7 +5,7 @@ import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Row, Col } from 'react-bootstrap';
 // import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
-import { geoMercator, format, geoPath, scaleQuantize, extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
+import { geoMercator, range, legendHelpers, format, geoPath, scaleQuantize,scaleThreshold, extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
@@ -44,25 +44,16 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
   let color_range = _.map(data, d => {
     return +d.data_value
   });
+
+  let sum = color_range.reduce(function(a, b){
+    return a + b;
+}, 0);
+
+  let dotVal = Math.round(sum/4000);
+  console.log("sum", sum, dotVal);
+
   let [min, max] = extent(color_range);
-  // let comp = (max - min)/3;
-  // let low = min + comp;
-  // let high = max - comp;
-
-  // const colorScale1 = scaleQuantize().domain([min, max])
-  //   .range(["rgb(0, 128, 0)","rgb(255,255,0)", "rgb(255, 0, 0)"]);
-
-
-  const colorScale1 = scaleQuantize().domain([min, max])
-    .range(["rgb(0, 128, 0)", "rgb(255,255,0)", "rgb(255, 0, 0)"]);
-
-
-  // const colorScale3 = scaleSequential().domain([max,min])
-  //   .interpolator(interpolateOrRd);
-
-
-  // const colorScale3 = scaleSequential().domain([max,min])
-  //   .interpolator(interpolateReds);
+  
 
   const colorScale3 = scaleQuantize().domain([min, max]).range(schemeReds[5]);
 
@@ -89,35 +80,49 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
     return mergedGeoJson;
   }
 
-  let low = 10.0;
-  let medium = 20.0;
-  let high = 30.0;
-  if (selIndicator == 12) {
+  let low;
+  let medium;
+  let high;
+  if (selIndicator == 12 || selIndicator == 13) {
     low = 20.0;
     medium = 30.0;
     high = 40.0;
-  } else if (selIndicator == 19) {
+  } else if (selIndicator == 19 || selIndicator == 20) {
     low = 5.0;
     medium = 10.0;
     high = 15.0;
+  } else if (selIndicator == 17 || selIndicator == 18) {
+     low = 10.0;
+     medium = 20.0;
+     high = 30.0;
   }
 
 
 
-  let colorScale2 = (v) => {
-    if (typeof v != "undefined") {
-      let selectedColor;
-      if (v < low) { selectedColor = "#24562B"; }//matte green
-      else if (v >= low && v < medium) { selectedColor = "#FFE338"; }//matte yellow
-      else if (v >= medium && v < high) { selectedColor = "#E26313"; } //matte orange
-      else if (v >= high) { selectedColor = "#B2022F"; } //matte red
-      return selectedColor;
+  // let colorScale2 = (v) => {
+  //   if (typeof v != "undefined") {
+  //     let selectedColor;
+  //     if (v < low) { selectedColor = "#24562B"; }//matte green
+  //     else if (v >= low && v < medium) { selectedColor = "#FFE338"; }//matte yellow
+  //     else if (v >= medium && v < high) { selectedColor = "#E26313"; } //matte orange
+  //     else if (v >= high) { selectedColor = "#B2022F"; } //matte red
+  //     return selectedColor;
+  //   }
+  //   else {
+  //     return "#A9A9B0";
+  //   }
+  // };
+  function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
+    console.log("ts", i, genLength, generatedLabels,labelDelimiter);
+    if (i === 0) {
+      const values = generatedLabels[i].split(` ${labelDelimiter} `)
+      return `Less than ${values[1]}`
+    } else if (i === genLength - 1) {
+      const values = generatedLabels[i].split(` ${labelDelimiter} `)
+      return `${values[0]} or more`
     }
-    else {
-      return "#A9A9B0";
-    }
+    return generatedLabels[i]
   };
-
 
   let tooltip = select("body").append("div")
     .attr("class", "tooltip")
@@ -137,25 +142,21 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
     // let c1Value  = d => d.data_value;
     let c2Value = d => d.dataValue;
 
-    // let colorScale = scaleOrdinal();
-    // colorScale.domain(c2Value)
-    //     .range("red","yellow", "green");
     let colorScale;
-    if (unit === 2) {
-      colorScale = colorScale3;
-    } else {
-      colorScale = colorScale1;
-    }
-    let colorScale4 = scaleOrdinal()
+  
+    let colorScale2 = scaleThreshold().domain([low, medium, high])
+    .range(["#24562B", "#FFE338", "#E26313", "#B2022F"]); 
+
+    let colorScale4 = scaleQuantize()
       .domain([min, max])
       .range(["#24562B", "#FFE338", "#B2022F", "#7d0a1f"])
 
-    let colorScale4_p = scaleOrdinal()
+    let colorScale4_p = scaleQuantize()
       .domain([min, max])
       .range(["#7d0a1f", "#B2022F", "#FFE338", "#24562B"])
 
-
-    if (selIndicator === 12 || selIndicator === 19) {
+    let arrsuw = ['12', '19', '17', '18', '20', '13'];
+    if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }
     else if (indicatorSense[0].type === 'Negative') {
@@ -208,12 +209,6 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
         else
           return "#A9A9B0";
       })
-      // .style("fill", d =>{
-      //   if (typeof c2Value(d) != "undefined")
-      //     return colorScale(c2Value(d))
-      //   elsevalue
-      //     return "#A9A9B0";
-      // })
       .style("opacity", d => {
         if (d.area_id !== parseInt(selArea) && isLevelThree) {
           return ".2"
@@ -253,6 +248,17 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
    
     if (unit === 2) {
 
+      svg.selectAll('clipPath').remove();
+      svg.selectAll('points').remove();
+      svg.selectAll('*').remove();
+
+      svg
+      .selectAll(".polygon")
+      .data(mergedGeometry)
+      .join("path").attr("class", "polygon")
+      .style("fill", "#fff")
+      .attr("d", feature => pathGenerator(feature));
+
       svg.selectAll(".mask")
       .data(mergedGeometry)
       .enter()
@@ -260,28 +266,28 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
       .attr("class","mask")
       .attr("id",function(d){return d.areacode;})
       .append("path")
-      .attr("d", pathGenerator);
-  
+      .attr("d", feature => pathGenerator(feature));
 
-   svg.selectAll(".points")
-    .data(mergedGeometry)
-    .enter()
-    .append("g")
-    .attr("class","points")
-    .attr("clip-path", function(d){return "url(#"+d.areacode+")";})
-    .each(draw_circles);
-
+      svg.selectAll(".points")
+        .data(mergedGeometry)
+        .enter()
+        .append("g")
+        .attr("class","points")
+        .attr("clip-path", function(d){return "url(#"+d.areacode+")";})
+        .each(draw_circles);
 
       function draw_circles(d) {
+        //console.log("d",d);
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = bounds[1][1] - bounds[0][1];
         let x = bounds[0][0];
         let y = bounds[0][1];
+      
 
         let p = d.properties.AREA_ / (width_d * height_d);
         let p_ = d.properties.AREA_
-        let n = d.dataValue / (min);
+        let n = d.dataValue / dotVal;
 
         if (typeof d.dataValue !== 'undefined')
         {
@@ -304,7 +310,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
       {
         // var area = width * height * p;
         //var radius = 10;
-        var radius = Math.sqrt(area / (1.62*n));
+        var radius = Math.sqrt(area / (15*n));
         //  console.log("widthher",width, height, area, radius);
          var sample = poissonDiscSampler(width, height, radius);
          for (var data = [], d; d = sample();) { data.push(d); }
@@ -316,7 +322,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
       function poissonDiscSampler(width, height, radius) {
               var k = 30, // maximum number of samples before rejection
                   radius2 = radius * radius,
-                  R = 3 * radius2,
+                  R = 0.1 * radius2,
                   cellSize = radius * Math.SQRT1_2,
                   gridWidth = Math.ceil(width / cellSize),
                   gridHeight = Math.ceil(height / cellSize),
@@ -385,33 +391,48 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
     }
 
 
-
+    legend.selectAll("*").remove();
     legend.append("g")
       .attr("class", "legendQuant")
       .attr("transform", "translate(20,20)");
 
-    // let myLegend = legendColor()
-    //   .labelFormat(format(".2f"))
-    //   .title(`Legend (${unitName})`)
+
     let formatter;
     if (unit === 2) {
       //formatter = format(',.0f');
       formatter = format('.2s');
     }
     else {
-      // var p = Math.max(0, precisionFixed(0.05) - 2);
-      // formatter= format("." + p + "%");
-      formatter = format(".2f");
+      formatter = format(".1f");
     }
 
-    let myLegend = legendColor()
+    let myLegend;
+    if(unit === 2)
+    {
+      legend.select(".legendQuant").append('text').text("1 dot =" + dotVal);
+    }
+    else{
+       if (!arrsuw.includes(selIndicator)) {
+      myLegend = legendColor()
       .labelFormat(formatter)
       .title(`Legend (in ${unitName})`)
       .titleWidth(180)
       .scale(colorScale);
-
-    legend.select(".legendQuant")
+    } 
+    else{
+      myLegend = legendColor()
+      .labelFormat(formatter)
+      .title(`Legend (in ${unitName})`)
+      .titleWidth(180)
+      .labels(thresholdLabels)
+      .scale(colorScale);
+    }
+      legend.select(".legendQuant")
       .call(myLegend);
+      
+    }
+
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geometry, dimensions, data, unit])
 

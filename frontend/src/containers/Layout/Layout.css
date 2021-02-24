@@ -39,45 +39,51 @@
   background-color: red;
   width: 100%;
   margin: 0 auto;
-
-
 }
 
-.layout{
+.layout {
   height: 85vh; /* specific */
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
   /* background:red; */
 }
 
-.layout__header{
-  flex:.1;
+.layout__header {
+  flex: 0.1;
   /* background-color:blue; */
 }
 
-.layout__body{
-  flex:.9;
+.layout__body {
+  flex: 0.9;
   /* background:yellow; */
-  display:flex;
+  display: flex;
 }
-.layout__body__left{
+.layout__body__left {
   /* background:green; */
-  flex:.4;
-  overflow-y:scroll;
+  flex: 0.4;
+  overflow-y: scroll;
   width: 100%;
   height: 79vh;
   display: flex;
   flex-wrap: wrap;
-  gap:10px;
+  gap: 10px;
 }
 
-
-.layout__body__right{
-  display:flex;
+.layout__body__right {
+  display: flex;
   /* background:cyan; */
-  flex:.6;
+  flex: 0.6;
 }
 
-
-
+.chart-container-bar {
+  width: 55%;
+  height: 300px;
+  margin: 10px;
+}
+.chart-container-line {
+  width: 60%;
+  height: 300px;
+  margin-top: 10px;
+  padding-top: 30px;
+}

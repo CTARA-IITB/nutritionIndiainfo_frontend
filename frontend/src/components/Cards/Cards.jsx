@@ -20,10 +20,12 @@ const Cards = ({ indicatorDetail , setSelIndicator}) => {
 
   let colorvar1 = true;
   if (indicatorDetail) {
+    console.log("INDICATOR",indicatorDetail)
     var element1 = [];
     for (var i = 0; i < indicatorcount; i++) {
       if (colorvar1 === true) {
         element1.push(<div className="card"> <Card
+          id = {indicatorDetail[i].indicator.indicator_id}
           title={indicatorDetail[i].indicator.indicator_name}
           value={indicatorDetail[i].data_value}
           value_type={indicatorDetail[i].unit.unit_name}
@@ -38,6 +40,7 @@ const Cards = ({ indicatorDetail , setSelIndicator}) => {
       }
       else {
         element1.push(<div className="card"> <Card
+          id = {indicatorDetail[i].indicator.indicator_id}
           title={indicatorDetail[i].indicator.indicator_name}
           value={indicatorDetail[i].data_value}
           value_type={indicatorDetail[i].unit.unit_name}

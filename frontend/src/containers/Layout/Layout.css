@@ -76,7 +76,14 @@
   flex: 0.6;
 }
 
-.layout__body__bottom {
-  height: 79vh;
-  weight: 79vh;
+.chart-container-bar {
+  width: 55%;
+  height: 300px;
+  margin: 10px;
+}
+.chart-container-line {
+  width: 60%;
+  height: 300px;
+  margin-top: 10px;
+  padding-top: 30px;
 }

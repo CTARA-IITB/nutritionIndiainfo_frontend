@@ -308,7 +308,8 @@ console.log("indicatorBar",indicatorBar);
       datasets: [{
       label: [graphTitle,',',selSubgroup,',',unit],
       data:barData,
-      backgroundColor: ["rgb(255, 99, 132)", "rgb(77, 103, 191)", "green", "rgb(230, 168, 92)", "rgb(142, 112, 194)", "rgb(134, 219, 204)"]
+      backgroundColor: "rgb(255, 99, 132)"
+      // backgroundColor: ["rgb(255, 99, 132)", "rgb(77, 103, 191)", "green", "rgb(230, 168, 92)", "rgb(142, 112, 194)", "rgb(134, 219, 204)"]
       }]
 }
 
@@ -376,9 +377,31 @@ console.log("indicatorBar",indicatorBar);
             }
           </div>
         </div>
-        <div>
-          <Bar data={datab} />
-          <Line data={datal} />
+        
+        <div class="chart-container-bar">
+
+          <Bar data={datab} 
+               options={{
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero: true
+                    }
+                  }]
+                }
+              }}
+           />
+
+        </div>
+        <div class="chart-container-line">
+        <Line data={datal} 
+        
+        legend= {{
+          position: "top",
+          // display: false,
+          // align: "start"
+      }}
+      />
         </div>
 
       </div>

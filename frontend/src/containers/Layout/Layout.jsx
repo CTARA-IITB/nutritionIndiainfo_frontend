@@ -367,67 +367,58 @@ console.log("indicatorBar",indicatorBar);
         </div>
         <div className="layout__body">
           <div className="layout__body__left">
-            <Cards indicatorDetail={indicatorDetail} 
-            setSelIndicator={setSelIndicator}
-            />
+            <div className="layout__body__left__cards">
+              <Cards indicatorDetail={indicatorDetail} 
+              setSelIndicator={setSelIndicator}
+              />
+            </div>
+            <div className="layout__body__left__trend">
+              <Line data={datal}/>
+            </div>
+            
           </div>
           <div className="layout__body__right">
-
-            {
-            nutritionData.length > 0 ? 
-            <Map geometry={renderMap} 
-            data={nutritionData} 
-            onMapClick={setAreaName} 
-            setLevel={setLevel} 
-            level={level} 
-            setSelArea={setSelArea} 
-            unit={unit} 
-            unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} 
-            selArea={selArea} 
-            isLevelThree={isLevelThree} 
-            setIsLevelThree={setIsLevelThree} 
-            handleClick={handleClick} 
-            searchRef={searchRef} 
-            setFilterDropdownValue={setFilterDropdownValue} 
-            areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator}
-            indicatorSense={indicatorSense} 
-            switchDisplay={switchDisplay}
-            toggleState={toggleState}
+            <div className="layout__body__right__map">
+              {
+              nutritionData.length > 0 ? 
+              <Map geometry={renderMap} 
+              data={nutritionData} 
+              onMapClick={setAreaName} 
+              setLevel={setLevel} 
+              level={level} 
+              setSelArea={setSelArea} 
+              unit={unit} 
+              unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} 
+              selArea={selArea} 
+              isLevelThree={isLevelThree} 
+              setIsLevelThree={setIsLevelThree} 
+              handleClick={handleClick} 
+              searchRef={searchRef} 
+              setFilterDropdownValue={setFilterDropdownValue} 
+              areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator}
+              indicatorSense={indicatorSense} 
+              switchDisplay={switchDisplay}
+              toggleState={toggleState}
+              />
+                : <div className="text-center"></div>
+              }
+            </div>
+            <div className="layout__body__right__bar">
+              <Bar data={datab} 
+                options={{
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }}
             />
-              : <div className="text-center"></div>
-            }
+            </div>
+       
           </div>
-
-
-
         </div>
-        
-        <div class="chart-container-bar">
-
-          <Bar data={datab} 
-               options={{
-                scales: {
-                  yAxes: [{
-                    ticks: {
-                      beginAtZero: true
-                    }
-                  }]
-                }
-              }}
-           />
-
-        </div>
-        <div class="chart-container-line">
-        <Line data={datal} 
-        
-      //   legend= {{
-      //     position: "top",
-      //     display: false,
-      //     align: "start"
-      // }}
-      />
-        </div>
-
       </div>
     </React.Fragment>
   );

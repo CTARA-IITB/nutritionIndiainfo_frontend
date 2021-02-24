@@ -42,28 +42,31 @@
 }
 
 .layout {
-  height: 85vh; /* specific */
+  height: 85vh; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* background:red; */
+  gap:10px
 }
 
 .layout__header {
   flex: 0.1;
   /* background-color:blue; */
 }
-
-.layout__body {
-  flex: 0.9;
-  /* background:yellow; */
+.layout__body{
+  flex: .9;
   display: flex;
 }
+
 .layout__body__left {
-  /* background:green; */
   flex: 0.4;
+  display: flex;
+  gap:50px;
+  flex-direction: column;
+}
+.layout__body__left__cards {
+  width:100%;
   overflow-y: scroll;
-  width: 100%;
   height: 79vh;
   display: flex;
   flex-wrap: wrap;
@@ -72,8 +75,17 @@
 
 .layout__body__right {
   display: flex;
-  /* background:cyan; */
   flex: 0.6;
+  display: flex;
+  gap:90px;
+  flex-direction: column;
+
+}
+
+.layout__body__right__bar{
+  width: 70%;
+  margin: auto;
+
 }
 
 .chart-container-bar {

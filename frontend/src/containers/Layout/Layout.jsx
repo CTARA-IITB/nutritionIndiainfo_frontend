@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Table } from 'react-bootstrap';
 // import ClipLoader from "react-spinners/ClipLoader";
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../../containers/SkeletonCard";
-
+import {Bar,Line} from 'react-chartjs-2';
 
 // import Form from "../../components/Form/Form";
 import { Map } from "../../components/Map/Map";
@@ -39,9 +39,11 @@ const Layout = ({ tabId }) => {
   const [selArea, setSelArea] = useState(iniSelArea);
   const [areaList, setAreaList] = useState(null);
   const [parentArea, setParentArea] = useState(null);
-
+  const [indicatorBar, setIndicatorBar] = useState(null);
+  const [indicatorTrend, setIndicatorTrend]=useState(null);
 
   const [areaName, setAreaName] = useState('IND');
+
 
   const [indicatorDetail, setIndicatorDetail] = useState(null);
   const [unit, setUnit] = useState(null);
@@ -50,7 +52,7 @@ const Layout = ({ tabId }) => {
 
   const iniSelIndicator = '12';
   const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
-
+  const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState(null);
 
   const iniSelSubgroup = '6';  //All
   const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
@@ -70,18 +72,10 @@ const Layout = ({ tabId }) => {
   //   )
   // },[])
 
-   //get Units Name
+   
 
-   useEffect(() => {
-    json(`http://localhost:8000/api/getUnitName`)
-    .then(units => {setUnitList(units)})
-  },[])
-
-
-
-
-
-  //india data
+ 
+//india data
   const [selIndiaData, setSelIndiaData] = useState(null);
 
   useEffect(() => {
@@ -124,10 +118,43 @@ const Layout = ({ tabId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selIndicator, selSubgroup, selTimeperiod, selArea, parentArea])
 
+//  get graph title
+useEffect(() => {
+  const url = 'http://localhost:8000/api/indicator/'+tab;
+  json(url).then( options =>{
+    setIndicatorDropdownOpt(options);
+  }   
+  )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+ }, [tabId])
+ let graphTitle=selIndicator;
+ if (indicatorDropdownOpt) {
+     indicatorDropdownOpt.map(indi => {
+       if(indi.value===selIndicator)
+         {graphTitle=indi.title
+         }
+       });
+     
+   }
+//getting graph data
+  useEffect(() => {
+    const url = `http://localhost:8000/api/getIndicatorBar/${selIndicator}/${selTimeperiod}/${selArea}`;
+    json(url).then(indicatorBar => {
+      setIndicatorBar(indicatorBar)
+    })
+}, [selIndicator, selSubgroup, selTimeperiod, selArea])
+console.log("indicatorBar",indicatorBar);
 
-
-
-  //set Unit on indicator and subgroup change
+  //getting trend chart data
+  useEffect(() => {
+    const url = `http://localhost:8000/api/getIndicatorTrend/${selIndicator}/${selSubgroup}/${selArea}`;
+    json(url).then(indicatorTrend => {
+      setIndicatorTrend(indicatorTrend)
+    })
+  }, [selIndicator, selSubgroup, selArea])
+  console.log("indicatorTrend",indicatorTrend);
+  
+//set Unit on indicator and subgroup change
 
   useEffect(() => {
     const url = `http://localhost:8000/api/getUnit/${selIndicator}/${selSubgroup}`;
@@ -157,7 +184,15 @@ const Layout = ({ tabId }) => {
 
     })
   }, [tab])
- 
+  
+ //get Units Name
+
+  useEffect(() => {
+    const url = "http://localhost:8000/api/getUnitName";
+    json(url).then(unitList => {
+      setUnitList(unitList)
+    })
+  }, [])
 
 
   //getting indicator sense
@@ -255,11 +290,46 @@ const Layout = ({ tabId }) => {
 
     } else {
       renderMap = boundaries.state;
-
       nutritionData = selIndiaData;
     }
     // console.log(stateBoundary);
   }
+    let barLabel=[];
+    indicatorBar.map(i=>{
+      barLabel.push(i.subgroup.subgroup_name)
+    })
+    let barData=[];
+    indicatorBar.map(i=>{
+      barData.push(+i.data_value)
+    })
+    let  datab= {
+      labels:barLabel,
+      datasets: [{
+      label: [graphTitle,',',selSubgroup,',',unit],
+      data:barData,
+      backgroundColor: "rgb(255, 99, 132)"
+      // backgroundColor: ["rgb(255, 99, 132)", "rgb(77, 103, 191)", "green", "rgb(230, 168, 92)", "rgb(142, 112, 194)", "rgb(134, 219, 204)"]
+      }]
+}
+
+    let trendLabel=[];
+    indicatorTrend.map(i=>{
+      trendLabel.push(i.timeperiod.timeperiod)
+    })
+    let trendData=[];
+    indicatorTrend.map(i=>{
+      trendData.push(+i.data_value)
+    })
+    let  datal= {
+      labels:trendLabel,
+      datasets: [{
+      label: [graphTitle,',',selSubgroup,',',unit],
+      fill: false,
+      borderWidth:3,
+      borderColor:'rgb(106, 166, 41)',
+      data:trendData
+      }]
+    }
 
 
   if (!nutritionData) {
@@ -297,39 +367,58 @@ const Layout = ({ tabId }) => {
         </div>
         <div className="layout__body">
           <div className="layout__body__left">
-            <Cards indicatorDetail={indicatorDetail} />
+            <div className="layout__body__left__cards">
+              <Cards indicatorDetail={indicatorDetail} 
+              setSelIndicator={setSelIndicator}
+              />
+            </div>
+            <div className="layout__body__left__trend">
+              <Line data={datal}/>
+            </div>
+            
           </div>
           <div className="layout__body__right">
-
-            {
-            nutritionData.length > 0 ? 
-            <Map geometry={renderMap} 
-            data={nutritionData} 
-            onMapClick={setAreaName} 
-            setLevel={setLevel} 
-            level={level} 
-            setSelArea={setSelArea} 
-            unit={unit} 
-            unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} 
-            selArea={selArea} 
-            isLevelThree={isLevelThree} 
-            setIsLevelThree={setIsLevelThree} 
-            handleClick={handleClick} 
-            searchRef={searchRef} 
-            setFilterDropdownValue={setFilterDropdownValue} 
-            areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator}
-            indicatorSense={indicatorSense} 
-            switchDisplay={switchDisplay}
-            toggleState={toggleState}
+            <div className="layout__body__right__map">
+              {
+              nutritionData.length > 0 ? 
+              <Map geometry={renderMap} 
+              data={nutritionData} 
+              onMapClick={setAreaName} 
+              setLevel={setLevel} 
+              level={level} 
+              setSelArea={setSelArea} 
+              unit={unit} 
+              unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} 
+              selArea={selArea} 
+              isLevelThree={isLevelThree} 
+              setIsLevelThree={setIsLevelThree} 
+              handleClick={handleClick} 
+              searchRef={searchRef} 
+              setFilterDropdownValue={setFilterDropdownValue} 
+              areaDropdownOpt={areaDropdownOpt} selIndicator={selIndicator}
+              indicatorSense={indicatorSense} 
+              switchDisplay={switchDisplay}
+              toggleState={toggleState}
+              />
+                : <div className="text-center"></div>
+              }
+            </div>
+            <div className="layout__body__right__bar">
+              <Bar data={datab} 
+                options={{
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }}
             />
-              : <div className="text-center"></div>
-            }
+            </div>
+       
           </div>
-
-
-
         </div>
-
       </div>
     </React.Fragment>
   );

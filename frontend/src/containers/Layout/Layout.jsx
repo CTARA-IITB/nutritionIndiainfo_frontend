@@ -396,11 +396,11 @@ console.log("indicatorBar",indicatorBar);
         <div class="chart-container-line">
         <Line data={datal} 
         
-        legend= {{
-          position: "top",
-          // display: false,
-          // align: "start"
-      }}
+      //   legend= {{
+      //     position: "top",
+      //     display: false,
+      //     align: "start"
+      // }}
       />
         </div>
 

@@ -296,7 +296,7 @@ console.log("indicatorBar",indicatorBar);
   }
     let barLabel=[];
     indicatorBar.map(i=>{
-      barLabel.push(i.subgroup.subgroup_name)
+      barLabel.push(i.subgroup.subgroup_name+";"+i.subgroup.sub_category)
     })
     let barData=[];
     indicatorBar.map(i=>{
@@ -307,8 +307,8 @@ console.log("indicatorBar",indicatorBar);
       datasets: [{
       label: [graphTitle,',',selSubgroup,',',unit],
       data:barData,
+      xAxisID:'xAxis1',
       backgroundColor: "rgb(255, 99, 132)"
-      // backgroundColor: ["rgb(255, 99, 132)", "rgb(77, 103, 191)", "green", "rgb(230, 168, 92)", "rgb(142, 112, 194)", "rgb(134, 219, 204)"]
       }]
 }
 
@@ -408,6 +408,35 @@ console.log("indicatorBar",indicatorBar);
               <Bar data={datab} 
                 options={{
                   scales: {
+                    xAxes:[{
+                      id:'xAxis1',
+                      type:"category",
+                      ticks:{
+                        callback:function(label){
+                          var subgroup = label.split(";")[0];
+                          return subgroup;
+                        }
+                      }
+
+                    },
+                    {
+                      id:'xAxis2',
+                      type:"category",
+                      gridLines: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                      },
+                      ticks:{
+                        callback:function(label){
+                          var subgroup = label.split(";")[0];
+                          var type = label.split(";")[1];
+                          if(subgroup === "Rural" || subgroup === "Female"  || subgroup ==="ST" || subgroup === "Middle"){
+                            return type
+                          }
+                          else
+                          return ""
+                        }
+                      }
+                    }],
                     yAxes: [{
                       ticks: {
                         beginAtZero: true

@@ -88,11 +88,15 @@ export const Map = ({
       }
     });
 
-    let mergedGeoJson = _(newArr)
-      .keyBy('areacode')
-      .merge(_.keyBy(geojson, 'properties.ID_'))
-      .values()
-      .value();
+    // let mergedGeoJson = _(newArr)
+    //   .keyBy('areacode')
+    //   .merge(_.keyBy(geojson, 'properties.ID_'))
+    //   .values()
+    //   .value();
+
+      let mergedGeoJson = _.map(geojson, function(item) {
+        return _.assign(item, _.find(newArr, ['areacode', item.properties.ID_]));
+    });
 
     return mergedGeoJson;
   }
@@ -129,11 +133,11 @@ export const Map = ({
     let sum = color_range.reduce(function(a, b){
       return a + b;
   }, 0);
-  
+    console.log("SUM",sum)
     let dotVal = Math.round(sum/4000);
-    console.log("DOTVAL",dotVal)
+    console.log("SUMMMMM",dotVal)
     let [min, max] = extent(color_range);
-    console.log("DOTVALMIN",min)
+    console.log("MIN",min)
   
     let low;
     let medium;
@@ -284,7 +288,8 @@ export const Map = ({
 
         let p = d.properties.AREA_ / (width_d * height_d);
         let p_ = d.properties.AREA_
-        let n = d.dataValue / (min);
+        let n = d.dataValue / (min
+          );
 
         if (typeof d.dataValue !== 'undefined')
         {

@@ -49,10 +49,17 @@ export const createHierarchy = (options) =>{
         cellSize = radius * Math.SQRT1_2,
         gridWidth = Math.ceil(width / cellSize),
         gridHeight = Math.ceil(height / cellSize),
-        grid = new Array(gridWidth * gridHeight),
+        // grid = new Array(gridWidth * gridHeight);
+
+    
+
         queue = [],
         queueSize = 0,
         sampleSize = 0;
+
+
+        let  gridSize = Math.round(gridWidth*gridHeight);
+        let  grid = new Array(gridSize);
 
     return function() {
       if (!sampleSize) return sample(Math.random() * width, Math.random() * height);

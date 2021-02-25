@@ -49,10 +49,11 @@ class UnitNameSerializer(serializers.ModelSerializer):
 class IndicatorUnitSubgroupSerializer(serializers.ModelSerializer):
     value = serializers.CharField(source='subgroup.subgroup_id')
     title = serializers.CharField(source='subgroup.subgroup_name')
+    subgroup_type = serializers.CharField(source='subgroup.sub_category')
 
     class Meta:
         model = IndicatorUnitSubgroup
-        fields = ('value','title')	
+        fields = ('value','title','subgroup_type')	
 
 class UtDatatimeSerializer(serializers.ModelSerializer):
     value = serializers.CharField(source='timeperiod.timeperiod_id')

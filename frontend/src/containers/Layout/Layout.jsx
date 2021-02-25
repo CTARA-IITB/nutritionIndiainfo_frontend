@@ -325,6 +325,7 @@ console.log("indicatorBar",indicatorBar);
       datasets: [{
       label: [graphTitle,',',selSubgroup,',',unit],
       fill: false,
+      lineTension:0,
       borderWidth:3,
       borderColor:'rgb(106, 166, 41)',
       data:trendData

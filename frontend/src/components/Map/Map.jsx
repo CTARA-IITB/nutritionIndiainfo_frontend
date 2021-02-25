@@ -61,35 +61,7 @@ export const Map = ({
   //   statusMsg ="Click on Map to go back to India Map";
   // }
 
-  let color_range = _.map(data, d => {
-    return +d.data_value
-  });
-
-  let sum = color_range.reduce(function(a, b){
-    return a + b;
-}, 0);
-
-  let dotVal = Math.round(sum/4000);
-  console.log("sum", sum, dotVal);
-
-  let [min, max] = extent(color_range);
-
-  let low;
-  let medium;
-  let high;
-  if (selIndicator == 12 || selIndicator == 13) {
-    low = 20.0;
-    medium = 30.0;
-    high = 40.0;
-  } else if (selIndicator == 19 || selIndicator == 20) {
-    low = 5.0;
-    medium = 10.0;
-    high = 15.0;
-  } else if (selIndicator == 17 || selIndicator == 18) {
-     low = 10.0;
-     medium = 20.0;
-     high = 30.0;
-  }
+  
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
     console.log("ts", i, genLength, generatedLabels,labelDelimiter);
@@ -148,6 +120,38 @@ export const Map = ({
 
     let c2Value = d => d.dataValue;
 
+
+
+    let color_range = _.map(data, d => {
+      return +d.data_value
+    });
+    
+    let sum = color_range.reduce(function(a, b){
+      return a + b;
+  }, 0);
+  
+    let dotVal = Math.round(sum/4000);
+    console.log("DOTVAL",dotVal)
+    let [min, max] = extent(color_range);
+    console.log("DOTVALMIN",min)
+  
+    let low;
+    let medium;
+    let high;
+    if (selIndicator == 12 || selIndicator == 13) {
+      low = 20.0;
+      medium = 30.0;
+      high = 40.0;
+    } else if (selIndicator == 19 || selIndicator == 20) {
+      low = 5.0;
+      medium = 10.0;
+      high = 15.0;
+    } else if (selIndicator == 17 || selIndicator == 18) {
+       low = 10.0;
+       medium = 20.0;
+       high = 30.0;
+    }
+    
     let colorScale;
   
     let colorScale2 = scaleThreshold().domain([low, medium, high])
@@ -317,7 +321,7 @@ export const Map = ({
     legend.append("g")
       .attr("class", "legendQuant")
       .attr("transform", "translate(20,20)");
-      
+
     let formatter;
     if (unit === 2) {
       //formatter = format(',.0f');
@@ -352,12 +356,6 @@ export const Map = ({
       .call(myLegend);
       
     }
-
-
-  
-   
-
-   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geometry, dimensions, data, unit])
 
@@ -367,9 +365,6 @@ export const Map = ({
   }else{
     switchButton= null;
   }
-  
-
-
   return (
     <>
       <div className="map">

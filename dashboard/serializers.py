@@ -29,7 +29,7 @@ class IndicatorSerializer(serializers.ModelSerializer):
 class SubgroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subgroup
-        fields = ('subgroup_id','subgroup_name') 
+        fields = ('subgroup_id','subgroup_name','sub_category') 
 
 class IndicatorAllSerializer(serializers.ModelSerializer):
     class Meta:

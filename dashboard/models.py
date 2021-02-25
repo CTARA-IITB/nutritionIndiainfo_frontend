@@ -184,6 +184,7 @@ class Subgroup(models.Model):
     subgroup_id = models.AutoField(primary_key=True)
     subgroup_name = models.CharField(max_length=20, blank=True, null=True)
     subgroup_order = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    sub_category = models.CharField(max_length=40, blank=True, null=True)
 
     class Meta:
         managed = False

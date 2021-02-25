@@ -51,7 +51,7 @@ export const createHierarchy = (options) =>{
         gridHeight = Math.ceil(height / cellSize),
         // grid = new Array(gridWidth * gridHeight);
 
-    
+        
 
         queue = [],
         queueSize = 0,
@@ -59,6 +59,7 @@ export const createHierarchy = (options) =>{
 
 
         let  gridSize = Math.round(gridWidth*gridHeight);
+        console.log("gridSize", gridSize);
         let  grid = new Array(gridSize);
 
     return function() {

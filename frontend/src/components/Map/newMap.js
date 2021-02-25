@@ -5,8 +5,8 @@ import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Row, Col } from 'react-bootstrap';
 // import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
-import { geoMercator, format, geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
-import {poissonDiscSampler} from '../../utils'
+import { geoMercator, range, legendHelpers, format, geoPath, scaleQuantize,scaleThreshold, extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
+
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
 import { AnimateOnChange } from 'react-animation';
@@ -73,36 +73,11 @@ export const Map = ({
   console.log("sum", sum, dotVal);
 
   let [min, max] = extent(color_range);
+  
 
-  let low;
-  let medium;
-  let high;
-  if (selIndicator == 12 || selIndicator == 13) {
-    low = 20.0;
-    medium = 30.0;
-    high = 40.0;
-  } else if (selIndicator == 19 || selIndicator == 20) {
-    low = 5.0;
-    medium = 10.0;
-    high = 15.0;
-  } else if (selIndicator == 17 || selIndicator == 18) {
-     low = 10.0;
-     medium = 20.0;
-     high = 30.0;
-  }
+  const colorScale3 = scaleQuantize().domain([min, max]).range(schemeReds[5]);
 
-  function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
-    console.log("ts", i, genLength, generatedLabels,labelDelimiter);
-    if (i === 0) {
-      const values = generatedLabels[i].split(` ${labelDelimiter} `)
-      return `Less than ${values[1]}`
-    } else if (i === genLength - 1) {
-      const values = generatedLabels[i].split(` ${labelDelimiter} `)
-      return `${values[0]} or more`
-    }
-    return generatedLabels[i]
-  };
-
+  // const colorScale = scaleSequential(interpolateRdYlGn).domain()
 
   //merge geometry and data
 
@@ -125,12 +100,49 @@ export const Map = ({
     return mergedGeoJson;
   }
 
+  let low;
+  let medium;
+  let high;
+  if (selIndicator == 12 || selIndicator == 13) {
+    low = 20.0;
+    medium = 30.0;
+    high = 40.0;
+  } else if (selIndicator == 19 || selIndicator == 20) {
+    low = 5.0;
+    medium = 10.0;
+    high = 15.0;
+  } else if (selIndicator == 17 || selIndicator == 18) {
+     low = 10.0;
+     medium = 20.0;
+     high = 30.0;
+  }
 
 
 
-
-
-
+  // let colorScale2 = (v) => {
+  //   if (typeof v != "undefined") {
+  //     let selectedColor;
+  //     if (v < low) { selectedColor = "#24562B"; }//matte green
+  //     else if (v >= low && v < medium) { selectedColor = "#FFE338"; }//matte yellow
+  //     else if (v >= medium && v < high) { selectedColor = "#E26313"; } //matte orange
+  //     else if (v >= high) { selectedColor = "#B2022F"; } //matte red
+  //     return selectedColor;
+  //   }
+  //   else {
+  //     return "#A9A9B0";
+  //   }
+  // };
+  function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
+    console.log("ts", i, genLength, generatedLabels,labelDelimiter);
+    if (i === 0) {
+      const values = generatedLabels[i].split(` ${labelDelimiter} `)
+      return `Less than ${values[1]}`
+    } else if (i === genLength - 1) {
+      const values = generatedLabels[i].split(` ${labelDelimiter} `)
+      return `${values[0]} or more`
+    }
+    return generatedLabels[i]
+  };
 
   let tooltip = select("body").append("div")
     .attr("class", "tooltip")
@@ -146,6 +158,8 @@ export const Map = ({
     const pathGenerator = geoPath(projection);
     let mergedGeometry = addProperties(geometry.features, data);
 
+
+    // let c1Value  = d => d.data_value;
     let c2Value = d => d.dataValue;
 
     let colorScale;
@@ -172,12 +186,22 @@ export const Map = ({
       colorScale = colorScale4_p;
 
     }
-    
-  
 
 
 
+    // if (typeof c2Value != "undefined"){
+    //   if(selIndicator === 12 || selIndicator === 19){
+    //     colorScale = colorScale2;
+    //   }
+    //   else if(indicatorSense[0].type === 'Negative'){
+    //     colorScale = colorScale4;
 
+    //   }else if(indicatorSense[0].type ==='Positive'){
+    //     colorScale = colorScale4_p;
+
+    //   }
+    // }else
+    //     return colorScale="#A9A9B0";
 
 
     const onMouseMove = (event, d) => {
@@ -205,12 +229,6 @@ export const Map = ({
         else
           return "#A9A9B0";
       })
-      // .style("fill", d =>{
-      //   if (typeof c2Value(d) != "undefined")
-      //     return colorScale(c2Value(d))
-      //   elsevalue
-      //     return "#A9A9B0";
-      // })
       .style("opacity", d => {
         if (d.area_id !== parseInt(selArea) && isLevelThree) {
           return ".2"
@@ -252,6 +270,17 @@ export const Map = ({
    
     if (unit === 2) {
 
+      svg.selectAll('clipPath').remove();
+      svg.selectAll('points').remove();
+      svg.selectAll('*').remove();
+
+      svg
+      .selectAll(".polygon")
+      .data(mergedGeometry)
+      .join("path").attr("class", "polygon")
+      .style("fill", "#fff")
+      .attr("d", feature => pathGenerator(feature));
+
       svg.selectAll(".mask")
       .data(mergedGeometry)
       .enter()
@@ -259,28 +288,28 @@ export const Map = ({
       .attr("class","mask")
       .attr("id",function(d){return d.areacode;})
       .append("path")
-      .attr("d", pathGenerator);
-  
+      .attr("d", feature => pathGenerator(feature));
 
-   svg.selectAll(".points")
-    .data(mergedGeometry)
-    .enter()
-    .append("g")
-    .attr("class","points")
-    .attr("clip-path", function(d){return "url(#"+d.areacode+")";})
-    .each(draw_circles);
-
+      svg.selectAll(".points")
+        .data(mergedGeometry)
+        .enter()
+        .append("g")
+        .attr("class","points")
+        .attr("clip-path", function(d){return "url(#"+d.areacode+")";})
+        .each(draw_circles);
 
       function draw_circles(d) {
+        //console.log("d",d);
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = bounds[1][1] - bounds[0][1];
         let x = bounds[0][0];
         let y = bounds[0][1];
+      
 
         let p = d.properties.AREA_ / (width_d * height_d);
         let p_ = d.properties.AREA_
-        let n = d.dataValue / (min);
+        let n = d.dataValue / dotVal;
 
         if (typeof d.dataValue !== 'undefined')
         {
@@ -303,7 +332,7 @@ export const Map = ({
       {
         // var area = width * height * p;
         //var radius = 10;
-        var radius = Math.sqrt(area / (1.62*n));
+        var radius = Math.sqrt(area / (15*n));
         //  console.log("widthher",width, height, area, radius);
          var sample = poissonDiscSampler(width, height, radius);
          for (var data = [], d; d = sample();) { data.push(d); }
@@ -311,13 +340,85 @@ export const Map = ({
       
       }
       
+      
+      function poissonDiscSampler(width, height, radius) {
+              var k = 30, // maximum number of samples before rejection
+                  radius2 = radius * radius,
+                  R = 0.1 * radius2,
+                  cellSize = radius * Math.SQRT1_2,
+                  gridWidth = Math.ceil(width / cellSize),
+                  gridHeight = Math.ceil(height / cellSize),
+                  grid = new Array(gridWidth * gridHeight),
+                  queue = [],
+                  queueSize = 0,
+                  sampleSize = 0;
+      
+              return function() {
+                if (!sampleSize) return sample(Math.random() * width, Math.random() * height);
+      
+                // Pick a random existing sample and remove it from the queue.
+                while (queueSize) {
+                  var i = Math.random() * queueSize | 0,
+                      s = queue[i];
+      
+                  // Make a new candidate between [radius, 2 * radius] from the existing sample.
+                  for (var j = 0; j < k; ++j) {
+                    var a = 2 * Math.PI * Math.random(),
+                        r = Math.sqrt(Math.random() * R + radius2),
+                        x = s[0] + r * Math.cos(a),
+                        y = s[1] + r * Math.sin(a);
+      
+                    // Reject candidates that are outside the allowed extent,
+                    // or closer than 2 * radius to any existing sample.
+                    if (0 <= x && x < width && 0 <= y && y < height && far(x, y)) return sample(x, y);
+                  }
+      
+                  queue[i] = queue[--queueSize];
+                  queue.length = queueSize;
+                }
+              };
+      
+              function far(x, y) {
+                var i = x / cellSize | 0,
+                    j = y / cellSize | 0,
+                    i0 = Math.max(i - 2, 0),
+                    j0 = Math.max(j - 2, 0),
+                    i1 = Math.min(i + 3, gridWidth),
+                    j1 = Math.min(j + 3, gridHeight);
+      
+                for (j = j0; j < j1; ++j) {
+                  var o = j * gridWidth;
+                  for (i = i0; i < i1; ++i) {
+                    if (s = grid[o + i]) {
+                      var s,
+                          dx = s[0] - x,
+                          dy = s[1] - y;
+                      if (dx * dx + dy * dy < radius2) return false;
+                    }
+                  }
+                }
+      
+                return true;
+              }
+      
+              function sample(x, y) {
+                var s = [x, y];
+                queue.push(s);
+                grid[gridWidth * (y / cellSize | 0) + (x / cellSize | 0)] = s;
+                ++sampleSize;
+                ++queueSize;
+                return s;
+              }
+            }
     }
+
 
     legend.selectAll("*").remove();
     legend.append("g")
       .attr("class", "legendQuant")
       .attr("transform", "translate(20,20)");
-      
+
+
     let formatter;
     if (unit === 2) {
       //formatter = format(',.0f');
@@ -352,10 +453,6 @@ export const Map = ({
       .call(myLegend);
       
     }
-
-
-  
-   
 
    
     // eslint-disable-next-line react-hooks/exhaustive-deps

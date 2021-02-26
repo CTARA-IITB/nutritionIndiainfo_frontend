@@ -36,6 +36,7 @@ export const Map = ({
   switchDisplay,
   toggleState
 }) => {
+  console.log("unitatstart", unit);
   console.log(geometry);
   const svgRef = useRef();
   const svgLegRef = useRef();
@@ -64,7 +65,6 @@ export const Map = ({
   
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
-    console.log("ts", i, genLength, generatedLabels,labelDelimiter);
     if (i === 0) {
       const values = generatedLabels[i].split(` ${labelDelimiter} `)
       return `Less than ${values[1]}`
@@ -198,9 +198,10 @@ export const Map = ({
           .style("top", event.clientY - 30 + "px");
       }
     };
-
-
-
+    if(unit !== 2)
+    {
+    svg.selectAll("*").remove();
+  
     svg
       .selectAll(".polygon")
       .data(mergedGeometry)
@@ -254,11 +255,27 @@ export const Map = ({
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature));
 
-    svg.selectAll(".points").remove();
+    }
 
     // bubbles for numeric unit values
    
     if (unit === 2) {
+
+      svg.selectAll('*').remove();
+
+      svg
+      .selectAll(".polygon")
+      .data(mergedGeometry)
+      .join("path").attr("class", "polygon")
+      .style("fill", "#fff")
+      .on("mousemove", (i, d) => onMouseMove(i, d))
+      .on("mouseout", function (d) {
+        tooltip
+          // .transition()    
+          // .duration(500)    
+          .style("opacity", 0);
+      })
+      .attr("d", feature => pathGenerator(feature));
 
       svg.selectAll(".mask")
       .data(mergedGeometry)
@@ -280,6 +297,7 @@ export const Map = ({
 
 
       function draw_circles(d) {
+        console.log("inside draw circle");
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = bounds[1][1] - bounds[0][1];
@@ -288,8 +306,7 @@ export const Map = ({
 
         let p = d.properties.AREA_ / (width_d * height_d);
         let p_ = d.properties.AREA_
-        let n = d.dataValue / (min
-          );
+        let n = d.dataValue / (min);
 
         if (typeof d.dataValue !== 'undefined')
         {
@@ -345,14 +362,16 @@ export const Map = ({
        if (!arrsuw.includes(selIndicator)) {
       myLegend = legendColor()
       .labelFormat(formatter)
-      .title(`Legend (in ${unitName})`)
+      .title('Legend')
+      //.title(`Legend (in ${unitName})`)
       .titleWidth(180)
       .scale(colorScale);
     } 
     else{
       myLegend = legendColor()
       .labelFormat(formatter)
-      .title(`Legend (in ${unitName})`)
+      .title('Legend')
+     // .title(`Legend (in ${unitName})`)
       .titleWidth(180)
       .labels(thresholdLabels)
       .scale(colorScale);

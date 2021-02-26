@@ -118,10 +118,11 @@ class UtDataTrendSerializer(serializers.ModelSerializer):
     timeperiod = TimeperiodSerializer()
     unit = UnitNameSerializer()
     data_value = serializers.DecimalField(max_digits=255, decimal_places=2)
+    subgroup = SubgroupSerializer()
   
     class Meta:
         model = UtData
-        fields =  ('timeperiod', 'unit' ,'data_value')
+        fields =  ('timeperiod', 'unit' ,'data_value', 'subgroup')
 
 class UtDataBarSerializer(serializers.ModelSerializer):
     subgroup = SubgroupSerializer()

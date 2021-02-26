@@ -67,10 +67,10 @@
 .layout__body__left__cards {
   width:100%;
   overflow-y: scroll;
-  height: 79vh;
+  height: 70vh;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 0px;
 }
 
 .layout__body__right {
@@ -86,6 +86,11 @@
   width: 70%;
   margin: auto;
 
+}
+
+.layout__body__left__trend{
+margin-top: 70px;
+margin-left: 10px;
 }
 
 .chart-container-bar {

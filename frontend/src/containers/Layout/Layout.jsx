@@ -17,6 +17,7 @@ import { json } from 'd3';
 import Cards from '../../components/Cards/Cards.jsx';
 import SplitPane, { Pane } from 'react-split-pane';
 import "./Layout.css";
+import { TextCenter } from "react-bootstrap-icons";
 
 // const renderedMap = (boundaries) => (boundaries.state);
 
@@ -119,19 +120,22 @@ const Layout = ({ tabId }) => {
   }, [selIndicator, selSubgroup, selTimeperiod, selArea, parentArea])
 
 //  get graph title
-useEffect(() => {
-  const url = 'http://localhost:8000/api/indicator/'+tab;
-  json(url).then( options =>{
-    setIndicatorDropdownOpt(options);
-  }   
-  )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
- }, [tabId])
+// useEffect(() => {
+//   const url = 'http://localhost:8000/api/indicator/'+tab;
+//   json(url).then( options =>{
+//     setIndicatorDropdownOpt(options);
+//   }   
+//   )
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+//  }, [tabId])
  let graphTitle=selIndicator;
- if (indicatorDropdownOpt) {
-     indicatorDropdownOpt.map(indi => {
-       if(indi.value===selIndicator)
-         {graphTitle=indi.title
+ let graphUnit =unit;
+ if (indicatorDetail) {
+    indicatorDetail.map(indi => {
+       if(indi.indicator.indicator_id=== parseInt(selIndicator))
+         { 
+           graphTitle=indi.indicator.indicator_name;
+           graphUnit = indi.unit.unit_name;
          }
        });
      
@@ -294,10 +298,39 @@ console.log("indicatorBar",indicatorBar);
     }
     // console.log(stateBoundary);
   }
+
+  
+
+
     let barLabel=[];
     indicatorBar.map(i=>{
       barLabel.push(i.subgroup.subgroup_name+";"+i.subgroup.sub_category)
     })
+    console.log("barLabel", barLabel);
+    var colors = []
+for(var i = 0; i < barLabel.length; i++){
+  if(barLabel[i].split(";")[1] === 'null')
+  {
+    colors[i] = 'rgb(0,153,255)';
+  }
+  else  if(barLabel[i].split(";")[1] === 'Sex')
+  {
+    colors[i] = 'rgb(254,225,211)';
+  }
+  else  if(barLabel[i].split(";")[1] === 'Location')
+  {
+    colors[i] = 'rgb(251,161,167)';
+  }
+  else  if(barLabel[i].split(";")[1] === 'Caste')
+  {
+    colors[i] = 'rgb(247,104,161)';
+  }
+  else  if(barLabel[i].split(";")[1] === 'Wealth Index')
+  {
+    colors[i] = 'rgb(230,23,173)';
+  }
+  
+}
     let barData=[];
     indicatorBar.map(i=>{
       barData.push(+i.data_value)
@@ -305,10 +338,13 @@ console.log("indicatorBar",indicatorBar);
     let  datab= {
       labels:barLabel,
       datasets: [{
-      label: [graphTitle,',',selSubgroup,',',unit],
+      label: [graphTitle, graphUnit],
       data:barData,
       xAxisID:'xAxis1',
-      backgroundColor: "rgb(255, 99, 132)"
+      //backgroundColor: "rgb(255, 99, 132)"
+      backgroundColor: colors,
+      borderColor: '#ffffff',
+      borderWidth: 1
       }]
 }
 
@@ -320,22 +356,24 @@ console.log("indicatorBar",indicatorBar);
     indicatorTrend.map(i=>{
       trendData.push(+i.data_value)
     })
+    let graphSubgroup = indicatorTrend[0].subgroup.subgroup_name;
     let  datal= {
       labels:trendLabel,
       datasets: [{
-      label: [graphTitle,',',selSubgroup,',',unit],
+      label: [graphTitle, graphUnit, graphSubgroup],
       fill: false,
       lineTension:0,
       borderWidth:3,
       borderColor:'rgb(106, 166, 41)',
       data:trendData
       }]
+     
     }
 
 
-  if (!nutritionData) {
-    return
-  }
+  // if (!nutritionData) {
+  //   return
+  // }
   return (
     <React.Fragment>
 
@@ -374,7 +412,38 @@ console.log("indicatorBar",indicatorBar);
               />
             </div>
             <div className="layout__body__left__trend">
-              <Line data={datal}/>
+              <Line data={datal} options = {{
+                legend:
+                {
+                  display: false,
+                },
+                 title: {
+                  display: true,
+                  text: graphTitle+','+graphUnit+','+graphSubgroup,
+              },
+                scales: {
+                    xAxes: [{
+                      offset: true,
+                      gridLines: {
+                        drawOnChartArea:false
+                    },
+                    ticks: {
+                      minRotation: 0,
+                  }
+                    }],
+                    yAxes: [{
+                      gridLines: {
+                        drawOnChartArea:false
+                    },
+                    ticks: {
+                      padding: 10,
+                  }
+                  }]
+
+                }
+
+               }}
+              />
             </div>
             
           </div>
@@ -389,7 +458,7 @@ console.log("indicatorBar",indicatorBar);
               level={level} 
               setSelArea={setSelArea} 
               unit={unit} 
-              unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} 
+              //unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} 
               selArea={selArea} 
               isLevelThree={isLevelThree} 
               setIsLevelThree={setIsLevelThree} 
@@ -407,6 +476,14 @@ console.log("indicatorBar",indicatorBar);
             <div className="layout__body__right__bar">
               <Bar data={datab} 
                 options={{
+                  legend:
+                  {
+                    display: false,
+                  },
+                  title: {
+                    display: true,
+                    text: graphTitle+','+graphUnit,
+                },
                   scales: {
                     xAxes:[{
                       id:'xAxis1',
@@ -426,6 +503,7 @@ console.log("indicatorBar",indicatorBar);
                         drawOnChartArea: false, // only want the grid lines for one axis to show up
                       },
                       ticks:{
+                        minRotation: 0,
                         callback:function(label){
                           var subgroup = label.split(";")[0];
                           var type = label.split(";")[1];
@@ -434,13 +512,19 @@ console.log("indicatorBar",indicatorBar);
                           }
                           else
                           return ""
-                        }
-                      }
+                        }  
+                      },
+                      gridLines: {
+                        drawOnChartArea:false
+                    }
                     }],
                     yAxes: [{
                       ticks: {
                         beginAtZero: true
-                      }
+                      },
+                      gridLines: {
+                        drawOnChartArea:false
+                    }
                     }]
                   }
                 }}

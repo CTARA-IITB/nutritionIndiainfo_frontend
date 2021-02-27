@@ -5,7 +5,7 @@ import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Row, Col } from 'react-bootstrap';
 // import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
-import { geoMercator, format, geoPath, scaleQuantize, extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
+import { geoMercator, format, geoPath, scaleQuantize, extent, select, schemeReds, geoCentroid, scaleOrdinal, scaleLinear } from 'd3';
 
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
@@ -141,7 +141,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
     //     .range("red","yellow", "green");
     let colorScale;
     if (unit === 2) {
-      colorScale = colorScale3;
+      colorScale = colorScale1;
     } else {
       colorScale = colorScale1;
     }
@@ -167,7 +167,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
       colorScale = colorScale4;
 
     } else if (indicatorSense[0].type === 'Positive') {
-      colorScale = colorScale4_p;
+      // colorScale = colorScale4_p;
 
     }
 
@@ -301,47 +301,46 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
       var color0 = scaleOrdinal()
         .domain([min_b, max_b])
         .range(["#faafb3", "#f76870", "#f53d47", "#9c1017"])
-
+      console.log("HAYA",min_b,max_b)
       //stunting
-      var color1 = scaleOrdinal()
+      var color1 = scaleLinear()
         .domain([min_b, max_b])
-        .range(["#d4f5a6", "#b7fa5a", "#6cad11", "#3a5219"])
+        .range(["#2f5200","#d4f5a6"])
 
 
       //underweight
-      var color2 = scaleOrdinal()
+      var color2 = scaleLinear()
         .domain([min_b, max_b])
-        .range(["#c6e2f7", "#5cb6fa", "#1c69a3", "#0b436e"])
+        .range(["#c6e2f7", "#0b436e"])
 
       //overwieght
-      var color3 = scaleOrdinal()
+      var color3 = scaleLinear()
         .domain([min_b, max_b])
-        .range(["#dbb3f2", "#c17aeb", "#8b34bf", "#321345"])
+        .range(["#dbb3f2", "#321345"])
 
       //everythin else
-      let color4 = scaleOrdinal()
+      let color4 = scaleLinear()
         .domain([min, max])
-        .range(["#fcc09f", "#f5a071", "#f77025", "#b3470b"])
+        .range(["#fcc09f", "#b3470b"])
 
-      let color4_p = scaleOrdinal()
+      let color4_p = scaleLinear()
         .domain([min, max])
-        .range(["#b3470b", "#f77025", "#f5a071", "#fcc09f"])
+        .range(["#b3470b", "#fcc09f"])
 
-      let color_b;
       if (selIndicator === '156') {
-        color_b = color1;
+        colorScale = color1;
 
       } else if (selIndicator === '160') {
-        color_b = color0;
+        colorScale = color0;
       } else if (selIndicator === '158') {
-        color_b = color2;
+        colorScale = color2;
 
       } else if (selIndicator === '167') {
-        color_b = color3;
+        colorScale = color3;
       } else if (indicatorSense[0].type === 'Negative') {
-        color_b = color4;
+        colorScale = color4;
       } else if (indicatorSense[0].type === 'Positive') {
-        color_b = color4_p;
+        colorScale = color4_p;
       }
 
       // var color = scaleOrdinal()
@@ -355,7 +354,7 @@ export const Map = ({ geometry, data, onMapClick, setLevel, level, setSelArea, u
         .attr("class", "geoCentroid")
         .style("fill", function (d) {
           if (typeof d.data_value != "undefined")
-            return color_b(d.data_value);
+            return colorScale(d.data_value);
           else
             return "#A9A9B0";
         })

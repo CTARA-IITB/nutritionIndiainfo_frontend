@@ -131,5 +131,6 @@ STATIC_URL = '/static/'
 # we whitelist localhost:3000 because that's where frontend will be served
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
-     'http://caaqms.urbansciences.in'
+     'http://caaqms.urbansciences.in',
+     'http://13.235.60.173/',
 ]

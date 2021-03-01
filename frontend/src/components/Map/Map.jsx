@@ -34,7 +34,11 @@ export const Map = ({
   selIndicator, 
   indicatorSense ,
   switchDisplay,
-  toggleState
+  toggleState,
+  indiName,
+  areaName,
+  timepName,
+  subName
 }) => {
   console.log("unitatstart", unit);
   console.log(geometry);
@@ -47,6 +51,7 @@ export const Map = ({
     var element = document.getElementById("info-msg");
     element.classList.remove("shake");
   }
+
 
   // let statusMsg;
   // if(level === data[0].area.area_level)
@@ -112,7 +117,6 @@ export const Map = ({
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-
   useEffect(() => {
     const svg = select(svgRef.current);
     const legend = select(svgLegRef.current)
@@ -154,7 +158,13 @@ export const Map = ({
        low = 10.0;
        medium = 20.0;
        high = 30.0;
+    } else if(selIndicator == 71 || selIndicator == 124 )
+    {
+      low = 5.0;
+      medium = 20.0;
+      high = 40.0;
     }
+    
     
     let colorScale;
   
@@ -169,7 +179,7 @@ export const Map = ({
       .domain([min, max])
       .range(["#7d0a1f", "#B2022F", "#FFE338", "#24562B"])
 
-    let arrsuw = ['12', '19', '17', '18', '20', '13'];
+    let arrsuw = ['12', '19', '17', '18', '20', '13', '71','124'];
     if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }
@@ -201,7 +211,6 @@ export const Map = ({
     if(unit !== 2)
     {
     svg.selectAll("*").remove();
-  
     svg
       .selectAll(".polygon")
       .data(mergedGeometry)
@@ -255,6 +264,9 @@ export const Map = ({
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature));
 
+   
+  
+
     }
 
     // bubbles for numeric unit values
@@ -306,7 +318,7 @@ export const Map = ({
 
         let p = d.properties.AREA_ / (width_d * height_d);
         let p_ = d.properties.AREA_
-        let n = d.dataValue / (min);
+        let n = d.dataValue / (dotVal);
 
         if (typeof d.dataValue !== 'undefined')
         {
@@ -342,7 +354,7 @@ export const Map = ({
     legend.selectAll("*").remove();
     legend.append("g")
       .attr("class", "legendQuant")
-      .attr("transform", "translate(20,20)");
+      .attr("transform", "translate(20,20)")
 
     let formatter;
     if (unit === 2) {
@@ -362,22 +374,24 @@ export const Map = ({
        if (!arrsuw.includes(selIndicator)) {
       myLegend = legendColor()
       .labelFormat(formatter)
-      .title('Legend')
-      //.title(`Legend (in ${unitName})`)
+     // .title('Legend')
+      .title(`Legend (in ${unitName})`)
       .titleWidth(180)
       .scale(colorScale);
     } 
     else{
       myLegend = legendColor()
       .labelFormat(formatter)
-      .title('Legend')
-     // .title(`Legend (in ${unitName})`)
+      //.title('Legend')
+      .title(`Legend (in ${unitName})`)
       .titleWidth(180)
       .labels(thresholdLabels)
       .scale(colorScale);
     }
+
       legend.select(".legendQuant")
       .call(myLegend);
+
       
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -401,10 +415,10 @@ export const Map = ({
               {switchButton}
             </div>
           
-          
           <div className="map__requirements__legend">
             <svg className="svg-legend" ref={svgLegRef}></svg>
           </div>
+     
         </div>
 
       </div>

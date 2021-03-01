@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8000",
+  "proxy": "http://13.234.11.176",
   "dependencies": {
     "@material-ui/styles": "^5.0.0-alpha.22",
     "@testing-library/jest-dom": "^4.2.4",

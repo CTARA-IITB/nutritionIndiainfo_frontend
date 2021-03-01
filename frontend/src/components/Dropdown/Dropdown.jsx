@@ -56,7 +56,7 @@ export const Dropdown = ({
 
     // console.log(areaList.filter(d => d.area_level));
     useEffect(() => {
-        const url = 'http://localhost:8000/api/area';
+        const url = 'http://13.234.11.176/api/area';
         json(url).then( options =>{
         const [country,statesID] = createHierarchy(options);
         setStateID(statesID)
@@ -75,7 +75,7 @@ export const Dropdown = ({
 
 
   useEffect(() => {
-    const url = 'http://localhost:8000/api/indicator/'+tab;
+    const url = 'http://13.234.11.176/api/indicator/'+tab;
     json(url).then( options =>{
       setIndicatorDropdownOpt(options);
     }
@@ -101,7 +101,7 @@ export const Dropdown = ({
 
 
    useEffect(() => {
-    const url = `http://localhost:8000/api/subgroup/${selIndicator}`;
+    const url = `http://13.234.11.176/api/subgroup/${selIndicator}`;
     json(url).then( options =>{
       setSubgroupDropdownOpt(options);
     }
@@ -121,9 +121,9 @@ export const Dropdown = ({
     let url;
     // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
     if(isLevelThree)
-    url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${parentArea}`;
+    url = `http://13.234.11.176/api/timeperiod/${selIndicator}/${selSubgroup}/${parentArea}`;
     else
-    url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
+    url = `http://13.234.11.176/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
     console.log(url)
     json(url).then( options =>{
       setTimeperiodDropdownOpt(options);

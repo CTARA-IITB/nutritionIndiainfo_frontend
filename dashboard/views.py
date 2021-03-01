@@ -108,7 +108,8 @@ class IndicatorDetailView(generics.ListAPIView):
         serializer_class =  UtDataAllSerializer
         def get_queryset(self,*args, **kwargs):
                 selectedTab = self.kwargs.get('tab', None)
-                queryset= UtData.objects.raw('select * from ut_data join (select ut_data.indicator_id, Max(ut_data.timeperiod_id) as maxt from ut_data join indicator on ut_data.indicator_id = indicator.indicator_id and indicator.classification_id = %s where ut_data.area_id=1 and ut_data.subgroup_id=6 group by ut_data.indicator_id order by ut_data.indicator_id) max on ut_data.indicator_id=max.indicator_id and ut_data.timeperiod_id=max.maxt where area_id=1 and subgroup_id=6 order by ut_data.indicator_id', [selectedTab])
+                areaSelect =self.kwargs.get('area', None)
+                queryset= UtData.objects.raw('select * from ut_data join (select ut_data.indicator_id, Max(ut_data.timeperiod_id) as maxt from ut_data join indicator on ut_data.indicator_id = indicator.indicator_id and indicator.classification_id = %s where ut_data.area_id=1 and ut_data.subgroup_id=6 group by ut_data.indicator_id order by ut_data.indicator_id) max on ut_data.indicator_id=max.indicator_id and ut_data.timeperiod_id=max.maxt where area_id= %s and subgroup_id=6 order by ut_data.indicator_id', [selectedTab,areaSelect])
                 return queryset
 
 class IndicatorTypeView(generics.ListAPIView): 
@@ -142,5 +143,5 @@ class IndicatorBarView(generics.ListAPIView):
                 indicatorSelect = self.kwargs.get('indicator',None)
                 areaSelect = self.kwargs.get('area', None)
                 timeperiodSelect = self.kwargs.get('timeperiod', None)
-                queryset = UtData.objects.filter(Q(indicator=indicatorSelect) & Q(timeperiod=timeperiodSelect) & Q(area=areaSelect)).order_by('subgroup__subgroup_order')
+                queryset = UtData.objects.filter(Q(indicator=indicatorSelect) & Q(timeperiod=timeperiodSelect) & Q(area=areaSelect)).order_by('subgroup__subgroup_order').exclude(data_value__isnull=True)
                 return queryset            

@@ -130,12 +130,16 @@ const Layout = ({ tabId }) => {
 //  }, [tabId])
  let graphTitle=selIndicator;
  let graphUnit =unit;
+ let graphArea = selArea;
+ let graphTimeperiod =selTimeperiod
  if (indicatorDetail) {
     indicatorDetail.map(indi => {
        if(indi.indicator.indicator_id=== parseInt(selIndicator))
          { 
            graphTitle=indi.indicator.indicator_name;
            graphUnit = indi.unit.unit_name;
+           graphArea = indi.area.area_name;
+           graphTimeperiod = indi.timeperiod.timeperiod;
          }
        });
      
@@ -182,12 +186,12 @@ console.log("indicatorBar",indicatorBar);
   }
   // get indicatorDetails-1-immediate cause,3-underlying cause,6-basic cause,8-manifest-tab
   useEffect(() => {
-    const url = `http://127.0.0.1:8000/api/getIndicatorDetails/${tab}`;
+    const url = `http://127.0.0.1:8000/api/getIndicatorDetails/${tab}/${selArea}`;
     json(url).then(indicatorDetail => {
       setIndicatorDetail(indicatorDetail)
 
     })
-  }, [tab])
+  }, [tab, selArea])
   
  //get Units Name
 
@@ -300,7 +304,6 @@ console.log("indicatorBar",indicatorBar);
   }
 
   
-
 
     let barLabel=[];
     indicatorBar.map(i=>{
@@ -419,7 +422,8 @@ for(var i = 0; i < barLabel.length; i++){
                 },
                  title: {
                   display: true,
-                  text: graphTitle+','+graphUnit+','+graphSubgroup,
+                  text: [graphTitle+','+graphUnit+','+graphSubgroup, 'TrendData'+ ', '+ graphArea],
+                  fontColor: "black",
               },
                 scales: {
                     xAxes: [{
@@ -458,7 +462,7 @@ for(var i = 0; i < barLabel.length; i++){
               level={level} 
               setSelArea={setSelArea} 
               unit={unit} 
-              //unitName={unitList.filter(d => d.unit_id === unit)[0]['unit_name']} 
+              unitName={graphUnit} 
               selArea={selArea} 
               isLevelThree={isLevelThree} 
               setIsLevelThree={setIsLevelThree} 
@@ -469,6 +473,11 @@ for(var i = 0; i < barLabel.length; i++){
               indicatorSense={indicatorSense} 
               switchDisplay={switchDisplay}
               toggleState={toggleState}
+              indiName ={graphTitle}
+              areaName ={graphArea}
+              timepName ={graphTimeperiod}
+              subName = {graphSubgroup}
+
               />
                 : <div className="text-center"></div>
               }
@@ -482,7 +491,8 @@ for(var i = 0; i < barLabel.length; i++){
                   },
                   title: {
                     display: true,
-                    text: graphTitle+','+graphUnit,
+                    text: [graphTitle +','+ graphUnit, graphArea +', '+ graphTimeperiod],
+                    fontColor: "black",
                 },
                   scales: {
                     xAxes:[{
@@ -493,7 +503,10 @@ for(var i = 0; i < barLabel.length; i++){
                           var subgroup = label.split(";")[0];
                           return subgroup;
                         }
-                      }
+                      },
+                      gridLines: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                      },
 
                     },
                     {

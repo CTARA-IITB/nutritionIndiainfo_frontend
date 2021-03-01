@@ -132,5 +132,5 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
      'http://caaqms.urbansciences.in',
-     'http://13.235.60.173/',
+     'http://13.235.60.173',
 ]

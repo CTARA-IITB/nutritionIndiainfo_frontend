@@ -151,7 +151,6 @@ const Layout = ({ tabId }) => {
       setIndicatorBar(indicatorBar)
     })
 }, [selIndicator, selSubgroup, selTimeperiod, selArea])
-console.log("indicatorBar",indicatorBar);
 
   //getting trend chart data
   useEffect(() => {
@@ -160,7 +159,6 @@ console.log("indicatorBar",indicatorBar);
       setIndicatorTrend(indicatorTrend)
     })
   }, [selIndicator, selSubgroup, selArea])
-  console.log("indicatorTrend",indicatorTrend);
   
 //set Unit on indicator and subgroup change
 
@@ -216,7 +214,6 @@ console.log("indicatorBar",indicatorBar);
   const newBoundaries = useNewBoundaries();
   const Dboundaries = useDataDistrict();
   const NewDboundaries = useNewDistrictBoundaries();
-  // console.log("NEWDBOUND",NewDboundaries)
   const stateBoundary = useDataState(areaName, Dboundaries);
   const newDistrictBoundaries = useDataState(areaName,NewDboundaries)
   const handleClick = () => {
@@ -265,7 +262,6 @@ console.log("indicatorBar",indicatorBar);
 
   let renderMap = null;
   let nutritionData = null;
-  console.log(newBoundaries, selTimeperiod)
 
   if (level === 1 || stateBoundary.features === undefined) {
     if (toggleState === true) {
@@ -294,13 +290,11 @@ console.log("indicatorBar",indicatorBar);
       else
       renderMap = stateBoundary;
       nutritionData = selStateData;
-      // console.log("stateboundaries",renderMap)
 
     } else {
       renderMap = boundaries.state;
       nutritionData = selIndiaData;
     }
-    // console.log(stateBoundary);
   }
 
   
@@ -309,7 +303,6 @@ console.log("indicatorBar",indicatorBar);
     indicatorBar.map(i=>{
       barLabel.push(i.subgroup.subgroup_name+";"+i.subgroup.sub_category)
     })
-    console.log("barLabel", barLabel);
     var colors = []
 for(var i = 0; i < barLabel.length; i++){
   if(barLabel[i].split(";")[1] === 'null')

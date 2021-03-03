@@ -54,7 +54,6 @@ export const Dropdown = ({
     
     const [stateID,setStateID] = useState(null);
 
-    // console.log(areaList.filter(d => d.area_level));
     useEffect(() => {
         const url = 'http://localhost:8000/api/area';
         json(url).then( options =>{
@@ -87,7 +86,6 @@ export const Dropdown = ({
    // change selIndicator when indicator updated
    useEffect(() => {
     if(indicatorDropdownOpt){
-      // console.log(indicatorDropdownOpt[0],"indidrop");
       setSelIndicator(indicatorDropdownOpt[0].value)
     }
    // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,7 +122,6 @@ export const Dropdown = ({
     url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${parentArea}`;
     else
     url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
-    console.log(url)
     json(url).then( options =>{
       setTimeperiodDropdownOpt(options);
     }

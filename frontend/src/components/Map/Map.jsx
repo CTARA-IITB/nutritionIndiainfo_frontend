@@ -40,8 +40,6 @@ export const Map = ({
   timepName,
   subName
 }) => {
-  console.log("unitatstart", unit);
-  console.log(geometry);
   const svgRef = useRef();
   const svgLegRef = useRef();
   const wrapperRef = useRef();
@@ -137,11 +135,8 @@ export const Map = ({
     let sum = color_range.reduce(function(a, b){
       return a + b;
   }, 0);
-    console.log("SUM",sum)
     let dotVal = Math.round(sum/4000);
-    console.log("SUMMMMM",dotVal)
     let [min, max] = extent(color_range);
-    console.log("MIN",min)
   
     let low;
     let medium;
@@ -270,7 +265,7 @@ export const Map = ({
     }
 
     // bubbles for numeric unit values
-   
+
     if (unit === 2) {
 
       svg.selectAll('*').remove();
@@ -309,7 +304,6 @@ export const Map = ({
 
 
       function draw_circles(d) {
-        console.log("inside draw circle");
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = bounds[1][1] - bounds[0][1];
@@ -323,9 +317,6 @@ export const Map = ({
         if (typeof d.dataValue !== 'undefined')
         {
         var points = createPoints(width_d, height_d, p_, n);
-
-        // console.log("points", min, d.dataValue, n,  points.length);
-
         for(var i=0; i< points.length; i++)
         {
           select(this).append("circle")
@@ -342,7 +333,6 @@ export const Map = ({
         // var area = width * height * p;
         //var radius = 10;
         var radius = Math.sqrt(area / (1.62*n));
-        //  console.log("widthher",width, height, area, radius);
          var sample = poissonDiscSampler(width, height, radius);
          for (var data = [], d; d = sample();) { data.push(d); }
          return data;
@@ -366,6 +356,7 @@ export const Map = ({
     }
 
     let myLegend;
+   
     if(unit === 2)
     {
       legend.select(".legendQuant").append('text').text("1 dot =" + dotVal);

@@ -20,7 +20,6 @@ const Cards = ({ indicatorDetail , setSelIndicator}) => {
 
   let colorvar1 = true;
   if (indicatorDetail) {
-    console.log("INDICATOR",indicatorDetail)
     var element1 = [];
     for (var i = 0; i < indicatorcount; i++) {
       if (colorvar1 === true) {

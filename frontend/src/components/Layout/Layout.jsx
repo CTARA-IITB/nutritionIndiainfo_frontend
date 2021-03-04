@@ -254,8 +254,8 @@ const Layout = ({
   // if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList || !unitList){
   // 	return <pre>Loading...</pre>
   // }
-  if (!boundaries || !stateBoundary || !unitList || !newBoundaries || !indicatorTrend) {
-    return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
+  if (!boundaries || !stateBoundary || !unitList || !newBoundaries || !indicatorTrend ||!indicatorBar) {
+    return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
   }
 
   let renderMap = null;

@@ -6,12 +6,12 @@ import {
     NavLink,
     useParams
   } from "react-router-dom";
-  import Layout from "../../containers/Layout/Layout";
+//   import Layout from "../../containers/Layout/Layout";
   import "./navbar.css";
   import {Navbar, Nav} from 'react-bootstrap';
 
 
-  export const Navbars = ({id}) => {
+  export const Navbars = ({setTabId}) => {
         return(
             <div>
                 <div className="">
@@ -45,8 +45,8 @@ import {
                                 </ul>
                             </nav> */}
                             <Switch>
-                                <Route exact path="/" children={<Child />} />
-                                <Route path="/:id" children={<Child />} />
+                                <Route exact path="/" children={<Child setTabId={setTabId}/>} />
+                                <Route path="/:id" children={<Child setTabId={setTabId}/>} />
                             </Switch>
                         </Router>
                     </div>
@@ -57,12 +57,12 @@ import {
 }
 
 
-function Child() {
+function Child({setTabId}) {
     // We can use the `useParams` hook here to access
     // the dynamic pieces of the URL.
     let { id } = useParams();
-    console.log(id)
-    return (
-        <Layout tabId={id} />
+    setTabId(id)
+    return (<></>
+        // <Layout tabId={id} />
     );
   }

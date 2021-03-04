@@ -265,7 +265,7 @@ export const Map = ({
     }
 
     // bubbles for numeric unit values
-
+    console.log(unit)
     if (unit === 2) {
 
       svg.selectAll('*').remove();
@@ -386,7 +386,7 @@ export const Map = ({
       
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geometry, dimensions, data, unit])
+  }, [unit,geometry, dimensions, data])
 
   let switchButton;
   if(switchDisplay && level === 1){

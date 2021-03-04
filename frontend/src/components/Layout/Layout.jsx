@@ -6,12 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Container, Row, Col, Table } from 'react-bootstrap';
 // import ClipLoader from "react-spinners/ClipLoader";
-import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../../containers/SkeletonCard";
+import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import {Bar,Line} from 'react-chartjs-2';
 
 // import Form from "../../components/Form/Form";
 import { Map } from "../../components/Map/Map";
-import { useData, useDataDistrict, useDataState, useNewBoundaries ,useNewDistrictBoundaries} from '../../containers/UseData'
+import { useData, useDataDistrict, useDataState, useNewBoundaries ,useNewDistrictBoundaries} from '../UseData'
 import { json } from 'd3';
 
 import Cards from '../../components/Cards/Cards.jsx';
@@ -21,12 +21,25 @@ import { TextCenter } from "react-bootstrap-icons";
 
 // const renderedMap = (boundaries) => (boundaries.state);
 
-const Layout = ({ tabId }) => {
+const Layout = ({ 
+  tabId,
+  setLevel,
+  selIndicator,
+  selSubgroup,
+  selTimeperiod,
+  level,
+  parentArea,
+  selArea,
+  areaName,
+  areaList,
+  setAreaName,
+  setParentArea,
+  setSelIndicator,
+  setSelArea,
+  setFilterDropdownValue,
+  areaDropdownOpt,
+  searchRef}) => {
 
-  const [level, setLevel] = useState(1);
-  const searchRef = useRef();
-  const [filterDropdownValue, setFilterDropdownValue] = useState([]);
-  const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [switchDisplay,setSwitchDisplay] = useState(true);
 
 
@@ -36,14 +49,9 @@ const Layout = ({ tabId }) => {
   const [isLevelThree, setIsLevelThree] = useState(false);
 
 
-  const iniSelArea = '1';  //india
-  const [selArea, setSelArea] = useState(iniSelArea);
-  const [areaList, setAreaList] = useState(null);
-  const [parentArea, setParentArea] = useState(null);
   const [indicatorBar, setIndicatorBar] = useState(null);
   const [indicatorTrend, setIndicatorTrend]=useState(null);
 
-  const [areaName, setAreaName] = useState('IND');
 
 
   const [indicatorDetail, setIndicatorDetail] = useState(null);
@@ -51,18 +59,8 @@ const Layout = ({ tabId }) => {
   const [unitList, setUnitList] = useState(null);
   const [indicatorSense, setIndicatorSense] = useState(null);
 
-  const iniSelIndicator = '12';
-  const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState(null);
 
-  const iniSelSubgroup = '6';  //All
-  const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
-
-  const iniSelTimeperiod = '22';  //NHHS5
-  const [selTimeperiod, setSelTimeperiod] = useState(iniSelTimeperiod);
-
-  //district data
-  // const [selDistrictData,setSelDistrictData] = useState(null);
 
   // useEffect(() => {
   //   const url = `http://localhost:8000/api/indiaMap/12/6/19/3`;
@@ -256,7 +254,7 @@ const Layout = ({ tabId }) => {
   // if(!boundaries || !areaDropdownOpt || !subgroupDropdownOpt || !indicatorDropdownOpt || !timeperiodDropdownOpt || !stateBoundary  || !areaList || !unitList){
   // 	return <pre>Loading...</pre>
   // }
-  if (!boundaries || !stateBoundary || !unitList || !newBoundaries) {
+  if (!boundaries || !stateBoundary || !unitList || !newBoundaries || !indicatorTrend) {
     return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
   }
 
@@ -375,30 +373,7 @@ for(var i = 0; i < barLabel.length; i++){
 
       <div className="layout">
         <div className="layout__header">
-          <Dropdown
-            tabId={tabId}
-            selArea={selArea}
-            selIndicator={selIndicator}
-            selSubgroup={selSubgroup}
-            selTimeperiod={selTimeperiod}
-            setSelArea={setSelArea}
-            setAreaName={setAreaName}
-            setSelIndicator={setSelIndicator}
-            setSelSubgroup={setSelSubgroup}
-            setSelTimeperiod={setSelTimeperiod}
-            setLevel={setLevel}
-            level={level}
-            setAreaList={setAreaList}
-            setIsLevelThree={setIsLevelThree}
-            searchRef={searchRef}
-            filterDropdownValue={filterDropdownValue}
-            setFilterDropdownValue={setFilterDropdownValue}
-            areaDropdownOpt={areaDropdownOpt}
-            setAreaDropdownOpt={setAreaDropdownOpt}
-            parentArea={parentArea}
-            isLevelThree={isLevelThree}
 
-          />
         </div>
         <div className="layout__body">
           <div className="layout__body__left">

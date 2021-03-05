@@ -255,7 +255,7 @@ const Layout = ({
   // 	return <pre>Loading...</pre>
   // }
   if (!boundaries || !stateBoundary || !unitList || !newBoundaries || !indicatorTrend) {
-    return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
+    return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
   }
 
   let renderMap = null;

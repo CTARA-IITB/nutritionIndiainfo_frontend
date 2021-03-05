@@ -9,11 +9,16 @@ import { Dropdown } from "./components/Dropdown/Dropdown";
 
 import { Navbars } from "./components/Navbar/Navbars";
 const App = ()=> {
+  const iniSelArea = '1';  //india
   const [tabId, setTabId] = useState(null);
-  const [selArea, setSelArea] = useState(null);
-  const [selIndicator, setSelIndicator] = useState(null);
-  const [selSubgroup, setSelSubgroup] = useState(null);
-  const [selTimeperiod, setSelTimeperiod] = useState(null);
+  const [selArea, setSelArea] = useState(iniSelArea);
+  const iniSelIndicator = '12';
+  const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
+  const iniSelSubgroup = '6';  //All
+  const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
+
+  const iniSelTimeperiod = '22';  //NHHS5
+  const [selTimeperiod, setSelTimeperiod] = useState(iniSelTimeperiod);
   const [areaName, setAreaName] = useState('IND');
   const [level, setLevel] = useState(1);
   const [areaList, setAreaList] = useState(null);
@@ -22,7 +27,6 @@ const App = ()=> {
   const [filterDropdownValue, setFilterDropdownValue] = useState([]);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [parentArea, setParentArea] = useState(null);
-
     return(<> 
 
     <Navbars setTabId={setTabId}/>

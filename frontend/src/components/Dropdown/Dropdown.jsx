@@ -63,12 +63,6 @@ export const Dropdown = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 
-      useEffect(()=>{
-        if(areaDropdownOpt){
-          setSelArea(areaDropdownOpt[0].value)
-        }
-      },[areaDropdownOpt])
-
 
     //Indicator
  
@@ -109,13 +103,7 @@ export const Dropdown = ({
     )
   }, [selIndicator])
 
-  // change selSubgroup when subgroupOptindicator updated
-  useEffect(() => {
-    if(subgroupDropdownOpt){
-      setSelSubgroup(subgroupDropdownOpt[0].value)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [subgroupDropdownOpt])
+ 
 
 
 
@@ -139,11 +127,7 @@ export const Dropdown = ({
   }, [selIndicator,selSubgroup,selArea])
 
 
-  useEffect(()=>{
-    if(timeperiodDropdownOpt){
-      setSelTimeperiod(timeperiodDropdownOpt[0].value)
-    }
-  },[timeperiodDropdownOpt])
+  
 
       // change selTimeperiod when indicator updated
       useEffect(() => {

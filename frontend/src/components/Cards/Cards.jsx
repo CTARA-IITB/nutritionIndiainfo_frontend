@@ -4,7 +4,8 @@ import Card from '../../components/Cards/Card/Card';
 import ItemsCarousel from 'react-items-carousel';
 import { useState } from "react";
 import "./Cards.css"
-const Cards = ({ indicatorDetail , setSelIndicator}) => {
+const Cards = ({ indicatorDetail , setSelIndicator, setSelTimeperiod}) => {
+  console.log("indicatorDetail", indicatorDetail);
 
   let indicatorcount = 0;
   if (indicatorDetail) {
@@ -25,10 +26,12 @@ const Cards = ({ indicatorDetail , setSelIndicator}) => {
       if (colorvar1 === true) {
         element1.push(<div className="card"> <Card
           id = {indicatorDetail[i].indicator.indicator_id}
+          id1 = {indicatorDetail[i].timeperiod.timeperiod_id}
           title={indicatorDetail[i].indicator.indicator_name}
           value={indicatorDetail[i].data_value}
           value_type={indicatorDetail[i].unit.unit_name}
           setSelIndicator={setSelIndicator}
+          setSelTimeperiod = {setSelTimeperiod}
           deff='underweight'
           source={indicatorDetail[i].timeperiod.timeperiod}
           style="pink-card"
@@ -40,10 +43,12 @@ const Cards = ({ indicatorDetail , setSelIndicator}) => {
       else {
         element1.push(<div className="card"> <Card
           id = {indicatorDetail[i].indicator.indicator_id}
+          id1 = {indicatorDetail[i].timeperiod.timeperiod_id}
           title={indicatorDetail[i].indicator.indicator_name}
           value={indicatorDetail[i].data_value}
           value_type={indicatorDetail[i].unit.unit_name}
           setSelIndicator={setSelIndicator}
+          setSelTimeperiod = {setSelTimeperiod}
           deff='underweight'
           source={indicatorDetail[i].timeperiod.timeperiod}
           style="green-card"

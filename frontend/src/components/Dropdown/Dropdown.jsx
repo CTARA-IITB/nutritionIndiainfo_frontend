@@ -12,14 +12,15 @@ export const Dropdown = ({
     tabId,
     selArea,
     selIndicator,
-    selTimeperiod,
     selSubgroup,
+    selTimeperiod,
     setSelArea,
-    setSelIndicator,
-    setSelTimeperiod,
-    setSelSubgroup,
     setAreaName,
+    setSelIndicator,
+    setSelSubgroup,
+    setSelTimeperiod,
     setLevel,
+    level,
     setAreaList,
     setIsLevelThree,
     searchRef,
@@ -28,11 +29,9 @@ export const Dropdown = ({
     areaDropdownOpt,
     setAreaDropdownOpt,
     parentArea,
-    isLevelThree}) =>{
+    isLevelThree,setUnit, isSelected,  setIsSelected, indicatorDropdownOpt, setIndicatorDropdownOpt,subgroupDropdownOpt, setSubgroupDropdownOpt,
+    timeperiodDropdownOpt, setTimeperiodDropdownOpt, unit, areaList, setParentArea, stateID, treeRef, openDropdown, setOpenDropdown, setIndicatorSense}) =>{
     
-
-    const [openDropdown,setOpenDropdown] = useState(false);
-    const treeRef = useRef();
     let tab;
     if(tabId === undefined || tabId === 'section1')
     {
@@ -49,107 +48,12 @@ export const Dropdown = ({
     }
     //Area
     
-    const [stateID,setStateID] = useState(null);
-
-    useEffect(() => {
-        const url = 'http://localhost:8000/api/area';
-        json(url).then( options =>{
-        const [country,statesID] = createHierarchy(options);
-        setStateID(statesID)
-        setAreaDropdownOpt(country);
-        setAreaList(options);
-        }
-        )
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [])
-
-
-    //Indicator
- 
-  const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState(null);
-
-
-
-  useEffect(() => {
-    const url = 'http://localhost:8000/api/indicator/'+tab;
-    json(url).then( options =>{
-      setIndicatorDropdownOpt(options);
-    }
-    
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tabId])
-
-   // change selIndicator when indicator updated
-   useEffect(() => {
-    if(indicatorDropdownOpt){
-      setSelIndicator(indicatorDropdownOpt[0].value)
-    }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [indicatorDropdownOpt])
-
-
-
-   //subgroup
-   
-   const [subgroupDropdownOpt, setSubgroupDropdownOpt] = useState(null);
-
-
-   useEffect(() => {
-    const url = `http://localhost:8000/api/subgroup/${selIndicator}`;
-    json(url).then( options =>{
-      setSubgroupDropdownOpt(options);
-    }
-    )
-  }, [selIndicator])
-
  
 
-
-
-   //timeperiod
-  
-   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState(null);
-
-
-   useEffect(() => {
-    let url;
-    // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-    if(isLevelThree)
-    url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${parentArea}`;
-    else
-    url = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${selArea}`;
-    json(url).then( options =>{
-      setTimeperiodDropdownOpt(options);
-    }
-    )
-// eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selIndicator,selSubgroup,selArea])
-
-
-  
-
-      // change selTimeperiod when indicator updated
-      useEffect(() => {
-        let flag = false;
-        if(timeperiodDropdownOpt){
-          timeperiodDropdownOpt.forEach(timeperiod => {
-            if(timeperiod.value === selTimeperiod){
-              flag = true;
-            }
-          });
-          if(!flag) setSelTimeperiod(timeperiodDropdownOpt[0].value)
-        }
-       // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [timeperiodDropdownOpt])
 
   if(!areaDropdownOpt){
-
     return <SkeletonDropdown />
-    
   }
-
-
   //AntDsearch expand tree
 
 const dataList = [];
@@ -165,9 +69,131 @@ const generateList = (data) => {
 };
 generateList(areaDropdownOpt)
 
+const timeperiodChange = async(e) =>{
+  let val = e;
+  console.log("E in time", e)
+  setIsSelected(false);
+  setSelTimeperiod(e);
+  setIsSelected(true);
+}
+
+const indicatorChange = async(e) =>{
+  let val = e;
+  setIsSelected(false);
+  setSelIndicator(e);
+  let indiSense = indicatorDropdownOpt.filter(f => f.indicator_id === parseInt(val)).indi_sense;
+  console.log("indisense", indiSense);
+  setIndicatorSense(indiSense);
+  const url_1 = await fetch(`http://localhost:8000/api/subgroup/${val}`);
+  const body = await url_1.json()
+  console.log("body", {val}, body);
+  setSubgroupDropdownOpt(body);
+  setSelSubgroup(body[0].value);
+  let url;
+    // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
+    if(isLevelThree)
+    url = await fetch(`http://localhost:8000/api/timeperiod/${val}/${selSubgroup}/${parentArea}`);
+    else
+    url = await fetch(`http://localhost:8000/api/timeperiod/${val}/${selSubgroup}/${selArea}`);
+    const body_1 = await url.json()
+      setTimeperiodDropdownOpt(body_1);
+      let flag = false;
+      if(body_1){
+        body_1.forEach(timeperiod => {
+          if(timeperiod.value === parseInt(selTimeperiod)){
+            flag = true;
+          }
+        });
+        if(!flag) setSelTimeperiod(body_1[0].value)
+    } 
+    const url_3 = await fetch(`http://localhost:8000/api/getUnit/${val}/${selSubgroup}`);
+    const body_3 = await url_3.json()
+    setUnit(body_3[0].unit)
+    setIsSelected(true);
+}
+
+const subgroupChange = async(e) =>{
+  console.log("sub change", e);
+  let val = e;
+  setSelSubgroup(e);
+  console.log("selsubgroup", selSubgroup);
+  setIsSelected(false);
+  let url;
+    // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
+    if(isLevelThree)
+    url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${val}/${parentArea}`);
+    else
+    url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${val}/${selArea}`);
+    const body_1 = await url.json()
+      setTimeperiodDropdownOpt(body_1);
+      let flag = false;
+      if(body_1){
+        body_1.forEach(timeperiod => {
+          if(timeperiod.value === parseInt(selTimeperiod)){
+            flag = true;
+          }
+        });
+        if(!flag) setSelTimeperiod(body_1[0].value)
+    } 
+  setIsSelected(true);
+}
+
+
+const areaChange = async(e) => {
+  let value = e
+  setIsSelected(false);
+    if(value === "1"){
+        setLevel(1)
+        setIsLevelThree(false);
+    }
+    else if(stateID.indexOf(parseInt(value)) !== -1){
+        setIsLevelThree(false);
+        setLevel(2)
+    }
+    else setLevel(3);
+    setSelArea(value);
+    let title = areaList.filter(f => f.area_id === parseInt(value))[0].area_name;
+    setAreaName(title);
+    console.log("areaname", title);
+    treeRef.current.blur()
+
+
+  let areaParentId;
+  if (level === 3) {
+
+    areaParentId = areaList.filter(f => f.area_id === parseInt(selArea))[0].area_parent_id; // loop 1
+    let parentName = areaList.filter(f => f.area_id === areaParentId)[0].area_name;  //loop 2  later optimise this
+    setAreaName(parentName);
+    setParentArea(areaParentId);
+    setIsLevelThree(true);
+    setLevel(2);
+  }
+  let url;
+    // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
+    if(isLevelThree)
+    url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${areaParentId}`);
+    else
+    url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${value}`);
+    const body_1 = await url.json()
+
+      setTimeperiodDropdownOpt(body_1);
+      let flag = false;
+      if(body_1){
+        body_1.forEach(timeperiod => {
+          if(timeperiod.value === parseInt(selTimeperiod)){
+            flag = true;
+          }
+        });
+        if(!flag) setSelTimeperiod(body_1[0].value)
+    } 
+    setIsSelected(true);
+
+}
 
 const onChange = (e) =>{
+  setIsSelected(false);
   let { value } = e.target;
+  console.log("area", value);
   value = value.charAt(0).toUpperCase() + value.slice(1);
   if(value === ""){
     setOpenDropdown(false);
@@ -185,6 +211,7 @@ const onChange = (e) =>{
 
     setFilterDropdownValue(expandedKeys)
   }
+  
 }
 
     return (
@@ -209,23 +236,7 @@ const onChange = (e) =>{
                 treeDefaultExpandAll={false}
                 ref = {treeRef}
                 open={openDropdown}
-
-                onChange={ (value,title) =>  {
-                    if(value === "1"){
-                        setLevel(1)
-                        setIsLevelThree(false);
-                    }
-                    else if(stateID.indexOf(parseInt(value)) !== -1){
-                        setIsLevelThree(false);
-                        setLevel(2)
-
-                    }
-                    else setLevel(3);
-                        setSelArea(value);
-                        setAreaName(title[0]);
-                    treeRef.current.blur()
-                  } 
-                }
+                onChange={areaChange}
               />
             </Col>
 
@@ -244,7 +255,7 @@ const onChange = (e) =>{
                 treeData={indicatorDropdownOpt}
                 filterTreeNode
                 treeNodeFilterProp
-                onChange={ value => setSelIndicator(value) }
+                onChange={ indicatorChange }
                 />
             </Col>
 
@@ -259,7 +270,7 @@ const onChange = (e) =>{
                 value={selSubgroup}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={subgroupDropdownOpt}
-                onChange={ value => setSelSubgroup(value)}
+                onChange={ subgroupChange }
                 />
                 </Col>
         
@@ -273,13 +284,12 @@ const onChange = (e) =>{
                 value={selTimeperiod}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={timeperiodDropdownOpt}
-                onChange={value => setSelTimeperiod(value) }
+                onChange={timeperiodChange }
                 />
               </Col>
              
     </Row>
     )
 }
-
 
 

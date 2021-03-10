@@ -20,11 +20,11 @@ class AreaEnDropSerializer(serializers.ModelSerializer):
 
 class IndicatorSerializer(serializers.ModelSerializer):
     value =  serializers.CharField(source='indicator_id')	#renaming and changing int to charfield
-    title = serializers.CharField(source='indicator_name')	#renaming
+    title = serializers.CharField(source='indicator_name')
 
     class Meta:
         model = Indicator
-        fields = ('value','title')	
+        fields = ('value','title', 'indi_sense')	
 
 class SubgroupSerializer(serializers.ModelSerializer):
     class Meta:

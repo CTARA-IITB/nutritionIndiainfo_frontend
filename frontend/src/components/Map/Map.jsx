@@ -34,12 +34,10 @@ export const Map = ({
   selIndicator, 
   indicatorSense ,
   switchDisplay,
-  toggleState,
-  indiName,
-  areaName,
-  timepName,
-  subName
+  toggleState
 }) => {
+  console.log("geometry", geometry);
+  console.log("unit", unit);
   const svgRef = useRef();
   const svgLegRef = useRef();
   const wrapperRef = useRef();
@@ -141,15 +139,11 @@ export const Map = ({
     let low;
     let medium;
     let high;
-    if (selIndicator == 12 || selIndicator == 13) {
-      low = 20.0;
-      medium = 30.0;
-      high = 40.0;
-    } else if (selIndicator == 19 || selIndicator == 20) {
+    if (selIndicator == 19 || selIndicator == 20 || selIndicator == 92 || selIndicator == 96 || selIndicator == 105) {
       low = 5.0;
       medium = 10.0;
       high = 15.0;
-    } else if (selIndicator == 17 || selIndicator == 18) {
+    } else if (selIndicator == 17 || selIndicator == 18 || selIndicator == 12 || selIndicator == 13) {
        low = 10.0;
        medium = 20.0;
        high = 30.0;
@@ -164,24 +158,24 @@ export const Map = ({
     let colorScale;
   
     let colorScale2 = scaleThreshold().domain([low, medium, high])
-    .range(["#24562B", "#FFE338", "#E26313", "#B2022F"]); 
+    .range(["#DAF7A6", "#FFE338", "#FF0000", "#B2022F"]); 
 
     let colorScale4 = scaleQuantize()
       .domain([min, max])
-      .range(["#24562B", "#FFE338", "#B2022F", "#7d0a1f"])
+      .range(["#DAF7A6", "#FFE338", "#FF0000", "#B2022F"])
 
     let colorScale4_p = scaleQuantize()
       .domain([min, max])
-      .range(["#7d0a1f", "#B2022F", "#FFE338", "#24562B"])
+      .range(["#B2022F", "#FF0000", "#FFE338", "#DAF7A6"])
 
     let arrsuw = ['12', '19', '17', '18', '20', '13', '71','124'];
     if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }
-    else if (indicatorSense[0].type === 'Negative') {
+    else if (indicatorSense === 'Negative') {
       colorScale = colorScale4;
 
-    } else if (indicatorSense[0].type === 'Positive') {
+    } else if (indicatorSense === 'Positive') {
       colorScale = colorScale4_p;
 
     }
@@ -304,6 +298,9 @@ export const Map = ({
 
 
       function draw_circles(d) {
+        console.log("unit", unit);
+        if(unit !== 1)
+        {
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = bounds[1][1] - bounds[0][1];
@@ -327,6 +324,7 @@ export const Map = ({
 
         }
         }
+      }
       }
       function createPoints(width, height, area, n)
       {

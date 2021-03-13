@@ -63,7 +63,7 @@ const Layout = ({
 
 
   // useEffect(() => {
-  //   const url = `http://localhost:8000/api/indiaMap/12/6/19/3`;
+  //   const url = `http://13.234.11.176/api/indiaMap/12/6/19/3`;
   //   json(url).then( data =>{
   //     setSelDistrictData(data);
 
@@ -78,14 +78,14 @@ const Layout = ({
   const [selIndiaData, setSelIndiaData] = useState(null);
 
   useEffect(() => {
-    const url = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/2`;
+    const url = `http://13.234.11.176/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/2`;
     json(url).then(data => {
       setSelIndiaData(data);
     }
     )
 
     //switch Display
-    const switchurl=`http://localhost:8000/api/getDistrictDetails/${selIndicator}/${selSubgroup}/${selTimeperiod}`;
+    const switchurl=`http://13.234.11.176/api/getDistrictDetails/${selIndicator}/${selSubgroup}/${selTimeperiod}`;
     json(switchurl).then(data =>{
       if(data.length)
         setSwitchDisplay(true);
@@ -103,12 +103,12 @@ const Layout = ({
   useEffect(() => {
     let url;
     if (level === 1)
-      url = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/3`
+      url = `http://13.234.11.176/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/3`
     else if (level === 2) {
       if (isLevelThree)
-        url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
+        url = `http://13.234.11.176/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
       else
-        url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
+        url = `http://13.234.11.176/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
     }
     json(url).then(data => {
       setSelStateData(data);
@@ -119,7 +119,7 @@ const Layout = ({
 
 //  get graph title
 // useEffect(() => {
-//   const url = 'http://localhost:8000/api/indicator/'+tab;
+//   const url = 'http://13.234.11.176/api/indicator/'+tab;
 //   json(url).then( options =>{
 //     setIndicatorDropdownOpt(options);
 //   }   
@@ -144,7 +144,7 @@ const Layout = ({
    }
 //getting graph data
   useEffect(() => {
-    const url = `http://localhost:8000/api/getIndicatorBar/${selIndicator}/${selTimeperiod}/${selArea}`;
+    const url = `http://13.234.11.176/api/getIndicatorBar/${selIndicator}/${selTimeperiod}/${selArea}`;
     json(url).then(indicatorBar => {
       setIndicatorBar(indicatorBar)
     })
@@ -152,7 +152,7 @@ const Layout = ({
 
   //getting trend chart data
   useEffect(() => {
-    const url = `http://localhost:8000/api/getIndicatorTrend/${selIndicator}/${selSubgroup}/${selArea}`;
+    const url = `http://13.234.11.176/api/getIndicatorTrend/${selIndicator}/${selSubgroup}/${selArea}`;
     json(url).then(indicatorTrend => {
       setIndicatorTrend(indicatorTrend)
     })
@@ -161,7 +161,7 @@ const Layout = ({
 //set Unit on indicator and subgroup change
 
   useEffect(() => {
-    const url = `http://localhost:8000/api/getUnit/${selIndicator}/${selSubgroup}`;
+    const url = `http://13.234.11.176/api/getUnit/${selIndicator}/${selSubgroup}`;
     json(url).then(unit => {
       setUnit(unit[0].unit)
     })
@@ -182,7 +182,7 @@ const Layout = ({
   }
   // get indicatorDetails-1-immediate cause,3-underlying cause,6-basic cause,8-manifest-tab
   useEffect(() => {
-    const url = `http://127.0.0.1:8000/api/getIndicatorDetails/${tab}/${selArea}`;
+    const url = `http://13.234.11.176/api/getIndicatorDetails/${tab}/${selArea}`;
     json(url).then(indicatorDetail => {
       setIndicatorDetail(indicatorDetail)
 
@@ -192,7 +192,7 @@ const Layout = ({
  //get Units Name
 
   useEffect(() => {
-    const url = "http://localhost:8000/api/getUnitName";
+    const url = "http://13.234.11.176/api/getUnitName";
     json(url).then(unitList => {
       setUnitList(unitList)
     })
@@ -201,7 +201,7 @@ const Layout = ({
 
   //getting indicator sense
   useEffect(() => {
-    const url = `http://localhost:8000/api/getIndicatorType/${selIndicator}`;
+    const url = `http://13.234.11.176/api/getIndicatorType/${selIndicator}`;
     json(url).then(indicatorSense => {
       setIndicatorSense(indicatorSense)
     })

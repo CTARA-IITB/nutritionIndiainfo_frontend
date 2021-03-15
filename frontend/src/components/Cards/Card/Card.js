@@ -3,7 +3,6 @@ import React from 'react'
 import './Card.css'
 function Card({id, title, value, value_type, setSelIndicator, deff, source, style }) {
     const  changeColor = ({setSelIndicator, id, setOnCardClick})=> {
-console.log("IIIIIID",id);
 setSelIndicator(id.toString());
       }
 

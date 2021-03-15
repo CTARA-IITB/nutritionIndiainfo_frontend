@@ -9,10 +9,6 @@ import { json } from 'd3';
 //   stateBoundary, newDistrictBoundaries}) => {
     const Cards = ({ indicatorDetail,  setIndicatorDetail,selArea, tab, setSelIndicator, boundaries}) => {
 
-     console.log("boundaries", boundaries);
-    // console.log("newBoundaries", newBoundaries);
-    // console.log("Dboundaries", Dboundaries);
-    // console.log("NewDboundaries", NewDboundaries);
 
   useEffect(() => {
     const url = `http://127.0.0.1:8000/api/getIndicatorDetails/${tab}/${selArea}`;
@@ -22,7 +18,6 @@ import { json } from 'd3';
     })
   }, [tab, selArea])
 
-  console.log("indicatordetail", indicatorDetail);
   let indicatorcount = 0;
   if (indicatorDetail) {
     indicatorDetail.map(indi => {

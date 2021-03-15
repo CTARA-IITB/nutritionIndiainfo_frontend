@@ -8,11 +8,11 @@ import { createHierarchy } from '../../utils';
 import { useParams } from "react-router-dom";
 import Cards  from "../../components/Cards/Cards";
 import { useData, useDataDistrict, useDataState, useNewBoundaries ,useNewDistrictBoundaries} from '../UseData'
+import { feature } from 'topojson';
 
 const {Search} = Input;
 export const Dropdown = ({}) =>{
-      let { id } = useParams();
-
+  let { id } = useParams();
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
   const iniSelIndicator = '12';
@@ -40,62 +40,63 @@ export const Dropdown = ({}) =>{
   const [parentArea, setParentArea] = useState(null);
   const [indicatorDetail, setIndicatorDetail] = useState(null);
   const [boundaries, setBoundaries] = useState(null);
+
+
   // let boundaries;
   // let newBoundaries;
   // let Dboundaries;
   // let NewDboundaries;
 
 
-      console.log("tabis", id);
-      let tab =8;
-      let indiVal ='12'
-        if(id === undefined || id === 'section1')
-        {
-          tab =8;
-          indiVal ='12';
-        }
-        else if(id === 'section2'){
-          tab=1;
-          indiVal = '2';
-        }
-        else if(id === 'section3'){
-          tab=3;
-          indiVal = '74';
-        }
-        else if(id === 'section4'){ 
-          tab=6;
-          indiVal = '56';
-        }
-        useEffect(() => {
-          const url_4 = 'http://localhost:8000/api/area';
-          json(url_4).then( options =>{
-          const [country,statesID] = createHierarchy(options);
-          setStateID(statesID)
-          setAreaDropdownOpt(country);
-          setAreaList(options);  
+    let tab =8;
+    let indiVal ='12'
+      if(id === undefined || id === 'section1')
+      {
+        tab =8;
+        indiVal ='12';
+      }
+      else if(id === 'section2'){
+        tab=1;
+        indiVal = '2';
+      }
+      else if(id === 'section3'){
+        tab=3;
+        indiVal = '74';
+      }
+      else if(id === 'section4'){ 
+        tab=6;
+        indiVal = '56';
+      }
+      useEffect(() => {
+        const url_4 = 'http://localhost:8000/api/area';
+        json(url_4).then( options =>{
+        const [country,statesID] = createHierarchy(options);
+        setStateID(statesID)
+        setAreaDropdownOpt(country);
+        setAreaList(options);  
+        })
+        const url = 'http://localhost:8000/api/indicator/'+tab;
+        json(url).then( options =>{
+          setIndicatorDropdownOpt(options);
+        } )
+        const url_1 = `http://localhost:8000/api/subgroup/${selIndicator}`;
+        json(url_1).then(options => {
+          setSubgroupDropdownOpt(options);
+        })
+        const  url_2 = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/1`;
+        json(url_2).then( options =>{
+          setTimeperiodDropdownOpt(options);
+        } )
+        const url_3 = `http://localhost:8000/api/getUnit/${selIndicator}`;
+        json(url_3).then(unit => {
+          setUnit(unit[0].unit)
+        })
+        const url_5 = `http://localhost:8000/api/getIndicatorDetails/${tab}/${selArea}`;
+        json(url_5).then(indicatorDetail => {
+          setIndicatorDetail(indicatorDetail)
           })
-          const url = 'http://localhost:8000/api/indicator/'+tab;
-          json(url).then( options =>{
-            setIndicatorDropdownOpt(options);
-          } )
-          const url_1 = `http://localhost:8000/api/subgroup/${selIndicator}`;
-          json(url_1).then(options => {
-            setSubgroupDropdownOpt(options);
-          })
-         const  url_2 = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/1`;
-          json(url_2).then( options =>{
-            setTimeperiodDropdownOpt(options);
-          } )
-          const url_3 = `http://localhost:8000/api/getUnit/${selIndicator}`;
-          json(url_3).then(unit => {
-            setUnit(unit[0].unit)
-          })
-          const url_5 = `http://localhost:8000/api/getIndicatorDetails/${tab}/${selArea}`;
-          json(url_5).then(indicatorDetail => {
-            setIndicatorDetail(indicatorDetail)
-           })
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [])
 
         useEffect(() => {
           const url = 'http://localhost:8000/api/indicator/'+tab;
@@ -120,14 +121,45 @@ export const Dropdown = ({}) =>{
           // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [id])
 
-        console.log("sel", selIndicator, selSubgroup, selTimeperiod, unit);
         // const boundaries = useData();
         // const newBoundaries = useNewBoundaries();
         // const Dboundaries = useDataDistrict();
         // const NewDboundaries = useNewDistrictBoundaries();
-        // // console.log("NEWDBOUND",NewDboundaries)
+        // console.log("NEWDBOUND",NewDboundaries)
         // const stateBoundary = useDataState(areaName, Dboundaries);
         // const newDistrictBoundaries = useDataState(areaName, NewDboundaries)
+
+        useEffect(() => {
+          async function fetchData(){
+
+            const jsonIndianstate =
+            'https://gist.githubusercontent.com/AnimeshN/b705d4f1a910a16013348e6743d597f4/raw/13ff136e1cd3a90b2fcca370158960dddf74fbee/india_state_old.json';
+            const jsonIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/9b27088c28f134b51983f1a25012474e/raw/7d551013cc70a2b4f08bc1bebd092f3e53a9ceca/india_district_old_v2.json';
+        
+    
+            const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/95d3e079cd1933a0fae19bf3b99b9eec/raw/d0b9a50879e7fb01816cd4ae578219abeb4ec0ac/india_state_nfhs5.json';
+            const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/262881c21197aa8da0524550b128d639/raw/ffd5cb39d90469934c1072ab7399c16e823fc82e/india_district_new_v3.json';   
+
+            const stateTopology = await json(jsonIndianstate);
+            const districtTopology = await json(jsonIndiaDistrict);
+            const newStateTopology = await json(jsonNewIndianstate);
+            const newDistrictTopology = await json(jsonNewIndiaDistrict);
+
+            const stateObject = stateTopology.objects.india_state_old;
+            const districtObject = districtTopology.objects.india_district_old_v2;
+            const newStateObject = newStateTopology.objects.india_state_nfhs5;
+            const newDistrictObject = newDistrictTopology.objects.india_district_new_v3;
+            
+            setBoundaries({
+              'state':feature(stateTopology,stateObject),
+              'dist':feature(districtTopology,districtObject),
+              'new_state': feature(newStateTopology,newStateObject),
+              'new_dist':feature(newDistrictTopology,newDistrictObject)
+            });
+          }
+          fetchData(); 
+        }, []);
+        console.log(boundaries)
 
         if(!areaDropdownOpt){
           return <SkeletonDropdown />
@@ -146,7 +178,6 @@ export const Dropdown = ({}) =>{
         generateList(areaDropdownOpt)
         const timeperiodChange = async(e) =>{
           let val = e;
-          console.log("E in time", e)
           setIsSelected(false);
           setSelTimeperiod(e);
           setIsSelected(true);
@@ -158,11 +189,9 @@ export const Dropdown = ({}) =>{
           setIsSelected(false);
           setSelIndicator(e);
           let indiSense = indicatorDropdownOpt.filter(f => f.indicator_id === parseInt(val)).indi_sense;
-          console.log("indisense", indiSense);
           setIndicatorSense(indiSense);
           const url_1 = await fetch(`http://localhost:8000/api/subgroup/${val}`);
           const body = await url_1.json()
-          console.log("body", {val}, body);
           setSubgroupDropdownOpt(body);
           setSelSubgroup(body[0].value);
           let url;
@@ -189,10 +218,8 @@ export const Dropdown = ({}) =>{
         }
         
         const subgroupChange = async(e) =>{
-          console.log("sub change", e);
           let val = e;
           setSelSubgroup(e);
-          console.log("selsubgroup", selSubgroup);
           setIsSelected(false);
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
@@ -229,7 +256,6 @@ export const Dropdown = ({}) =>{
             setSelArea(value);
             let title = areaList.filter(f => f.area_id === parseInt(value))[0].area_name;
             setAreaName(title);
-            console.log("areaname", title);
             treeRef.current.blur()
         
         
@@ -268,7 +294,6 @@ export const Dropdown = ({}) =>{
         const onChange = (e) =>{
           setIsSelected(false);
           let { value } = e.target;
-          console.log("area", value);
           value = value.charAt(0).toUpperCase() + value.slice(1);
           if(value === ""){
             setOpenDropdown(false);

@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import  {shouldComponentUpdate} from "react";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
-import { BarChart } from "../../components/BarChart/BarChart";
 // import 'react-dropdown/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

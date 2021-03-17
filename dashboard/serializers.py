@@ -100,10 +100,8 @@ class NiStDtbPolySerializer(GeoFeatureModelSerializer):
 #         model = UtData
 #         fields = ('data_id','data_value')
 
-
-
 class UnitSerializer(serializers.ModelSerializer):
-
+        unit = UnitNameSerializer()
         class Meta:
             model = IndicatorUnitSubgroup
             fields = ('unit','indicator')

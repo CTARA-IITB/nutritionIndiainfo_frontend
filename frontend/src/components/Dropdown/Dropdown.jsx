@@ -1,5 +1,4 @@
 import React,{useState,useEffect,useRef} from "react";
-
 import {Row, Col } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
@@ -7,7 +6,8 @@ import {SkeletonDropdown} from "../SkeletonCard";
 import { createHierarchy } from '../../utils';
 import { useParams } from "react-router-dom";
 import Cards  from "../../components/Cards/Cards";
-import { useData, useDataDistrict, useDataState, useNewBoundaries ,useNewDistrictBoundaries} from '../UseData'
+import {Trend}  from "../../components/Trend/Trend";
+import {BarGraph}  from "../../components/BarGraph/BarGraph";
 import { feature } from 'topojson';
 
 const {Search} = Input;
@@ -31,7 +31,7 @@ export const Dropdown = ({}) =>{
   const [isSelected , setIsSelected] = useState(true);
   const [openDropdown,setOpenDropdown] = useState(false);
   const treeRef = useRef();
-  const [areaName, setAreaName] = useState('IND');
+  const [areaName, setAreaName] = useState('India');
   const [level, setLevel] = useState(1);
   const [areaList, setAreaList] = useState(null);
   const [isLevelThree, setIsLevelThree] = useState(false);
@@ -39,7 +39,14 @@ export const Dropdown = ({}) =>{
   const [filterDropdownValue, setFilterDropdownValue] = useState([]);
   const [parentArea, setParentArea] = useState(null);
   const [indicatorDetail, setIndicatorDetail] = useState(null);
+  const [indicatorTrend, setIndicatorTrend] = useState(null);
+  const[indicatorBar, setIndicatorBar]= useState();
   const [boundaries, setBoundaries] = useState(null);
+  const [graphTitle, setGraphTitle] = useState("Prevalence of stunting in under-five year olds");
+  const [graphSubgroup, setGraphSubgroup] = useState('All');
+  const [graphTimeperiod, setGraphTimeperiod] = useState('NFHS5 2019-20');
+  const [graphUnit, setGraphUnit] = useState('Percent');
+
 
 
   // let boundaries;
@@ -87,13 +94,21 @@ export const Dropdown = ({}) =>{
         json(url_2).then( options =>{
           setTimeperiodDropdownOpt(options);
         } )
-        const url_3 = `http://localhost:8000/api/getUnit/${selIndicator}`;
+        const url_3 = `http://localhost:8000/api/getUnit/${selIndicator}/${selSubgroup}`;
         json(url_3).then(unit => {
-          setUnit(unit[0].unit)
+          setUnit(unit[0].unit.unit_id)
         })
         const url_5 = `http://localhost:8000/api/getIndicatorDetails/${tab}/${selArea}`;
         json(url_5).then(indicatorDetail => {
           setIndicatorDetail(indicatorDetail)
+          })
+        const url_6 = `http://localhost:8000/api/getIndicatorTrend/${selIndicator}/${selSubgroup}/${selArea}`;
+        json(url_6).then(indicatorTrend => {
+            setIndicatorTrend(indicatorTrend)
+          })
+        const url_7 = `http://localhost:8000/api/getIndicatorBar/${selIndicator}/${selTimeperiod}/${selArea}`;
+        json(url_7).then( options =>{
+            setIndicatorBar(options);
           })
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
@@ -102,21 +117,25 @@ export const Dropdown = ({}) =>{
           const url = 'http://localhost:8000/api/indicator/'+tab;
           json(url).then( options =>{
             setIndicatorDropdownOpt(options);
-            setSelIndicator(options[0].value)
+            setSelIndicator(options[0].value);
+            setGraphTitle(options[0].title);
           } )
           const url_1 = `http://localhost:8000/api/subgroup/${indiVal}`;
           json(url_1).then(options => {
             setSubgroupDropdownOpt(options);
             setSelSubgroup(options[0].value);
+            setGraphSubgroup(options[0].title);
           })
          const  url_2 = `http://localhost:8000/api/timeperiod/${indiVal}/${selSubgroup}/1`;
           json(url_2).then( options =>{
             setTimeperiodDropdownOpt(options);
-            setSelTimeperiod(options[0].value)
+            setSelTimeperiod(options[0].value);
+            setGraphTimeperiod(options[0].title);
           } )
-          const url_3 = `http://localhost:8000/api/getUnit/${indiVal}`;
+          const url_3 = `http://localhost:8000/api/getUnit/${indiVal}/${selSubgroup}`;
           json(url_3).then(unit => {
-            setUnit(unit[0].unit)
+            setUnit(unit[0].unit.unit_id);
+            setGraphUnit(unit[0].unit.unit_name);
           })
           // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [id])
@@ -188,12 +207,15 @@ export const Dropdown = ({}) =>{
           let val = e;
           setIsSelected(false);
           setSelIndicator(e);
-          let indiSense = indicatorDropdownOpt.filter(f => f.indicator_id === parseInt(val)).indi_sense;
+          let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
+          let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
+          setGraphTitle(indiName);
           setIndicatorSense(indiSense);
           const url_1 = await fetch(`http://localhost:8000/api/subgroup/${val}`);
           const body = await url_1.json()
           setSubgroupDropdownOpt(body);
           setSelSubgroup(body[0].value);
+          setGraphSubgroup(body[0].title);
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree)
@@ -209,11 +231,15 @@ export const Dropdown = ({}) =>{
                     flag = true;
                   }
                 });
-                if(!flag) setSelTimeperiod(body_1[0].value)
+                if(!flag){
+                  setSelTimeperiod(body_1[0].value);
+                  setGraphTimeperiod(body_1[0].title);
+                }
             } 
             const url_3 = await fetch(`http://localhost:8000/api/getUnit/${val}/${selSubgroup}`);
             const body_3 = await url_3.json()
-            setUnit(body_3[0].unit)
+            setUnit(body_3[0].unit.unit_id);
+            setGraphUnit(body_3[0].unit.unit_name);
             setIsSelected(true);
         }
         
@@ -221,6 +247,8 @@ export const Dropdown = ({}) =>{
           let val = e;
           setSelSubgroup(e);
           setIsSelected(false);
+          let subName = subgroupDropdownOpt.filter(f => f.value === val)[0].title;
+          setGraphSubgroup(subName);
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree)
@@ -236,7 +264,10 @@ export const Dropdown = ({}) =>{
                     flag = true;
                   }
                 });
-                if(!flag) setSelTimeperiod(body_1[0].value)
+                if(!flag) {
+                  setSelTimeperiod(body_1[0].value);
+                  setGraphTimeperiod(body_1[0].title);
+                }
             } 
           setIsSelected(true);
         }
@@ -285,7 +316,10 @@ export const Dropdown = ({}) =>{
                     flag = true;
                   }
                 });
-                if(!flag) setSelTimeperiod(body_1[0].value)
+                if(!flag) {
+                  setSelTimeperiod(body_1[0].value);
+                  setGraphTimeperiod(body_1[0].title);
+                }
             } 
             setIsSelected(true);
         
@@ -398,7 +432,33 @@ export const Dropdown = ({}) =>{
     <Cards indicatorDetail = {indicatorDetail} setIndicatorDetail = {setIndicatorDetail} selArea ={selArea}
     tab = {tab} setSelIndicator = {setSelIndicator} boundaries = {boundaries}/>
     </div>
+    <div className="layout__body__left__trend">
+      <Trend indicatorTrend = {indicatorTrend}
+      setIndicatorTrend = {setIndicatorTrend}
+      selIndicator = {selIndicator}
+      selSubgroup = {selSubgroup}
+      selArea = {selArea}
+      graphTitle = {graphTitle}
+      graphSubgroup = {graphSubgroup}
+      graphUnit = {graphUnit}
+      areaName = {areaName}/>
+      </div>
     </div>
+    <div className="layout__body__right">
+    <div className="layout__body__right__map">
+      </div>
+    <div className="layout__body__right__bar">
+    <BarGraph indicatorBar = {indicatorBar}
+      setIndicatorBar = {setIndicatorBar}
+      selIndicator = {selIndicator}
+      selTimeperiod = {selTimeperiod}
+      selArea = {selArea}
+      graphTitle = {graphTitle}
+      graphTimeperiod = {graphTimeperiod}
+      graphUnit = {graphUnit}
+      areaName = {areaName}/>
+      </div>
+      </div>
     </div>
     </div>
    </>

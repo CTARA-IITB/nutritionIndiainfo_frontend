@@ -16,7 +16,7 @@ class IndicatorListView(generics.ListAPIView):
         serializer_class = IndicatorSerializer
         def get_queryset(self,*args, **kwargs):
                 selectedTab = self.kwargs.get('tab', None)
-                queryset = Indicator.objects.filter(Q(classification=selectedTab)).values('indicator_id', 'indicator_name').order_by('indicator_order')
+                queryset = Indicator.objects.filter(Q(classification=selectedTab)).values('indicator_id', 'indicator_name', 'indi_sense').order_by('indicator_order')
                 return queryset
 
 class SubgroupListView(generics.ListAPIView): 

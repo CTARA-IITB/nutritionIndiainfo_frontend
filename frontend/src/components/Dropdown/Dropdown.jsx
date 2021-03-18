@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import Cards  from "../../components/Cards/Cards";
 import {Trend}  from "../../components/Trend/Trend";
 import {BarGraph}  from "../../components/BarGraph/BarGraph";
+import {Map} from "../../components/Map/Map";
 import { feature } from 'topojson';
 
 const {Search} = Input;
@@ -178,11 +179,40 @@ export const Dropdown = ({}) =>{
           }
           fetchData(); 
         }, []);
-        console.log(boundaries)
+        const [selIndiaData,setSelIndiaData] = useState(null);
+        const [selStateData,setSelStateData] = useState(null);
+        useEffect(() => {
+          let url;
+          if (level === 1)
+          {
+            url = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/2`
+            json(url).then(data => {
+              setSelIndiaData(data);
+            })
+          }
+          else if (level === 2) {
+            if (isLevelThree)
+              url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
+            else
+              url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
+              json(url).then(data => {
+                setSelStateData(data);
+              })
+          }
+         
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [selIndicator, selSubgroup, selTimeperiod, selArea, parentArea])
 
-        if(!areaDropdownOpt){
+        if(!areaDropdownOpt || !boundaries){
           return <SkeletonDropdown />
         }
+
+
+
+        let renderMap = boundaries.state;
+        let nutritionData = selIndiaData;
+
+        console.log(nutritionData,renderMap)
         const dataList = [];
         const generateList = (data) => {
           for (let i = 0; i < data.length; i++) {
@@ -446,7 +476,32 @@ export const Dropdown = ({}) =>{
     </div>
     <div className="layout__body__right">
     <div className="layout__body__right__map">
-      </div>
+              {
+              nutritionData !== null && nutritionData.length > 0 ? 
+              <Map geometry={renderMap} 
+              data={nutritionData} 
+              onMapClick={setAreaName} 
+              setLevel={setLevel} 
+              level={level} 
+              setSelArea={setSelArea} 
+              unit={unit} 
+              unitName={graphUnit} 
+              selArea={selArea} 
+              isLevelThree={isLevelThree} 
+              setIsLevelThree={setIsLevelThree} 
+              // handleClick={handleClick} 
+              searchRef={searchRef} 
+              setFilterDropdownValue={setFilterDropdownValue} 
+              areaDropdownOpt={areaDropdownOpt} 
+              selIndicator={selIndicator}
+              indicatorSense={indicatorSense} 
+              // switchDisplay={switchDisplay}
+              // toggleState={toggleState}
+
+              />
+                : <div className="text-center"></div>
+              }
+            </div>
     <div className="layout__body__right__bar">
     <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}

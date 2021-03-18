@@ -133,7 +133,7 @@ export const Map = ({
     let sum = color_range.reduce(function(a, b){
       return a + b;
   }, 0);
-    let dotVal = Math.round(sum/4000);
+    let dotVal = Math.ceil(sum/4000);
     let [min, max] = extent(color_range);
   
     let low;

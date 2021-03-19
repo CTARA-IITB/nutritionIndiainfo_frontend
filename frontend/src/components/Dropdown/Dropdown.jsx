@@ -47,6 +47,8 @@ export const Dropdown = ({}) =>{
   const [graphSubgroup, setGraphSubgroup] = useState('All');
   const [graphTimeperiod, setGraphTimeperiod] = useState('NFHS5 2019-20');
   const [graphUnit, setGraphUnit] = useState('Percent');
+  const [switchDisplay,setSwitchDisplay] = useState(true);
+  const [toggleState, setToggleState] = useState(true)
 
 
 
@@ -203,6 +205,28 @@ export const Dropdown = ({}) =>{
           // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [selIndicator, selSubgroup, selTimeperiod, selArea, parentArea])
 
+
+        useEffect(() => {
+          //switch Display
+          const switchurl=`http://localhost:8000/api/getDistrictDetails/${selIndicator}/${selSubgroup}/${selTimeperiod}`;
+          json(switchurl).then(data =>{
+            if(data.length)
+              setSwitchDisplay(true);
+            else
+              setSwitchDisplay(false);
+          })
+        }, [selIndicator, selSubgroup, selTimeperiod])
+
+        const handleClick = () => {
+          setToggleState(!toggleState);
+          // let text = null;
+          // if (buttonText === 'District')
+          //   text = 'state';
+          // else
+          //   text = 'District';
+          // changeText(text);
+        }
+
         if(!areaDropdownOpt || !boundaries){
           return <SkeletonDropdown />
         }
@@ -212,7 +236,6 @@ export const Dropdown = ({}) =>{
         let renderMap = boundaries.state;
         let nutritionData = selIndiaData;
 
-        console.log(nutritionData,renderMap)
         const dataList = [];
         const generateList = (data) => {
           for (let i = 0; i < data.length; i++) {
@@ -377,6 +400,8 @@ export const Dropdown = ({}) =>{
           }
           
         }
+
+        
    
     return (
       <>
@@ -489,14 +514,14 @@ export const Dropdown = ({}) =>{
               selArea={selArea} 
               isLevelThree={isLevelThree} 
               setIsLevelThree={setIsLevelThree} 
-              // handleClick={handleClick} 
+              handleClick={handleClick} 
               searchRef={searchRef} 
               setFilterDropdownValue={setFilterDropdownValue} 
               areaDropdownOpt={areaDropdownOpt} 
               selIndicator={selIndicator}
               indicatorSense={indicatorSense} 
-              // switchDisplay={switchDisplay}
-              // toggleState={toggleState}
+              switchDisplay={switchDisplay}
+              toggleState={toggleState}
 
               />
                 : <div className="text-center"></div>

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import SentenseOnCard from './SentenseOnCard';
 import './Card.css'
 function Card({id, title, value, value_type, setSelIndicator, deff, source, style }) {
     const  changeColor = ({setSelIndicator, id, setOnCardClick})=> {
@@ -8,6 +8,7 @@ setSelIndicator(id.toString());
 
     // let changeColor=({setSelIndicator})=> { 
     //         setSelIndicator("2");    }
+    const s=<SentenseOnCard title={title} value_type={value_type}/>
     return (
         <div className='card-container' className={style} >
             <div className="card-content" onClick={() => changeColor({setSelIndicator, id})}>
@@ -20,7 +21,7 @@ setSelIndicator(id.toString());
                     <p>{value_type}</p>
                     <hr width="150px" color="black" />
                     <h4>{value}</h4>
-                    <p>children suffering from {deff}</p>
+                    <p>{s}</p>
                     <h5>source: {source}</h5>
                 </div>
 

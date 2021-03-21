@@ -453,6 +453,7 @@ export const Dropdown = ({}) =>{
             <span className="dropdown-title">Select subgroup</span>
 
                 <TreeSelect
+                showSearch
                 className='dropdown'
                 virtual={false}
                 style={{ width: '100%' }}
@@ -467,6 +468,7 @@ export const Dropdown = ({}) =>{
             <span className="dropdown-title"> Select timeperiod</span>
 
                 <TreeSelect
+                showSearch
                 className='dropdown'
                 virtual={false}
                 style={{ width: '100%' }}

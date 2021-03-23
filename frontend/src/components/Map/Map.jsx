@@ -397,18 +397,19 @@ export const Map = ({
       <div className="map">
         <div ref={wrapperRef} className="map__svg">
           <svg className="svg-map" ref={svgRef} ></svg>
-        </div>
-        <div className="map__requirements">
-          
-              <div className="map__requirements__switch">
+          <div className="map__requirements__switch">
               {switchButton}
             </div>
           
           <div className="map__requirements__legend">
             <svg className="svg-legend" ref={svgLegRef}></svg>
           </div>
-     
+    
         </div>
+        {/* <div className="map__requirements">
+          
+            
+        </div> */}
 
       </div>
 

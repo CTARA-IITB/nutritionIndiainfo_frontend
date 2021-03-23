@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef} from "react";
+import React,{useState,useEffect,useRef,useCallback} from "react";
 import {Row, Col } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
@@ -10,6 +10,7 @@ import {Trend}  from "../../components/Trend/Trend";
 import {BarGraph}  from "../../components/BarGraph/BarGraph";
 import {Map} from "../../components/Map/Map";
 import { feature } from 'topojson';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 const {Search} = Input;
 export const Dropdown = ({}) =>{
@@ -41,7 +42,7 @@ export const Dropdown = ({}) =>{
   const [parentArea, setParentArea] = useState(null);
   const [indicatorDetail, setIndicatorDetail] = useState(null);
   const [indicatorTrend, setIndicatorTrend] = useState(null);
-  const[indicatorBar, setIndicatorBar]= useState();
+  const [indicatorBar, setIndicatorBar]= useState();
   const [boundaries, setBoundaries] = useState(null);
   const [graphTitle, setGraphTitle] = useState("Prevalence of stunting in under-five year olds");
   const [graphSubgroup, setGraphSubgroup] = useState('All');
@@ -49,8 +50,9 @@ export const Dropdown = ({}) =>{
   const [graphUnit, setGraphUnit] = useState('Percent');
   const [switchDisplay,setSwitchDisplay] = useState(true);
   const [toggleState, setToggleState] = useState(true)
-
-
+  const screen1 = useFullScreenHandle();
+  const screen2 = useFullScreenHandle();
+  const screen3 = useFullScreenHandle();
 
   // let boundaries;
   // let newBoundaries;
@@ -482,25 +484,37 @@ export const Dropdown = ({}) =>{
     
     <div className="layout">
   <div className="layout__body">
-    <div className="layout__body__left">
-            <div className="layout__body__left__cards">
+
+    <div className="layout__body__left__cards">
     <Cards indicatorDetail = {indicatorDetail} setIndicatorDetail = {setIndicatorDetail} selArea ={selArea}
     tab = {tab} setSelIndicator = {setSelIndicator} boundaries = {boundaries}/>
     </div>
-    <div className="layout__body__left__trend">
-      <Trend indicatorTrend = {indicatorTrend}
-      setIndicatorTrend = {setIndicatorTrend}
-      selIndicator = {selIndicator}
-      selSubgroup = {selSubgroup}
-      selArea = {selArea}
-      graphTitle = {graphTitle}
-      graphSubgroup = {graphSubgroup}
-      graphUnit = {graphUnit}
-      areaName = {areaName}/>
-      </div>
+
+ 
+    <div style={{ marginRight:"5px" ,marginLeft: "20px", width: "300px" }}>
+    <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen2.enter} /></button>
+    <FullScreen handle={screen2}  >
+            <Trend indicatorTrend = {indicatorTrend}
+            setIndicatorTrend = {setIndicatorTrend}
+            selIndicator = {selIndicator}
+            selSubgroup = {selSubgroup}
+            selArea = {selArea}
+            graphTitle = {graphTitle}
+            graphSubgroup = {graphSubgroup}
+            graphUnit = {graphUnit}
+          areaName = {areaName}/>
+
+    <button className="button_exit_trend"><img src="./exit.jpg" alt="image" onClick={screen2.exit} /></button>
+    </FullScreen>
+         
     </div>
-    <div className="layout__body__right">
-    <div className="layout__body__right__map">
+    </div>
+    
+    <div className="layout__body__right__bar">
+
+    <button className="button_fullscreen_map"><img src="./fullscreen.jpg" alt="image" onClick={screen3.enter} /></button>
+    <div style={{ position: "relative", marginTop:"-550px",marginLeft: "305px", width: "250px" }}>
+    <FullScreen handle={screen3} >
               {
               nutritionData !== null && nutritionData.length > 0 ? 
               <Map geometry={renderMap} 
@@ -526,21 +540,28 @@ export const Dropdown = ({}) =>{
               />
                 : <div className="text-center"></div>
               }
-            </div>
-    <div className="layout__body__right__bar">
-    <BarGraph indicatorBar = {indicatorBar}
-      setIndicatorBar = {setIndicatorBar}
-      selIndicator = {selIndicator}
-      selTimeperiod = {selTimeperiod}
-      selArea = {selArea}
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      areaName = {areaName}/>
+    <button className="button_exit_map"><img src="./exit.jpg" alt="image" onClick={screen3.exit} /></button>
+    </FullScreen>
+    </div>
+
+    <button className="button_fullscreen_bar"><img src="./fullscreen.jpg" alt="image" onClick={screen1.enter} /></button>
+    <div style={{ position: "relative", marginTop:"-615px",marginLeft: "700px", width: "430px" }}>
+    <FullScreen handle={screen1} >
+            <BarGraph indicatorBar = {indicatorBar}
+            setIndicatorBar = {setIndicatorBar}
+            selIndicator = {selIndicator}
+            selTimeperiod = {selTimeperiod}
+            selArea = {selArea}
+            graphTitle = {graphTitle}
+            graphTimeperiod = {graphTimeperiod}
+            graphUnit = {graphUnit}
+            areaName = {areaName}/>
+      <button className="button_exit_bar"><img src="./exit.jpg" alt="image" onClick={screen1.exit} /></button>
+       </FullScreen>
+      
       </div>
       </div>
     </div>
-    </div>
-   </>
+    </>
     )
 }

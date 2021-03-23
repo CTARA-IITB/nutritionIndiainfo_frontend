@@ -35,7 +35,7 @@ export const Trend = ({indicatorTrend, setIndicatorTrend, selIndicator, selSubgr
       }
     
     return (
-                 <Line data={datal} options = {{
+                  <Line data={datal} options = {{
                    legend:
                    {
                      display: false,
@@ -52,7 +52,8 @@ export const Trend = ({indicatorTrend, setIndicatorTrend, selIndicator, selSubgr
                            drawOnChartArea:false
                        },
                        ticks: {
-                         minRotation: 0,
+                        fontSize: 7,
+                        minRotation: 0,
                      }
                        }],
                        yAxes: [{
@@ -60,6 +61,7 @@ export const Trend = ({indicatorTrend, setIndicatorTrend, selIndicator, selSubgr
                            drawOnChartArea:false
                        },
                        ticks: {
+                        fontSize: 8,
                          padding: 10,
                      }
                      }]

@@ -44,55 +44,55 @@
 }
 
 .layout {
-  height: 85vh; 
+  height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap:10px
+  gap: 10px;
 }
 
 .layout__header {
   flex: 0.1;
   /* background-color:blue; */
 }
-.layout__body{
-  flex: .9;
+.layout__body {
+  flex: 0.9;
   display: flex;
 }
 
-.layout__body__left {
+/* .layout__body__left {
   flex: 0.4;
   display: flex;
-  gap:50px;
+  gap: 50px;
   flex-direction: column;
-}
+} */
 .layout__body__left__cards {
-  width:100%;
+  margin-top: 15px;
+  width: 600px;
   overflow-y: scroll;
-  height: 70vh;
+  height: 80vh;
   display: flex;
   flex-wrap: wrap;
   gap: 0px;
 }
 
-.layout__body__right {
+/* .layout__body__right {
   display: flex;
   flex: 0.6;
   display: flex;
-  gap:90px;
+  margin-top: 500px;
+  gap: 90px;
   flex-direction: column;
+} */
 
-}
-
-.layout__body__right__bar{
+.layout__body__right__bar {
   width: 70%;
-  margin: auto;
-
+  margin-left: 300px;
 }
 
-.layout__body__left__trend{
-margin-top: 70px;
-margin-left: 10px;
+.layout__body__left__trend {
+  margin-top: 70px;
+  margin-left: 10px;
 }
 
 .chart-container-bar {
@@ -105,4 +105,49 @@ margin-left: 10px;
   height: 300px;
   margin-top: 10px;
   padding-top: 30px;
+}
+.button_fullscreen_trend {
+  background-color: white;
+  width: 40px;
+  border: white;
+  margin-left: 310px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.button_exit_trend {
+  background-color: white;
+  border: none;
+  margin-left: 310px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.button_fullscreen_bar {
+  background-color: white;
+  width: 50px;
+  border: white;
+  margin-left: 1080px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.button_exit_bar {
+  background-color: white;
+  border: none;
+  margin-left: 390px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.button_fullscreen_map {
+  background-color: white;
+  width: 50px;
+  border: none;
+  margin-left: 630px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.button_exit_map {
+  background-color: white;
+  border: none;
+  margin-left: 232px;
+  cursor: pointer;
+  overflow: hidden;
 }

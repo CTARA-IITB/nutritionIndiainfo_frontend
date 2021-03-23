@@ -69,12 +69,13 @@ export const BarGraph = ({indicatorBar, setIndicatorBar, selIndicator, selTimepe
               display: true,
               text: [graphTitle +','+ graphUnit, areaName +', '+ graphTimeperiod],
               fontColor: "black",
-          },
+            },
             scales: {
               xAxes:[{
                 id:'xAxis1',
                 type:"category",
                 ticks:{
+                  fontSize: 11,
                   callback:function(label){
                     var subgroup = label.split(";")[0];
                     return subgroup;
@@ -92,6 +93,7 @@ export const BarGraph = ({indicatorBar, setIndicatorBar, selIndicator, selTimepe
                   drawOnChartArea: false, // only want the grid lines for one axis to show up
                 },
                 ticks:{
+                  fontSize: 9,
                   minRotation: 0,
                   callback:function(label){
                     var subgroup = label.split(";")[0];
@@ -109,6 +111,7 @@ export const BarGraph = ({indicatorBar, setIndicatorBar, selIndicator, selTimepe
               }],
               yAxes: [{
                 ticks: {
+                  fontSize: 8,
                   beginAtZero: true
                 },
                 gridLines: {

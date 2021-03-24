@@ -16,6 +16,8 @@ import { json } from 'd3';
     })
   }, [tab, selArea])
 
+  console.log(indicatorDetail,"details");
+    
   let indicatorcount = 0;
   if (indicatorDetail) {
     indicatorDetail.map(indi => {
@@ -74,7 +76,7 @@ import { json } from 'd3';
           );
           colorvar1 = true;
         }
-        i++;
+        
       }
     }
     else{

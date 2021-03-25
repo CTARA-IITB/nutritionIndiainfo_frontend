@@ -404,7 +404,7 @@ export const Dropdown = ({}) =>{
         }
 
         
-   
+   let fontSize=15
     return (
       <>
       <Row className=' mt-3 '>
@@ -493,7 +493,7 @@ export const Dropdown = ({}) =>{
  
     <div style={{ marginRight:"5px" ,marginLeft: "20px", width: "300px" }}>
     <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen2.enter} /></button>
-    <FullScreen handle={screen2}  >
+    <FullScreen className="screen fullscreen-enabled .my-component " handle={screen2} >
             <Trend indicatorTrend = {indicatorTrend}
             setIndicatorTrend = {setIndicatorTrend}
             selIndicator = {selIndicator}
@@ -502,7 +502,8 @@ export const Dropdown = ({}) =>{
             graphTitle = {graphTitle}
             graphSubgroup = {graphSubgroup}
             graphUnit = {graphUnit}
-          areaName = {areaName}/>
+            areaName = {areaName}
+            />
 
     <button className="button_exit_trend"><img src="./exit.jpg" alt="image" onClick={screen2.exit} /></button>
     </FullScreen>
@@ -546,7 +547,7 @@ export const Dropdown = ({}) =>{
 
     <button className="button_fullscreen_bar"><img src="./fullscreen.jpg" alt="image" onClick={screen1.enter} /></button>
     <div style={{ position: "relative", marginTop:"-615px",marginLeft: "700px", width: "430px" }}>
-    <FullScreen handle={screen1} >
+    <FullScreen className="screen" handle={screen1} >
             <BarGraph indicatorBar = {indicatorBar}
             setIndicatorBar = {setIndicatorBar}
             selIndicator = {selIndicator}

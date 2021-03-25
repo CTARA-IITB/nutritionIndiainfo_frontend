@@ -151,3 +151,6 @@
   cursor: pointer;
   overflow: hidden;
 }
+.screen {
+  background-color: white;
+}

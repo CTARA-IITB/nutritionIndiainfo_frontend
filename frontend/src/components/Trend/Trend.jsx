@@ -53,6 +53,7 @@ export const Trend = ({indicatorTrend, setIndicatorTrend, selIndicator, selSubgr
                        },
                        ticks: {
                         fontSize: 7,
+                        fontColor:"black",
                         minRotation: 0,
                      }
                        }],
@@ -62,7 +63,8 @@ export const Trend = ({indicatorTrend, setIndicatorTrend, selIndicator, selSubgr
                        },
                        ticks: {
                         fontSize: 8,
-                         padding: 10,
+                        fontColor:"black",
+                        padding: 10,
                      }
                      }]
    

@@ -26,7 +26,7 @@ div.tooltip {
   position: absolute;
   text-align: center;
   width: 150px;
-  height: 70px;       
+  height: 70px;
   background-color: white;
   border-radius: 10px;
   pointer-events: none;
@@ -105,26 +105,26 @@ button.ant-switch {
   }
 }
 
-.map{
+.map {
   /* background-color: red; */
   width: 100%;
   display: flex;
-} 
-
-.map__svg{
-  /* background-color: darkgray; */
-  flex:.8;
 }
-.map__requirements{
+
+.map__svg {
+  /* background-color: darkgray; */
+  flex: 0.8;
+}
+.map__requirements {
   /* background-color: darkorchid; */
-  flex:.2;
-  display:flex;
+  flex: 0.2;
+  display: flex;
   flex-direction: column;
 }
 
-.map__requirements_switch{
-  flex:.2;
+.map__requirements_switch {
+  flex: 0.2;
 }
-.map__requirements_legend{
-  flex:.8;
+.map__requirements_legend {
+  flex: 0.8;
 }

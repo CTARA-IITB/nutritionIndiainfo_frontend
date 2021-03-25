@@ -2,14 +2,14 @@ import React,{useState,useEffect,useRef} from "react";
 import {Row, Col } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
-import {SkeletonDropdown} from "../SkeletonCard";
-import { createHierarchy } from '../../utils';
+import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns } from '../../utils';
 import { useParams } from "react-router-dom";
 import Cards  from "../../components/Cards/Cards";
 import {Trend}  from "../../components/Trend/Trend";
 import {BarGraph}  from "../../components/BarGraph/BarGraph";
-import {Map} from "../../components/Map/Map";
 import { feature } from 'topojson';
+import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
+import { Map } from "../../components/Map/Map";
 
 const {Search} = Input;
 export const Dropdown = ({}) =>{
@@ -29,7 +29,7 @@ export const Dropdown = ({}) =>{
   const [subgroupDropdownOpt, setSubgroupDropdownOpt] = useState([]);
   const [stateID,setStateID] = useState(null);
   const [indicatorSense, setIndicatorSense] = useState('Negative');
-  const [isSelected , setIsSelected] = useState(true);
+  const [isSelected , setIsSelected] = useState(false);
   const [openDropdown,setOpenDropdown] = useState(false);
   const treeRef = useRef();
   const [areaName, setAreaName] = useState('India');
@@ -41,14 +41,19 @@ export const Dropdown = ({}) =>{
   const [parentArea, setParentArea] = useState(null);
   const [indicatorDetail, setIndicatorDetail] = useState(null);
   const [indicatorTrend, setIndicatorTrend] = useState(null);
-  const[indicatorBar, setIndicatorBar]= useState();
+  const[indicatorBar, setIndicatorBar]= useState(null);
+  const[selIndiaData, setSelIndiaData]= useState(null);
   const [boundaries, setBoundaries] = useState(null);
   const [graphTitle, setGraphTitle] = useState("Prevalence of stunting in under-five year olds");
   const [graphSubgroup, setGraphSubgroup] = useState('All');
   const [graphTimeperiod, setGraphTimeperiod] = useState('NFHS5 2019-20');
   const [graphUnit, setGraphUnit] = useState('Percent');
   const [switchDisplay,setSwitchDisplay] = useState(true);
-  const [toggleState, setToggleState] = useState(true)
+  const [toggleState, setToggleState] = useState(true);
+  const [buttonText, setButtonText] = useState("District");
+  const [selStateData, setSelStateData] = useState(null);
+  const changeText = (text) => setButtonText(text);
+
 
 
 
@@ -60,6 +65,7 @@ export const Dropdown = ({}) =>{
 
     let tab =8;
     let indiVal ='12'
+
       if(id === undefined || id === 'section1')
       {
         tab =8;
@@ -67,7 +73,7 @@ export const Dropdown = ({}) =>{
       }
       else if(id === 'section2'){
         tab=1;
-        indiVal = '2';
+        indiVal = '2';  
       }
       else if(id === 'section3'){
         tab=3;
@@ -77,6 +83,28 @@ export const Dropdown = ({}) =>{
         tab=6;
         indiVal = '56';
       }
+
+      useEffect(() => {
+      async function populateTabData()
+      {
+        setIsSelected(false);
+        let subVal = '6';
+        await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
+        let timeVal = selTimeperiod;
+        const  url_2 = await fetch(`http://localhost:8000/api/timeperiod/${indiVal}/${subVal}/${selArea}`);
+        const body_2 = await url_2.json();
+        setTimeperiodDropdownOpt(body_2);
+        setSelTimeperiod(body_2[0].value);
+        timeVal = body_2[0].value;
+        setGraphTimeperiod(body_2[0].title);
+        await setVisulaizationData(indiVal, subVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
+        await setCardData(tab, selArea, setIndicatorDetail)
+        setIsSelected(true);
+      }
+      populateTabData();
+      }, [id])
+
+
       useEffect(() => {
         const url_4 = 'http://localhost:8000/api/area';
         json(url_4).then( options =>{
@@ -113,43 +141,12 @@ export const Dropdown = ({}) =>{
         json(url_7).then( options =>{
             setIndicatorBar(options);
           })
+        const  url_8 = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/2`
+          json(url_8).then(data => {
+            setSelIndiaData(data);
+          })
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
-
-        useEffect(() => {
-          const url = 'http://localhost:8000/api/indicator/'+tab;
-          json(url).then( options =>{
-            setIndicatorDropdownOpt(options);
-            setSelIndicator(options[0].value);
-            setGraphTitle(options[0].title);
-          } )
-          const url_1 = `http://localhost:8000/api/subgroup/${indiVal}`;
-          json(url_1).then(options => {
-            setSubgroupDropdownOpt(options);
-            setSelSubgroup(options[0].value);
-            setGraphSubgroup(options[0].title);
-          })
-         const  url_2 = `http://localhost:8000/api/timeperiod/${indiVal}/${selSubgroup}/1`;
-          json(url_2).then( options =>{
-            setTimeperiodDropdownOpt(options);
-            setSelTimeperiod(options[0].value);
-            setGraphTimeperiod(options[0].title);
-          } )
-          const url_3 = `http://localhost:8000/api/getUnit/${indiVal}/${selSubgroup}`;
-          json(url_3).then(unit => {
-            setUnit(unit[0].unit.unit_id);
-            setGraphUnit(unit[0].unit.unit_name);
-          })
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [id])
-
-        // const boundaries = useData();
-        // const newBoundaries = useNewBoundaries();
-        // const Dboundaries = useDataDistrict();
-        // const NewDboundaries = useNewDistrictBoundaries();
-        // console.log("NEWDBOUND",NewDboundaries)
-        // const stateBoundary = useDataState(areaName, Dboundaries);
-        // const newDistrictBoundaries = useDataState(areaName, NewDboundaries)
 
         useEffect(() => {
           async function fetchData(){
@@ -181,61 +178,10 @@ export const Dropdown = ({}) =>{
           }
           fetchData(); 
         }, []);
-        const [selIndiaData,setSelIndiaData] = useState(null);
-        const [selStateData,setSelStateData] = useState(null);
-        useEffect(() => {
-          let url;
-          if (level === 1)
-          {
-            url = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/2`
-            json(url).then(data => {
-              setSelIndiaData(data);
-            })
-          }
-          else if (level === 2) {
-            if (isLevelThree)
-              url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${parentArea}`
-            else
-              url = `http://localhost:8000/api/areaData/${selIndicator}/${selSubgroup}/${selTimeperiod}/${selArea}`;
-              json(url).then(data => {
-                setSelStateData(data);
-              })
-          }
-         
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [selIndicator, selSubgroup, selTimeperiod, selArea, parentArea])
 
-
-        useEffect(() => {
-          //switch Display
-          const switchurl=`http://localhost:8000/api/getDistrictDetails/${selIndicator}/${selSubgroup}/${selTimeperiod}`;
-          json(switchurl).then(data =>{
-            if(data.length)
-              setSwitchDisplay(true);
-            else
-              setSwitchDisplay(false);
-          })
-        }, [selIndicator, selSubgroup, selTimeperiod])
-
-        const handleClick = () => {
-          setToggleState(!toggleState);
-          // let text = null;
-          // if (buttonText === 'District')
-          //   text = 'state';
-          // else
-          //   text = 'District';
-          // changeText(text);
-        }
-
-        if(!areaDropdownOpt || !boundaries){
+        if(!areaDropdownOpt){
           return <SkeletonDropdown />
         }
-
-
-
-        let renderMap = boundaries.state;
-        let nutritionData = selIndiaData;
-
         const dataList = [];
         const generateList = (data) => {
           for (let i = 0; i < data.length; i++) {
@@ -248,13 +194,6 @@ export const Dropdown = ({}) =>{
           }
         };
         generateList(areaDropdownOpt)
-        const timeperiodChange = async(e) =>{
-          let val = e;
-          setIsSelected(false);
-          setSelTimeperiod(e);
-          setIsSelected(true);
-        }
-
      
         const indicatorChange = async(e) =>{
           let val = e;
@@ -278,6 +217,7 @@ export const Dropdown = ({}) =>{
             const body_1 = await url.json()
               setTimeperiodDropdownOpt(body_1);
               let flag = false;
+              let timeValue = selTimeperiod;
               if(body_1){
                 body_1.forEach(timeperiod => {
                   if(timeperiod.value === parseInt(selTimeperiod)){
@@ -285,21 +225,27 @@ export const Dropdown = ({}) =>{
                   }
                 });
                 if(!flag){
+                  timeValue = body_1[0].value;
                   setSelTimeperiod(body_1[0].value);
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
             const url_3 = await fetch(`http://localhost:8000/api/getUnit/${val}/${selSubgroup}`);
             const body_3 = await url_3.json()
+            console.log(body_3);
             setUnit(body_3[0].unit.unit_id);
             setGraphUnit(body_3[0].unit.unit_name);
+            console.log("ius", val, body[0].value, timeValue, selArea, parentArea, level);
+            await setVisulaizationData(val, body[0].value, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
             setIsSelected(true);
         }
-        
+
+       
+ 
         const subgroupChange = async(e) =>{
           let val = e;
-          setSelSubgroup(e);
           setIsSelected(false);
+          setSelSubgroup(e);
           let subName = subgroupDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphSubgroup(subName);
           let url;
@@ -311,6 +257,7 @@ export const Dropdown = ({}) =>{
             const body_1 = await url.json()
               setTimeperiodDropdownOpt(body_1);
               let flag = false;
+              let timeValue = selTimeperiod;
               if(body_1){
                 body_1.forEach(timeperiod => {
                   if(timeperiod.value === parseInt(selTimeperiod)){
@@ -318,25 +265,44 @@ export const Dropdown = ({}) =>{
                   }
                 });
                 if(!flag) {
+                  timeValue = body_1[0].value;
                   setSelTimeperiod(body_1[0].value);
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
+          await setVisulaizationData(selIndicator, val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
+          setIsSelected(true);
+        }
+
+        const timeperiodChange = async(e) =>{
+          let val = e;
+          setIsSelected(false);
+          setSelTimeperiod(e);
+          await setVisulaizationData(selIndicator, selSubgroup, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
           setIsSelected(true);
         }
 
         const areaChange = async(e) => {
           let value = e
+          let newLevel = 1;
+          let levelThree = false;
           setIsSelected(false);
             if(value === "1"){
                 setLevel(1)
                 setIsLevelThree(false);
+                levelThree = false;
+                
             }
             else if(stateID.indexOf(parseInt(value)) !== -1){
                 setIsLevelThree(false);
+                levelThree = false;
+                newLevel = 2;
                 setLevel(2)
             }
-            else setLevel(3);
+            else {
+              newLevel = 3;
+              setLevel(3);
+            }
             setSelArea(value);
             let title = areaList.filter(f => f.area_id === parseInt(value))[0].area_name;
             setAreaName(title);
@@ -351,6 +317,7 @@ export const Dropdown = ({}) =>{
             setAreaName(parentName);
             setParentArea(areaParentId);
             setIsLevelThree(true);
+            levelThree = true;
             setLevel(2);
           }
           let url;
@@ -363,6 +330,7 @@ export const Dropdown = ({}) =>{
         
               setTimeperiodDropdownOpt(body_1);
               let flag = false;
+              let timeValue = selTimeperiod;
               if(body_1){
                 body_1.forEach(timeperiod => {
                   if(timeperiod.value === parseInt(selTimeperiod)){
@@ -370,10 +338,13 @@ export const Dropdown = ({}) =>{
                   }
                 });
                 if(!flag) {
+                  timeValue = body_1[0].value;
                   setSelTimeperiod(body_1[0].value);
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
+            await setVisulaizationData(selIndicator, selSubgroup, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
+            await setCardData(tab, value, setIndicatorDetail)
             setIsSelected(true);
         
         }
@@ -398,10 +369,13 @@ export const Dropdown = ({}) =>{
         
             setFilterDropdownValue(expandedKeys)
           }
-          
+          setIsSelected(true);
         }
-
-        
+        if (!boundaries || !boundaries.state  || !boundaries.new_state) {
+          return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
+        }
+      
+       
    
     return (
       <>
@@ -473,7 +447,8 @@ export const Dropdown = ({}) =>{
                 value={selTimeperiod}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={timeperiodDropdownOpt}
-                onChange={value => setSelTimeperiod(value) }
+               // onChange={value => setSelTimeperiod(value) }
+               onChange={timeperiodChange}
                 />
               </Col>
              
@@ -484,51 +459,59 @@ export const Dropdown = ({}) =>{
   <div className="layout__body">
     <div className="layout__body__left">
             <div className="layout__body__left__cards">
-    <Cards indicatorDetail = {indicatorDetail} setIndicatorDetail = {setIndicatorDetail} selArea ={selArea}
-    tab = {tab} setSelIndicator = {setSelIndicator} boundaries = {boundaries}/>
+            {isSelected? <Cards indicatorDetail = {indicatorDetail} setIndicatorDetail = {setIndicatorDetail} selArea ={selArea}
+    tab = {tab} setSelIndicator = {setSelIndicator} boundaries = {boundaries}/> : null}
     </div>
     <div className="layout__body__left__trend">
+      {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
       setIndicatorTrend = {setIndicatorTrend}
+      unit = {unit}
+      selTimeperiod = {selTimeperiod}
       selIndicator = {selIndicator}
       selSubgroup = {selSubgroup}
       selArea = {selArea}
       graphTitle = {graphTitle}
       graphSubgroup = {graphSubgroup}
       graphUnit = {graphUnit}
-      areaName = {areaName}/>
+      areaName = {areaName}/>: null}
       </div>
     </div>
     <div className="layout__body__right">
     <div className="layout__body__right__map">
-              {
-              nutritionData !== null && nutritionData.length > 0 ? 
-              <Map geometry={renderMap} 
-              data={nutritionData} 
-              onMapClick={setAreaName} 
+    {isSelected? <Map boundaries={boundaries} 
+              selIndiaData={selIndiaData} 
+              setSelIndiaData ={setSelIndiaData}
               setLevel={setLevel} 
               level={level} 
               setSelArea={setSelArea} 
               unit={unit} 
               unitName={graphUnit} 
               selArea={selArea} 
-              isLevelThree={isLevelThree} 
-              setIsLevelThree={setIsLevelThree} 
-              handleClick={handleClick} 
               searchRef={searchRef} 
               setFilterDropdownValue={setFilterDropdownValue} 
               areaDropdownOpt={areaDropdownOpt} 
               selIndicator={selIndicator}
               indicatorSense={indicatorSense} 
-              switchDisplay={switchDisplay}
-              toggleState={toggleState}
-
-              />
-                : <div className="text-center"></div>
-              }
+              isLevelThree = {isLevelThree}
+              switchDisplay = {switchDisplay}
+              setSwitchDisplay = {setSwitchDisplay}
+              selSubgroup = {selSubgroup}
+              selTimeperiod = {selTimeperiod}
+              parentArea = {parentArea}
+              toggleState = {toggleState}
+              setToggleState = {setToggleState}
+              setSelIndiaData = {setSelIndiaData}
+              setIsLevelThree = {setIsLevelThree}
+              buttonText = {buttonText}
+              changeText = {changeText}
+              areaName = {areaName}
+              selStateData = {selStateData}
+              setSelStateData = {setSelStateData}
+              /> : null}
             </div>
     <div className="layout__body__right__bar">
-    <BarGraph indicatorBar = {indicatorBar}
+    {isSelected? <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
@@ -536,7 +519,7 @@ export const Dropdown = ({}) =>{
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}
-      areaName = {areaName}/>
+      areaName = {areaName}/>: null}
       </div>
       </div>
     </div>

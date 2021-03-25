@@ -2,19 +2,12 @@ import React, { useState, useEffect } from "react";
 import {Bar} from 'react-chartjs-2';
 import { json } from 'd3';
 
-export const BarGraph = ({indicatorBar, setIndicatorBar, selIndicator, selTimeperiod, selArea, graphTitle, 
+export const BarGraph = ({indicatorBar, graphTitle, 
   graphTimeperiod, graphUnit, areaName}) => { 
       
     let barLabel=[];
     let barData=[];
     let datab = [];
-    useEffect(() => {
-        const url = `http://localhost:8000/api/getIndicatorBar/${selIndicator}/${selTimeperiod}/${selArea}`;
-        json(url).then( options =>{
-          setIndicatorBar(options);
-        })
-      }, [selIndicator, selTimeperiod, selArea])
-
       if(indicatorBar)
       {
         indicatorBar.map(i=>{

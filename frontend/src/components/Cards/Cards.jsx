@@ -3,19 +3,8 @@ import Card from '../../components/Cards/Card/Card';
 import { useState, useEffect } from "react";
 import "./Cards.css"
 import { json } from 'd3';
-// const Cards = ({ indicatorDetail,  setIndicatorDetail,selArea, tab, setSelIndicator, boundaries, newBoundaries, Dboundaries, NewDboundaries,
-//   stateBoundary, newDistrictBoundaries}) => {
-    const Cards = ({ indicatorDetail,  setIndicatorDetail,selArea, tab, setSelIndicator, boundaries}) => {
 
-
-  useEffect(() => {
-    const url = `http://127.0.0.1:8000/api/getIndicatorDetails/${tab}/${selArea}`;
-    json(url).then(indicatorDetail => {
-      setIndicatorDetail(indicatorDetail)
-
-    })
-  }, [tab, selArea])
-
+    const Cards = ({ indicatorDetail, setSelIndicator}) => {
   let indicatorcount = 0;
   if (indicatorDetail) {
     indicatorDetail.map(indi => {

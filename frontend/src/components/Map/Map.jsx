@@ -10,34 +10,33 @@ import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
 import { AnimateOnChange } from 'react-animation';
+import { json } from 'd3';
 
 import "./Map.css";
 
 
 
 export const Map = ({ 
-  geometry, 
-  data, 
-  onMapClick, 
-  setLevel, 
+  boundaries, 
+  selIndiaData,  
   level, 
   setSelArea, 
   unit, 
   unitName, 
   selArea, 
-  isLevelThree, 
-  setIsLevelThree, 
-  handleClick, 
   searchRef, 
   setFilterDropdownValue, 
   areaDropdownOpt, 
   selIndicator, 
-  indicatorSense ,
-  switchDisplay,
-  toggleState
+  indicatorSense,
+  isLevelThree,
+  switchDisplay, setSwitchDisplay,
+  selSubgroup,
+  selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
+  selStateData, setSelStateData
 }) => {
-  console.log("geometry", geometry);
-  console.log("unit", unit);
+  console.log("in map", selIndicator, selTimeperiod);
+  let geometry = boundaries.new_state;
   const svgRef = useRef();
   const svgLegRef = useRef();
   const wrapperRef = useRef();
@@ -48,22 +47,15 @@ export const Map = ({
     element.classList.remove("shake");
   }
 
-
-  // let statusMsg;
-  // if(level === data[0].area.area_level)
-  // {
-  //   document.getElementById("info-msg").className += " shake";
-  //   setTimeout(removeShake,3000);
-  //   statusMsg ="No data: please select another survey";
-  // }
-  // else if(level === 1){
-  //   statusMsg ="Click on Map to Drill down to District level";
-  // }
-  // else{
-  //   statusMsg ="Click on Map to go back to India Map";
-  // }
-
-  
+  const handleClick = () => {
+    setToggleState(!toggleState);
+    let text = null;
+    if (buttonText === 'District')
+      text = 'state';
+    else
+      text = 'District';
+    changeText(text);
+  }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
     if (i === 0) {
@@ -80,6 +72,7 @@ export const Map = ({
   //merge geometry and data
 
   function addProperties(geojson, data) {
+
     let newArr = _.map(data, function (item) {
       return {
         areacode: item.area.area_code,
@@ -94,7 +87,6 @@ export const Map = ({
     //   .merge(_.keyBy(geojson, 'properties.ID_'))
     //   .values()
     //   .value();
-
       let mergedGeoJson = _.map(geojson, function(item) {
         return _.assign(item, _.find(newArr, ['areacode', item.properties.ID_]));
     });
@@ -102,10 +94,44 @@ export const Map = ({
     return mergedGeoJson;
   }
 
+  function removeShake() {
+    var element = document.getElementById("info-msg");
+    element.classList.remove("shake");
+  }
+  let statusMsg;
 
+  let data = selIndiaData;
+  if (level === 1)
+  {
+    statusMsg ="Click on Map to Drill down to District level";
+     if (selTimeperiod === '22')    // change state boundaries when timeperiod is NFHS5
+     geometry = boundaries.new_state;
+     else
+     geometry = boundaries.state;
+  }
+  else{
+    if(null!== selStateData && selStateData.length > 0)
+    {
+      data = selStateData;
+      statusMsg ="Click on Map to go back to India Map";
+    if(selTimeperiod == '22')
+    {
+      let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
+      geometry = {type: "FeatureCollection",features}
+    }
+    else{
+      let features = boundaries.dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
+      geometry = {type: "FeatureCollection",features}
+    }
+  }
+  else{
+    // console.log("testst", document.getElementById("info-msg"));
+    //   document.getElementById("info-msg").className += " shake";
+    //   setTimeout(removeShake,3000);
+      statusMsg ="No data: please select another survey";
 
-
-
+  }
+  }
 
 
 
@@ -120,11 +146,12 @@ export const Map = ({
     const projection = geoMercator().fitSize([width, height], geometry);
 
     const pathGenerator = geoPath(projection);
+    let geojson = geometry.features;
     let mergedGeometry = addProperties(geometry.features, data);
+    console.log("data", data);
+    console.log("mergedGeometry", mergedGeometry);
 
     let c2Value = d => d.dataValue;
-
-
 
     let color_range = _.map(data, d => {
       return +d.data_value
@@ -133,7 +160,7 @@ export const Map = ({
     let sum = color_range.reduce(function(a, b){
       return a + b;
   }, 0);
-    let dotVal = Math.ceil(sum/4000);
+    let dotVal = Math.round(sum/4000);
     let [min, max] = extent(color_range);
   
     let low;
@@ -180,12 +207,6 @@ export const Map = ({
 
     }
     
-  
-
-
-
-
-
 
     const onMouseMove = (event, d) => {
       if (typeof d.dataValue != 'undefined') {
@@ -198,7 +219,7 @@ export const Map = ({
       }
     };
     if(unit !== 2)
-    {
+    {  
     svg.selectAll("*").remove();
     svg
       .selectAll(".polygon")
@@ -229,27 +250,28 @@ export const Map = ({
           // .transition()    
           // .duration(500)    
           .style("opacity", 0);
-      }).on('click', (i, d) => {
-        if(toggleState){
-          setIsLevelThree(false);
-          // let id = d.area_id
-          tooltip.style('opacity', 0);
-          if (level === 1) {
-  
-            if (typeof c2Value(d) != "undefined") {
-              setSelArea('' + d.area_id);
-              setLevel(2);
-              onMapClick(d.areaname);
-            }
-          } else if (level === 2) {
-            setSelArea("1");  //india
-            setLevel(1);
-            searchRef.current.state.value = "";  //reset search to
-            setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
-          }
-        }
-    
       })
+      // .on('click', (i, d) => {
+      //   if(toggleState){
+      //     setIsLevelThree(false);
+      //     // let id = d.area_id
+      //     tooltip.style('opacity', 0);
+      //     if (level === 1) {
+  
+      //       if (typeof c2Value(d) != "undefined") {
+      //         setSelArea('' + d.area_id);
+      //         setLevel(2);
+      //         onMapClick(d.areaname);
+      //       }
+      //     } else if (level === 2) {
+      //       setSelArea("1");  //india
+      //       setLevel(1);
+      //       searchRef.current.state.value = "";  //reset search to
+      //       setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
+      //     }
+      //   }
+    
+      // })
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature));
 
@@ -301,6 +323,7 @@ export const Map = ({
         console.log("unit", unit);
         if(unit !== 1)
         {
+        console.log("dotvalue in fun",dotVal);
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = bounds[1][1] - bounds[0][1];
@@ -406,6 +429,9 @@ export const Map = ({
           
           <div className="map__requirements__legend">
             <svg className="svg-legend" ref={svgLegRef}></svg>
+          </div>
+          <div id="info-msg" className="msg">
+           {statusMsg}
           </div>
      
         </div>

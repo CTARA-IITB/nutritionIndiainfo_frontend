@@ -10,7 +10,7 @@ import {BarGraph}  from "../../components/BarGraph/BarGraph";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
-
+import "./Dropdown.css";
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   let { id } = useParams();
@@ -379,7 +379,7 @@ export const Dropdown = ({}) =>{
    
     return (
       <>
-      <Row className=' mt-3 '>
+      <Row className=' mt-3 mb-3'>
       <Col>
             <span className="dropdown-title">Select Area</span>
             {/* <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  ref={searchRef}/> */}
@@ -466,24 +466,13 @@ export const Dropdown = ({}) =>{
             {isSelected? <Cards indicatorDetail = {indicatorDetail} setIndicatorDetail = {setIndicatorDetail} selArea ={selArea}
     tab = {tab} setSelIndicator = {setSelIndicator} boundaries = {boundaries}/> : null}
     </div>
-    <div className="layout__body__left__trend">
-      {isSelected?
-      <Trend indicatorTrend = {indicatorTrend}
-      setIndicatorTrend = {setIndicatorTrend}
-      unit = {unit}
-      selTimeperiod = {selTimeperiod}
-      selIndicator = {selIndicator}
-      selSubgroup = {selSubgroup}
-      selArea = {selArea}
-      graphTitle = {graphTitle}
-      graphSubgroup = {graphSubgroup}
-      graphUnit = {graphUnit}
-      areaName = {areaName}/>: null}
-      </div>
+
     </div>
     <div className="layout__body__right">
-    <div className="layout__body__right__map">
-    {isSelected? <Map boundaries={boundaries} 
+    <div className="layout__body__right__r1">
+        <div className="layout__body__right__r1__map">
+
+        {isSelected? <Map boundaries={boundaries} 
               selIndiaData={selIndiaData} 
               setSelIndiaData ={setSelIndiaData}
               setLevel={setLevel} 
@@ -513,8 +502,29 @@ export const Dropdown = ({}) =>{
               selStateData = {selStateData}
               setSelStateData = {setSelStateData}
               /> : null}
-            </div>
-    <div className="layout__body__right__bar">
+
+        </div>
+        <div className="layout__body__right__r1__trend">
+        {isSelected?
+      <Trend indicatorTrend = {indicatorTrend}
+      setIndicatorTrend = {setIndicatorTrend}
+      unit = {unit}
+      selTimeperiod = {selTimeperiod}
+      selIndicator = {selIndicator}
+      selSubgroup = {selSubgroup}
+      selArea = {selArea}
+      graphTitle = {graphTitle}
+      graphSubgroup = {graphSubgroup}
+      graphUnit = {graphUnit}
+      areaName = {areaName}/>: null}
+        </div>
+    </div>
+
+    <div className="layout__body__right__r2">
+    <div className="layout__body__right__r2__bar1">
+ 
+    </div>
+    <div className="layout__body__right__r2__bar2">
     {isSelected? <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
@@ -524,7 +534,19 @@ export const Dropdown = ({}) =>{
       graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
-      </div>
+    </div>
+  
+    </div>
+    {/* <div className="layout__body__left__trend">
+      
+      </div> */}
+
+    {/* <div className="layout__body__right__map">
+  
+            </div> */}
+    {/* <div className="layout__body__right__bar">
+ 
+      </div> */}
       </div>
     </div>
     </div>

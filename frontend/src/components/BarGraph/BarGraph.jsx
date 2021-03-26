@@ -41,7 +41,7 @@ const BarGraph = ({indicatorBar, graphTitle,
         datab = {
               labels:barLabel,
               datasets: [{
-              label: [graphTitle, graphUnit],
+              label: [graphTitle, graphUnit,graphTimeperiod],
               data:barData,
               xAxisID:'xAxis1',
               //backgroundColor: "rgb(255, 99, 132)"
@@ -130,6 +130,16 @@ const BarGraph = ({indicatorBar, graphTitle,
         let barData=[];
         let datab = [];
         let stateDataValue,stateAreaName;
+        let color;
+
+        if(selIndiaData && level=="1")
+          {
+            selIndiaData.map(i=>{
+              barLabel.push(i.area.area_name)
+              barData.push(+i.data_value)
+              color= 'rgb(142, 209, 25)'
+             })
+          }        
         if(selStateData && level=="2")
           {
             for(let j=0;j<selIndiaData.length;j++){
@@ -141,28 +151,40 @@ const BarGraph = ({indicatorBar, graphTitle,
                 barData.push(stateDataValue)
               }           
             }
-              selStateData.map(i=>{
+            selStateData.map(i=>{
               barLabel.push(i.area.area_name)
               barData.push(+i.data_value)
- 
+              color=' rgb(142, 209, 25)'
             })
           }           
-          if(selIndiaData && level=="1")
+          if(level==="3")
           {
-            selIndiaData.map(i=>{
-              barLabel.push(i.area.area_name)
-              barData.push(+i.data_value)
+            console.log(selStateData[0].area.area_name,"state,distrrr")
+            // for(let j=0;j<selIndiaData.length;j++){
+            //   if(+selArea===selIndiaData[j].area.area_id)
+            //   { 
+            //     stateDataValue=selIndiaData[j].data_value
+            //     stateAreaName=selIndiaData[j].area.area_name
+            //     barLabel.push(stateAreaName)
+            //     barData.push(stateDataValue)
+            //     color='rbg(114, 54, 117)'
+            //   }           
+            // }
+            // selStateData.map(i=>{
+            //   barLabel.push(i.area.area_name)
+            //   barData.push(+i.data_value)
  
-            })
-          }           
+            // })
+          }              
+ 
             datab = {
                   labels:barLabel,
                   datasets: [{
-                  label: [graphTitle, graphUnit],
+                  label: [graphTitle, graphUnit, graphTimeperiod],
                   data:barData,
                   xAxisID:'xAxis1',
                   //backgroundColor: "rgb(255, 99, 132)"
-                  backgroundColor: "rgb(142, 209, 25)",
+                  backgroundColor:color,
                   borderColor: "rgb(142, 209, 25)",
                   borderWidth: 1
                   }]
@@ -177,7 +199,7 @@ const BarGraph = ({indicatorBar, graphTitle,
                 },
                 title: {
                   display: true,
-                  text: [graphTitle +','+ graphUnit, areaName +', '+ graphTimeperiod],
+                  text: [graphTitle +','+ graphUnit, areaName +','+ graphTimeperiod],
                   fontColor: "black",
                 },
                 scales: {
@@ -204,7 +226,7 @@ const BarGraph = ({indicatorBar, graphTitle,
                       drawOnChartArea: false, // only want the grid lines for one axis to show up
                     },
                     ticks:{
-                      fontSize: 9,
+                      fontSize: 7,
                       fontColor:"black",
                       minRotation: 0,
                       callback:function(label){
@@ -223,7 +245,7 @@ const BarGraph = ({indicatorBar, graphTitle,
                   }],
                   yAxes: [{
                     ticks: {
-                      fontSize: 8,
+                      fontSize: 7,
                       fontColor:"black",
                       beginAtZero: true
                     },

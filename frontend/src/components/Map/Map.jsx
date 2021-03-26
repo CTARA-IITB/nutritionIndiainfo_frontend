@@ -35,7 +35,7 @@ export const Map = ({
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
   selStateData, setSelStateData
 }) => {
-  console.log("in map", selIndicator, selTimeperiod);
+  console.log("in map", selIndiaData,selStateData);
   let geometry = boundaries.new_state;
   const svgRef = useRef();
   const svgLegRef = useRef();
@@ -273,7 +273,8 @@ export const Map = ({
     
       // })
       // .transition().duration(1000)
-      .attr("d", feature => pathGenerator(feature));
+      .attr("d", feature => pathGenerator(feature))
+      .attr('transform',`translate(0,-170)`);
 
    
   

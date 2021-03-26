@@ -109,22 +109,22 @@ button.ant-switch {
   /* background-color: red; */
   width: 100%;
   display: flex;
+
+  /* flex-direction: column; */
 }
 
 .map__svg {
+  z-index: 1;
+
   /* background-color: darkgray; */
-  flex: 0.8;
 }
 .map__requirements {
   /* background-color: darkorchid; */
-  flex: 0.2;
   display: flex;
   flex-direction: column;
 }
 
 .map__requirements_switch {
-  flex: 0.2;
 }
 .map__requirements_legend {
-  flex: 0.8;
 }

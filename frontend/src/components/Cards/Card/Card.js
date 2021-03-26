@@ -22,7 +22,7 @@ setSelIndicator(id.toString());
                     <hr width="150px" color="black" />
                     <h4>{value}</h4>
                     <p>{sentence}</p>
-                    <h5>source: {source}</h5>
+                    <p>source: {source}</p>
                 </div>
 
             </div>

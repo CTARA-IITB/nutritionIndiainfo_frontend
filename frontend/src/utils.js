@@ -1,3 +1,5 @@
+import { json } from 'd3';
+
 export const fetchAreaCode = (areaList,areaID) =>{
     return(areaList.filter(area => parseInt(area.area_id) === areaID)[0]['area_code']);
 }
@@ -41,6 +43,69 @@ export const createHierarchy = (options) =>{
     return [india,onlyDistrict];
   }
 
+  export async function setVisulaizationData(indicator, subgroup, timeperiod, area, parentArea, level, levelThree, setIndicatorBar, setIndicatorTrend, 
+    setSelIndiaData, setSelStateData, setSwitchDisplay)
+  {
+    const url_1 =  await fetch(`http://localhost:8000/api/getIndicatorTrend/${indicator}/${subgroup}/${area}`);
+    const body_1 = await url_1.json();
+    setIndicatorTrend(body_1)
+
+    const url_2 = await fetch(`http://localhost:8000/api/getIndicatorBar/${indicator}/${timeperiod}/${area}`);
+    const body_2 = await url_2.json();
+    setIndicatorBar(body_2);
+
+    // if (level === 1)
+    // {
+     const url_3 = await fetch(`http://localhost:8000/api/indiaMap/${indicator}/${subgroup}/${timeperiod}/2`);
+     const body_3 = await url_3.json();
+     setSelIndiaData(body_3);
+    // }
+    // else
+     if (level === 2) {
+      let url_4;
+      if (levelThree)
+       url_4 =  await fetch(`http://localhost:8000/api/areaData/${indicator}/${subgroup}/${timeperiod}/${parentArea}`);
+      else
+        url_4 = await fetch(`http://localhost:8000/api/areaData/${indicator}/${subgroup}/${timeperiod}/${area}`);
+        const body_4 = await url_4.json();
+        setSelStateData(body_4);
+    }
+    const switchurl= await fetch(`http://localhost:8000/api/getDistrictDetails/${indicator}/${subgroup}/${timeperiod}`);
+    const body_5 = await switchurl.json();
+      if(body_5.length)
+        setSwitchDisplay(true);
+      else
+        setSwitchDisplay(false);
+
+  }
+
+  export async function setCardData(tab, area, setIndicatorDetail)
+  {
+    const url = await fetch(`http://127.0.0.1:8000/api/getIndicatorDetails/${tab}/${area}`);
+    const body = await url.json();
+    setIndicatorDetail(body);
+  }
+
+  export async function populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt,
+    setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
+  {
+    const url_6 = await fetch(`http://localhost:8000/api/indicator/${tab}`);
+    const body_6 = await url_6.json();
+    setIndicatorDropdownOpt(body_6);
+    setSelIndicator(body_6[0].value);
+    setGraphTitle(body_6[0].title);
+
+    const url_7 = await fetch(`http://localhost:8000/api/subgroup/${indiVal}`);
+    const body_7 = await url_7.json();
+    setSubgroupDropdownOpt(body_7);
+    setSelSubgroup(body_7[0].value);
+    setGraphSubgroup(body_7[0].title);
+   
+    const url_8 = await fetch(`http://localhost:8000/api/getUnit/${indiVal}/${subVal}`);
+    const body_8 = await url_8.json();
+    setUnit(body_8[0].unit.unit_id);
+    setGraphUnit(body_8[0].unit.unit_name);
+  }
         
   export function poissonDiscSampler(width, height, radius) {
     console.log("poisson called");

@@ -2,17 +2,9 @@ import React, { useState, useEffect } from "react";
 import {Line} from 'react-chartjs-2';
 import { json } from 'd3';
 
-export const Trend = ({indicatorTrend, setIndicatorTrend, selIndicator, selSubgroup, selArea, graphTitle, graphSubgroup, graphUnit, areaName}) => { 
-      
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName}) => { 
     let trendLabel=[];
     let trendData=[];
-    useEffect(() => {
-        const url_1 = `http://localhost:8000/api/getIndicatorTrend/${selIndicator}/${selSubgroup}/${selArea}`;
-        json(url_1).then(indicatorTrend => {
-          setIndicatorTrend(indicatorTrend)
-        })
-      }, [selIndicator, selSubgroup, selArea])
-
       if(indicatorTrend)
       {
       indicatorTrend.map(i=>{

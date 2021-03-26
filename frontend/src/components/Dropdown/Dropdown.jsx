@@ -382,12 +382,11 @@ export const Dropdown = ({}) =>{
       <Row className=' mt-3 '>
       <Col>
             <span className="dropdown-title">Select Area</span>
-            <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  ref={searchRef}/>
+            {/* <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  ref={searchRef}/> */}
 
             <TreeSelect
-                // showSearch
+                showSearch
                 // filterTreeNode={filterTree}
-                // treeNodeFilterProp ={'value'}
                 className='dropdown'
                 virtual={false}
                 style={{ width: '100%' }}
@@ -399,6 +398,7 @@ export const Dropdown = ({}) =>{
                 treeDefaultExpandAll={false}
                 ref = {treeRef}
                 open={openDropdown}
+                treeNodeFilterProp ='title'
                 onChange={areaChange}
               />
             </Col>
@@ -417,7 +417,7 @@ export const Dropdown = ({}) =>{
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={indicatorDropdownOpt}
                 filterTreeNode
-                treeNodeFilterProp
+                treeNodeFilterProp ='title'
                 onChange={ indicatorChange }
                 />
             </Col>
@@ -427,12 +427,14 @@ export const Dropdown = ({}) =>{
             <span className="dropdown-title">Select subgroup</span>
 
                 <TreeSelect
+                showSearch
                 className='dropdown'
                 virtual={false}
                 style={{ width: '100%' }}
                 value={selSubgroup}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={subgroupDropdownOpt}
+                treeNodeFilterProp ='title'
                 onChange={ subgroupChange}
                 />
                 </Col>
@@ -441,6 +443,7 @@ export const Dropdown = ({}) =>{
             <span className="dropdown-title"> Select timeperiod</span>
 
                 <TreeSelect
+                showSearch
                 className='dropdown'
                 virtual={false}
                 style={{ width: '100%' }}
@@ -448,6 +451,7 @@ export const Dropdown = ({}) =>{
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={timeperiodDropdownOpt}
                // onChange={value => setSelTimeperiod(value) }
+               treeNodeFilterProp ='title'
                onChange={timeperiodChange}
                 />
               </Col>

@@ -44,7 +44,7 @@ export const createHierarchy = (options) =>{
   }
 
   export async function setVisulaizationData(indicator, subgroup, timeperiod, area, parentArea, level, levelThree, setIndicatorBar, setIndicatorTrend, 
-    setSelIndiaData, setSelStateData, setSwitchDisplay)
+    setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData)
   {
     const url_1 =  await fetch(`http://localhost:8000/api/getIndicatorTrend/${indicator}/${subgroup}/${area}`);
     const body_1 = await url_1.json();
@@ -72,8 +72,11 @@ export const createHierarchy = (options) =>{
     }
     const switchurl= await fetch(`http://localhost:8000/api/getDistrictDetails/${indicator}/${subgroup}/${timeperiod}`);
     const body_5 = await switchurl.json();
-      if(body_5.length)
-        setSwitchDisplay(true);
+    if(body_5.length)
+    {
+      setSwitchDisplay(true);
+      setSelDistrictsData(body_5);
+    }
       else
         setSwitchDisplay(false);
 

@@ -52,6 +52,7 @@ export const Dropdown = ({}) =>{
   const [toggleState, setToggleState] = useState(true);
   const [buttonText, setButtonText] = useState("District");
   const [selStateData, setSelStateData] = useState(null);
+  const [selDistrictsData, setSelDistrictsData] = useState(null);
   const changeText = (text) => setButtonText(text);
 
 
@@ -88,6 +89,7 @@ export const Dropdown = ({}) =>{
       async function populateTabData()
       {
         setIsSelected(false);
+        setToggleState(true);
         let subVal = '6';
         await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
         let timeVal = selTimeperiod;
@@ -97,7 +99,7 @@ export const Dropdown = ({}) =>{
         setSelTimeperiod(body_2[0].value);
         timeVal = body_2[0].value;
         setGraphTimeperiod(body_2[0].title);
-        await setVisulaizationData(indiVal, subVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
+        await setVisulaizationData(indiVal, subVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
         await setCardData(tab, selArea, setIndicatorDetail)
         setIsSelected(true);
       }
@@ -113,38 +115,6 @@ export const Dropdown = ({}) =>{
         setAreaDropdownOpt(country);
         setAreaList(options);  
         })
-        const url = 'http://localhost:8000/api/indicator/'+tab;
-        json(url).then( options =>{
-          setIndicatorDropdownOpt(options);
-        } )
-        const url_1 = `http://localhost:8000/api/subgroup/${selIndicator}`;
-        json(url_1).then(options => {
-          setSubgroupDropdownOpt(options);
-        })
-        const  url_2 = `http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/1`;
-        json(url_2).then( options =>{
-          setTimeperiodDropdownOpt(options);
-        } )
-        const url_3 = `http://localhost:8000/api/getUnit/${selIndicator}/${selSubgroup}`;
-        json(url_3).then(unit => {
-          setUnit(unit[0].unit.unit_id)
-        })
-        const url_5 = `http://localhost:8000/api/getIndicatorDetails/${tab}/${selArea}`;
-        json(url_5).then(indicatorDetail => {
-          setIndicatorDetail(indicatorDetail)
-          })
-        const url_6 = `http://localhost:8000/api/getIndicatorTrend/${selIndicator}/${selSubgroup}/${selArea}`;
-        json(url_6).then(indicatorTrend => {
-            setIndicatorTrend(indicatorTrend)
-          })
-        const url_7 = `http://localhost:8000/api/getIndicatorBar/${selIndicator}/${selTimeperiod}/${selArea}`;
-        json(url_7).then( options =>{
-            setIndicatorBar(options);
-          })
-        const  url_8 = `http://localhost:8000/api/indiaMap/${selIndicator}/${selSubgroup}/${selTimeperiod}/2`
-          json(url_8).then(data => {
-            setSelIndiaData(data);
-          })
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 
@@ -198,6 +168,7 @@ export const Dropdown = ({}) =>{
         const indicatorChange = async(e) =>{
           let val = e;
           setIsSelected(false);
+          setToggleState(true);
           setSelIndicator(e);
           let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
           let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
@@ -235,8 +206,7 @@ export const Dropdown = ({}) =>{
             console.log(body_3);
             setUnit(body_3[0].unit.unit_id);
             setGraphUnit(body_3[0].unit.unit_name);
-            console.log("ius", val, body[0].value, timeValue, selArea, parentArea, level);
-            await setVisulaizationData(val, body[0].value, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
+            await setVisulaizationData(val, body[0].value, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             setIsSelected(true);
         }
 
@@ -245,6 +215,7 @@ export const Dropdown = ({}) =>{
         const subgroupChange = async(e) =>{
           let val = e;
           setIsSelected(false);
+          setToggleState(true);
           setSelSubgroup(e);
           let subName = subgroupDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphSubgroup(subName);
@@ -270,15 +241,16 @@ export const Dropdown = ({}) =>{
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
-          await setVisulaizationData(selIndicator, val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
+          await setVisulaizationData(selIndicator, val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
           setIsSelected(true);
         }
 
         const timeperiodChange = async(e) =>{
           let val = e;
           setIsSelected(false);
+          setToggleState(true);
           setSelTimeperiod(e);
-          await setVisulaizationData(selIndicator, selSubgroup, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
+          await setVisulaizationData(selIndicator, selSubgroup, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
           setIsSelected(true);
         }
 
@@ -287,6 +259,7 @@ export const Dropdown = ({}) =>{
           let newLevel = 1;
           let levelThree = false;
           setIsSelected(false);
+          setToggleState(true);
             if(value === "1"){
                 setLevel(1)
                 setIsLevelThree(false);
@@ -310,19 +283,20 @@ export const Dropdown = ({}) =>{
         
         
           let areaParentId;
-          if (level === 3) {
+          if (newLevel === 3) {
         
-            areaParentId = areaList.filter(f => f.area_id === parseInt(selArea))[0].area_parent_id; // loop 1
+            areaParentId = areaList.filter(f => f.area_id === parseInt(value))[0].area_parent_id; // loop 1
             let parentName = areaList.filter(f => f.area_id === areaParentId)[0].area_name;  //loop 2  later optimise this
             setAreaName(parentName);
             setParentArea(areaParentId);
             setIsLevelThree(true);
             levelThree = true;
             setLevel(2);
+            newLevel = 2;
           }
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(isLevelThree)
+            if(levelThree)
             url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${areaParentId}`);
             else
             url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${selSubgroup}/${value}`);
@@ -343,7 +317,7 @@ export const Dropdown = ({}) =>{
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
-            await setVisulaizationData(selIndicator, selSubgroup, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay);
+            await setVisulaizationData(selIndicator, selSubgroup, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             await setCardData(tab, value, setIndicatorDetail)
             setIsSelected(true);
         
@@ -463,8 +437,7 @@ export const Dropdown = ({}) =>{
   <div className="layout__body">
     <div className="layout__body__left">
             <div className="layout__body__left__cards">
-            {isSelected? <Cards indicatorDetail = {indicatorDetail} setIndicatorDetail = {setIndicatorDetail} selArea ={selArea}
-    tab = {tab} setSelIndicator = {setSelIndicator} boundaries = {boundaries}/> : null}
+            {isSelected? <Cards indicatorDetail = {indicatorDetail} indicatorChange = {indicatorChange}/> : null}
     </div>
 
     </div>
@@ -501,6 +474,7 @@ export const Dropdown = ({}) =>{
               areaName = {areaName}
               selStateData = {selStateData}
               setSelStateData = {setSelStateData}
+              selDistrictsData = {selDistrictsData}
               /> : null}
 
         </div>

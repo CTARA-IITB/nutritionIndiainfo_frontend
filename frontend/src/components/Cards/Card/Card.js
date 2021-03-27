@@ -1,9 +1,9 @@
 import React from 'react'
 import SentenceOnCard from './SentenceOnCard'
 import './Card.css'
-function Card({id, title, value, value_type, setSelIndicator, deff, source, style }) {
-    const  changeColor = ({setSelIndicator, id, setOnCardClick})=> {
-setSelIndicator(id.toString());
+function Card({id, title, value, value_type, indicatorChange, deff, source, style }) {
+    const  changeColor = ({indicatorChange, id})=> {
+        indicatorChange(id.toString());
       }
 
     // let changeColor=({setSelIndicator})=> { 
@@ -11,7 +11,7 @@ setSelIndicator(id.toString());
     const sentence =<SentenceOnCard title={title} value_type={value_type}/>
     return (
         <div className='card-container' className={style} >
-            <div className="card-content" onClick={() => changeColor({setSelIndicator, id})}>
+            <div className="card-content" onClick={() => changeColor({indicatorChange, id})}>
             
                  
                 <div className='card-title'>

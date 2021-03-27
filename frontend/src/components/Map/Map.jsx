@@ -33,9 +33,8 @@ export const Map = ({
   switchDisplay, setSwitchDisplay,
   selSubgroup,
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
-  selStateData, setSelStateData
+  selStateData, setSelStateData, selDistrictsData
 }) => {
-  console.log("in map", selIndiaData,selStateData);
   let geometry = boundaries.new_state;
   const svgRef = useRef();
   const svgLegRef = useRef();
@@ -103,11 +102,24 @@ export const Map = ({
   let data = selIndiaData;
   if (level === 1)
   {
+    if (toggleState === true) {
+
+      if (selTimeperiod === '22')    // change state boundaries when timeperiod is NFHS5
+        geometry = boundaries.new_state;
+      else
+        geometry = boundaries.state;
+      
+      data = selIndiaData;
+    }
+    else {
+
+        if(selTimeperiod === '22')
+          geometry = boundaries.new_dist;
+        else
+          geometry = boundaries.dist;
+      data = selDistrictsData;
+    }
     statusMsg ="Click on Map to Drill down to District level";
-     if (selTimeperiod === '22')    // change state boundaries when timeperiod is NFHS5
-     geometry = boundaries.new_state;
-     else
-     geometry = boundaries.state;
   }
   else{
     if(null!== selStateData && selStateData.length > 0)
@@ -127,7 +139,11 @@ export const Map = ({
   else{
     // console.log("testst", document.getElementById("info-msg"));
     //   document.getElementById("info-msg").className += " shake";
-    //   setTimeout(removeShake,3000);
+        //   setTimeout(removeShake,3000);
+      if (selTimeperiod === '22')    // change state boundaries when timeperiod is NFHS5
+        geometry = boundaries.new_state;
+      else
+        geometry = boundaries.state;
       statusMsg ="No data: please select another survey";
 
   }
@@ -148,8 +164,7 @@ export const Map = ({
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
     let mergedGeometry = addProperties(geometry.features, data);
-    console.log("data", data);
-    console.log("mergedGeometry", mergedGeometry);
+ 
 
     let c2Value = d => d.dataValue;
 
@@ -321,10 +336,8 @@ export const Map = ({
 
 
       function draw_circles(d) {
-        console.log("unit", unit);
         if(unit !== 1)
         {
-        console.log("dotvalue in fun",dotVal);
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = bounds[1][1] - bounds[0][1];
@@ -335,7 +348,11 @@ export const Map = ({
         let p_ = d.properties.AREA_
         let n = d.dataValue / (dotVal);
 
-        if (typeof d.dataValue !== 'undefined')
+        if(dotVal > d.dataValue)
+        {
+          n = 1;
+        }
+        if (typeof d.dataValue !== 'undefined' && d.dataValue > 0 && isFinite(width_d) && isFinite(height_d))
         {
         var points = createPoints(width_d, height_d, p_, n);
         for(var i=0; i< points.length; i++)
@@ -354,7 +371,7 @@ export const Map = ({
       {
         // var area = width * height * p;
         //var radius = 10;
-        var radius = Math.sqrt(area / (1.62*n));
+        var radius = Math.sqrt(area / (10*n));
          var sample = poissonDiscSampler(width, height, radius);
          for (var data = [], d; d = sample();) { data.push(d); }
          return data;

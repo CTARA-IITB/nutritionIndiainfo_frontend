@@ -219,30 +219,7 @@ const BarGraph = ({indicatorBar, graphTitle,
                     },
       
                   },
-                  {
-                    id:'xAxis2',
-                    type:"category",
-                    gridLines: {
-                      drawOnChartArea: false, // only want the grid lines for one axis to show up
-                    },
-                    ticks:{
-                      fontSize: 7,
-                      fontColor:"black",
-                      minRotation: 0,
-                      callback:function(label){
-                        var subgroup = label.split(";")[0];
-                        var type = label.split(";")[1];
-                        if(subgroup === "Rural" || subgroup === "Female"  || subgroup ==="ST" || subgroup === "Middle"){
-                          return type
-                        }
-                        else
-                        return ""
-                      }  
-                    },
-                    gridLines: {
-                      drawOnChartArea:false
-                  }
-                  }],
+              ],
                   yAxes: [{
                     ticks: {
                       fontSize: 7,

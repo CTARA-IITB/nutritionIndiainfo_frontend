@@ -6,7 +6,7 @@ import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns }
 import { useParams } from "react-router-dom";
 import Cards  from "../../components/Cards/Cards";
 import {Trend}  from "../../components/Trend/Trend";
-import {BarGraph}  from "../../components/BarGraph/BarGraph";
+import {BarGraph, BarGraphArea}  from "../../components/BarGraph/BarGraph";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
@@ -522,7 +522,22 @@ export const Dropdown = ({}) =>{
 
     <div className="layout__body__right__r2">
     <div className="layout__body__right__r2__bar1">
- 
+    {isSelected? <BarGraphArea 
+      indicatorBar = {indicatorBar}
+      graphTitle = {graphTitle}
+      graphTimeperiod = {graphTimeperiod}
+      graphUnit = {graphUnit}
+      selIndiaData={selIndiaData} 
+      level={level} 
+      unit={unit} 
+      unitName={graphUnit} 
+      selArea={selArea} 
+      selIndicator={selIndicator}
+      isLevelThree = {isLevelThree}
+      selSubgroup = {selSubgroup}
+      selTimeperiod = {selTimeperiod}
+      areaName = {areaName}
+      selStateData = {selStateData}/>: null}
     </div>
     <div className="layout__body__right__r2__bar2">
     {isSelected? <BarGraph indicatorBar = {indicatorBar}

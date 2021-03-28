@@ -31,9 +31,10 @@ export const Map = ({
   indicatorSense,
   isLevelThree,
   switchDisplay, setSwitchDisplay,
+
   selSubgroup,
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
-  selStateData, setSelStateData, selDistrictsData
+  selStateData, setSelStateData, selDistrictsData, areaChange
 }) => {
   let geometry = boundaries.new_state;
   const svgRef = useRef();
@@ -266,28 +267,30 @@ export const Map = ({
           // .duration(500)    
           .style("opacity", 0);
       })
-      // .on('click', (i, d) => {
-      //   if(toggleState){
-      //     setIsLevelThree(false);
-      //     // let id = d.area_id
-      //     tooltip.style('opacity', 0);
-      //     if (level === 1) {
-  
-      //       if (typeof c2Value(d) != "undefined") {
-      //         setSelArea('' + d.area_id);
-      //         setLevel(2);
-      //         onMapClick(d.areaname);
-      //       }
-      //     } else if (level === 2) {
-      //       setSelArea("1");  //india
-      //       setLevel(1);
-      //       searchRef.current.state.value = "";  //reset search to
-      //       setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
-      //     }
-      //   }
+      .on('click', (i, d) => {
+        if(toggleState){
+          setIsLevelThree(false);
+          // let id = d.area_id
+          tooltip.style('opacity', 0);
+          if (level === 1) {
+
+            if (typeof c2Value(d) != "undefined") {
+              areaChange(d.area_id.toString());
+              // setSelArea('' + d.area_id);
+              // setLevel(2);
+              // onMapClick(d.areaname);
+            }
+          } else if (level === 2) {
+            areaChange("1");
+            // setSelArea("1");  //india
+            // setLevel(1);
+            // searchRef.current.state.value = "";  //reset search to
+            // setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
+          }
+        }
     
-      // })
-      // .transition().duration(1000)
+      })
+      .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
       .attr('transform',`translate(0,-170)`);
 

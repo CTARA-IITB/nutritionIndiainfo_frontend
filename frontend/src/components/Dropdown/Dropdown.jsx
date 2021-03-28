@@ -482,6 +482,7 @@ export const Dropdown = ({}) =>{
               selStateData = {selStateData}
               setSelStateData = {setSelStateData}
               selDistrictsData = {selDistrictsData}
+              areaChange = {areaChange}
               /> : null}
               </FullScreen>
 

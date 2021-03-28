@@ -125,7 +125,7 @@ class DistrictDataView(generics.ListAPIView):
                 indicatorSelect = self.kwargs.get('indicator', None)
                 subgroupSelect = self.kwargs.get('subgroup', None)
                 timeperiodSelect = self.kwargs.get('timeperiod', None)
-                queryset= UtData.objects.raw('select * from ut_data join area_en on ut_data.area_id=area_en.area_id and area_level=3 where ut_data.timeperiod_id = %s and ut_data.indicator_id = %s and ut_data.subgroup_id = %s limit 1', [timeperiodSelect, indicatorSelect, subgroupSelect])
+                queryset= UtData.objects.raw('select * from ut_data join area_en on ut_data.area_id=area_en.area_id and area_level=3 where ut_data.timeperiod_id = %s and ut_data.indicator_id = %s and ut_data.subgroup_id = %s', [timeperiodSelect, indicatorSelect, subgroupSelect])
                 return queryset
 
 class IndicatorTrendView(generics.ListAPIView): 

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import "./Cards.css"
 import { json } from 'd3';
 
-    const Cards = ({ indicatorDetail, setSelIndicator}) => {
+    const Cards = ({ indicatorDetail, indicatorChange}) => {
   let indicatorcount = 0;
   if (indicatorDetail) {
     indicatorDetail.map(indi => {
@@ -34,13 +34,13 @@ import { json } from 'd3';
       for(i=0;i<indicatorcount;i++){
 
           if (colorvar1 === true) {
-            element1.push(<div className="card"> <Card
+            element1.push(<div className="card" id = {indicatorDetail[i].indicator.indicator_id}> <Card
             id = {indicatorDetail[i].indicator.indicator_id}
             id1 = {indicatorDetail[i].timeperiod.timeperiod_id}
             title={indicatorDetail[i].indicator.indicator_name}
             value={indicatorDetail[i].data_value}
             value_type={indicatorDetail[i].unit.unit_name}
-            setSelIndicator={setSelIndicator}
+            indicatorChange ={indicatorChange}
             source={indicatorDetail[i].timeperiod.timeperiod}
             style="pink-card"
           
@@ -50,13 +50,13 @@ import { json } from 'd3';
          
         }
         else {
-          element1.push(<div className="card"> <Card
+          element1.push(<div className="card" id = {indicatorDetail[i].indicator.indicator_id}> <Card
             id = {indicatorDetail[i].indicator.indicator_id}
             id1 = {indicatorDetail[i].timeperiod.timeperiod_id}
             title={indicatorDetail[i].indicator.indicator_name}
             value={indicatorDetail[i].data_value}
             value_type={indicatorDetail[i].unit.unit_name}
-            setSelIndicator={setSelIndicator}
+            indicatorChange ={indicatorChange}
             source={indicatorDetail[i].timeperiod.timeperiod}
             style="green-card"
           /></div>
@@ -70,13 +70,13 @@ import { json } from 'd3';
       while(i<firstNumberIndex && j<indicatorcount){
 
         if (colorvar1 === true) {
-            element1.push(<div className="card"> <Card
+            element1.push(<div className="card" id = {indicatorDetail[i].indicator.indicator_id}> <Card
             id = {indicatorDetail[i].indicator.indicator_id}
             id1 = {indicatorDetail[i].timeperiod.timeperiod_id}
             title={indicatorDetail[i].indicator.indicator_name}
             value={indicatorDetail[i].data_value}
             value_type={indicatorDetail[i].unit.unit_name}
-            setSelIndicator={setSelIndicator}
+            indicatorChange ={indicatorChange}
             source={indicatorDetail[i].timeperiod.timeperiod}
             style="pink-card"
           
@@ -86,13 +86,13 @@ import { json } from 'd3';
           i++;
         }
         else {
-          element1.push(<div className="card"> <Card
+          element1.push(<div className="card" id = {indicatorDetail[i].indicator.indicator_id}> <Card
             id = {indicatorDetail[j].indicator.indicator_id}
             id1 = {indicatorDetail[j].timeperiod.timeperiod_id}
             title={indicatorDetail[j].indicator.indicator_name}
             value={indicatorDetail[j].data_value}
             value_type={indicatorDetail[j].unit.unit_name}
-            setSelIndicator={setSelIndicator}
+            indicatorChange ={indicatorChange}
             source={indicatorDetail[j].timeperiod.timeperiod}
             style="green-card"
           /></div>
@@ -107,13 +107,13 @@ import { json } from 'd3';
       while(i<firstNumberIndex){
   
         if (colorvar1 === true) {
-            element1.push(<div className="card"> <Card
+            element1.push(<div className="card" id = {indicatorDetail[i].indicator.indicator_id}> <Card
             id = {indicatorDetail[i].indicator.indicator_id}
             id1 = {indicatorDetail[i].timeperiod.timeperiod_id}
             title={indicatorDetail[i].indicator.indicator_name}
             value={indicatorDetail[i].data_value}
             value_type={indicatorDetail[i].unit.unit_name}
-            setSelIndicator={setSelIndicator}
+            indicatorChange ={indicatorChange}
             source={indicatorDetail[i].timeperiod.timeperiod}
             style="pink-card"
           
@@ -123,13 +123,13 @@ import { json } from 'd3';
           i++;
         }
         else {
-          element1.push(<div className="card"> <Card
+          element1.push(<div className="card" id = {indicatorDetail[i].indicator.indicator_id}> <Card
             id = {indicatorDetail[i].indicator.indicator_id}
             id1 = {indicatorDetail[i].timeperiod.timeperiod_id}
             title={indicatorDetail[i].indicator.indicator_name}
             value={indicatorDetail[i].data_value}
             value_type={indicatorDetail[i].unit.unit_name}
-            setSelIndicator={setSelIndicator}
+            indicatorChange ={indicatorChange}
             source={indicatorDetail[i].timeperiod.timeperiod}
             style="green-card"
           /></div>

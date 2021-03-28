@@ -109,7 +109,7 @@
       height: 35%;
       display: flex;
       gap:10px;
-  }
+  } 
 
   .layout__body__right__r1__map{
       background-color: #ebf1fa;
@@ -136,6 +136,14 @@
     width: 50%;
     height: 100%;
     background-color: #ebf1fa;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .layout__body__right__r2__bar2__buttons{
+    flex:.1;
+    margin: 5px;
+    cursor: pointer;
   }
 
   .layout__body__right__r2__bar2{
@@ -143,3 +151,4 @@
     height: 100%;
     background-color: #ebf1fa;
 }
+

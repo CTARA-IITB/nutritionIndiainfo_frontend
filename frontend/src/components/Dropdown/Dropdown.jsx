@@ -11,6 +11,8 @@ import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
 import "./Dropdown.css";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import arrows_fullscreen from './arrows-fullscreen.svg';
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   let { id } = useParams();
@@ -55,6 +57,9 @@ export const Dropdown = ({}) =>{
   const [selDistrictsData, setSelDistrictsData] = useState(null);
   const changeText = (text) => setButtonText(text);
 
+  const screen2 = useFullScreenHandle();
+  const screen3 = useFullScreenHandle();
+  const screen4 = useFullScreenHandle();
 
 
 
@@ -479,6 +484,9 @@ export const Dropdown = ({}) =>{
 
         </div>
         <div className="layout__body__right__r1__trend">
+      <img src={arrows_fullscreen} style={{float:"right",margin:"5px"}} alt="fullscreen" width="20" height="20" onClick={screen2.enter}></img>
+      <FullScreen handle={screen2}>
+
         {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
       setIndicatorTrend = {setIndicatorTrend}
@@ -491,11 +499,15 @@ export const Dropdown = ({}) =>{
       graphSubgroup = {graphSubgroup}
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
+
+</FullScreen>
+
         </div>
     </div>
 
     <div className="layout__body__right__r2">
     <div className="layout__body__right__r2__bar1">
+      
     {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
       graphTitle = {graphTitle}
@@ -512,6 +524,7 @@ export const Dropdown = ({}) =>{
       selTimeperiod = {selTimeperiod}
       areaName = {areaName}
       selStateData = {selStateData}/>: null}
+      
     </div>
     <div className="layout__body__right__r2__bar2">
     {isSelected? <BarGraph indicatorBar = {indicatorBar}

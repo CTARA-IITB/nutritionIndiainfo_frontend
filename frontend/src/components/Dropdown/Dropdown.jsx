@@ -57,6 +57,7 @@ export const Dropdown = ({}) =>{
   const [selDistrictsData, setSelDistrictsData] = useState(null);
   const changeText = (text) => setButtonText(text);
 
+  const screen1 = useFullScreenHandle();
   const screen2 = useFullScreenHandle();
   const screen3 = useFullScreenHandle();
   const screen4 = useFullScreenHandle();
@@ -449,7 +450,8 @@ export const Dropdown = ({}) =>{
     <div className="layout__body__right">
     <div className="layout__body__right__r1">
         <div className="layout__body__right__r1__map">
-
+        <img src={arrows_fullscreen} style={{float:"right",margin:"5px"}} alt="fullscreen" width="20" height="20" onClick={screen1.enter}></img>
+      <FullScreen handle={screen1}>
         {isSelected? <Map boundaries={boundaries} 
               selIndiaData={selIndiaData} 
               setSelIndiaData ={setSelIndiaData}
@@ -481,6 +483,7 @@ export const Dropdown = ({}) =>{
               setSelStateData = {setSelStateData}
               selDistrictsData = {selDistrictsData}
               /> : null}
+              </FullScreen>
 
         </div>
         <div className="layout__body__right__r1__trend">
@@ -500,6 +503,8 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
 
+      
+
 </FullScreen>
 
         </div>
@@ -507,7 +512,8 @@ export const Dropdown = ({}) =>{
 
     <div className="layout__body__right__r2">
     <div className="layout__body__right__r2__bar1">
-      
+    <img src={arrows_fullscreen} style={{float:"right",margin:"5px"}} alt="fullscreen" width="20" height="20" onClick={screen3.enter}></img>
+      <FullScreen handle={screen3}>
     {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
       graphTitle = {graphTitle}
@@ -524,9 +530,11 @@ export const Dropdown = ({}) =>{
       selTimeperiod = {selTimeperiod}
       areaName = {areaName}
       selStateData = {selStateData}/>: null}
-      
+      </FullScreen>
     </div>
     <div className="layout__body__right__r2__bar2">
+    <img src={arrows_fullscreen} style={{float:"right",margin:"5px"}} alt="fullscreen" width="20" height="20" onClick={screen4.enter}></img>
+      <FullScreen handle={screen4}>
     {isSelected? <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
@@ -536,6 +544,7 @@ export const Dropdown = ({}) =>{
       graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
+      </FullScreen>
     </div>
   
     </div>

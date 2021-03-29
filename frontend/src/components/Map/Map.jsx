@@ -238,6 +238,8 @@ export const Map = ({
     {  
     svg.selectAll("*").remove();
     svg
+      .attr("width",width)
+      .attr("height",height)
       .selectAll(".polygon")
       .data(mergedGeometry)
       .join("path").attr("class", "polygon")
@@ -292,7 +294,7 @@ export const Map = ({
       })
       .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(0,-170)`);
+      .attr('transform',`translate(0,0)`);
 
    
   
@@ -306,6 +308,8 @@ export const Map = ({
       svg.selectAll('*').remove();
 
       svg
+      .attr('width',width)
+      .attr('height',height)
       .selectAll(".polygon")
       .data(mergedGeometry)
       .join("path").attr("class", "polygon")
@@ -452,7 +456,7 @@ export const Map = ({
             <svg className="svg-legend" ref={svgLegRef}></svg>
           </div>
           <div id="info-msg" className="msg">
-           {statusMsg}
+           {/* {statusMsg} */}
           </div>
      
         </div>

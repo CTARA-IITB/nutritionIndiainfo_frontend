@@ -1,7 +1,7 @@
 .svg-map {
-  /* display: block; */
-  /* width: 50vw; */
-  /* height: 100vh; */
+  display: block;
+  width: 100%;
+  height: 75vh;
 }
 
 svg .polygon {
@@ -107,37 +107,29 @@ button.ant-switch {
 
 .map{
   /* background-color: red; */
-  width: 650px;
-  height: 380px;
+  width: 100%;
   display: flex;
+
   /* flex-direction: column; */
 } 
 
 .map__svg{
 
   z-index: 1;
-  flex:.9;
-  /* background-color:  darkgray; */
+
+  /* background-color: darkgray; */
 }
 .map__requirements{
   
   /* background-color: darkorchid; */
   display:flex;
   flex-direction: column;
-  float: right;
-  /* background-color: yellow; */
 }
 
 .map__requirements_switch{
-  float: right;
-  /* background-color: blueviolet; */
+  
   
 }
 .map__requirements_legend{
   
-}
-.svg-legend{
-  width: 80%;
-  /* background-color: blue; */
-  float: right;
 }

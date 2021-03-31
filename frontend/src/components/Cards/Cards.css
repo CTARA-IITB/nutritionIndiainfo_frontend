@@ -1,17 +1,16 @@
 .card {
-    margin-bottom: 0px;
-    margin-right: -5px;
-    margin-left: -7px;
-    margin-top: 0px;
-    width: 50%;
-  }
-  .pink-card {
-    background-color: #FF9933;
-    height: 100%;
-
-  }
-  .green-card {
-    background-color: #138808;
-    height: 100%;
-
-  }
+  margin-bottom: 0px;
+  margin-right: -5px;
+  margin-left: -7px;
+  margin-top: 0px;
+  width: 52%;
+  height: 50%;
+}
+.pink-card {
+  background-color: #ff9933;
+  height: 100%;
+}
+.green-card {
+  background-color: #138808;
+  height: 100%;
+}

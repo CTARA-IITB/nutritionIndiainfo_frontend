@@ -12,7 +12,7 @@ import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard
 import { Map } from "../../components/Map/Map";
 import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import arrows_fullscreen from './arrows-fullscreen.svg';
+
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   let { id } = useParams();
@@ -56,7 +56,6 @@ export const Dropdown = ({}) =>{
   const [selStateData, setSelStateData] = useState(null);
   const [selDistrictsData, setSelDistrictsData] = useState(null);
   const changeText = (text) => setButtonText(text);
-
   const screen1 = useFullScreenHandle();
   const screen2 = useFullScreenHandle();
   const screen3 = useFullScreenHandle();
@@ -197,7 +196,7 @@ export const Dropdown = ({}) =>{
               let timeValue = selTimeperiod;
               if(body_1){
                 body_1.forEach(timeperiod => {
-                  if(timeperiod.value === parseInt(selTimeperiod)){
+                  if(timeperiod.value === selTimeperiod){
                     flag = true;
                   }
                 });
@@ -237,7 +236,7 @@ export const Dropdown = ({}) =>{
               let timeValue = selTimeperiod;
               if(body_1){
                 body_1.forEach(timeperiod => {
-                  if(timeperiod.value === parseInt(selTimeperiod)){
+                  if(timeperiod.value === selTimeperiod){
                     flag = true;
                   }
                 });
@@ -313,10 +312,12 @@ export const Dropdown = ({}) =>{
               let timeValue = selTimeperiod;
               if(body_1){
                 body_1.forEach(timeperiod => {
-                  if(timeperiod.value === parseInt(selTimeperiod)){
+                  if(timeperiod.value === selTimeperiod){
                     flag = true;
                   }
                 });
+                console.log("flag", flag);
+               
                 if(!flag) {
                   timeValue = body_1[0].value;
                   setSelTimeperiod(body_1[0].value);
@@ -439,59 +440,53 @@ export const Dropdown = ({}) =>{
     </Row>
  
     
-    <div className="layout">
+  <div className="layout">
   <div className="layout__body">
     <div className="layout__body__left">
             <div className="layout__body__left__cards">
             {isSelected? <Cards indicatorDetail = {indicatorDetail} indicatorChange = {indicatorChange}/> : null}
-    </div>
-
+            </div>
     </div>
     <div className="layout__body__right">
-    <div className="layout__body__right__r1">
-        <div className="layout__body__right__r1__map">
-        <img src={arrows_fullscreen} style={{float:"right",margin:"5px"}} alt="fullscreen" width="20" height="20" onClick={screen1.enter}></img>
-      <FullScreen handle={screen1}>
+    {/* <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen1.enter} /></button> */}
+      <FullScreen  className="fullscreen_css" handle={screen1}>
         {isSelected? <Map boundaries={boundaries} 
-              selIndiaData={selIndiaData} 
-              setSelIndiaData ={setSelIndiaData}
-              setLevel={setLevel} 
-              level={level} 
-              setSelArea={setSelArea} 
-              unit={unit} 
-              unitName={graphUnit} 
-              selArea={selArea} 
-              searchRef={searchRef} 
-              setFilterDropdownValue={setFilterDropdownValue} 
-              areaDropdownOpt={areaDropdownOpt} 
-              selIndicator={selIndicator}
-              indicatorSense={indicatorSense} 
-              isLevelThree = {isLevelThree}
-              switchDisplay = {switchDisplay}
-              setSwitchDisplay = {setSwitchDisplay}
-              selSubgroup = {selSubgroup}
-              selTimeperiod = {selTimeperiod}
-              parentArea = {parentArea}
-              toggleState = {toggleState}
-              setToggleState = {setToggleState}
-              setSelIndiaData = {setSelIndiaData}
-              setIsLevelThree = {setIsLevelThree}
-              buttonText = {buttonText}
-              changeText = {changeText}
-              areaName = {areaName}
-              selStateData = {selStateData}
-              setSelStateData = {setSelStateData}
-              selDistrictsData = {selDistrictsData}
-              areaChange = {areaChange}
-              /> : null}
-              </FullScreen>
-
-        </div>
-        <div className="layout__body__right__r1__trend">
-      <img src={arrows_fullscreen} style={{float:"right",margin:"5px"}} alt="fullscreen" width="20" height="20" onClick={screen2.enter}></img>
-      <FullScreen handle={screen2}>
-
-        {isSelected?
+          selIndiaData={selIndiaData} 
+          setSelIndiaData ={setSelIndiaData}
+          setLevel={setLevel} 
+          level={level} 
+          setSelArea={setSelArea} 
+          unit={unit} 
+          unitName={graphUnit} 
+          selArea={selArea} 
+          searchRef={searchRef} 
+          setFilterDropdownValue={setFilterDropdownValue} 
+          areaDropdownOpt={areaDropdownOpt} 
+          selIndicator={selIndicator}
+          indicatorSense={indicatorSense} 
+          isLevelThree = {isLevelThree}
+          switchDisplay = {switchDisplay}
+          setSwitchDisplay = {setSwitchDisplay}
+          selSubgroup = {selSubgroup}
+          selTimeperiod = {selTimeperiod}
+          parentArea = {parentArea}
+          toggleState = {toggleState}
+          setToggleState = {setToggleState}
+          setSelIndiaData = {setSelIndiaData}
+          setIsLevelThree = {setIsLevelThree}
+          buttonText = {buttonText}
+          changeText = {changeText}
+          areaName = {areaName}
+          selStateData = {selStateData}
+          setSelStateData = {setSelStateData}
+          selDistrictsData = {selDistrictsData}
+          areaChange = {areaChange}
+          /> : null}
+          </FullScreen>
+      <div className="trend_css">
+      <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen2.enter} /></button>
+      <FullScreen  className="fullscreen_css" handle={screen2}>
+      {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
       setIndicatorTrend = {setIndicatorTrend}
       unit = {unit}
@@ -503,19 +498,12 @@ export const Dropdown = ({}) =>{
       graphSubgroup = {graphSubgroup}
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
-
-      
-
-</FullScreen>
-
-        </div>
-    </div>
-
-    <div className="layout__body__right__r2">
-    <div className="layout__body__right__r2__bar1">
-    <img src={arrows_fullscreen} style={{float:"right",margin:"5px"}} alt="fullscreen" width="20" height="20" onClick={screen3.enter}></img>
-      <FullScreen handle={screen3}>
-    {isSelected? <BarGraphArea 
+      </FullScreen>
+      </div>
+      <div className="barArea_css">
+      <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen3.enter} /></button>
+      <FullScreen className="fullscreen_css" handle={screen3}>
+      {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
@@ -532,11 +520,11 @@ export const Dropdown = ({}) =>{
       areaName = {areaName}
       selStateData = {selStateData}/>: null}
       </FullScreen>
-    </div>
-    <div className="layout__body__right__r2__bar2">
-    <img src={arrows_fullscreen} style={{float:"right",margin:"5px"}} alt="fullscreen" width="20" height="20" onClick={screen4.enter}></img>
-      <FullScreen handle={screen4}>
-    {isSelected? <BarGraph indicatorBar = {indicatorBar}
+      </div>
+      <div className="bar_css">
+      <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen4.enter} /></button>
+      <FullScreen className="fullscreen_css" handle={screen4}>
+      {isSelected? <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
@@ -546,6 +534,7 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
       </FullScreen>
+      </div>
     </div>
   
     </div>
@@ -560,8 +549,6 @@ export const Dropdown = ({}) =>{
  
       </div> */}
       </div>
-    </div>
-    </div>
    </>
     )
 }

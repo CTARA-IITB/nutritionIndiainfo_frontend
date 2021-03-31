@@ -238,8 +238,6 @@ export const Map = ({
     {  
     svg.selectAll("*").remove();
     svg
-      .attr("width",width)
-      .attr("height",height)
       .selectAll(".polygon")
       .data(mergedGeometry)
       .join("path").attr("class", "polygon")
@@ -294,7 +292,7 @@ export const Map = ({
       })
       .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(0,0)`);
+      .attr('transform',`translate(0,-50)`);
 
    
   
@@ -308,8 +306,6 @@ export const Map = ({
       svg.selectAll('*').remove();
 
       svg
-      .attr('width',width)
-      .attr('height',height)
       .selectAll(".polygon")
       .data(mergedGeometry)
       .join("path").attr("class", "polygon")
@@ -321,6 +317,30 @@ export const Map = ({
           // .duration(500)    
           .style("opacity", 0);
       })
+      .on('click', (i, d) => {
+        if(toggleState){
+          setIsLevelThree(false);
+          // let id = d.area_id
+          tooltip.style('opacity', 0);
+          if (level === 1) {
+
+            if (typeof c2Value(d) != "undefined") {
+              areaChange(d.area_id.toString());
+              // setSelArea('' + d.area_id);
+              // setLevel(2);
+              // onMapClick(d.areaname);
+            }
+          } else if (level === 2) {
+            areaChange("1");
+            // setSelArea("1");  //india
+            // setLevel(1);
+            // searchRef.current.state.value = "";  //reset search to
+            // setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
+          }
+        }
+    
+      })
+      .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature));
 
       svg.selectAll(".mask")
@@ -378,7 +398,14 @@ export const Map = ({
       {
         // var area = width * height * p;
         //var radius = 10;
-        var radius = Math.sqrt(area / (10*n));
+        var radius;
+        if(level === 1 || null === selStateData || selStateData.length === 0)
+        {
+          radius = Math.sqrt(area / (10*n));
+        }
+        else{
+          radius = Math.sqrt(area / (1.62*n));
+        }
          var sample = poissonDiscSampler(width, height, radius);
          for (var data = [], d; d = sample();) { data.push(d); }
          return data;
@@ -456,7 +483,7 @@ export const Map = ({
             <svg className="svg-legend" ref={svgLegRef}></svg>
           </div>
           <div id="info-msg" className="msg">
-           {/* {statusMsg} */}
+           {statusMsg}
           </div>
      
         </div>

@@ -12,7 +12,7 @@ import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard
 import { Map } from "../../components/Map/Map";
 import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-
+import arrow_fullscreen from './arrow_fullscreen.svg';
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   let { id } = useParams();
@@ -484,7 +484,7 @@ export const Dropdown = ({}) =>{
           /> : null}
           </FullScreen>
       <div className="trend_css">
-      <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen2.enter} /></button>
+      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
       <FullScreen  className="fullscreen_css" handle={screen2}>
       {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
@@ -501,7 +501,7 @@ export const Dropdown = ({}) =>{
       </FullScreen>
       </div>
       <div className="barArea_css">
-      <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen3.enter} /></button>
+      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
       <FullScreen className="fullscreen_css" handle={screen3}>
       {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
@@ -522,7 +522,7 @@ export const Dropdown = ({}) =>{
       </FullScreen>
       </div>
       <div className="bar_css">
-      <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen4.enter} /></button>
+      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
       <FullScreen className="fullscreen_css" handle={screen4}>
       {isSelected? <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}

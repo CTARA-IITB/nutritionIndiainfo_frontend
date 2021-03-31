@@ -133,4 +133,6 @@ CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
      'http://caaqms.urbansciences.in',
      'http://13.235.60.173',
+     'http://65.2.31.243',
+     'http://nutritionindia.communitygis.net',
 ]

@@ -440,15 +440,16 @@ export const Dropdown = ({}) =>{
     </Row>
  
     
-  <div className="layout">
-  <div className="layout__body">
-    <div className="layout__body__left">
+    {/* <div className="layout__body__left">
             <div className="layout__body__left__cards">
             {isSelected? <Cards indicatorDetail = {indicatorDetail} indicatorChange = {indicatorChange}/> : null}
             </div>
-    </div>
-    <div className="layout__body__right">
-    {/* <button className="button_fullscreen_trend"><img src="./fullscreen.jpg" alt="image" onClick={screen1.enter} /></button> */}
+    </div> */}
+
+<div class="layout">
+   <div class="layout_left">
+     <div class="layout_left_map">
+           <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
       <FullScreen  className="fullscreen_css" handle={screen1}>
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
@@ -483,25 +484,9 @@ export const Dropdown = ({}) =>{
           areaChange = {areaChange}
           /> : null}
           </FullScreen>
-      <div className="trend_css">
-      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
-      <FullScreen  className="fullscreen_css" handle={screen2}>
-      {isSelected?
-      <Trend indicatorTrend = {indicatorTrend}
-      setIndicatorTrend = {setIndicatorTrend}
-      unit = {unit}
-      selTimeperiod = {selTimeperiod}
-      selIndicator = {selIndicator}
-      selSubgroup = {selSubgroup}
-      selArea = {selArea}
-      graphTitle = {graphTitle}
-      graphSubgroup = {graphSubgroup}
-      graphUnit = {graphUnit}
-      areaName = {areaName}/>: null}
-      </FullScreen>
-      </div>
-      <div className="barArea_css">
-      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
+     </div>
+     <div class="layout_left_bar1">
+     <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
       <FullScreen className="fullscreen_css" handle={screen3}>
       {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
@@ -520,9 +505,28 @@ export const Dropdown = ({}) =>{
       areaName = {areaName}
       selStateData = {selStateData}/>: null}
       </FullScreen>
+     </div>
+   </div>
+    <div class="layout_right">
+      <div class="layout_right_trend">
+      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
+      <FullScreen  className="fullscreen_css" handle={screen2}>
+      {isSelected?
+      <Trend indicatorTrend = {indicatorTrend}
+      setIndicatorTrend = {setIndicatorTrend}
+      unit = {unit}
+      selTimeperiod = {selTimeperiod}
+      selIndicator = {selIndicator}
+      selSubgroup = {selSubgroup}
+      selArea = {selArea}
+      graphTitle = {graphTitle}
+      graphSubgroup = {graphSubgroup}
+      graphUnit = {graphUnit}
+      areaName = {areaName}/>: null}
+      </FullScreen>
       </div>
-      <div className="bar_css">
-      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
+     <div class="layout_right_bar2">
+     <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
       <FullScreen className="fullscreen_css" handle={screen4}>
       {isSelected? <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
@@ -534,21 +538,15 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
       </FullScreen>
-      </div>
+     </div>
     </div>
-  
-    </div>
-    {/* <div className="layout__body__left__trend">
-      
-      </div> */}
+  </div>
 
-    {/* <div className="layout__body__right__map">
-  
-            </div> */}
-    {/* <div className="layout__body__right__bar">
  
-      </div> */}
-      </div>
+
+      
+     
+     
    </>
     )
 }

@@ -187,6 +187,7 @@
   /* background-color:yellow; */
   width:100%;
   height:50%;
+  /* display: flex; */
 }
 
 .layout_left_bar1{

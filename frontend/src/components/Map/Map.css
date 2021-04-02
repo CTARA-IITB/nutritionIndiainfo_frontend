@@ -1,7 +1,7 @@
 .svg-map {
   display: block;
   width: 100%;
-  height: 75vh;
+  height: 100vh;
 }
 
 svg .polygon {
@@ -106,30 +106,37 @@ button.ant-switch {
 }
 
 .map{
-  /* background-color: red; */
-  width: 100%;
-  display: flex;
-
-  /* flex-direction: column; */
-} 
-
-.map__svg{
-
-  z-index: 1;
-
-  /* background-color: darkgray; */
-}
-.map__requirements{
-  
-  /* background-color: darkorchid; */
+  /* background-color:red; */
+  height:50vh;
   display:flex;
-  flex-direction: column;
+}
+.map_svg{
+  /* background-color:green; */
+  width:70%;
+  justify-content:center;
+}
+.map_req{
+  display:flex;
+  flex-direction:column;
+  /* background-color:yellow; */
+  height:100%;
+  width:30%;
+  justify-content:flex-end;
+  
+}
+.map_req_toggle{
+  /* background-color:blue; */
+  height:20%;
+  width:100%;
 }
 
-.map__requirements_switch{
-  
-  
+.map_req_legend{
+  /* background-color:red; */
+  height:40%;
+  width:100%;
 }
-.map__requirements_legend{
-  
+.map_req_text{
+  /* background-color:coral; */
+  height:20%;
 }
+

@@ -292,7 +292,7 @@ export const Map = ({
       })
       .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(0,-50)`);
+      // .attr('transform',`translate(0,-50)`);
 
    
   
@@ -469,7 +469,25 @@ export const Map = ({
   }
   return (
     <>
-      <div className="map">
+      <div class="map">
+    <div class="map_svg" ref={wrapperRef}>
+    <svg className="svg-map" ref={svgRef} ></svg>
+    </div>
+    <div class="map_req">
+      <div class="map_req_toggle">
+      {switchButton}
+      </div>
+      <div class="map_req_legend">
+      <svg className="svg-legend" ref={svgLegRef}></svg>
+
+      </div>
+      <div class="map_req_text">
+          <div id="info-msg" className="msg"></div>
+
+      </div>
+    </div>
+  </div>
+      {/* <div className="map">
         <div ref={wrapperRef} className="map__svg">
           <svg className="svg-map" ref={svgRef} ></svg>
         </div>
@@ -482,13 +500,12 @@ export const Map = ({
           <div className="map__requirements__legend">
             <svg className="svg-legend" ref={svgLegRef}></svg>
           </div>
-          <div id="info-msg" className="msg">
            {statusMsg}
           </div>
      
         </div>
 
-      </div>
+      </div> */}
 
     </>
   )

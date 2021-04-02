@@ -61,6 +61,7 @@ export const Dropdown = ({}) =>{
   const screen3 = useFullScreenHandle();
   const screen4 = useFullScreenHandle();
 
+  const map = document.getElementsByClassName("map");
 
 
   // let boundaries;
@@ -356,7 +357,24 @@ export const Dropdown = ({}) =>{
           return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
         }
       
-       
+      //  const makeitFull = ()=> {
+      //   // map.style.height="100vh";
+      //   ();
+
+      // }
+
+      const checkchange = (state,handle)=>{
+        if(map){
+          if(state === true){
+            map[0].style.height = "100vh";
+          }
+          else if(state === false){
+            if(map[0] != undefined)
+            map[0].style.height = "50vh";
+            // map[0].style.height = "50vh";
+          }
+        }
+      }
    
     return (
       <>
@@ -450,7 +468,7 @@ export const Dropdown = ({}) =>{
    <div class="layout_left">
      <div class="layout_left_map">
            <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
-      <FullScreen  className="fullscreen_css" handle={screen1}>
+      <FullScreen  className="fullscreen_css" handle={screen1} onChange={checkchange}>
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}

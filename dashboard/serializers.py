@@ -65,10 +65,11 @@ class UtDatatimeSerializer(serializers.ModelSerializer):
 class UtDataSerializer(serializers.ModelSerializer):
     area = AreaEnSerializer()
     data_value = serializers.DecimalField(max_digits=255, decimal_places=2)
-  
+    data_value_num = serializers.DecimalField(max_digits=255, decimal_places=2)
+
     class Meta:
         model = UtData
-        fields = ('area' , 'data_value')
+        fields = ('area' , 'data_value','data_value_num')
 
 class UtDataAllSerializer(serializers.ModelSerializer):
     indicator = IndicatorAllSerializer()

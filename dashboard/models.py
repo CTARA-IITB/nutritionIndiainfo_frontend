@@ -338,7 +338,7 @@ class UtData(models.Model):
     unit = models.ForeignKey(Unit, models.DO_NOTHING)
     subgroup = models.ForeignKey(Subgroup, models.DO_NOTHING)
     data_value = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
-
+    data_value_num = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'ut_data'

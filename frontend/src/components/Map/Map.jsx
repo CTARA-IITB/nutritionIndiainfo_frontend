@@ -473,7 +473,7 @@ export const Map = ({
       <div class="map">
       <div class="map_area">
       <div class="map_title">
-        <small style={{textAlign:'center',fontWeight:"bold"}}>{graphTitle},{graphUnit},{areaName},{graphTimeperiod}</small>
+        <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{graphTitle},{graphUnit},{areaName},{graphTimeperiod}</small>
       </div>
     <div class="map_svg" ref={wrapperRef}>
     <svg className="svg-map" ref={svgRef} ></svg>

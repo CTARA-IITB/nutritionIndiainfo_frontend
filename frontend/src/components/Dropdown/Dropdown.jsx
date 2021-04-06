@@ -378,11 +378,10 @@ export const Dropdown = ({}) =>{
    
     return (
       <>
-      <Row className=' mt-3 mb-3'>
+       <div className="layout_dropdown">
+         <Row className=''>
       <Col>
             <span className="dropdown-title">Select Area</span>
-            {/* <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  ref={searchRef}/> */}
-
             <TreeSelect
                 showSearch
                 // filterTreeNode={filterTree}
@@ -456,6 +455,9 @@ export const Dropdown = ({}) =>{
               </Col>
              
     </Row>
+       </div>
+    <div className="layout_vizs"></div>
+      
  
     
     {/* <div className="layout__body__left">
@@ -464,10 +466,7 @@ export const Dropdown = ({}) =>{
             </div>
     </div> */}
 
-<div class="layout">
-   <div class="layout_left">
-     <div class="layout_left_map">
-           <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
+           {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
       <FullScreen  className="fullscreen_css" handle={screen1} onChange={checkchange}>
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
@@ -505,10 +504,8 @@ export const Dropdown = ({}) =>{
           graphUnit = {graphUnit}
           areaName = {areaName}
           /> : null}
-          </FullScreen>
-     </div>
-     <div class="layout_left_bar1">
-     <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
+          </FullScreen> */}
+     {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
       <FullScreen className="fullscreen_css" handle={screen3}>
       {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
@@ -526,12 +523,8 @@ export const Dropdown = ({}) =>{
       selTimeperiod = {selTimeperiod}
       areaName = {areaName}
       selStateData = {selStateData}/>: null}
-      </FullScreen>
-     </div>
-   </div>
-    <div class="layout_right">
-      <div class="layout_right_trend">
-      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
+      </FullScreen> */}
+      {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
       <FullScreen  className="fullscreen_css" handle={screen2}>
       {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
@@ -546,8 +539,6 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
       </FullScreen>
-      </div>
-     <div class="layout_right_bar2">
      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
       <FullScreen className="fullscreen_css" handle={screen4}>
       {isSelected? <BarGraph indicatorBar = {indicatorBar}
@@ -559,10 +550,7 @@ export const Dropdown = ({}) =>{
       graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}
       areaName = {areaName}/>: null}
-      </FullScreen>
-     </div>
-    </div>
-  </div>
+      </FullScreen> */}
 
  
 

@@ -13,11 +13,15 @@ import {BrowserRouter as Router, Switch, Route, NavLink, useParams} from "react-
 import "./components/Navbar/navbar.css";
 import {Navbar, Nav} from 'react-bootstrap';
 import { createHierarchy } from './utils';
+import "./App.css";
 
 const App = ()=> {
 
     return(<> 
-        <Router> 
+    <div className="layout">
+    <Router> 
+    <div class="layout_navbar">
+
             <Navbar expand="lg">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -29,11 +33,16 @@ const App = ()=> {
             </Nav>
             </Navbar.Collapse>
             </Navbar>
+            </div>
+
                 <Switch>
                     <Route exact path="/" component= {Dropdown}/>
                     <Route path="/:id" component= {Dropdown}/>
                 </Switch> 
             </Router>
+   
+    </div>
+       
          
     </>);
   }

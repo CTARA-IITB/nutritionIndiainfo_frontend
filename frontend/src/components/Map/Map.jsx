@@ -34,7 +34,8 @@ export const Map = ({
 
   selSubgroup,
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
-  selStateData, setSelStateData, selDistrictsData, areaChange
+  selStateData, setSelStateData, selDistrictsData, areaChange,
+  graphTitle,graphTimeperiod,graphUnit
 }) => {
   let geometry = boundaries.new_state;
   const svgRef = useRef();
@@ -470,9 +471,18 @@ export const Map = ({
   return (
     <>
       <div class="map">
+      <div class="map_area">
+      <div class="map_title">
+        <small style={{textAlign:'center',fontWeight:'bold'}}>{graphTitle},{graphUnit},{areaName},{graphTimeperiod}</small>
+      </div>
     <div class="map_svg" ref={wrapperRef}>
     <svg className="svg-map" ref={svgRef} ></svg>
     </div>
+      
+    </div>
+    {/* <div class="map_svg" ref={wrapperRef}>
+    <svg className="svg-map" ref={svgRef} ></svg>
+    </div> */}
     <div class="map_req">
       <div class="map_req_toggle">
       {switchButton}
@@ -487,6 +497,7 @@ export const Map = ({
       </div>
     </div>
   </div>
+
       {/* <div className="map">
         <div ref={wrapperRef} className="map__svg">
           <svg className="svg-map" ref={svgRef} ></svg>

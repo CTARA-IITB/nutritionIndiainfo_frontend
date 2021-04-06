@@ -110,11 +110,35 @@ button.ant-switch {
   height:50vh;
   display:flex;
 }
-.map_svg{
+
+.map_area{
   /* background-color:green; */
   width:70%;
-  justify-content:center;
+  /* justify-content:center; */
+/*   display:flex; */
+/*   flex-direction:row; */
 }
+.map_title{
+  /* background-color:coral; */
+  width:50%;
+  height:10%;
+  display: flex;
+  justify-content: center;
+  font-weight: 100;
+  margin: 0px 200px;
+  margin-top: 20px;
+}
+
+.map_svg{
+  /* background-color:grey; */
+  width:100%;
+  height:90%;
+}
+/* .map_svg{
+  background-color:green;
+  width:70%;
+  justify-content:center;
+} */
 .map_req{
   display:flex;
   flex-direction:column;

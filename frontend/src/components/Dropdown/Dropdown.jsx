@@ -500,6 +500,10 @@ export const Dropdown = ({}) =>{
           setSelStateData = {setSelStateData}
           selDistrictsData = {selDistrictsData}
           areaChange = {areaChange}
+          graphTitle = {graphTitle}
+          graphTimeperiod = {graphTimeperiod}
+          graphUnit = {graphUnit}
+          areaName = {areaName}
           /> : null}
           </FullScreen>
      </div>

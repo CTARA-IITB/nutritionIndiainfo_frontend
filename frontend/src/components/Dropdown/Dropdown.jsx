@@ -62,7 +62,9 @@ export const Dropdown = ({}) =>{
   const screen4 = useFullScreenHandle();
 
   const map = document.getElementsByClassName("map");
-
+  const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
+  const changeBurdenText = (text) => setBurdenButtonText(text);
+  const [toggleStateBurden,setToggleStateBurden]=useState(true);
 
   // let boundaries;
   // let newBoundaries;
@@ -175,6 +177,7 @@ export const Dropdown = ({}) =>{
           let val = e;
           setIsSelected(false);
           setToggleState(true);
+          setToggleStateBurden(true);
           setSelIndicator(e);
           let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
           let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
@@ -222,6 +225,7 @@ export const Dropdown = ({}) =>{
           let val = e;
           setIsSelected(false);
           setToggleState(true);
+          setToggleStateBurden(true);
           setSelSubgroup(e);
           let subName = subgroupDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphSubgroup(subName);
@@ -255,6 +259,7 @@ export const Dropdown = ({}) =>{
           let val = e;
           setIsSelected(false);
           setToggleState(true);
+          setToggleStateBurden(true);
           setSelTimeperiod(e);
           await setVisulaizationData(selIndicator, selSubgroup, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
           setIsSelected(true);
@@ -266,6 +271,7 @@ export const Dropdown = ({}) =>{
           let levelThree = false;
           setIsSelected(false);
           setToggleState(true);
+          setToggleStateBurden(true);
             if(value === "1"){
                 setLevel(1)
                 setIsLevelThree(false);
@@ -504,6 +510,11 @@ export const Dropdown = ({}) =>{
           graphTimeperiod = {graphTimeperiod}
           graphUnit = {graphUnit}
           areaName = {areaName}
+          toggleStateBurden={toggleStateBurden}
+          setToggleStateBurden={setToggleStateBurden}
+          burdenbuttonText={burdenbuttonText} 
+          changeBurdenText={changeBurdenText}
+
           /> : null}
           </FullScreen>
      </div>

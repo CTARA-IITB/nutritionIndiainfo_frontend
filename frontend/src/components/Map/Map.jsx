@@ -35,7 +35,9 @@ export const Map = ({
   selSubgroup,
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
   selStateData, setSelStateData, selDistrictsData, areaChange,
-  graphTitle,graphTimeperiod,graphUnit
+  graphTitle,graphTimeperiod,graphUnit,
+  toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText
+
 }) => {
   let geometry = boundaries.new_state;
   const svgRef = useRef();
@@ -56,6 +58,16 @@ export const Map = ({
     else
       text = 'District';
     changeText(text);
+  }
+
+  const burdenClick = () => {
+    setToggleStateBurden(!toggleStateBurden);
+    let text = null;
+    if (burdenbuttonText === 'Burden')
+      text = 'Prevalence';
+    else
+      text = 'Burden';
+      changeBurdenText(text);
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
@@ -80,6 +92,8 @@ export const Map = ({
         areaname: item.area.area_name,
         area_id: item.area.area_id,
         dataValue: parseFloat(item.data_value),
+        dataValueNum: parseFloat(item.data_value_num),
+
       }
     });
 
@@ -168,10 +182,18 @@ export const Map = ({
     let mergedGeometry = addProperties(geometry.features, data);
  
 
-    let c2Value = d => d.dataValue;
+    let c2Value;
+    if (toggleStateBurden === true) 
+    {
+      c2Value = d => d.dataValue;
+    }
+    else{
+      c2Value = d => d.dataValueNum;
+    }
+
 
     let color_range = _.map(data, d => {
-      return +d.data_value
+      return +d.data_value_num
     });
     
     let sum = color_range.reduce(function(a, b){
@@ -235,7 +257,8 @@ export const Map = ({
           .style("top", event.clientY - 30 + "px");
       }
     };
-    if(unit !== 2)
+    // if(unit !== 2)
+    if (toggleStateBurden === true)
     {  
     svg.selectAll("*").remove();
     svg
@@ -301,9 +324,9 @@ export const Map = ({
     }
 
     // bubbles for numeric unit values
-    console.log(unit)
-    if (unit === 2) {
-
+    // console.log(unit)
+    // if (unit === 2) {
+    else{
       svg.selectAll('*').remove();
 
       svg
@@ -364,8 +387,6 @@ export const Map = ({
 
 
       function draw_circles(d) {
-        if(unit !== 1)
-        {
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = bounds[1][1] - bounds[0][1];
@@ -374,13 +395,16 @@ export const Map = ({
 
         let p = d.properties.AREA_ / (width_d * height_d);
         let p_ = d.properties.AREA_
-        let n = d.dataValue / (dotVal);
+        // let n = d.dataValue / (dotVal);
+        let n = d.dataValueNum / (dotVal);
 
-        if(dotVal > d.dataValue)
+        if(dotVal > d.dataValueNum)
         {
           n = 1;
         }
-        if (typeof d.dataValue !== 'undefined' && d.dataValue > 0 && isFinite(width_d) && isFinite(height_d))
+        if (typeof d.dataValueNum !== 'undefined' && d.dataValueNum > 0 
+&& isFinite(width_d) && isFinite(height_d))
+
         {
         var points = createPoints(width_d, height_d, p_, n);
         for(var i=0; i< points.length; i++)
@@ -393,7 +417,7 @@ export const Map = ({
 
         }
         }
-      }
+      
       }
       function createPoints(width, height, area, n)
       {
@@ -421,7 +445,7 @@ export const Map = ({
       .attr("transform", "translate(20,20)")
 
     let formatter;
-    if (unit === 2) {
+    if (toggleStateBurden === true) {
       //formatter = format(',.0f');
       formatter = format('.2s');
     }
@@ -431,7 +455,7 @@ export const Map = ({
 
     let myLegend;
    
-    if(unit === 2)
+    if (toggleStateBurden === false) 
     {
       legend.select(".legendQuant").append('text').text("1 dot =" + dotVal);
     }
@@ -460,14 +484,24 @@ export const Map = ({
       
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unit,geometry, dimensions, data])
+  }, [unit,geometry, dimensions, data, toggleStateBurden])
 
   let switchButton;
+  let burdenButton;
+  let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108'];
+
   if(switchDisplay && level === 1){
     switchButton = <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
   }else{
     switchButton= null;
   }
+  if (burdenIndicators.includes(selIndicator)) {
+    burdenButton = <Switch className="mb-2" size="large" checkedChildren="Burden" unCheckedChildren="Prevalence" onClick={burdenClick} />
+  }
+  else{
+    burdenButton= null;
+  }
+
   return (
     <>
       <div class="map">
@@ -487,6 +521,9 @@ export const Map = ({
       <div class="map_req_toggle">
       {switchButton}
       </div>
+      <div className="map__requirements__switch">
+              {burdenButton}  
+            </div>
       <div class="map_req_legend">
       <svg className="svg-legend" ref={svgLegRef}></svg>
 

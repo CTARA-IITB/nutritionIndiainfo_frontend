@@ -53,7 +53,7 @@ const BarGraph = ({indicatorBar, graphTitle,
       }
     
     return (
-        <Bar data={datab} height={height} width={500} options={{
+        <Bar data={datab} height={height} width={400} options={{
           responsive: true, 
           maintainAspectRatio: false,
             legend:
@@ -126,7 +126,7 @@ const BarGraph = ({indicatorBar, graphTitle,
       graphTimeperiod, graphUnit,selIndiaData,level,
       unit,unitName,selArea,selIndicator,indicatorSense, 
       isLevelThree,selSubgroup,selTimeperiod,areaName,
-      selStateData}) => { 
+      selStateData,height}) => { 
 
         let barLabel=[];
         let barData=[];
@@ -194,7 +194,9 @@ const BarGraph = ({indicatorBar, graphTitle,
         
         
         return (
-            <Bar data={datab}  options={{
+            <Bar data={datab} height={height} width={400}  options={{
+              responsive: true, 
+              maintainAspectRatio: false,
                 legend:
                 {
                   display: false,

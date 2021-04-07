@@ -396,8 +396,10 @@ export const Dropdown = ({}) =>{
       //     // console.log(div[0].style)
       //   }
       // }
-      let height = document.getElementById('layout_id').clientHeight/3.4;
-
+      let height;
+      if(document.getElementById('right_bar_id'))
+      height = document.getElementById('right_bar_id').clientHeight;
+      height = height - (height * 0.24);
       const fullScreenResize = (state)=>{
         // console.log(vizHeight)
         let div1 = document.getElementsByClassName("chartjs-render-monitor");
@@ -406,8 +408,8 @@ export const Dropdown = ({}) =>{
         let div = document.getElementById("right_bar_id").children;
         if(div[1].children[1] && div1[0])
         if(state === false){
-          div1[0].style.height=height+"px";
-          div[1].children[1].style.height = height + "px";
+          div1[0].style.height=height - (height * 0.2)+"px";
+          div[1].children[1].style.height = height - (height * 0.2) + "px";
         }
         // if(div[0] !== undefined)
         // if(state === false){

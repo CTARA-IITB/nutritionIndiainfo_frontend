@@ -27,7 +27,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       }
     
     return (
-                 <Line data={datal} height={height} width={500} options = {{
+                 <Line data={datal} height={height} width={400} options = {{
                   responsive: true, 
                   maintainAspectRatio: false,
                    legend:

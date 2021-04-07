@@ -9,7 +9,7 @@
   width:100%;
   background-color:grey;
   flex-direction:column;
-  gap:10px;
+  /* gap:10px; */
   justify-content: center;
 }
 

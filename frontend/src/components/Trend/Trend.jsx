@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {Line} from 'react-chartjs-2';
 import { json } from 'd3';
 
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName}) => { 
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName,height}) => { 
     let trendLabel=[];
     let trendData=[];
       if(indicatorTrend)
@@ -27,7 +27,9 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       }
     
     return (
-                 <Line data={datal} options = {{
+                 <Line data={datal} height={height} width={500} options = {{
+                  responsive: true, 
+                  maintainAspectRatio: false,
                    legend:
                    {
                      display: false,

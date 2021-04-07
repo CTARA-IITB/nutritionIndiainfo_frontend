@@ -3,7 +3,7 @@ import {Bar} from 'react-chartjs-2';
 import { json } from 'd3';
 
 const BarGraph = ({indicatorBar, graphTitle, 
-  graphTimeperiod, graphUnit, areaName}) => { 
+  graphTimeperiod, graphUnit, areaName,height}) => { 
       
     let barLabel=[];
     let barData=[];
@@ -53,7 +53,9 @@ const BarGraph = ({indicatorBar, graphTitle,
       }
     
     return (
-        <Bar data={datab}  options={{
+        <Bar data={datab} height={height} width={500} options={{
+          responsive: true, 
+          maintainAspectRatio: false,
             legend:
             {
               display: false,

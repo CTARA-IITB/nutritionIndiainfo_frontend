@@ -60,7 +60,7 @@ export const Dropdown = ({}) =>{
   const screen2 = useFullScreenHandle();
   const screen3 = useFullScreenHandle();
   const screen4 = useFullScreenHandle();
-
+  const [vizHeight,setVizHeight] = useState(null);
   const map = document.getElementsByClassName("map");
 
 
@@ -154,7 +154,19 @@ export const Dropdown = ({}) =>{
           }
           fetchData(); 
         }, []);
+        useEffect(()=>{
+          // return () =>{
+            let div1 = document.getElementById("right_bar_id");
+            if(div1)
+            setVizHeight(div1.clientHeight)
 
+          // }
+          // document.getElementById('right_bar_id').addEventListener('load',handler,false);
+
+        })
+        const handler=() =>{
+          console.log("loaded");
+        }
         if(!areaDropdownOpt){
           return <SkeletonDropdown />
         }
@@ -376,6 +388,33 @@ export const Dropdown = ({}) =>{
         }
       }
    
+      // const trendFullscreen = (state)=>{
+      //   let div = document.getElementsByClassName("chartjs-render-monitor");
+      //   if(div[0] !== undefined)
+      //   if(state === false){
+      //     div[0].style.height="280px";
+      //     // console.log(div[0].style)
+      //   }
+      // }
+      let height = document.getElementById('layout_id').clientHeight/3.4;
+
+      const fullScreenResize = (state)=>{
+        // console.log(vizHeight)
+        let div1 = document.getElementsByClassName("chartjs-render-monitor");
+        // if(div1[0] !== undefined)
+
+        let div = document.getElementById("right_bar_id").children;
+        if(div[1].children[1] && div1[0])
+        if(state === false){
+          div1[0].style.height=height+"px";
+          div[1].children[1].style.height = height + "px";
+        }
+        // if(div[0] !== undefined)
+        // if(state === false){
+        //   div[0].style.height="280px";
+        //   console.log(div[0].style)
+        // }
+      }
     return (
       <>
        <div className="layout_dropdown">
@@ -456,16 +495,9 @@ export const Dropdown = ({}) =>{
              
     </Row>
        </div>
-    <div className="layout_vizs"></div>
-      
- 
-    
-    {/* <div className="layout__body__left">
-            <div className="layout__body__left__cards">
-            {isSelected? <Cards indicatorDetail = {indicatorDetail} indicatorChange = {indicatorChange}/> : null}
-            </div>
-    </div> */}
-
+       <div class="layout_vizs">
+       <div class="vizs_left">
+         <div class="left_map">
            {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
       <FullScreen  className="fullscreen_css" handle={screen1} onChange={checkchange}>
         {isSelected? <Map boundaries={boundaries} 
@@ -505,52 +537,78 @@ export const Dropdown = ({}) =>{
           areaName = {areaName}
           /> : null}
           </FullScreen> */}
-     {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
-      <FullScreen className="fullscreen_css" handle={screen3}>
-      {isSelected? <BarGraphArea 
-      indicatorBar = {indicatorBar}
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      unit={unit} 
-      unitName={graphUnit} 
-      selArea={selArea} 
-      selIndicator={selIndicator}
-      isLevelThree = {isLevelThree}
-      selSubgroup = {selSubgroup}
-      selTimeperiod = {selTimeperiod}
-      areaName = {areaName}
-      selStateData = {selStateData}/>: null}
-      </FullScreen> */}
-      {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
-      <FullScreen  className="fullscreen_css" handle={screen2}>
-      {isSelected?
-      <Trend indicatorTrend = {indicatorTrend}
-      setIndicatorTrend = {setIndicatorTrend}
-      unit = {unit}
-      selTimeperiod = {selTimeperiod}
-      selIndicator = {selIndicator}
-      selSubgroup = {selSubgroup}
-      selArea = {selArea}
-      graphTitle = {graphTitle}
-      graphSubgroup = {graphSubgroup}
-      graphUnit = {graphUnit}
-      areaName = {areaName}/>: null}
-      </FullScreen>
-     <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
-      <FullScreen className="fullscreen_css" handle={screen4}>
-      {isSelected? <BarGraph indicatorBar = {indicatorBar}
-      setIndicatorBar = {setIndicatorBar}
-      selIndicator = {selIndicator}
-      selTimeperiod = {selTimeperiod}
-      selArea = {selArea}
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      areaName = {areaName}/>: null}
-      </FullScreen> */}
+         </div>
+         <div class="left_bar">
+            {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
+            <FullScreen className="fullscreen_css" handle={screen3}>
+            {isSelected? <BarGraphArea 
+            indicatorBar = {indicatorBar}
+            graphTitle = {graphTitle}
+            graphTimeperiod = {graphTimeperiod}
+            graphUnit = {graphUnit}
+            selIndiaData={selIndiaData} 
+            level={level} 
+            unit={unit} 
+            unitName={graphUnit} 
+            selArea={selArea} 
+            selIndicator={selIndicator}
+            isLevelThree = {isLevelThree}
+            selSubgroup = {selSubgroup}
+            selTimeperiod = {selTimeperiod}
+            areaName = {areaName}
+            selStateData = {selStateData}/>: null}
+            </FullScreen> */}
+         </div>
+       </div>
+       <div class="vizs_right">
+         <div class="right_trend" >
+          <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
+          <FullScreen  className="fullscreen_css" handle={screen2} onChange={fullScreenResize}>
+          {isSelected?
+          <Trend indicatorTrend = {indicatorTrend}
+          setIndicatorTrend = {setIndicatorTrend}
+          unit = {unit}
+          selTimeperiod = {selTimeperiod}
+          selIndicator = {selIndicator}
+          selSubgroup = {selSubgroup}
+          selArea = {selArea}
+          graphTitle = {graphTitle}
+          graphSubgroup = {graphSubgroup}
+          graphUnit = {graphUnit}
+          areaName = {areaName}
+          height = {height}/>: null}
+          </FullScreen>
+         </div>
+         <div class="right_bar" id="right_bar_id">
+          <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
+          <FullScreen className="fullscreen_css" handle={screen4} onChange={fullScreenResize}>
+          {isSelected? <BarGraph indicatorBar = {indicatorBar}
+          setIndicatorBar = {setIndicatorBar}
+          selIndicator = {selIndicator}
+          selTimeperiod = {selTimeperiod}
+          selArea = {selArea}
+          graphTitle = {graphTitle}
+          graphTimeperiod = {graphTimeperiod}
+          graphUnit = {graphUnit}
+          areaName = {areaName}
+          height = {height}/>: null}
+          </FullScreen>
+         </div>
+       </div>
+     </div>
+      
+ 
+    
+    {/* <div className="layout__body__left">
+            <div className="layout__body__left__cards">
+            {isSelected? <Cards indicatorDetail = {indicatorDetail} indicatorChange = {indicatorChange}/> : null}
+            </div>
+    </div> */}
+
+           
+     
+
+     
 
  
 

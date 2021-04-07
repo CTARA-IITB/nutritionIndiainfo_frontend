@@ -15,17 +15,55 @@
 
 .layout_navbar{
   background:green;
-  flex:.1;
+  height: 10%;
 }
 .layout_dropdown{
   background:red;
-  flex:.1;
   width: calc(100% - 20px);
   margin: 5px;
+  height: 10%;
+
 }
 .layout_vizs{
   background:cyan;
-  flex:8;
   display:flex;
   gap:10px;
+  height: 80%;
+
+}
+
+.vizs_left{
+  background:olive;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  width: 50%;
+}
+.vizs_right{
+  background:pink;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  width: 50%;
+
+}
+.left_map{
+  background:yellow;
+  height:50%;
+}
+.left_bar{
+  background:blue;
+  height:50%;
+}
+.right_trend{
+  background:blue;
+  height:50%;
+}
+.right_bar{
+  background:yellow;
+  height:50%;
+}
+
+.chartjs-render-monitor{
+  width: 50%;
 }

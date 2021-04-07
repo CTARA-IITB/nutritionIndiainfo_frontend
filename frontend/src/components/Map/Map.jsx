@@ -248,11 +248,11 @@ export const Map = ({
     
 
     const onMouseMove = (event, d) => {
-      if (typeof d.dataValue != 'undefined') {
+      if (typeof c2Value(d) != 'undefined') {
         // tooltip.style("opacity", .9);
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b>Value:</b>" + d.dataValue)
+        tooltip.html("<b>" + d.areaname + "</b><br><b>Value:</b>" + c2Value(d))
           .style("left", event.clientX + "px")
           .style("top", event.clientY - 30 + "px");
       }

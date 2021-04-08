@@ -261,6 +261,9 @@ export const Dropdown = ({}) =>{
           setToggleState(true);
           setToggleStateBurden(true);
           setSelTimeperiod(e);
+          let timePeriodName = timeperiodDropdownOpt.filter(f => f.value === e)[0].title;
+          console.log("timePeriodName", timePeriodName);
+          setGraphTimeperiod(timePeriodName);
           await setVisulaizationData(selIndicator, selSubgroup, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
           setIsSelected(true);
         }

@@ -20,7 +20,7 @@ const App = ()=> {
     return(<> 
     <div className="layout" id="layout_id">
     <Router> 
-    <div class="layout_navbar">
+    <div className="layout_navbar">
 
             <Navbar expand="lg">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />

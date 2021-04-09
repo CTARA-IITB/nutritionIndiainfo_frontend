@@ -1,7 +1,7 @@
 .svg-map {
   display: block;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 svg .polygon {
@@ -107,7 +107,7 @@ button.ant-switch {
 
 .map{
   /* background-color:red; */
-  height:50vh;
+  height:37vh;
   display:flex;
 }
 
@@ -120,7 +120,7 @@ button.ant-switch {
 }
 .map_title{
   /* background-color:coral; */
-  width:55%;
+  width:60%;
   height:10%;
   display: flex;
   justify-content: center;
@@ -132,7 +132,7 @@ button.ant-switch {
 .map_svg{
   /* background-color:grey; */
   width:100%;
-  height:90%;
+  height:80%;
 }
 /* .map_svg{
   background-color:green;

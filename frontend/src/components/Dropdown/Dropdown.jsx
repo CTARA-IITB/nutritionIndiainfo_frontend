@@ -154,16 +154,7 @@ export const Dropdown = ({}) =>{
           }
           fetchData(); 
         }, []);
-        useEffect(()=>{
-          // return () =>{
-            let div1 = document.getElementById("right_bar_id");
-            if(div1)
-            setVizHeight(div1.clientHeight)
-
-          // }
-          // document.getElementById('right_bar_id').addEventListener('load',handler,false);
-
-        })
+        
         const handler=() =>{
           console.log("loaded");
         }
@@ -382,7 +373,7 @@ export const Dropdown = ({}) =>{
           }
           else if(state === false){
             if(map[0] != undefined)
-            map[0].style.height = "50vh";
+            map[0].style.height = "37vh";
             // map[0].style.height = "50vh";
           }
         }
@@ -397,9 +388,14 @@ export const Dropdown = ({}) =>{
       //   }
       // }
       let height;
-      if(document.getElementById('right_bar_id'))
-      height = document.getElementById('right_bar_id').clientHeight;
-      height = height - (height * 0.25);
+      if(document.getElementById('layout_vizs_id')){
+        // height = document.getElementById('right_bar_id').clientHeight;
+        // height = height - (height * 0.25);
+        
+        height = document.getElementById('layout_vizs_id').clientHeight/2 - 100;
+        // setVizHeight(height);
+
+      }
 
       const fullScreenResize = (state)=>{
         // console.log(vizHeight)
@@ -501,10 +497,10 @@ export const Dropdown = ({}) =>{
              
     </Row>
        </div>
-       <div class="layout_vizs">
+       <div class="layout_vizs" id="layout_vizs_id">
        <div class="vizs_left">
          <div class="left_map">
-           {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
+           <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
       <FullScreen  className="fullscreen_css" handle={screen1} onChange={checkchange}>
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
@@ -542,7 +538,7 @@ export const Dropdown = ({}) =>{
           graphUnit = {graphUnit}
           areaName = {areaName}
           /> : null}
-          </FullScreen> */}
+          </FullScreen>
          </div>
          <div class="left_bar">
             <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>

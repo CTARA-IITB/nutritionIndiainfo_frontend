@@ -399,17 +399,21 @@ export const Dropdown = ({}) =>{
       let height;
       if(document.getElementById('right_bar_id'))
       height = document.getElementById('right_bar_id').clientHeight;
-      height = height - (height * 0.24);
+      height = height - (height * 0.25);
+
       const fullScreenResize = (state)=>{
         // console.log(vizHeight)
-        let div1 = document.getElementsByClassName("chartjs-render-monitor");
+        let left_bar = document.getElementsByClassName("chartjs-render-monitor");
+        let right_trend = document.getElementById("right_trend_id").children;
         // if(div1[0] !== undefined)
 
-        let div = document.getElementById("right_bar_id").children;
-        if(div[1].children[1] && div1[0])
+        let right_bar = document.getElementById("right_bar_id").children;
+        if(right_bar[1].children[1] && left_bar[0] && right_trend[1].children[1])
         if(state === false){
-          div1[0].style.height=height - (height * 0.2)+"px";
-          div[1].children[1].style.height = height - (height * 0.2) + "px";
+          let updatedHeight =  height - (height * 0.2)+"px";
+          left_bar[0].style.height= updatedHeight
+          right_bar[1].children[1].style.height = updatedHeight;
+          right_trend[1].children[1].style.height = updatedHeight;
         }
         // if(div[0] !== undefined)
         // if(state === false){
@@ -541,8 +545,8 @@ export const Dropdown = ({}) =>{
           </FullScreen> */}
          </div>
          <div class="left_bar">
-            {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
-            <FullScreen className="fullscreen_css" handle={screen3}>
+            <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
+            <FullScreen className="fullscreen_css" handle={screen3} onChange={fullScreenResize}>
             {isSelected? <BarGraphArea 
             indicatorBar = {indicatorBar}
             graphTitle = {graphTitle}
@@ -558,12 +562,14 @@ export const Dropdown = ({}) =>{
             selSubgroup = {selSubgroup}
             selTimeperiod = {selTimeperiod}
             areaName = {areaName}
-            selStateData = {selStateData}/>: null}
-            </FullScreen> */}
+            selStateData = {selStateData}
+            height = {height}
+            />: null}
+            </FullScreen>
          </div>
        </div>
        <div class="vizs_right">
-         <div class="right_trend" >
+         <div class="right_trend" id="right_trend_id" >
           <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
           <FullScreen  className="fullscreen_css" handle={screen2} onChange={fullScreenResize}>
           {isSelected?

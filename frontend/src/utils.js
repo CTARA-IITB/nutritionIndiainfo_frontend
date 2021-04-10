@@ -46,17 +46,17 @@ export const createHierarchy = (options) =>{
   export async function setVisulaizationData(indicator, timeperiod, area, parentArea, level, levelThree, setIndicatorBar, setIndicatorTrend, 
     setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData)
   {
-    const url_1 =  await fetch(`http://localhost:8000/api/getIndicatorTrend/${indicator}/6/${area}`);
+    const url_1 =  await fetch(`http://13.234.11.176/api/getIndicatorTrend/${indicator}/6/${area}`);
     const body_1 = await url_1.json();
     setIndicatorTrend(body_1)
 
-    const url_2 = await fetch(`http://localhost:8000/api/getIndicatorBar/${indicator}/${timeperiod}/${area}`);
+    const url_2 = await fetch(`http://13.234.11.176/api/getIndicatorBar/${indicator}/${timeperiod}/${area}`);
     const body_2 = await url_2.json();
     setIndicatorBar(body_2);
 
     // if (level === 1)
     // {
-     const url_3 = await fetch(`http://localhost:8000/api/indiaMap/${indicator}/6/${timeperiod}/2`);
+     const url_3 = await fetch(`http://13.234.11.176/api/indiaMap/${indicator}/6/${timeperiod}/2`);
      const body_3 = await url_3.json();
      setSelIndiaData(body_3);
     // }
@@ -64,13 +64,13 @@ export const createHierarchy = (options) =>{
      if (level === 2) {
       let url_4;
       if (levelThree)
-       url_4 =  await fetch(`http://localhost:8000/api/areaData/${indicator}/6/${timeperiod}/${parentArea}`);
+       url_4 =  await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${parentArea}`);
       else
-        url_4 = await fetch(`http://localhost:8000/api/areaData/${indicator}/6/${timeperiod}/${area}`);
+        url_4 = await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${area}`);
         const body_4 = await url_4.json();
         setSelStateData(body_4);
     }
-    const switchurl= await fetch(`http://localhost:8000/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
+    const switchurl= await fetch(`http://13.234.11.176/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
     const body_5 = await switchurl.json();
     if(body_5.length)
     {
@@ -84,7 +84,7 @@ export const createHierarchy = (options) =>{
 
   export async function setCardData(tab, area, setIndicatorDetail)
   {
-    const url = await fetch(`http://localhost:8000/api/getIndicatorDetails/${tab}/${area}`);
+    const url = await fetch(`http://13.234.11.176/api/getIndicatorDetails/${tab}/${area}`);
     const body = await url.json();
     setIndicatorDetail(body);
   }
@@ -92,7 +92,7 @@ export const createHierarchy = (options) =>{
   export async function populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt,
     setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
   {
-    const url_6 = await fetch(`http://localhost:8000/api/indicator/${tab}`);
+    const url_6 = await fetch(`http://13.234.11.176/api/indicator/${tab}`);
     const body_6 = await url_6.json();
     setIndicatorDropdownOpt(body_6);
     setSelIndicator(body_6[0].value);
@@ -104,7 +104,7 @@ export const createHierarchy = (options) =>{
     // setSelSubgroup(body_7[0].value);
     // setGraphSubgroup(body_7[0].title);
    
-    const url_8 = await fetch(`http://localhost:8000/api/getUnit/${indiVal}/6`);
+    const url_8 = await fetch(`http://13.234.11.176/api/getUnit/${indiVal}/6`);
     const body_8 = await url_8.json();
     setUnit(body_8[0].unit.unit_id);
     setGraphUnit(body_8[0].unit.unit_name);

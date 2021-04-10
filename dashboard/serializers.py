@@ -76,11 +76,12 @@ class UtDataAllSerializer(serializers.ModelSerializer):
     timeperiod = TimeperiodSerializer()
     unit = UnitNameSerializer()
     data_value = serializers.DecimalField(max_digits=255, decimal_places=2)
+    data_value_num = serializers.DecimalField(max_digits=255, decimal_places=2)
     area = AreaEnSerializer()
   
     class Meta:
         model = UtData
-        fields =  ('indicator' , 'timeperiod', 'unit' ,'data_value', 'area')
+        fields =  ('indicator' , 'timeperiod', 'unit' ,'data_value', 'data_value_num', 'area')
 
 class NiStDtbPolySerializer(GeoFeatureModelSerializer):
     wkb_geometry = GeometryField()

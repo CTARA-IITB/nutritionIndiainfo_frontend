@@ -31,8 +31,6 @@ export const Map = ({
   indicatorSense,
   isLevelThree,
   switchDisplay, setSwitchDisplay,
-
-  selSubgroup,
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
   selStateData, setSelStateData, selDistrictsData, areaChange,
   graphTitle,graphTimeperiod,graphUnit,
@@ -40,6 +38,7 @@ export const Map = ({
 
 }) => {
   let geometry = boundaries.new_state;
+  let mapTitle;
   const svgRef = useRef();
   const svgLegRef = useRef();
   const wrapperRef = useRef();
@@ -61,13 +60,25 @@ export const Map = ({
   }
 
   const burdenClick = () => {
-    setToggleStateBurden(!toggleStateBurden);
+    setToggleStateBurden(!toggleStateBurden); 
     let text = null;
     if (burdenbuttonText === 'Burden')
+    {
       text = 'Prevalence';
+    }
     else
+    {
       text = 'Burden';
+    }
+
       changeBurdenText(text);
+  }
+
+  if (toggleStateBurden === true) {
+    mapTitle = graphTitle + ","+ graphUnit +","+areaName +","+ graphTimeperiod;
+  }
+  else{
+    mapTitle = graphTitle + ","+ "Number" +","+areaName +","+ graphTimeperiod;
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
@@ -183,12 +194,13 @@ export const Map = ({
  
 
     let c2Value;
+    mapTitle = graphTitle + ","+ "Number" +","+areaName +","+ graphTimeperiod;
     if (toggleStateBurden === true) 
     {
       c2Value = d => d.dataValue;
     }
     else{
-      c2Value = d => d.dataValueNum;
+      c2Value = d => d.dataValueNum; 
     }
 
 
@@ -258,6 +270,7 @@ export const Map = ({
       }
     };
     // if(unit !== 2)
+    console.log("data in burden out of else", data);
     if (toggleStateBurden === true)
     {  
     svg.selectAll("*").remove();
@@ -327,6 +340,7 @@ export const Map = ({
     // console.log(unit)
     // if (unit === 2) {
     else{
+      console.log("data in burden", data);
       svg.selectAll('*').remove();
 
       svg
@@ -488,7 +502,7 @@ export const Map = ({
 
   let switchButton;
   let burdenButton;
-  let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108'];
+  let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108', '53', '62'];
 
   if(switchDisplay && level === 1){
     switchButton = <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
@@ -504,12 +518,12 @@ export const Map = ({
 
   return (
     <>
-      <div class="map">
-      <div class="map_area">
-      <div class="map_title">
-        <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{graphTitle},{graphUnit},{areaName},{graphTimeperiod}</small>
+      <div className="map">
+      <div className="map_area">
+      <div className="map_title">
+        <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
       </div>
-    <div class="map_svg" ref={wrapperRef}>
+    <div className="map_svg" ref={wrapperRef}>
     <svg className="svg-map" ref={svgRef} ></svg>
     </div>
       
@@ -517,18 +531,18 @@ export const Map = ({
     {/* <div class="map_svg" ref={wrapperRef}>
     <svg className="svg-map" ref={svgRef} ></svg>
     </div> */}
-    <div class="map_req">
-      <div class="map_req_toggle">
+    <div className="map_req">
+      <div className="map_req_toggle">
       {switchButton}
       </div>
       <div className="map__requirements__switch">
               {burdenButton}  
             </div>
-      <div class="map_req_legend">
+      <div className="map_req_legend">
       <svg className="svg-legend" ref={svgLegRef}></svg>
 
       </div>
-      <div class="map_req_text">
+      <div className="map_req_text">
           <div id="info-msg" className="msg"></div>
 
       </div>

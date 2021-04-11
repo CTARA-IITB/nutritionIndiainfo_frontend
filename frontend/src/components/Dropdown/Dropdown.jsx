@@ -20,15 +20,15 @@ export const Dropdown = ({}) =>{
   const [selArea, setSelArea] = useState(iniSelArea);
   const iniSelIndicator = '12';
   const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
-  const iniSelSubgroup = '6';  //All
-  const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
+  // const iniSelSubgroup = '6';  //All
+  // const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
   const iniSelTimeperiod = '22';  //NHHS5
   const [selTimeperiod, setSelTimeperiod] = useState(iniSelTimeperiod);
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
-  const [subgroupDropdownOpt, setSubgroupDropdownOpt] = useState([]);
+  // const [subgroupDropdownOpt, setSubgroupDropdownOpt] = useState([]);
   const [stateID,setStateID] = useState(null);
   const [indicatorSense, setIndicatorSense] = useState('Negative');
   const [isSelected , setIsSelected] = useState(false);
@@ -99,16 +99,17 @@ export const Dropdown = ({}) =>{
         setIsSelected(false);
         setToggleState(true);
         let subVal = '6';
-        await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
+        //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
+        await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
         let timeVal = selTimeperiod;
-        const  url_2 = await fetch(`http://13.234.11.176/api/timeperiod/${indiVal}/${subVal}/${selArea}`);
+        const  url_2 = await fetch(`http://13.234.11.176/api/timeperiod/${indiVal}/6/${selArea}`);
         const body_2 = await url_2.json();
         setTimeperiodDropdownOpt(body_2);
         setSelTimeperiod(body_2[0].value);
         timeVal = body_2[0].value;
         setGraphTimeperiod(body_2[0].title);
-        await setVisulaizationData(indiVal, subVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
-        await setCardData(tab, selArea, setIndicatorDetail)
+        await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
+        //await setCardData(tab, selArea, setIndicatorDetail)
         setIsSelected(true);
       }
       populateTabData();
@@ -183,17 +184,17 @@ export const Dropdown = ({}) =>{
           let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTitle(indiName);
           setIndicatorSense(indiSense);
-          const url_1 = await fetch(`http://13.234.11.176/api/subgroup/${val}`);
-          const body = await url_1.json()
-          setSubgroupDropdownOpt(body);
-          setSelSubgroup(body[0].value);
-          setGraphSubgroup(body[0].title);
+          // const url_1 = await fetch(`http://13.234.11.176/api/subgroup/${val}`);
+          // const body = await url_1.json()
+          // setSubgroupDropdownOpt(body);
+          // setSelSubgroup(body[0].value);
+          // setGraphSubgroup(body[0].title);
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree)
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/${selSubgroup}/${parentArea}`);
+            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
             else
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/${selSubgroup}/${selArea}`);
+            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
             const body_1 = await url.json()
               setTimeperiodDropdownOpt(body_1);
               let flag = false;
@@ -210,50 +211,50 @@ export const Dropdown = ({}) =>{
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
-            const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/${selSubgroup}`);
+            const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
             const body_3 = await url_3.json()
             console.log(body_3);
             setUnit(body_3[0].unit.unit_id);
             setGraphUnit(body_3[0].unit.unit_name);
-            await setVisulaizationData(val, body[0].value, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
+            await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             setIsSelected(true);
         }
 
        
  
-        const subgroupChange = async(e) =>{
-          let val = e;
-          setIsSelected(false);
-          setToggleState(true);
-          setToggleStateBurden(true);
-          setSelSubgroup(e);
-          let subName = subgroupDropdownOpt.filter(f => f.value === val)[0].title;
-          setGraphSubgroup(subName);
-          let url;
-            // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(isLevelThree)
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/${val}/${parentArea}`);
-            else
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/${val}/${selArea}`);
-            const body_1 = await url.json()
-              setTimeperiodDropdownOpt(body_1);
-              let flag = false;
-              let timeValue = selTimeperiod;
-              if(body_1){
-                body_1.forEach(timeperiod => {
-                  if(timeperiod.value === selTimeperiod){
-                    flag = true;
-                  }
-                });
-                if(!flag) {
-                  timeValue = body_1[0].value;
-                  setSelTimeperiod(body_1[0].value);
-                  setGraphTimeperiod(body_1[0].title);
-                }
-            } 
-          await setVisulaizationData(selIndicator, val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
-          setIsSelected(true);
-        }
+        // const subgroupChange = async(e) =>{
+        //   let val = e;
+        //   setIsSelected(false);
+        //   setToggleState(true);
+        //   setToggleStateBurden(true);
+        //   setSelSubgroup(e);
+        //   let subName = subgroupDropdownOpt.filter(f => f.value === val)[0].title;
+        //   setGraphSubgroup(subName);
+        //   let url;
+        //     // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
+        //     if(isLevelThree)
+        //     url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/${val}/${parentArea}`);
+        //     else
+        //     url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/${val}/${selArea}`);
+        //     const body_1 = await url.json()
+        //       setTimeperiodDropdownOpt(body_1);
+        //       let flag = false;
+        //       let timeValue = selTimeperiod;
+        //       if(body_1){
+        //         body_1.forEach(timeperiod => {
+        //           if(timeperiod.value === selTimeperiod){
+        //             flag = true;
+        //           }
+        //         });
+        //         if(!flag) {
+        //           timeValue = body_1[0].value;
+        //           setSelTimeperiod(body_1[0].value);
+        //           setGraphTimeperiod(body_1[0].title);
+        //         }
+        //     } 
+        //   await setVisulaizationData(selIndicator, val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
+        //   setIsSelected(true);
+        // }
 
         const timeperiodChange = async(e) =>{
           let val = e;
@@ -262,9 +263,8 @@ export const Dropdown = ({}) =>{
           setToggleStateBurden(true);
           setSelTimeperiod(e);
           let timePeriodName = timeperiodDropdownOpt.filter(f => f.value === e)[0].title;
-          console.log("timePeriodName", timePeriodName);
           setGraphTimeperiod(timePeriodName);
-          await setVisulaizationData(selIndicator, selSubgroup, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
+          await setVisulaizationData(selIndicator, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
           setIsSelected(true);
         }
 
@@ -312,9 +312,9 @@ export const Dropdown = ({}) =>{
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(levelThree)
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/${selSubgroup}/${areaParentId}`);
+            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
             else
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/${selSubgroup}/${value}`);
+            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
             const body_1 = await url.json()
         
               setTimeperiodDropdownOpt(body_1);
@@ -334,8 +334,8 @@ export const Dropdown = ({}) =>{
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
-            await setVisulaizationData(selIndicator, selSubgroup, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
-            await setCardData(tab, value, setIndicatorDetail)
+            await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
+            //await setCardData(tab, value, setIndicatorDetail)
             setIsSelected(true);
         
         }
@@ -431,7 +431,7 @@ export const Dropdown = ({}) =>{
             </Col>
 
               
-                <Col>
+                {/* <Col>
             <span className="dropdown-title">Select subgroup</span>
 
                 <TreeSelect
@@ -445,7 +445,7 @@ export const Dropdown = ({}) =>{
                 treeNodeFilterProp ='title'
                 onChange={ subgroupChange}
                 />
-                </Col>
+                </Col> */}
         
               <Col>
             <span className="dropdown-title"> Select timeperiod</span>
@@ -495,7 +495,6 @@ export const Dropdown = ({}) =>{
           isLevelThree = {isLevelThree}
           switchDisplay = {switchDisplay}
           setSwitchDisplay = {setSwitchDisplay}
-          selSubgroup = {selSubgroup}
           selTimeperiod = {selTimeperiod}
           parentArea = {parentArea}
           toggleState = {toggleState}
@@ -536,7 +535,6 @@ export const Dropdown = ({}) =>{
       selArea={selArea} 
       selIndicator={selIndicator}
       isLevelThree = {isLevelThree}
-      selSubgroup = {selSubgroup}
       selTimeperiod = {selTimeperiod}
       areaName = {areaName}
       selStateData = {selStateData}/>: null}
@@ -549,12 +547,6 @@ export const Dropdown = ({}) =>{
       <FullScreen  className="fullscreen_css" handle={screen2}>
       {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
-      setIndicatorTrend = {setIndicatorTrend}
-      unit = {unit}
-      selTimeperiod = {selTimeperiod}
-      selIndicator = {selIndicator}
-      selSubgroup = {selSubgroup}
-      selArea = {selArea}
       graphTitle = {graphTitle}
       graphSubgroup = {graphSubgroup}
       graphUnit = {graphUnit}

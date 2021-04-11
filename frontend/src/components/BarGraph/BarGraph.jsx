@@ -123,7 +123,7 @@ const BarGraph = ({indicatorBar, graphTitle,
   const BarGraphArea = ({indicatorBar, graphTitle, 
       graphTimeperiod, graphUnit,selIndiaData,level,
       unit,unitName,selArea,selIndicator,indicatorSense, 
-      isLevelThree,selSubgroup,selTimeperiod,areaName,
+      isLevelThree,selTimeperiod,areaName,
       selStateData}) => { 
 
         let barLabel=[];

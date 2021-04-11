@@ -43,10 +43,10 @@ export const createHierarchy = (options) =>{
     return [india,onlyDistrict];
   }
 
-  export async function setVisulaizationData(indicator, subgroup, timeperiod, area, parentArea, level, levelThree, setIndicatorBar, setIndicatorTrend, 
+  export async function setVisulaizationData(indicator, timeperiod, area, parentArea, level, levelThree, setIndicatorBar, setIndicatorTrend, 
     setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData)
   {
-    const url_1 =  await fetch(`http://13.234.11.176/api/getIndicatorTrend/${indicator}/${subgroup}/${area}`);
+    const url_1 =  await fetch(`http://13.234.11.176/api/getIndicatorTrend/${indicator}/6/${area}`);
     const body_1 = await url_1.json();
     setIndicatorTrend(body_1)
 
@@ -56,7 +56,7 @@ export const createHierarchy = (options) =>{
 
     // if (level === 1)
     // {
-     const url_3 = await fetch(`http://13.234.11.176/api/indiaMap/${indicator}/${subgroup}/${timeperiod}/2`);
+     const url_3 = await fetch(`http://13.234.11.176/api/indiaMap/${indicator}/6/${timeperiod}/2`);
      const body_3 = await url_3.json();
      setSelIndiaData(body_3);
     // }
@@ -64,13 +64,13 @@ export const createHierarchy = (options) =>{
      if (level === 2) {
       let url_4;
       if (levelThree)
-       url_4 =  await fetch(`http://13.234.11.176/api/areaData/${indicator}/${subgroup}/${timeperiod}/${parentArea}`);
+       url_4 =  await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${parentArea}`);
       else
-        url_4 = await fetch(`http://13.234.11.176/api/areaData/${indicator}/${subgroup}/${timeperiod}/${area}`);
+        url_4 = await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${area}`);
         const body_4 = await url_4.json();
         setSelStateData(body_4);
     }
-    const switchurl= await fetch(`http://13.234.11.176/api/getDistrictDetails/${indicator}/${subgroup}/${timeperiod}`);
+    const switchurl= await fetch(`http://13.234.11.176/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
     const body_5 = await switchurl.json();
     if(body_5.length)
     {
@@ -89,8 +89,8 @@ export const createHierarchy = (options) =>{
     setIndicatorDetail(body);
   }
 
-  export async function populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt,
-    setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
+  export async function populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt,
+    setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
   {
     const url_6 = await fetch(`http://13.234.11.176/api/indicator/${tab}`);
     const body_6 = await url_6.json();
@@ -98,13 +98,13 @@ export const createHierarchy = (options) =>{
     setSelIndicator(body_6[0].value);
     setGraphTitle(body_6[0].title);
 
-    const url_7 = await fetch(`http://13.234.11.176/api/subgroup/${indiVal}`);
-    const body_7 = await url_7.json();
-    setSubgroupDropdownOpt(body_7);
-    setSelSubgroup(body_7[0].value);
-    setGraphSubgroup(body_7[0].title);
+    // const url_7 = await fetch(`http://13.234.11.176/api/subgroup/${indiVal}`);
+    // const body_7 = await url_7.json();
+    // setSubgroupDropdownOpt(body_7);
+    // setSelSubgroup(body_7[0].value);
+    // setGraphSubgroup(body_7[0].title);
    
-    const url_8 = await fetch(`http://13.234.11.176/api/getUnit/${indiVal}/${subVal}`);
+    const url_8 = await fetch(`http://13.234.11.176/api/getUnit/${indiVal}/6`);
     const body_8 = await url_8.json();
     setUnit(body_8[0].unit.unit_id);
     setGraphUnit(body_8[0].unit.unit_name);

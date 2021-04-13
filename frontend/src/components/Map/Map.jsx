@@ -59,21 +59,22 @@ export const Map = ({
     changeText(text);
   }
 
-  const burdenClick = () => {
-    setToggleStateBurden(!toggleStateBurden); 
-    let text = null;
-    if (burdenbuttonText === 'Burden')
-    {
-      text = 'Prevalence';
-    }
-    else
-    {
-      text = 'Burden';
-    }
+  // const burdenClick = () => {
+  //   setToggleStateBurden(!toggleStateBurden); 
+  //   let text = null;
+  //   if (burdenbuttonText === 'Burden')
+  //   {
+  //     text = 'Prevalence';
+  //   }
+  //   else
+  //   {
+  //     text = 'Burden';
+  //   }
 
-      changeBurdenText(text);
-  }
+  //     changeBurdenText(text);
+  // }
 
+ 
   if (toggleStateBurden === true) {
     mapTitle = graphTitle + ","+ graphUnit +","+areaName +","+ graphTimeperiod;
   }
@@ -194,7 +195,6 @@ export const Map = ({
  
 
     let c2Value;
-    mapTitle = graphTitle + ","+ "Number" +","+areaName +","+ graphTimeperiod;
     if (toggleStateBurden === true) 
     {
       c2Value = d => d.dataValue;
@@ -270,7 +270,6 @@ export const Map = ({
       }
     };
     // if(unit !== 2)
-    console.log("data in burden out of else", data);
     if (toggleStateBurden === true)
     {  
     svg.selectAll("*").remove();
@@ -340,7 +339,6 @@ export const Map = ({
     // console.log(unit)
     // if (unit === 2) {
     else{
-      console.log("data in burden", data);
       svg.selectAll('*').remove();
 
       svg
@@ -501,20 +499,20 @@ export const Map = ({
   }, [unit,geometry, dimensions, data, toggleStateBurden])
 
   let switchButton;
-  let burdenButton;
-  let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108', '53', '62'];
+  // let burdenButton;
+  // let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108', '53', '62'];
 
   if(switchDisplay && level === 1){
     switchButton = <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
   }else{
     switchButton= null;
   }
-  if (burdenIndicators.includes(selIndicator)) {
+ /*  if (burdenIndicators.includes(selIndicator)) {
     burdenButton = <Switch className="mb-2" size="large" checkedChildren="Burden" unCheckedChildren="Prevalence" onClick={burdenClick} />
   }
   else{
     burdenButton= null;
-  }
+  } */
 
   return (
     <>
@@ -535,9 +533,9 @@ export const Map = ({
       <div className="map_req_toggle">
       {switchButton}
       </div>
-      <div className="map__requirements__switch">
+      {/* <div className="map__requirements__switch">
               {burdenButton}  
-            </div>
+            </div> */}
       <div className="map_req_legend">
       <svg className="svg-legend" ref={svgLegRef}></svg>
 

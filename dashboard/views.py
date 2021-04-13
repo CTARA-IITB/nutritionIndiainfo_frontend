@@ -135,6 +135,7 @@ class IndicatorTrendView(generics.ListAPIView):
                 areaSelect = self.kwargs.get('area', None)
                 subgroupSelect = self.kwargs.get('subgroup', None)
                 queryset = UtData.objects.filter(Q(indicator=indicatorSelect) & Q(subgroup=subgroupSelect) & Q(area=areaSelect)).order_by('timeperiod').exclude(data_value__isnull=True)
+                print(queryset)
                 return queryset
 
 class IndicatorBarView(generics.ListAPIView): 

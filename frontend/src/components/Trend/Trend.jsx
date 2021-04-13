@@ -2,21 +2,33 @@ import React, { useState, useEffect } from "react";
 import {Line} from 'react-chartjs-2';
 import { json } from 'd3';
 
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName}) => { 
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName, toggleStateBurden}) => { 
     let trendLabel=[];
     let trendData=[];
       if(indicatorTrend)
-      {
+      { 
       indicatorTrend.map(i=>{
         trendLabel.push(i.timeperiod.timeperiod)
-        trendData.push(+i.data_value)
+        if(toggleStateBurden === true)
+        {
+          trendData.push(+i.data_value)
+        }
+        else{
+          trendData.push(+i.data_value_num)
+        }   
       })
       }
+      let trendUnit = graphUnit;
+      if(toggleStateBurden === false)
+      {
+        trendUnit = 'Number';
+      }
+     
      
       let  datal= {
         labels:trendLabel,
         datasets: [{
-        label: [graphTitle, graphUnit, graphSubgroup],
+        label: [graphTitle, trendUnit, graphSubgroup],
         fill: false,
         lineTension:0,
         borderWidth:3,
@@ -34,7 +46,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
                    },
                     title: {
                      display: true,
-                     text: [graphTitle+','+graphUnit+','+graphSubgroup, 'TrendData'+ ', '+ areaName],
+                     text: [graphTitle+','+trendUnit+','+graphSubgroup, 'TrendData'+ ', '+ areaName],
                      fontColor: "black",
                  },
                    scales: {

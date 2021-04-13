@@ -13,6 +13,7 @@ import { Map } from "../../components/Map/Map";
 import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import arrow_fullscreen from './arrow_fullscreen.svg';
+import { Switch } from 'antd';
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   let { id } = useParams();
@@ -102,7 +103,7 @@ export const Dropdown = ({}) =>{
         //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
         await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
         let timeVal = selTimeperiod;
-        const  url_2 = await fetch(`http://13.234.11.176/api/timeperiod/${indiVal}/6/${selArea}`);
+        const  url_2 = await fetch(`http://localhost:8000/api/timeperiod/${indiVal}/6/${selArea}`);
         const body_2 = await url_2.json();
         setTimeperiodDropdownOpt(body_2);
         setSelTimeperiod(body_2[0].value);
@@ -117,7 +118,7 @@ export const Dropdown = ({}) =>{
 
 
       useEffect(() => {
-        const url_4 = 'http://13.234.11.176/api/area';
+        const url_4 = 'http://localhost:8000/api/area';
         json(url_4).then( options =>{
         const [country,statesID] = createHierarchy(options);
         setStateID(statesID)
@@ -173,6 +174,8 @@ export const Dropdown = ({}) =>{
           }
         };
         generateList(areaDropdownOpt)
+
+      
      
         const indicatorChange = async(e) =>{
           let val = e;
@@ -192,9 +195,9 @@ export const Dropdown = ({}) =>{
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree)
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
+            url = await fetch(`http://localhost:8000/api/timeperiod/${val}/6/${parentArea}`);
             else
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
+            url = await fetch(`http://localhost:8000/api/timeperiod/${val}/6/${selArea}`);
             const body_1 = await url.json()
               setTimeperiodDropdownOpt(body_1);
               let flag = false;
@@ -211,9 +214,8 @@ export const Dropdown = ({}) =>{
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
-            const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
+            const url_3 = await fetch(`http://localhost:8000/api/getUnit/${val}/6`);
             const body_3 = await url_3.json()
-            console.log(body_3);
             setUnit(body_3[0].unit.unit_id);
             setGraphUnit(body_3[0].unit.unit_name);
             await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
@@ -312,9 +314,9 @@ export const Dropdown = ({}) =>{
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(levelThree)
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
+            url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/6/${areaParentId}`);
             else
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
+            url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/6/${value}`);
             const body_1 = await url.json()
         
               setTimeperiodDropdownOpt(body_1);
@@ -326,7 +328,6 @@ export const Dropdown = ({}) =>{
                     flag = true;
                   }
                 });
-                console.log("flag", flag);
                
                 if(!flag) {
                   timeValue = body_1[0].value;
@@ -384,7 +385,30 @@ export const Dropdown = ({}) =>{
           }
         }
       }
-   
+      
+      const burdenClick = () => {
+        setToggleStateBurden(!toggleStateBurden); 
+        let text = null;
+        if (burdenbuttonText === 'Burden')
+        {
+          text = 'Prevalence';
+        }
+        else
+        {
+          text = 'Burden';
+        }
+          changeBurdenText(text);   
+      }
+
+      let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108', '53', '62'];
+      let burdenButton;
+      if (burdenIndicators.includes(selIndicator)) {
+          burdenButton = <Switch className="mb-2" size="large" checkedChildren="Burden" unCheckedChildren="Prevalence" onClick={burdenClick} />
+        }
+        else{
+          burdenButton= null;
+        }
+
     return (
       <>
       <Row className=' mt-3 mb-3'>
@@ -429,8 +453,6 @@ export const Dropdown = ({}) =>{
                 onChange={ indicatorChange }
                 />
             </Col>
-
-              
                 {/* <Col>
             <span className="dropdown-title">Select subgroup</span>
 
@@ -465,6 +487,11 @@ export const Dropdown = ({}) =>{
               </Col>
              
     </Row>
+    {isSelected?
+    <div className="btn_toggle text-center">
+      {burdenButton}
+      </div>: null}
+  
  
     
     {/* <div className="layout__body__left">
@@ -537,7 +564,8 @@ export const Dropdown = ({}) =>{
       isLevelThree = {isLevelThree}
       selTimeperiod = {selTimeperiod}
       areaName = {areaName}
-      selStateData = {selStateData}/>: null}
+      selStateData = {selStateData}
+      toggleStateBurden = {toggleStateBurden}/>: null}
       </FullScreen>
      </div>
    </div>
@@ -550,7 +578,8 @@ export const Dropdown = ({}) =>{
       graphTitle = {graphTitle}
       graphSubgroup = {graphSubgroup}
       graphUnit = {graphUnit}
-      areaName = {areaName}/>: null}
+      areaName = {areaName}
+      toggleStateBurden = {toggleStateBurden}/>: null}
       </FullScreen>
       </div>
      <div class="layout_right_bar2">
@@ -564,7 +593,8 @@ export const Dropdown = ({}) =>{
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}
-      areaName = {areaName}/>: null}
+      areaName = {areaName}
+      toggleStateBurden = {toggleStateBurden}/>: null}
       </FullScreen>
      </div>
     </div>

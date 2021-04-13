@@ -111,8 +111,6 @@ export const createHierarchy = (options) =>{
   }
         
   export function poissonDiscSampler(width, height, radius) {
-    console.log("poisson called");
-
     var k = 30, // maximum number of samples before rejection
         radius2 = radius * radius,
         R = 0.1 * radius2,
@@ -120,9 +118,6 @@ export const createHierarchy = (options) =>{
         gridWidth = Math.ceil(width / cellSize),
         gridHeight = Math.ceil(height / cellSize),
         // grid = new Array(gridWidth * gridHeight);
-
-        
-
         queue = [],
         queueSize = 0,
         sampleSize = 0;

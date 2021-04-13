@@ -3,16 +3,27 @@ import {Bar} from 'react-chartjs-2';
 import { json } from 'd3';
 
 const BarGraph = ({indicatorBar, graphTitle, 
-  graphTimeperiod, graphUnit, areaName}) => { 
+  graphTimeperiod, graphUnit, areaName, toggleStateBurden}) => { 
       
     let barLabel=[];
     let barData=[];
     let datab = [];
+    let barUnit = graphUnit;
+    if(toggleStateBurden === false)
+     {
+          barUnit = 'Number';
+    }
       if(indicatorBar)
       {
         indicatorBar.map(i=>{
           barLabel.push(i.subgroup.subgroup_name+";"+i.subgroup.sub_category)
+          if(toggleStateBurden == true)
+          {
           barData.push(+i.data_value)
+          }
+          else{
+            barData.push(+i.data_value_num)
+          }
         })
         var colors = []
         for(var i = 0; i < barLabel.length; i++){
@@ -41,7 +52,7 @@ const BarGraph = ({indicatorBar, graphTitle,
         datab = {
               labels:barLabel,
               datasets: [{
-              label: [graphTitle, graphUnit,graphTimeperiod],
+              label: [graphTitle, barUnit,graphTimeperiod],
               data:barData,
               xAxisID:'xAxis1',
               //backgroundColor: "rgb(255, 99, 132)"
@@ -60,7 +71,7 @@ const BarGraph = ({indicatorBar, graphTitle,
             },
             title: {
               display: true,
-              text: [graphTitle +','+ graphUnit, areaName +', '+ graphTimeperiod],
+              text: [graphTitle +','+ barUnit, areaName +', '+ graphTimeperiod],
               fontColor: "black",
             },
             scales: {
@@ -124,7 +135,7 @@ const BarGraph = ({indicatorBar, graphTitle,
       graphTimeperiod, graphUnit,selIndiaData,level,
       unit,unitName,selArea,selIndicator,indicatorSense, 
       isLevelThree,selTimeperiod,areaName,
-      selStateData}) => { 
+      selStateData, toggleStateBurden}) => { 
 
         let barLabel=[];
         let barData=[];
@@ -136,7 +147,13 @@ const BarGraph = ({indicatorBar, graphTitle,
           {
             selIndiaData.map(i=>{
               barLabel.push(i.area.area_name)
+              if(toggleStateBurden === true)
+              {
               barData.push(+i.data_value)
+              }
+              else{
+                barData.push(+i.data_value_num)
+              }
               color= 'rgb(142, 209, 25)'
              })
           }        
@@ -145,7 +162,13 @@ const BarGraph = ({indicatorBar, graphTitle,
             for(let j=0;j<selIndiaData.length;j++){
               if(+selArea===selIndiaData[j].area.area_id)
               { 
+                if(toggleStateBurden === true)
+              {
                 stateDataValue=selIndiaData[j].data_value
+              }
+              else{
+                stateDataValue=selIndiaData[j].data_value_num
+              }
                 stateAreaName=selIndiaData[j].area.area_name
                 barLabel.push(stateAreaName)
                 barData.push(stateDataValue)
@@ -153,7 +176,13 @@ const BarGraph = ({indicatorBar, graphTitle,
             }
             selStateData.map(i=>{
               barLabel.push(i.area.area_name)
+              if(toggleStateBurden === true)
+              {
               barData.push(+i.data_value)
+              }
+              else{
+                barData.push(+i.data_value_num)
+              }
               color=' rgb(142, 209, 25)'
             })
           }           
@@ -176,11 +205,17 @@ const BarGraph = ({indicatorBar, graphTitle,
  
             // })
           }              
- 
+          
+          let barGUnit = graphUnit;
+          if(toggleStateBurden === false)
+          {
+            barGUnit = 'Number';
+          }
+
             datab = {
                   labels:barLabel,
                   datasets: [{
-                  label: [graphTitle, graphUnit, graphTimeperiod],
+                  label: [graphTitle, barGUnit, graphTimeperiod],
                   data:barData,
                   xAxisID:'xAxis1',
                   //backgroundColor: "rgb(255, 99, 132)"
@@ -199,7 +234,7 @@ const BarGraph = ({indicatorBar, graphTitle,
                 },
                 title: {
                   display: true,
-                  text: [graphTitle +','+ graphUnit, areaName +','+ graphTimeperiod],
+                  text: [graphTitle +','+ barGUnit, areaName +','+ graphTimeperiod],
                   fontColor: "black",
                 },
                 scales: {

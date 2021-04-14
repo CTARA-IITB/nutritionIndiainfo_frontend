@@ -103,7 +103,7 @@ export const Dropdown = ({}) =>{
         //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
         await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
         let timeVal = selTimeperiod;
-        const  url_2 = await fetch(`http://localhost:8000/api/timeperiod/${indiVal}/6/${selArea}`);
+        const  url_2 = await fetch(`http://13.234.11.176/api/timeperiod/${indiVal}/6/${selArea}`);
         const body_2 = await url_2.json();
         setTimeperiodDropdownOpt(body_2);
         setSelTimeperiod(body_2[0].value);
@@ -118,7 +118,7 @@ export const Dropdown = ({}) =>{
 
 
       useEffect(() => {
-        const url_4 = 'http://localhost:8000/api/area';
+        const url_4 = 'http://13.234.11.176/api/area';
         json(url_4).then( options =>{
         const [country,statesID] = createHierarchy(options);
         setStateID(statesID)
@@ -195,9 +195,9 @@ export const Dropdown = ({}) =>{
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree)
-            url = await fetch(`http://localhost:8000/api/timeperiod/${val}/6/${parentArea}`);
+            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
             else
-            url = await fetch(`http://localhost:8000/api/timeperiod/${val}/6/${selArea}`);
+            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
             const body_1 = await url.json()
               setTimeperiodDropdownOpt(body_1);
               let flag = false;
@@ -214,7 +214,7 @@ export const Dropdown = ({}) =>{
                   setGraphTimeperiod(body_1[0].title);
                 }
             } 
-            const url_3 = await fetch(`http://localhost:8000/api/getUnit/${val}/6`);
+            const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
             const body_3 = await url_3.json()
             setUnit(body_3[0].unit.unit_id);
             setGraphUnit(body_3[0].unit.unit_name);
@@ -314,9 +314,9 @@ export const Dropdown = ({}) =>{
           let url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(levelThree)
-            url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/6/${areaParentId}`);
+            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
             else
-            url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/6/${value}`);
+            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
             const body_1 = await url.json()
         
               setTimeperiodDropdownOpt(body_1);

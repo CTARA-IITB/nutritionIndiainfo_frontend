@@ -16,7 +16,7 @@ const BarGraph = ({indicatorBar, graphTitle,
       if(indicatorBar)
       {
         indicatorBar.map(i=>{
-          barLabel.push(i.subgroup.subgroup_name+";"+i.subgroup.sub_category)
+          barLabel.push(i.subgroup_name+";"+i.sub_category)
           if(toggleStateBurden == true)
           {
           barData.push(+i.data_value)

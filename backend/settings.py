@@ -135,4 +135,5 @@ CORS_ORIGIN_WHITELIST = [
      'http://13.235.60.173',
      'http://65.2.31.243',
      'http://nutritionindia.communitygis.net',
+    'http://any.host.want.to.allow.to.access.this.server.com',
 ]

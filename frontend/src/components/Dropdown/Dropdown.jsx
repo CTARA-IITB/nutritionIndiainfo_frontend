@@ -103,12 +103,14 @@ export const Dropdown = ({}) =>{
         //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
         await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
         let timeVal = selTimeperiod;
-        const  url_2 = await fetch(`http://13.234.11.176/api/timeperiod/${indiVal}/6/${selArea}`);
-        const body_2 = await url_2.json();
-        setTimeperiodDropdownOpt(body_2);
-        setSelTimeperiod(body_2[0].value);
-        timeVal = body_2[0].value;
-        setGraphTimeperiod(body_2[0].title);
+        const solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
+        // const body_2 = await url_2.json();
+        const solr_body_2 = await solr_url.json();
+        // console.log(body_2);
+        setTimeperiodDropdownOpt(solr_body_2.response.docs);
+        setSelTimeperiod(solr_body_2.response.docs[0].value);
+        timeVal = solr_body_2.response.docs[0].value;
+        setGraphTimeperiod(solr_body_2.response.docs[0].title);
         await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
         //await setCardData(tab, selArea, setIndicatorDetail)
         setIsSelected(true);
@@ -193,25 +195,36 @@ export const Dropdown = ({}) =>{
           // setSelSubgroup(body[0].value);
           // setGraphSubgroup(body[0].title);
           let url;
+          let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(isLevelThree)
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-            else
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-            const body_1 = await url.json()
-              setTimeperiodDropdownOpt(body_1);
+            if(isLevelThree){
+              // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
+              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${parentArea}`);
+
+            }
+            else{
+              // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
+              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
+            }
+
+
+            // const body_1 = await url.json()
+            const solr_body_1 = await solr_url.json()
+            console.log(solr_body_1.response.docs)
+
+              setTimeperiodDropdownOpt(solr_body_1.response.docs);
               let flag = false;
               let timeValue = selTimeperiod;
-              if(body_1){
-                body_1.forEach(timeperiod => {
+              if(solr_body_1.response.docs){
+                solr_body_1.response.docs.forEach(timeperiod => {
                   if(timeperiod.value === selTimeperiod){
                     flag = true;
                   }
                 });
                 if(!flag){
-                  timeValue = body_1[0].value;
-                  setSelTimeperiod(body_1[0].value);
-                  setGraphTimeperiod(body_1[0].title);
+                  timeValue = solr_body_1.response.docs[0].value;
+                  setSelTimeperiod(solr_body_1.response.docs[0].value);
+                  setGraphTimeperiod(solr_body_1.response.docs[0].title);
                 }
             } 
             const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
@@ -312,27 +325,36 @@ export const Dropdown = ({}) =>{
             newLevel = 2;
           }
           let url;
+          let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(levelThree)
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
-            else
-            url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
-            const body_1 = await url.json()
-        
-              setTimeperiodDropdownOpt(body_1);
+            if(levelThree){
+              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${areaParentId}`);
+
+              url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
+            }
+            else{
+              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}`);
+
+              url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
+
+            }
+            // const body_1 = await url.json()
+            let solr_body_1 = await solr_url.json()
+            solr_body_1 = solr_body_1.response.docs;
+              setTimeperiodDropdownOpt(solr_body_1);
               let flag = false;
               let timeValue = selTimeperiod;
-              if(body_1){
-                body_1.forEach(timeperiod => {
+              if(solr_body_1){
+                solr_body_1.forEach(timeperiod => {
                   if(timeperiod.value === selTimeperiod){
                     flag = true;
                   }
                 });
                
                 if(!flag) {
-                  timeValue = body_1[0].value;
-                  setSelTimeperiod(body_1[0].value);
-                  setGraphTimeperiod(body_1[0].title);
+                  timeValue = solr_body_1[0].value;
+                  setSelTimeperiod(solr_body_1[0].value);
+                  setGraphTimeperiod(solr_body_1[0].title);
                 }
             } 
             await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);

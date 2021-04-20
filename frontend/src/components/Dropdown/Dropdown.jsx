@@ -103,7 +103,7 @@ export const Dropdown = ({}) =>{
         //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
         await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
         let timeVal = selTimeperiod;
-        const solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
+        const solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
         // const body_2 = await url_2.json();
         const solr_body_2 = await solr_url.json();
         // console.log(body_2);
@@ -199,12 +199,12 @@ export const Dropdown = ({}) =>{
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${parentArea}`);
+              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${parentArea}`);
 
             }
             else{
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
+              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
             }
 
 
@@ -328,14 +328,14 @@ export const Dropdown = ({}) =>{
           let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(levelThree){
-              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${areaParentId}`);
+              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${areaParentId}`);
 
-              url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
+              // url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
             }
             else{
-              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}`);
+              solr_url = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}`);
 
-              url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
+              // url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
 
             }
             // const body_1 = await url.json()

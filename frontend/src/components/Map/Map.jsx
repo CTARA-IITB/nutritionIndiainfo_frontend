@@ -132,7 +132,7 @@ export const Map = ({
   {
     if (toggleState === true) {
 
-      if (selTimeperiod === '22')    // change state boundaries when timeperiod is NFHS5
+      if (selTimeperiod === 22)    // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
       else
         geometry = boundaries.state;
@@ -141,7 +141,7 @@ export const Map = ({
     }
     else {
 
-        if(selTimeperiod === '22')
+        if(selTimeperiod === 22)
           geometry = boundaries.new_dist;
         else
           geometry = boundaries.dist;
@@ -154,7 +154,7 @@ export const Map = ({
     {
       data = selStateData;
       statusMsg ="Click on Map to go back to India Map";
-    if(selTimeperiod == '22')
+    if(selTimeperiod == 22)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
       geometry = {type: "FeatureCollection",features}
@@ -168,7 +168,7 @@ export const Map = ({
     // console.log("testst", document.getElementById("info-msg"));
     //   document.getElementById("info-msg").className += " shake";
         //   setTimeout(removeShake,3000);
-      if (selTimeperiod === '22')    // change state boundaries when timeperiod is NFHS5
+      if (selTimeperiod === 22)    // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
       else
         geometry = boundaries.state;
@@ -246,7 +246,7 @@ export const Map = ({
       .domain([min, max])
       .range(["#B2022F", "#FF0000", "#FFE338", "#DAF7A6"])
 
-    let arrsuw = ['12', '19', '17', '18', '20', '13', '71','124'];
+    let arrsuw = [12, 19, 17, 18, 20, 13, 71,124];
     if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }

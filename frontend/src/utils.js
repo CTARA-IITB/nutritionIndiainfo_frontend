@@ -78,7 +78,7 @@ export const createHierarchy = (options) =>{
       }
        
       else{
-        url_4 = await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${area}`);
+        // url_4 = await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${area}`);
         solr_url_4 =  await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&row=100&omitHeader=true&q=*%3A*`);
       }
         // const body_4 = await url_4.json();
@@ -87,11 +87,14 @@ export const createHierarchy = (options) =>{
         setSelStateData(solr_body_4.response.docs);
     }
     const switchurl= await fetch(`http://localhost:8000/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
+    const solr_switchurl= await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=indicator_id%2Cindicator_name%2Ctimeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Carea_id%2Carea_code%2Carea_name%2Carea_level&fq=area_level%3A3&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&q=*%3A*&rows=10000&omitHeader=true`);
     const body_5 = await switchurl.json();
-    if(body_5.length)
+    const solr_body_5 = await solr_switchurl.json();
+    console.log(solr_body_5.response.docs,body_5);
+    if(solr_body_5.response.docs.length)
     {
       setSwitchDisplay(true);
-      setSelDistrictsData(body_5);
+      setSelDistrictsData(solr_body_5.response.docs);
     }
       else
         setSwitchDisplay(false);

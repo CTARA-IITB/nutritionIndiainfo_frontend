@@ -233,8 +233,8 @@ export const Dropdown = ({}) =>{
 
             // const body_3 = await url_3.json()
             const solr_body_3 = await solr_url_3.json()
-            setUnit(solr_body_3.response.docs[0].unit.unit_id);
-            setGraphUnit(solr_body_3.response.docs[0].unit.unit_name);
+            setUnit(solr_body_3.response.docs[0].unit_id);
+            setGraphUnit(solr_body_3.response.docs[0].unit_name);
             await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             setIsSelected(true);
         }

@@ -190,7 +190,7 @@ export const Dropdown = ({}) =>{
           let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTitle(indiName);
           setIndicatorSense(indiSense);
-          // const url_1 = await fetch(`http://13.234.11.176/api/subgroup/${val}`);
+          // const url_1 = await fetch(`http://localhost:8000/api/subgroup/${val}`);
           // const body = await url_1.json()
           // setSubgroupDropdownOpt(body);
           // setSelSubgroup(body[0].value);
@@ -252,9 +252,9 @@ export const Dropdown = ({}) =>{
         //   let url;
         //     // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
         //     if(isLevelThree)
-        //     url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/${val}/${parentArea}`);
+        //     url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${val}/${parentArea}`);
         //     else
-        //     url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/${val}/${selArea}`);
+        //     url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${val}/${selArea}`);
         //     const body_1 = await url.json()
         //       setTimeperiodDropdownOpt(body_1);
         //       let flag = false;

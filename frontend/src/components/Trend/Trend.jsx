@@ -8,7 +8,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       if(indicatorTrend)
       { 
       indicatorTrend.map(i=>{
-        trendLabel.push(i.timeperiod.timeperiod)
+        trendLabel.push(i.timeperiod)
         if(toggleStateBurden === true)
         {
           trendData.push(+i.data_value)

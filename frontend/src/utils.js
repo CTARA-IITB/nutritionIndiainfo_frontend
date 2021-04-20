@@ -46,13 +46,18 @@ export const createHierarchy = (options) =>{
   export async function setVisulaizationData(indicator, timeperiod, area, parentArea, level, levelThree, setIndicatorBar, setIndicatorTrend, 
     setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData)
   {
-    const url_1 =  await fetch(`http://13.234.11.176/api/getIndicatorTrend/${indicator}/6/${area}`);
+    
+    //const url_1 =  await fetch(`http://13.234.11.176/api/getIndicatorTrend/${indicator}/6/${area}`);
+    const url_1 =  await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=timeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name_subgroup_category&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&omitHeader=true&q=*%3A*&rows=400&sort=timeperiod_id%20asc`);
     const body_1 = await url_1.json();
-    setIndicatorTrend(body_1)
+    setIndicatorTrend(body_1.response.docs)
 
-    const url_2 = await fetch(`http://13.234.11.176/api/getIndicatorBar/${indicator}/${timeperiod}/${area}`);
+
+
+   // const url_2 = await fetch(`http://localhost:8000/api/getIndicatorBar/${indicator}/${timeperiod}/${area}`);
+    const url_2 = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=unit_id%2Cunit_name%2Csubgroup_name%2Csub_category%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name_subgroup_category&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=timeperiod_id%3A${timeperiod}&omitHeader=true&q=*%3A*&rows=100&sort=subgroup_order%20asc`);
     const body_2 = await url_2.json();
-    setIndicatorBar(body_2);
+    setIndicatorBar(body_2.response.docs);
 
     // if (level === 1)
     // {
@@ -81,7 +86,7 @@ export const createHierarchy = (options) =>{
         // console.log(body_4,solr_body_4)
         setSelStateData(solr_body_4.response.docs);
     }
-    const switchurl= await fetch(`http://13.234.11.176/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
+    const switchurl= await fetch(`http://localhost:8000/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
     const body_5 = await switchurl.json();
     if(body_5.length)
     {
@@ -95,7 +100,7 @@ export const createHierarchy = (options) =>{
 
   export async function setCardData(tab, area, setIndicatorDetail)
   {
-    const url = await fetch(`http://13.234.11.176/api/getIndicatorDetails/${tab}/${area}`);
+    const url = await fetch(`http://localhost:8000/api/getIndicatorDetails/${tab}/${area}`);
     const body = await url.json();
     setIndicatorDetail(body);
   }

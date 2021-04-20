@@ -146,7 +146,7 @@ const BarGraph = ({indicatorBar, graphTitle,
         if(selIndiaData && level=="1")
           {
             selIndiaData.map(i=>{
-              barLabel.push(i.area.area_name)
+              barLabel.push(i.area_name)
               if(toggleStateBurden === true)
               {
               barData.push(+i.data_value)
@@ -160,7 +160,7 @@ const BarGraph = ({indicatorBar, graphTitle,
         if(selStateData && level=="2")
           {
             for(let j=0;j<selIndiaData.length;j++){
-              if(+selArea===selIndiaData[j].area.area_id)
+              if(+selArea===selIndiaData[j].area_id)
               { 
                 if(toggleStateBurden === true)
               {
@@ -169,13 +169,13 @@ const BarGraph = ({indicatorBar, graphTitle,
               else{
                 stateDataValue=selIndiaData[j].data_value_num
               }
-                stateAreaName=selIndiaData[j].area.area_name
+                stateAreaName=selIndiaData[j].area_name
                 barLabel.push(stateAreaName)
                 barData.push(stateDataValue)
               }           
             }
             selStateData.map(i=>{
-              barLabel.push(i.area.area_name)
+              barLabel.push(i.area_name)
               if(toggleStateBurden === true)
               {
               barData.push(+i.data_value)
@@ -188,7 +188,7 @@ const BarGraph = ({indicatorBar, graphTitle,
           }           
           if(level==="3")
           {
-            console.log(selStateData[0].area.area_name,"state,distrrr")
+            console.log(selStateData[0].area_name,"state,distrrr")
             // for(let j=0;j<selIndiaData.length;j++){
             //   if(+selArea===selIndiaData[j].area.area_id)
             //   { 

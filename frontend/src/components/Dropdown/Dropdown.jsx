@@ -120,12 +120,13 @@ export const Dropdown = ({}) =>{
 
 
       useEffect(() => {
-        const url_4 = 'http://13.234.11.176/api/area';
-        json(url_4).then( options =>{
-        const [country,statesID] = createHierarchy(options);
+        // const url_4 = 'http://13.234.11.176/api/area';
+        const solr_url_4 = 'http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
+        json(solr_url_4).then( options =>{
+        const [country,statesID] = createHierarchy(options.response.docs);
         setStateID(statesID)
         setAreaDropdownOpt(country);
-        setAreaList(options);  
+        setAreaList(options.response.docs);  
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
@@ -548,7 +549,6 @@ export const Dropdown = ({}) =>{
           parentArea = {parentArea}
           toggleState = {toggleState}
           setToggleState = {setToggleState}
-          setSelIndiaData = {setSelIndiaData}
           setIsLevelThree = {setIsLevelThree}
           buttonText = {buttonText}
           changeText = {changeText}

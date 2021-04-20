@@ -100,11 +100,11 @@ export const Map = ({
 
     let newArr = _.map(data, function (item) {
       return {
-        areacode: item.area.area_code,
-        areaname: item.area.area_name,
-        area_id: item.area.area_id,
-        dataValue: parseFloat(item.data_value),
-        dataValueNum: parseFloat(item.data_value_num),
+        areacode: item.area_code,
+        areaname: item.area_name,
+        area_id: item.area_id,
+        dataValue: item.data_value,
+        dataValueNum: item.data_value_num,
 
       }
     });

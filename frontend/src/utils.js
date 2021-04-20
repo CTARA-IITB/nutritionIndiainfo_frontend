@@ -56,19 +56,30 @@ export const createHierarchy = (options) =>{
 
     // if (level === 1)
     // {
-     const url_3 = await fetch(`http://13.234.11.176/api/indiaMap/${indicator}/6/${timeperiod}/2`);
-     const body_3 = await url_3.json();
-     setSelIndiaData(body_3);
+    //  const url_3 = await fetch(`http://13.234.11.176/api/indiaMap/${indicator}/6/${timeperiod}/2`);
+     const solr_url_3 = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_level%3A2&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=100&omitHeader=true&q=*%3A*`);
+    //  const body_3 = await url_3.json();
+     const solr_body_3 = await solr_url_3.json();
+    //  console.log(body_3,solr_body_3)
+     setSelIndiaData(solr_body_3.response.docs);
     // }
     // else
      if (level === 2) {
-      let url_4;
-      if (levelThree)
-       url_4 =  await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${parentArea}`);
-      else
+      let url_4,solr_url_4;
+      if (levelThree){
+        // url_4 =  await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${parentArea}`);
+        solr_url_4 =  await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${parentArea}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&row=100&omitHeader=true&q=*%3A*`);
+
+      }
+       
+      else{
         url_4 = await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${area}`);
-        const body_4 = await url_4.json();
-        setSelStateData(body_4);
+        solr_url_4 =  await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&row=100&omitHeader=true&q=*%3A*`);
+      }
+        // const body_4 = await url_4.json();
+        const solr_body_4 = await solr_url_4.json();
+        // console.log(body_4,solr_body_4)
+        setSelStateData(solr_body_4.response.docs);
     }
     const switchurl= await fetch(`http://13.234.11.176/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
     const body_5 = await switchurl.json();

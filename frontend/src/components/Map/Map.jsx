@@ -195,18 +195,21 @@ export const Map = ({
  
 
     let c2Value;
+    let c1Value;
     if (toggleStateBurden === true) 
     {
       c2Value = d => d.dataValue;
+      c1Value = d => d.data_value;
     }
     else{
       c2Value = d => d.dataValueNum; 
+      c1Value = d => d.data_value_num; 
     }
-
-
-    let color_range = _.map(data, d => {
-      return +d.data_value_num
-    });
+    console.log("toggleStateBurden", toggleStateBurden, c2Value, c1Value);
+     
+     let color_range = _.map(data, d => {
+          return +c1Value(d)
+        });
     
     let sum = color_range.reduce(function(a, b){
       return a + b;
@@ -270,7 +273,7 @@ export const Map = ({
       }
     };
     // if(unit !== 2)
-    if (toggleStateBurden === true)
+    if (toggleStateBurden === true && unit !== 2)
     {  
     svg.selectAll("*").remove();
     svg
@@ -408,14 +411,13 @@ export const Map = ({
         let p = d.properties.AREA_ / (width_d * height_d);
         let p_ = d.properties.AREA_
         // let n = d.dataValue / (dotVal);
-        let n = d.dataValueNum / (dotVal);
+        let n = c2Value(d) / (dotVal);
 
-        if(dotVal > d.dataValueNum)
+        if(dotVal >c2Value(d))
         {
           n = 1;
         }
-        if (typeof d.dataValueNum !== 'undefined' && d.dataValueNum > 0 
-&& isFinite(width_d) && isFinite(height_d))
+        if (typeof c2Value(d) !== 'undefined' && c2Value(d) > 0 && isFinite(width_d) && isFinite(height_d))
 
         {
         var points = createPoints(width_d, height_d, p_, n);
@@ -457,7 +459,7 @@ export const Map = ({
       .attr("transform", "translate(20,20)")
 
     let formatter;
-    if (toggleStateBurden === true) {
+    if (toggleStateBurden === true && unit !== 2) {
       //formatter = format(',.0f');
       formatter = format('.2s');
     }
@@ -467,7 +469,7 @@ export const Map = ({
 
     let myLegend;
    
-    if (toggleStateBurden === false) 
+    if (toggleStateBurden === false || unit === 2) 
     {
       legend.select(".legendQuant").append('text').text("1 dot =" + dotVal);
     }

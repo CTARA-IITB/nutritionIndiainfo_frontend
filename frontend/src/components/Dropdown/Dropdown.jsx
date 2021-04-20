@@ -426,7 +426,7 @@ export const Dropdown = ({}) =>{
           changeBurdenText(text);   
       }
 
-      let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108', '53', '62'];
+      let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
       let burdenButton;
       if (burdenIndicators.includes(selIndicator)) {
           burdenButton = <Switch className="mb-2" size="large" checkedChildren="Burden" unCheckedChildren="Prevalence" onClick={burdenClick} />

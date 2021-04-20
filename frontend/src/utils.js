@@ -118,10 +118,13 @@ export const createHierarchy = (options) =>{
     // setSelSubgroup(body_7[0].value);
     // setGraphSubgroup(body_7[0].title);
    
-    const url_8 = await fetch(`http://13.234.11.176/api/getUnit/${indiVal}/6`);
-    const body_8 = await url_8.json();
-    setUnit(body_8[0].unit.unit_id);
-    setGraphUnit(body_8[0].unit.unit_name);
+    // const url_8 = await fetch(`http://13.234.11.176/api/getUnit/${indiVal}/6`);
+    const solr_url_8 = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+    // const body_8 = await url_8.json();
+    const solr_body_8 = await solr_url_8.json();
+    // console.log(body_8,solr_body_8.response.docs);
+    setUnit(solr_body_8.response.docs[0].unit_id);
+    setGraphUnit(solr_body_8.response.docs[0].unit_name);
   }
         
   export function poissonDiscSampler(width, height, radius) {

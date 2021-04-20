@@ -228,10 +228,13 @@ export const Dropdown = ({}) =>{
                   setGraphTimeperiod(solr_body_1.response.docs[0].title);
                 }
             } 
-            const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
-            const body_3 = await url_3.json()
-            setUnit(body_3[0].unit.unit_id);
-            setGraphUnit(body_3[0].unit.unit_name);
+            // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
+            const solr_url_3 = await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+
+            // const body_3 = await url_3.json()
+            const solr_body_3 = await solr_url_3.json()
+            setUnit(solr_body_3.response.docs[0].unit.unit_id);
+            setGraphUnit(solr_body_3.response.docs[0].unit.unit_name);
             await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             setIsSelected(true);
         }

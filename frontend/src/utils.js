@@ -73,13 +73,13 @@ export const createHierarchy = (options) =>{
       let url_4,solr_url_4;
       if (levelThree){
         // url_4 =  await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${parentArea}`);
-        solr_url_4 =  await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${parentArea}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&row=100&omitHeader=true&q=*%3A*`);
+        solr_url_4 =  await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${parentArea}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=1000&omitHeader=true&q=*%3A*`);
 
       }
        
       else{
         // url_4 = await fetch(`http://13.234.11.176/api/areaData/${indicator}/6/${timeperiod}/${area}`);
-        solr_url_4 =  await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&row=100&omitHeader=true&q=*%3A*`);
+        solr_url_4 =  await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=1000&omitHeader=true&q=*%3A*`);
       }
         // const body_4 = await url_4.json();
         const solr_body_4 = await solr_url_4.json();

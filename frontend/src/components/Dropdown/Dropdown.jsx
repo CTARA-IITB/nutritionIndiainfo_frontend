@@ -99,6 +99,7 @@ export const Dropdown = ({}) =>{
       {
         setIsSelected(false);
         setToggleState(true);
+        setToggleStateBurden(true);
         let subVal = '6';
         //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
         await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
@@ -426,7 +427,7 @@ export const Dropdown = ({}) =>{
           changeBurdenText(text);   
       }
 
-      let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108', '53', '62'];
+      let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
       let burdenButton;
       if (burdenIndicators.includes(selIndicator)) {
           burdenButton = <Switch className="mb-2" size="large" checkedChildren="Burden" unCheckedChildren="Prevalence" onClick={burdenClick} />
@@ -434,7 +435,7 @@ export const Dropdown = ({}) =>{
         else{
           burdenButton= null;
         }
-
+        console.log("burdenButton", burdenButton, selIndicator);
     return (
       <>
       <Row className=' mt-3 mb-3'>

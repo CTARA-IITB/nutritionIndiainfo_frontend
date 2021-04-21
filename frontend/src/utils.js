@@ -90,7 +90,6 @@ export const createHierarchy = (options) =>{
     const solr_switchurl= await fetch(`http://localhost:8983/solr/nutritionV2/select?fl=indicator_id%2Cindicator_name%2Ctimeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Carea_id%2Carea_code%2Carea_name%2Carea_level&fq=area_level%3A3&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&q=*%3A*&rows=10000&omitHeader=true`);
     const body_5 = await switchurl.json();
     const solr_body_5 = await solr_switchurl.json();
-    console.log(solr_body_5.response.docs,body_5);
     if(solr_body_5.response.docs.length)
     {
       setSwitchDisplay(true);

@@ -99,6 +99,7 @@ export const Dropdown = ({}) =>{
       {
         setIsSelected(false);
         setToggleState(true);
+        setToggleStateBurden(true);
         let subVal = '6';
         //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
         await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
@@ -434,7 +435,7 @@ export const Dropdown = ({}) =>{
         else{
           burdenButton= null;
         }
-
+        console.log("burdenButton", burdenButton, selIndicator);
     return (
       <>
       <Row className=' mt-3 mb-3'>

@@ -530,8 +530,8 @@ export const Dropdown = ({}) =>{
 <div class="layout">
    <div class="layout_left">
      <div class="layout_left_map">
-           <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
-      <FullScreen  className="fullscreen_css" handle={screen1} onChange={checkchange}>
+           {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
+      <FullScreen  className="fullscreen_css" handle={screen1} onChange={checkchange}> */}
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -569,13 +569,13 @@ export const Dropdown = ({}) =>{
           setToggleStateBurden={setToggleStateBurden}
           burdenbuttonText={burdenbuttonText} 
           changeBurdenText={changeBurdenText}
-
+          map={map}
           /> : null}
-          </FullScreen>
+          {/* </FullScreen> */}
      </div>
      <div class="layout_left_bar1">
-     <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
-      <FullScreen className="fullscreen_css" handle={screen3}>
+     {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
+      <FullScreen className="fullscreen_css" handle={screen3}> */}
       {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
       graphTitle = {graphTitle}
@@ -592,13 +592,13 @@ export const Dropdown = ({}) =>{
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}/>: null}
-      </FullScreen>
+      {/* </FullScreen> */}
      </div>
    </div>
     <div class="layout_right">
       <div class="layout_right_trend">
-      <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
-      <FullScreen  className="fullscreen_css" handle={screen2}>
+      {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
+      <FullScreen  className="fullscreen_css" handle={screen2}> */}
       {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
@@ -606,11 +606,11 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       areaName = {areaName}
       toggleStateBurden = {toggleStateBurden}/>: null}
-      </FullScreen>
+      {/* </FullScreen> */}
       </div>
      <div class="layout_right_bar2">
-     <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
-      <FullScreen className="fullscreen_css" handle={screen4}>
+     {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
+      <FullScreen className="fullscreen_css" handle={screen4}> */}
       {isSelected? <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
@@ -621,7 +621,7 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       areaName = {areaName}
       toggleStateBurden = {toggleStateBurden}/>: null}
-      </FullScreen>
+      {/* </FullScreen> */}
      </div>
     </div>
   </div>

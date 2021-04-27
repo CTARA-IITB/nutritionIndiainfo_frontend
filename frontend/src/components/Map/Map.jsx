@@ -9,8 +9,6 @@ import { geoMercator, format, geoPath, scaleQuantize, scaleThreshold,extent, sel
 import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
-import MapSideNavBar from "../SideNavBar/MapSideNavBar";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
 
@@ -36,7 +34,7 @@ export const Map = ({
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
   selStateData, setSelStateData, selDistrictsData, areaChange,
   graphTitle,graphTimeperiod,graphUnit,
-  toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map
+  toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText
 
 }) => {
   let geometry = boundaries.new_state;
@@ -518,25 +516,8 @@ export const Map = ({
     burdenButton= null;
   } */
 
-  const screen = useFullScreenHandle();
-
-  const checkchange = (state,handle)=>{
-    if(map){
-      if(state === true){
-        map[0].style.height = "100vh";
-      }
-      else if(state === false){
-        if(map[0] != undefined)
-        map[0].style.height = "50vh";
-        // map[0].style.height = "50vh";
-      }
-    }
-  }
-
   return (
     <>
-      <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
-      <MapSideNavBar mapData={data} map={map} screen={screen}/>
       <div className="map">
       <div className="map_area">
       <div className="map_title">
@@ -587,7 +568,7 @@ export const Map = ({
         </div>
 
       </div> */}
-    </FullScreen>  
+
     </>
   )
 };

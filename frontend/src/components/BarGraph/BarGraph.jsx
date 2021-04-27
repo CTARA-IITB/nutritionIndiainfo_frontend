@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {Bar} from 'react-chartjs-2';
-import SideNavBar from "../SideNavBar/SideNavBar";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import "./BarFullScreen.css";
-import 'chartjs-plugin-datalabels';
-
-
+import { json } from 'd3';
 
 const BarGraph = ({indicatorBar, graphTitle, 
   graphTimeperiod, graphUnit, areaName, toggleStateBurden}) => { 
@@ -67,13 +62,9 @@ const BarGraph = ({indicatorBar, graphTitle,
               }]
         }
       }
-    const screen=useFullScreenHandle();  
     
     return (
-      <>
-        <FullScreen  className="fullscreen_css" handle={screen}>
-        <SideNavBar chartData={datab} id="bar" screen={screen}/>
-        <Bar data={datab} id="bar"  options={{
+        <Bar data={datab}  options={{
             legend:
             {
               display: false,
@@ -136,9 +127,7 @@ const BarGraph = ({indicatorBar, graphTitle,
               }]
             }
           }}
-        />  
-        </FullScreen>
-      </>    
+        />    
         )
      }
    
@@ -236,12 +225,9 @@ const BarGraph = ({indicatorBar, graphTitle,
                   }]
             }
         
-        const screen=useFullScreenHandle();
+        
         return (
-          <>
-            <FullScreen  className="fullscreen_css" handle={screen}>
-            <SideNavBar chartData={datab} id="bar" screen={screen}/>
-            <Bar data={datab} id="bar" options={{
+            <Bar data={datab}  options={{
                 legend:
                 {
                   display: false,
@@ -281,9 +267,7 @@ const BarGraph = ({indicatorBar, graphTitle,
                   }]
                 }
               }}
-            />   
-          </FullScreen>  
-          </>   
+            />    
             )
          }
          export { BarGraph, BarGraphArea }

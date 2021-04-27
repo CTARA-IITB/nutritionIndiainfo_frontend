@@ -1,14 +1,8 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {Line} from 'react-chartjs-2';
-import SideNavBar from "../SideNavBar/SideNavBar";
-import "./TrendFullScreen.css";
-import 'chartjs-plugin-datalabels';
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { json } from 'd3';
 
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName, toggleStateBurden}) => { 
-
-    const screen = useFullScreenHandle();
-    
     let trendLabel=[];
     let trendData=[];
       if(indicatorTrend)
@@ -45,10 +39,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       }
     
     return (
-            <>
-              <FullScreen  className="fullscreen_css" handle={screen}>
-                  <SideNavBar chartData={datal} id="trend" screen={screen} />
-                 <Line id="trend" data={datal} options = {{
+                 <Line data={datal} options = {{
                    legend:
                    {
                      display: false,
@@ -81,7 +72,5 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
    
                   }}
                  />
-              </FullScreen>
-              </>   
                )
      }

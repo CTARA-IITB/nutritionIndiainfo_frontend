@@ -1,7 +1,7 @@
 # nutritionIndia_react_django
 
 
-## Standards and Methods
+## NutritionINDIA.info Standards and Methods
 > [Mockup presentation](https://drive.google.com/file/d/1b5FpCotZIF8ZH-_XkyTEY9jQPn74dygl/view?usp=sharing)
 
 > [Color Coding](https://drive.google.com/file/d/1EDn-bqO2_WnAF3evOuZi34hY5ERmMHvA/view?usp=sharing)

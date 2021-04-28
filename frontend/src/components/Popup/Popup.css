@@ -10,7 +10,7 @@
   
   .box {
     position: relative;
-    width: 70%;
+    width: 50%;
     margin: 0 auto;
     height: auto;
     max-height: 70vh;
@@ -20,6 +20,7 @@
     padding: 50px;
     /* border: 1px solid #999; */
     overflow: auto;
+    box-shadow: 10px 10px 5px #aaaaaa;
    
   }
   
@@ -39,4 +40,29 @@
     font-size: 20px;
   }
   
-  
+  #btn{
+    
+    border: none;
+    display:inline-block;
+    padding:0.3em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    background-color:#808080;
+    text-align:center;
+    transition: all 0.2s;
+  }
+
+  .container{
+    text-align: center;
+  }
+
+  .container #btn:hover {
+    background-color:#A9A9A9;
+    color: white;
+    
+  }

@@ -13,7 +13,6 @@ import MapSideNavBar from "../SideNavBar/MapSideNavBar";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
-
 import "./Map.css";
 
 
@@ -178,8 +177,6 @@ export const Map = ({
 
   }
   }
-
-
 
   let tooltip = select("body").append("div")
     .attr("class", "tooltip")
@@ -530,19 +527,19 @@ export const Map = ({
       }
     }
   }
-
+ 
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
-      <MapSideNavBar mapData={data} map={map} screen={screen}/>
+      <MapSideNavBar mapData={data} map={map} screen={screen} mapTitle={mapTitle} timePeriod={graphTimeperiod}/>
       <div className="map">
       <div className="map_area">
       <div className="map_title">
         <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
       </div>
-    <div className="map_svg" ref={wrapperRef}>
-    <svg className="svg-map" ref={svgRef} ></svg>
-    </div>
+      <div className="map_svg" ref={wrapperRef}>
+        <svg id="svgMap" className="svg-map" ref={svgRef} ></svg>
+      </div>
       
     </div>
     {/* <div class="map_svg" ref={wrapperRef}>
@@ -556,12 +553,10 @@ export const Map = ({
               {burdenButton}  
             </div> */}
       <div className="map_req_legend">
-      <svg className="svg-legend" ref={svgLegRef}></svg>
-
+        <svg id="svgLegend" className="svg-legend" ref={svgLegRef}></svg>
       </div>
       <div className="map_req_text">
           <div id="info-msg" className="msg"></div>
-
       </div>
     </div>
   </div>

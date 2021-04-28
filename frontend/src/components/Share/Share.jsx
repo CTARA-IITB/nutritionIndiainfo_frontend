@@ -26,51 +26,59 @@ import {
 const Share =()=> {
     const currentURL = window.location.href // returns the absolute URL of a page
     return (
-    <div className="share">
+    <div className="container">
         <FacebookShareButton
             url={currentURL}
+            id="btn"
         >
             <FacebookIcon size={40} round />
         </FacebookShareButton>
        
         <TwitterShareButton
             url={currentURL}
+            id="btn"
         >
             <TwitterIcon size={40} round />
         </TwitterShareButton>
      
         <EmailShareButton
             url={currentURL}
+            id="btn"
         >
             <EmailIcon size={40} round />
         </EmailShareButton>
        
         <TelegramShareButton
             url={currentURL}
+            id="btn"
         >
             <TelegramIcon size={40} round />
         </TelegramShareButton>
        
         <WhatsappShareButton
             url={currentURL}
+            id="btn"
         >
             <WhatsappIcon size={40} round />
         </WhatsappShareButton>
        
         <PinterestShareButton
             url={currentURL}
+            id="btn"
         >
             <PinterestIcon size={40} round />
         </PinterestShareButton>
         
         <RedditShareButton
             url={currentURL}
+            id="btn"
         >
             <RedditIcon size={40} round />
         </RedditShareButton>
        
         <LinkedinShareButton
             url={currentURL}
+            id="btn"
         >
             <LinkedinIcon size={40} round />
         </LinkedinShareButton>

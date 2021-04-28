@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Popup from "../Popup/Popup";
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -9,8 +8,18 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import Share  from "../../components/Share/Share";
+import {saveSvgAsPng,svgAsPngUri}  from 'save-svg-as-png';
+import jsPDF from 'jspdf';
 
-const MapSideNavBar = ({mapData,screen})=>{
+import { CSVLink } from "react-csv";
+import MenuIcon from '@material-ui/icons/Menu';
+
+const MapSideNavBar = ({mapData,screen,mapTitle,timePeriod})=>{
+
+    const [isOpen, setIsOpen] = useState(false);
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    }
 
     const [isOpenTable, setIsOpenTable] = useState(false);
     const toggleTablePopup = ()=>{
@@ -26,8 +35,8 @@ const MapSideNavBar = ({mapData,screen})=>{
     let table=[];
     for(var i=0;i<mapData.length;i++){
         table.push({
-        label:mapData[i].area_name,
-        data:+mapData[i].data_value,
+        area:mapData[i].area_name,
+        data:+mapData[i].data_value+" ("+timePeriod + ")",
         })
     }
     console.log(mapData,'map')
@@ -49,13 +58,49 @@ const MapSideNavBar = ({mapData,screen})=>{
             screen.exit();
         }
     }
+    // map download details
+    const mapOptions = {
+        scale: 10,
+        encoderOptions: 1,
+        backgroundColor: 'white',
+    }
+   
+    const saveJpeg = () => {
+        saveSvgAsPng(document.getElementById('svgMap'), 'map.jpeg', mapOptions);
+    };
+
+    const savePng = () => {
+       saveSvgAsPng(document.getElementById('svgMap'), 'map.png', mapOptions);
+    };
+
+    const saveSvg = () => {
+        saveSvgAsPng(document.getElementById('svgMap'), 'map.svg', mapOptions);
+     };
+
+    async function savePdf() {
+        const graph = document.getElementById('svg-chart');
+        const pdf = new jsPDF("l", "pt", [500, 300]);
+        const pdfCanvas = document.createElement("canvas");
+        pdfCanvas.setAttribute("width", 900);
+        pdfCanvas.setAttribute("height", 600);
+    
+        const dataURI = await svgAsPngUri(graph);
+    
+        pdf.addImage(dataURI, "PNG", 0, 0);
+        pdf.save("map.pdf");
+    }
 
     return(
         <>
             {isOpenTable && <Popup
             content={<>
-                <BootstrapTable data={ table } >
-                    <TableHeaderColumn dataField='label' isKey dataSort>Area Name</TableHeaderColumn>
+                <div id="title">{mapTitle}</div>
+                <BootstrapTable data={ table } 
+                    hover 
+                    search
+                    headerStyle={ { background:'#ECECEC' } }
+                >
+                    <TableHeaderColumn dataField='area' isKey dataSort>Area Name</TableHeaderColumn>
                     <TableHeaderColumn dataField='data'>Data</TableHeaderColumn>
                 </BootstrapTable> 
             </>}
@@ -69,27 +114,37 @@ const MapSideNavBar = ({mapData,screen})=>{
                 handleClose={toggleShare}
             />}
 
-            <DropdownButton
-                style={{float:'right'}}
-                key="left"
-                size="sm"
-                id="dropdown-button-drop-left"
-                drop="left"
-                variant="light"
-                title=""
-                >
-                <Dropdown.Item  id="saveMap" eventKey="1"><GetAppIcon/> Download</Dropdown.Item>
-                <Dropdown.Item onClick={()=>{
-                    if(flag){
-                        screen.enter();
-                        toggleFullScreen();
-                    }
-                    else exitFullScreen();
-                }} eventKey="2">{image} {text}</Dropdown.Item>
-                <Dropdown.Item onClick={toggleTablePopup} eventKey="3"><TableChartIcon/> Table</Dropdown.Item>
-                <Dropdown.Item onClick={toggleShare} eventKey="4"><ShareIcon/> Share </Dropdown.Item>
-            </DropdownButton>    
-
+            {isOpen && <Popup
+            content={<div className="container">
+                <CSVLink 
+                    data={table}
+                    filename="map.csv"
+                    target="_blank"
+                ><button id="btn">csv</button></CSVLink>
+                <button onClick={saveJpeg} id="btn">jpeg</button>
+                <button onClick={savePng} id="btn">png</button>
+                <button onClick={saveSvg} id="btn">svg</button>
+                <button onClick={savePdf} id="btn">pdf</button>
+            </div>}
+                handleClose={togglePopup}
+            />}
+            <Dropdown style={{float:'right'}}>
+                <Dropdown.Toggle variant="link" bsPrefix="p-0">
+                    <MenuIcon id="icon"/>
+                </Dropdown.Toggle>
+                <Dropdown.Menu align="right" >
+                    <Dropdown.Item  onClick={togglePopup} eventKey="1"  style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
+                    <Dropdown.Item onClick={()=>{
+                        if(flag){
+                            screen.enter();
+                            toggleFullScreen();
+                        }
+                        else exitFullScreen();
+                    }} eventKey="2"  style={{fontSize:'15px'}}>{image} {text}</Dropdown.Item>
+                    <Dropdown.Item onClick={toggleTablePopup} eventKey="3"  style={{fontSize:'15px'}}><TableChartIcon  style={{fontSize:'20px'}}/> Table</Dropdown.Item>
+                    <Dropdown.Item onClick={toggleShare} eventKey="4"  style={{fontSize:'15px'}}><ShareIcon  style={{fontSize:'20px'}}/> Share </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </>    
     )    
 }

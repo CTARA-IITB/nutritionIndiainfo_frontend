@@ -43,11 +43,13 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
         }]
        
       }
-    
+      // table title of trend graph
+      let title=graphTitle+',  '+trendUnit+'('+graphSubgroup+')'
+      let trendTimePeriod=-1;
     return (
             <>
               <FullScreen  className="fullscreen_css" handle={screen}>
-                  <SideNavBar chartData={datal} id="trend" screen={screen} />
+                  <SideNavBar chartData={datal} id="trend" screen={screen} title={title} timePeriod={trendTimePeriod}/>
                  <Line id="trend" data={datal} options = {{
                    legend:
                    {

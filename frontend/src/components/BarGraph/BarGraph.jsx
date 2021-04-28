@@ -68,11 +68,11 @@ const BarGraph = ({indicatorBar, graphTitle,
         }
       }
     const screen=useFullScreenHandle();  
-    
+    let title=graphTitle +', '+barUnit
     return (
       <>
         <FullScreen  className="fullscreen_css" handle={screen}>
-        <SideNavBar chartData={datab} id="bar" screen={screen}/>
+        <SideNavBar chartData={datab} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod}/>
         <Bar data={datab} id="bar"  options={{
             legend:
             {
@@ -237,10 +237,11 @@ const BarGraph = ({indicatorBar, graphTitle,
             }
         
         const screen=useFullScreenHandle();
+        let title=graphTitle +', '+barGUnit;
         return (
           <>
             <FullScreen  className="fullscreen_css" handle={screen}>
-            <SideNavBar chartData={datab} id="bar" screen={screen}/>
+            <SideNavBar chartData={datab} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod}/>
             <Bar data={datab} id="bar" options={{
                 legend:
                 {

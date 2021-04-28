@@ -1,5 +1,4 @@
 import React, {useState,useEffect,useCallback} from "react";
-import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Popup from "../Popup/Popup";
 import { saveAs } from 'file-saver'; 
@@ -12,20 +11,33 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import "./SideNavBar.css";
 import Share  from "../../components/Share/Share";
 import { CSVLink } from "react-csv";
+import MenuIcon from '@material-ui/icons/Menu';
+import html2canvas from "html2canvas";
+import jsPDF from 'jspdf';
 
-
-const SideNavBar = ({chartData,id,screen}) => {
+const SideNavBar = ({chartData,id,screen,title,timePeriod}) => {
 
   //table details
   let table=[];
-  for(var i=0;i<chartData.labels.length;i++){
-    table.push({
-       label:chartData.labels[i],
-       data:+chartData.datasets[0].data[i],
- 
-    })
+  if(timePeriod==-1){
+    for(var i=0;i<chartData.labels.length;i++){
+      table.push({
+        area:chartData.labels[i],
+        data:+chartData.datasets[0].data[i],
+  
+      })
+    }
   }
-  console.log(table,'table');
+  else{
+    for(var i=0;i<chartData.labels.length;i++){
+      if(chartData.datasets[0].data[i]){
+        table.push({
+            area:chartData.labels[i].split(";")[0],
+            data:+chartData.datasets[0].data[i]+" ("+timePeriod+")",
+        })
+      }  
+    }
+  }  
 
   const [isOpen, setIsOpen] = useState(false);
   const togglePopup = () => {
@@ -79,10 +91,13 @@ const SideNavBar = ({chartData,id,screen}) => {
   } 
   // save to pdf
   const savePdf=()=>{
-    const canvasSave = document.getElementById(id);
-    canvasSave.toBlob(function (blob) {
-          saveAs(blob, "chart.pdf")
-    })
+    let input = window.document.getElementById(id);
+    html2canvas(input).then(canvas => {
+      const img = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("l", "pt", [500, 300]);
+      pdf.addImage(img,"png",0,0);
+      pdf.save("chart.pdf");
+    });
   } 
 
   const [isOpenTable, setIsOpenTable] = useState(false);
@@ -94,26 +109,31 @@ const SideNavBar = ({chartData,id,screen}) => {
       <div>
         {isOpenTable && <Popup
           content={<>
-              <BootstrapTable data={ table } >
-                  <TableHeaderColumn dataField='label' isKey dataSort>Time Period</TableHeaderColumn>
-                  <TableHeaderColumn dataField='data'>Data</TableHeaderColumn>
+              <div id="title">{title}</div>
+              <BootstrapTable data={ table } 
+                hover 
+                search
+                headerStyle={ { background:'#ECECEC' } }
+              >
+                <TableHeaderColumn dataField='area' isKey dataSort >Time Period</TableHeaderColumn>
+                <TableHeaderColumn dataField='data' >Data</TableHeaderColumn>
               </BootstrapTable> 
           </>}
           handleClose={toggleTablePopup}
         />}
 
         {isOpen && <Popup
-          content={<>
+          content={<div className="container">
             <CSVLink 
               data={table}
               filename="chart.csv"
               target="_blank"
-            ><button>csv</button></CSVLink>
-            <button onClick={saveJpeg}>jpeg</button>
-            <button onClick={savePng}>png</button>
-            <button onClick={saveSvg}>svg</button>
-            <button onClick={savePdf}>pdf</button>
-          </>}
+            ><button id="btn">csv</button></CSVLink>
+            <button onClick={saveJpeg} id="btn">jpeg</button>
+            <button onClick={savePng} id="btn">png</button>
+            <button onClick={saveSvg} id="btn">svg</button>
+            <button onClick={savePdf} id="btn">pdf</button>
+          </div>}
           handleClose={togglePopup}
         />}
 
@@ -124,26 +144,23 @@ const SideNavBar = ({chartData,id,screen}) => {
           handleClose={toggleShare}
         />}
 
-        <DropdownButton
-          style={{float:'right'}}
-          key="left"
-          size="sm"
-          id="dropdown-button-drop-left"
-          drop="left"
-          variant="light"
-          title=""
-        >
-          <Dropdown.Item onClick={togglePopup} eventKey="1"><GetAppIcon/> Download</Dropdown.Item>
-          <Dropdown.Item onClick={()=>{
-            if(flag){
-              screen.enter();
-              toggleDropDownItem();
-            }
-            else exitFullScreen();
-          }} eventKey="2">{image} {text}</Dropdown.Item>
-          <Dropdown.Item onClick={toggleTablePopup} eventKey="3"><TableChartIcon/> Table</Dropdown.Item>
-          <Dropdown.Item onClick={toggleShare} eventKey="4"><ShareIcon/> Share </Dropdown.Item>
-        </DropdownButton>          
+        <Dropdown  style={{float:'right'}}>
+          <Dropdown.Toggle variant="link" bsPrefix="p-0">
+            <MenuIcon id="icon"/>
+          </Dropdown.Toggle>
+          <Dropdown.Menu align="right">
+            <Dropdown.Item onClick={togglePopup} eventKey="1"  style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
+            <Dropdown.Item onClick={()=>{
+              if(flag){
+                screen.enter();
+                toggleDropDownItem();
+              }
+              else exitFullScreen();
+            }} eventKey="2"  style={{fontSize:'15px'}}>{image} {text}</Dropdown.Item>
+            <Dropdown.Item onClick={toggleTablePopup} eventKey="3"  style={{fontSize:'15px'}}><TableChartIcon  style={{fontSize:'20px'}}/> Table</Dropdown.Item>
+            <Dropdown.Item onClick={toggleShare} eventKey="4"  style={{fontSize:'15px'}}><ShareIcon  style={{fontSize:'20px'}}/> Share </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     )
 }

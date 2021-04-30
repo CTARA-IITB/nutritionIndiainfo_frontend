@@ -10,7 +10,6 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import Share  from "../../components/Share/Share";
 import {saveSvgAsPng,svgAsPngUri}  from 'save-svg-as-png';
 import jsPDF from 'jspdf';
-
 import { CSVLink } from "react-csv";
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -58,6 +57,45 @@ const MapSideNavBar = ({mapData,screen,mapTitle,timePeriod})=>{
             screen.exit();
         }
     }
+
+    // var svgNS = "http://www.w3.org/2000/svg";  
+    // var outer = document.getElementById('map');
+
+    // // get map content
+    // var map = document.getElementById('map-div');
+    // if(map.getElementsByTagName('svg')[0])
+    //     var mapSvg = map.getElementsByTagName('svg')[0];
+    // var mapContent = Array.from(mapSvg.childNodes);
+
+    // // get legend content
+    // var legend = document.getElementById('legend-div');
+    // var legendSvg = legend.getElementsByTagName('svg')[0];
+    // var legendContent = Array.from(legendSvg.childNodes);
+
+    // // create a merged-div where we are going to merge the svgs
+    // var merged = document.createElement('div');
+    // merged.setAttribute('id', 'merged-div');
+    // outer.appendChild(merged);
+
+    // // createElementNS for svg
+    // var mergedSvg = document.createElementNS(svgNS, 'svg');
+    // mergedSvg.setAttribute('id', 'merged');
+    // // keep the viewBox of the chart
+    // mergedSvg.setAttribute('viewBox', mapSvg.getAttribute('viewBox'));
+    // merged.appendChild(mergedSvg);
+
+    // // adding the content of both svgs
+    // for (let i = 0; i < mapContent.length; i++) {
+    //     mergedSvg.appendChild(mapContent[i]);
+    // }
+    // for (let i = 0; i < legendContent.length; i++) {
+    //     mergedSvg.appendChild(legendContent[i]);
+    // }
+      
+    // // the unmerged svgs can be removed
+    // map.remove();
+    // legend.remove();
+
     // map download details
     const mapOptions = {
         scale: 10,

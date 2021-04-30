@@ -532,12 +532,12 @@ export const Map = ({
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
       <MapSideNavBar mapData={data} map={map} screen={screen} mapTitle={mapTitle} timePeriod={graphTimeperiod}/>
-      <div className="map">
+      <div id="map" className="map">
       <div className="map_area">
       <div className="map_title">
         <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
       </div>
-      <div className="map_svg" ref={wrapperRef}>
+      <div id="map-div" className="map_svg" ref={wrapperRef}>
         <svg id="svgMap" className="svg-map" ref={svgRef} ></svg>
       </div>
       
@@ -552,7 +552,7 @@ export const Map = ({
       {/* <div className="map__requirements__switch">
               {burdenButton}  
             </div> */}
-      <div className="map_req_legend">
+      <div id="legend-div" className="map_req_legend">
         <svg id="svgLegend" className="svg-legend" ref={svgLegRef}></svg>
       </div>
       <div className="map_req_text">

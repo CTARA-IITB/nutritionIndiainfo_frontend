@@ -212,7 +212,6 @@ export const Dropdown = ({}) =>{
 
             // const body_1 = await url.json()
             const solr_body_1 = await solr_url.json()
-            console.log(solr_body_1.response.docs)
 
               setTimeperiodDropdownOpt(solr_body_1.response.docs);
               let flag = false;
@@ -435,7 +434,8 @@ export const Dropdown = ({}) =>{
         else{
           burdenButton= null;
         }
-        console.log("burdenButton", burdenButton, selIndicator);
+
+
     return (
       <>
       <Row className=' mt-3 mb-3'>
@@ -527,7 +527,7 @@ export const Dropdown = ({}) =>{
             </div>
     </div> */}
 
-<div class="layout">
+<div class="layout" id="layoutid">
    <div class="layout_left">
      <div class="layout_left_map">
            <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>

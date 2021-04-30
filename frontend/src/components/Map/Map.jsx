@@ -205,7 +205,6 @@ export const Map = ({
       c2Value = d => d.dataValueNum; 
       c1Value = d => d.data_value_num; 
     }
-    console.log("toggleStateBurden", toggleStateBurden, c2Value, c1Value);
      
      let color_range = _.map(data, d => {
           return +c1Value(d)

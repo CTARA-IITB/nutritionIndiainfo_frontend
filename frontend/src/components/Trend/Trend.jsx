@@ -100,6 +100,12 @@ let yAxis = (
     y2={innerHeight}
     stroke="#E5E5E5"
   ></line>)
+
+  let heading = (
+    <text x={width/2 -200} style={{ textAnchor: 'start',fontSize:"13",fontWeight:"bold" }}> 
+    
+    {graphTitle},  {graphUnit}, {areaName}</text>
+  )
     
   return (
     <svg width={width} height={height}>
@@ -107,7 +113,7 @@ let yAxis = (
         transform={`translate(${margin.left},${margin.top})`}
       >
         <path d={lineGenerator(data)}></path>							// Draw line Graph
-        
+        {heading}
         
         {xAxis} 					//Draw x axis line
         {yAxis} 					//Draw y axis line

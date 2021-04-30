@@ -596,7 +596,7 @@ export const Dropdown = ({}) =>{
      </div>
    </div>
     <div class="layout_right">
-      <div class="layout_right_trend">
+      <div class="layout_right_trend" >
       <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
       <FullScreen  className="fullscreen_css" handle={screen2}>
       {isSelected?
@@ -605,6 +605,7 @@ export const Dropdown = ({}) =>{
       graphSubgroup = {graphSubgroup}
       graphUnit = {graphUnit}
       areaName = {areaName}
+      graphTimeperiod = {graphTimeperiod}
       toggleStateBurden = {toggleStateBurden}/>: null}
       </FullScreen>
       </div>
@@ -617,7 +618,6 @@ export const Dropdown = ({}) =>{
       selTimeperiod = {selTimeperiod}
       selArea = {selArea}
       graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}
       areaName = {areaName}
       toggleStateBurden = {toggleStateBurden}/>: null}

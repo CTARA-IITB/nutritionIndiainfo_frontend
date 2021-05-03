@@ -18,7 +18,7 @@ const margin = {
   left: 100,
   top: 80,
   right: 50,
-  bottom: 100,
+  bottom: 150,
 };
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName, toggleStateBurden}) => { 
   const [data, setData] = useState(null);
@@ -185,7 +185,8 @@ let yAxis = (
           />
             <text x={xScale(d.middle_date)} 							//lable on top of bar
                  	y={yScale(yValue(d))}							
-              		style={{ textAnchor: 'middle',fontSize:'12' }}
+                  style={{ textAnchor: 'middle',fontSize:(width * 0.0009) + "em" }}
+
               		dy="-.2em"
               >{d.timeperiod}</text>
           </g>

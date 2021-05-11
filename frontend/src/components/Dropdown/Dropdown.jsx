@@ -6,7 +6,7 @@ import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns }
 import { useParams } from "react-router-dom";
 import Cards  from "../../components/Cards/Cards";
 import {Trend}  from "../../components/Trend/Trend";
-import {BarGraph, BarGraphArea}  from "../../components/BarGraph/BarGraph";
+import {BarGraph}  from "../../components/BarGraph/BarGraph";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
@@ -14,6 +14,9 @@ import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import arrow_fullscreen from './arrow_fullscreen.svg';
 import { Switch } from 'antd';
+import Bar from "../../components/Bar/Bar";
+
+
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   let { id } = useParams();
@@ -99,11 +102,12 @@ export const Dropdown = ({}) =>{
       {
         setIsSelected(false);
         setToggleState(true);
+        setToggleStateBurden(true);
         let subVal = '6';
         //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
         await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
         let timeVal = selTimeperiod;
-        const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
+        const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv3/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
         // const body_2 = await url_2.json();
         const solr_body_2 = await solr_url.json();
         // console.log(body_2);
@@ -121,7 +125,7 @@ export const Dropdown = ({}) =>{
 
       useEffect(() => {
         // const url_4 = 'http://13.234.11.176/api/area';
-        const solr_url_4 = 'http://nutritionindia.communitygis.net:8983/solr/nutritionV2/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
+        const solr_url_4 = 'http://nutritionindia.communitygis.net:8983/solr/nutritionv3/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
         json(solr_url_4).then( options =>{
         const [country,statesID] = createHierarchy(options.response.docs);
         setStateID(statesID)
@@ -200,18 +204,17 @@ export const Dropdown = ({}) =>{
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${parentArea}`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv3/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${parentArea}`);
 
             }
             else{
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv3/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
             }
 
 
             // const body_1 = await url.json()
             const solr_body_1 = await solr_url.json()
-            console.log(solr_body_1.response.docs)
 
               setTimeperiodDropdownOpt(solr_body_1.response.docs);
               let flag = false;
@@ -229,7 +232,7 @@ export const Dropdown = ({}) =>{
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
-            const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionV2/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+            const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv3/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
 
             // const body_3 = await url_3.json()
             const solr_body_3 = await solr_url_3.json()
@@ -332,12 +335,12 @@ export const Dropdown = ({}) =>{
           let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(levelThree){
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${areaParentId}`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv3/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${areaParentId}`);
 
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
             }
             else{
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionV2/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv3/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}`);
 
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
 
@@ -435,6 +438,7 @@ export const Dropdown = ({}) =>{
           burdenButton= null;
         }
 
+
     return (
       <>
       <Row className=' mt-3 mb-3'>
@@ -526,11 +530,9 @@ export const Dropdown = ({}) =>{
             </div>
     </div> */}
 
-<div class="layout">
-   <div class="layout_left">
-     <div class="layout_left_map">
-           {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen1.enter} /></button>
-      <FullScreen  className="fullscreen_css" handle={screen1} onChange={checkchange}> */}
+<div class="layout" id="layoutid">
+  <div class="layout_left">
+      <div class="layout_left_map">
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -570,11 +572,9 @@ export const Dropdown = ({}) =>{
           changeBurdenText={changeBurdenText}
           map={map}
           /> : null}
-          {/* </FullScreen> */}
-     </div>
-     <div class="layout_left_bar1">
-     {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen3.enter} /></button>
-      <FullScreen className="fullscreen_css" handle={screen3}> */}
+      </div>
+      
+     {/* <div class="layout_left_bar1">
       {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
       graphTitle = {graphTitle}
@@ -591,45 +591,44 @@ export const Dropdown = ({}) =>{
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}/>: null}
-      {/* </FullScreen> */}
-     </div>
+     </div> */}
+     <div class="layout_left_bar1">
+     {isSelected? <Bar
+      graphTitle = {graphTitle}
+      graphTimeperiod = {graphTimeperiod}
+      graphUnit = {graphUnit}
+      selIndiaData={selIndiaData} 
+      level={level} 
+      selArea={selArea} 
+      selStateData = {selStateData}
+      toggleStateBurden = {toggleStateBurden}/>: null}
+      </div>
    </div>
     <div class="layout_right">
-      <div class="layout_right_trend">
-      {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen2.enter} /></button>
-      <FullScreen  className="fullscreen_css" handle={screen2}> */}
+      <div class="layout_right_trend" >
       {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphSubgroup = {graphSubgroup}
       graphUnit = {graphUnit}
       areaName = {areaName}
+      graphTimeperiod = {graphTimeperiod}
       toggleStateBurden = {toggleStateBurden}/>: null}
-      {/* </FullScreen> */}
       </div>
      <div class="layout_right_bar2">
-     {/* <button className="button_fullscreen_trend"><img src={arrow_fullscreen} alt="image" onClick={screen4.enter} /></button>
-      <FullScreen className="fullscreen_css" handle={screen4}> */}
       {isSelected? <BarGraph indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
       selArea = {selArea}
+      graphTimeperiod={graphTimeperiod}
       graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}
       areaName = {areaName}
       toggleStateBurden = {toggleStateBurden}/>: null}
-      {/* </FullScreen> */}
      </div>
     </div>
-  </div>
-
- 
-
-      
-     
-     
+  </div>   
    </>
     )
 }

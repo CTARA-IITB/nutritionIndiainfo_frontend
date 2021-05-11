@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, {useRef} from "react";
 import {Bar} from 'react-chartjs-2';
-import SideNavBar from "../SideNavBar/SideNavBar";
+import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "./BarFullScreen.css";
-import 'chartjs-plugin-datalabels';
-
-
+import PrintComponents from "react-print-components";
 
 const BarGraph = ({indicatorBar, graphTitle, 
   graphTimeperiod, graphUnit, areaName, toggleStateBurden}) => { 
       
+    const componentRef = useRef();
+   
     let barLabel=[];
     let barData=[];
     let datab = [];
@@ -69,11 +69,13 @@ const BarGraph = ({indicatorBar, graphTitle,
       }
     const screen=useFullScreenHandle();  
     let title=graphTitle +', '+barUnit
+    
     return (
       <>
+        
         <FullScreen  className="fullscreen_css" handle={screen}>
-        <SideNavBar chartData={datab} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod}/>
-        <Bar data={datab} id="bar"  options={{
+        <SideNavSecond chartData={datab} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef}/>
+        <Bar data={datab} ref={componentRef} id="bar"  options={{
             legend:
             {
               display: false,
@@ -147,6 +149,8 @@ const BarGraph = ({indicatorBar, graphTitle,
       unit,unitName,selArea,selIndicator,indicatorSense, 
       isLevelThree,selTimeperiod,areaName,
       selStateData, toggleStateBurden}) => { 
+
+        const componentRef = useRef();
 
         let barLabel=[];
         let barData=[];
@@ -240,9 +244,10 @@ const BarGraph = ({indicatorBar, graphTitle,
         let title=graphTitle +', '+barGUnit;
         return (
           <>
+            
             <FullScreen  className="fullscreen_css" handle={screen}>
-            <SideNavBar chartData={datab} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod}/>
-            <Bar data={datab} id="bar" options={{
+            <SideNavSecond chartData={datab} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
+            <Bar  data={datab} ref={componentRef} id="bar" options={{
                 legend:
                 {
                   display: false,
@@ -282,7 +287,7 @@ const BarGraph = ({indicatorBar, graphTitle,
                   }]
                 }
               }}
-            />   
+            />  
           </FullScreen>  
           </>   
             )

@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 // import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
@@ -9,7 +10,7 @@ import { geoMercator, format, geoPath, scaleQuantize, scaleThreshold,extent, sel
 import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
-import MapSideNavBar from "../SideNavBar/MapSideNavBar";
+import SideNavFirst from "../SideNav/SideNavFirst";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
@@ -527,18 +528,27 @@ export const Map = ({
       }
     }
   }
- 
+  let table=[];
+  if(data){
+    for(var i=0;i<data.length;i++){
+        table.push({
+            area:data[i].area_name,
+            data:+data[i].data_value+" ("+graphTimeperiod + ")",
+        })
+    }
+  }
+
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
-      <MapSideNavBar mapData={data} map={map} screen={screen} mapTitle={mapTitle} timePeriod={graphTimeperiod}/>
-      <div id="map" className="map">
+      <SideNavFirst table={table} dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
+      <div className="map">
       <div className="map_area">
       <div className="map_title">
         <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
       </div>
-      <div id="map-div" className="map_svg" ref={wrapperRef}>
-        <svg id="svgMap" className="svg-map" ref={svgRef} ></svg>
+      <div className="map_svg" ref={wrapperRef}>
+        <svg  id="svgMap" className="svg-map" ref={svgRef} ></svg>
       </div>
       
     </div>
@@ -552,7 +562,7 @@ export const Map = ({
       {/* <div className="map__requirements__switch">
               {burdenButton}  
             </div> */}
-      <div id="legend-div" className="map_req_legend">
+      <div className="map_req_legend">
         <svg id="svgLegend" className="svg-legend" ref={svgLegRef}></svg>
       </div>
       <div className="map_req_text">
@@ -578,9 +588,8 @@ export const Map = ({
           </div>
      
         </div>
-
       </div> */}
     </FullScreen>  
     </>
   )
-};
+};    

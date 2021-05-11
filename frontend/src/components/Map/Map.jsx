@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 // import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
@@ -9,9 +10,10 @@ import { geoMercator, format, geoPath, scaleQuantize, scaleThreshold,extent, sel
 import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
+import SideNavFirst from "../SideNav/SideNavFirst";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
-
 import "./Map.css";
 
 
@@ -34,7 +36,7 @@ export const Map = ({
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
   selStateData, setSelStateData, selDistrictsData, areaChange,
   graphTitle,graphTimeperiod,graphUnit,
-  toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText
+  toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map
 
 }) => {
   let geometry = boundaries.new_state;
@@ -177,8 +179,6 @@ export const Map = ({
   }
   }
 
-
-
   let tooltip = select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
@@ -195,20 +195,18 @@ export const Map = ({
  
 
     let c2Value;
-    let c1Value;
     if (toggleStateBurden === true) 
     {
       c2Value = d => d.dataValue;
-      c1Value = d => d.data_value;
     }
     else{
       c2Value = d => d.dataValueNum; 
-      c1Value = d => d.data_value_num; 
     }
-     
-     let color_range = _.map(data, d => {
-          return +c1Value(d)
-        });
+
+
+    let color_range = _.map(data, d => {
+      return +d.data_value_num
+    });
     
     let sum = color_range.reduce(function(a, b){
       return a + b;
@@ -272,7 +270,7 @@ export const Map = ({
       }
     };
     // if(unit !== 2)
-    if (toggleStateBurden === true && unit !== 2)
+    if (toggleStateBurden === true)
     {  
     svg.selectAll("*").remove();
     svg
@@ -410,13 +408,14 @@ export const Map = ({
         let p = d.properties.AREA_ / (width_d * height_d);
         let p_ = d.properties.AREA_
         // let n = d.dataValue / (dotVal);
-        let n = c2Value(d) / (dotVal);
+        let n = d.dataValueNum / (dotVal);
 
-        if(dotVal >c2Value(d))
+        if(dotVal > d.dataValueNum)
         {
           n = 1;
         }
-        if (typeof c2Value(d) !== 'undefined' && c2Value(d) > 0 && isFinite(width_d) && isFinite(height_d))
+        if (typeof d.dataValueNum !== 'undefined' && d.dataValueNum > 0 
+&& isFinite(width_d) && isFinite(height_d))
 
         {
         var points = createPoints(width_d, height_d, p_, n);
@@ -458,7 +457,7 @@ export const Map = ({
       .attr("transform", "translate(20,20)")
 
     let formatter;
-    if (toggleStateBurden === true && unit !== 2) {
+    if (toggleStateBurden === true) {
       //formatter = format(',.0f');
       formatter = format('.2s');
     }
@@ -468,7 +467,7 @@ export const Map = ({
 
     let myLegend;
    
-    if (toggleStateBurden === false || unit === 2) 
+    if (toggleStateBurden === false) 
     {
       legend.select(".legendQuant").append('text').text("1 dot =" + dotVal);
     }
@@ -515,16 +514,42 @@ export const Map = ({
     burdenButton= null;
   } */
 
+  const screen = useFullScreenHandle();
+
+  const checkchange = (state,handle)=>{
+    if(map){
+      if(state === true){
+        map[0].style.height = "100vh";
+      }
+      else if(state === false){
+        if(map[0] != undefined)
+        map[0].style.height = "50vh";
+        // map[0].style.height = "50vh";
+      }
+    }
+  }
+  let table=[];
+  if(data){
+    for(var i=0;i<data.length;i++){
+        table.push({
+            area:data[i].area_name,
+            data:+data[i].data_value+" ("+graphTimeperiod + ")",
+        })
+    }
+  }
+
   return (
     <>
+      <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
+      <SideNavFirst table={table} dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
       <div className="map">
       <div className="map_area">
       <div className="map_title">
         <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
       </div>
-    <div className="map_svg" ref={wrapperRef}>
-    <svg className="svg-map" ref={svgRef} ></svg>
-    </div>
+      <div className="map_svg" ref={wrapperRef}>
+        <svg  id="svgMap" className="svg-map" ref={svgRef} ></svg>
+      </div>
       
     </div>
     {/* <div class="map_svg" ref={wrapperRef}>
@@ -538,12 +563,10 @@ export const Map = ({
               {burdenButton}  
             </div> */}
       <div className="map_req_legend">
-      <svg className="svg-legend" ref={svgLegRef}></svg>
-
+        <svg id="svgLegend" className="svg-legend" ref={svgLegRef}></svg>
       </div>
       <div className="map_req_text">
           <div id="info-msg" className="msg"></div>
-
       </div>
     </div>
   </div>
@@ -565,9 +588,8 @@ export const Map = ({
           </div>
      
         </div>
-
       </div> */}
-
+    </FullScreen>  
     </>
   )
-};
+};    

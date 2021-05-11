@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import SideNavFirst from "../SideNav/SideNavFirst";
 import "./Trend.css";
 import {
   scaleLinear,
@@ -11,8 +13,6 @@ import {
   select
 } from 'd3';
 
-const width = window.screen.width/2;
-const height = window.screen.height/2;
 const tickLength = 8;
 const margin = {
   left: 100,
@@ -21,7 +21,14 @@ const margin = {
   bottom: 150,
 };
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName, toggleStateBurden}) => { 
+
+  const componentRef = useRef();
   const [data, setData] = useState(null);
+  const [height,setHeight] = useState(window.screen.width/2);
+  const [width,setWidth] = useState(window.screen.height/2);
+  const [check,setCheck] = useState(true);
+  const screen = useFullScreenHandle();
+
   const parseTime = timeParse('%d %b %y');
 	 let tooltip2 = select("body").append("div")
     .attr("class", "tooltip2")
@@ -31,6 +38,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
     const formatTooltipTime = timeFormat('%B-%Y');
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
+
   useEffect(() => {
       let cleanData = [];
       indicatorTrend.map((d) => {
@@ -66,7 +74,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
   let max_day = max_d.getDate();
   let max_date = new Date(max_year, max_month+6, max_day);
 
-  const xScale = scaleTime()
+const xScale = scaleTime()
   .domain([min_date, max_date])
   .range([0, innerWidth]);
 
@@ -79,7 +87,6 @@ else
 const yScale = scaleLinear()
   .domain([0, max(data, d=>yValue(d))])
   .range([innerHeight, 0]);
-
 
 
 const lineGenerator = line()
@@ -110,11 +117,42 @@ let yAxis = (
     
     {graphTitle},  {graphUnit}, {areaName}</text>
   )
+  
+  let title=graphTitle+',  '+graphUnit+'('+graphSubgroup+')'
+  
+  const checkchange = ()=>{
+    if(data!='undefined'){
+        setHeight(window.screen.height);
+        setWidth(window.screen.width);
+        setCheck(!check)
+    }
     
-  return (
-    <svg width={width} height={height}>
-        {heading}
+  }
 
+  const setScreen = ()=>{
+    setHeight(window.screen.height/2);
+    setWidth(window.screen.width/2);
+    setCheck(!check)
+  }
+
+  let table=[];
+  if(data ){
+    for(var i=0;i<data.length;i++){
+      table.push({
+        timeperiod:data[i].timeperiod,
+        data:+data[i].data_value
+      })
+    }
+  }
+
+  return (
+    <>
+    <FullScreen  className="fullscreen_css" handle={screen}  onChange={()=>{
+      if(check)setScreen();
+      else checkchange(); 
+    }}>
+    <SideNavFirst table={table} dataField="timeperiod" columnName="Time Period" id="trend" screen={screen} title={title}  componentRef={componentRef}/>
+    <svg id="svgTrend" width={width} height={height} ref={componentRef}>
       <g
         transform={`translate(${margin.left},${margin.top})`}
       >
@@ -193,5 +231,7 @@ let yAxis = (
         ))}
       </g>
     </svg>
+    </FullScreen>
+    </>
   );
-     }
+}

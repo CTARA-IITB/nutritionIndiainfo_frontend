@@ -17,7 +17,8 @@ import { createHierarchy } from './utils';
 const App = ()=> {
 
     return(<> 
-        <Router> 
+    <Dropdown/>
+        {/* <Router> 
             <Navbar expand="lg">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -33,7 +34,7 @@ const App = ()=> {
                     <Route exact path="/" component= {Dropdown}/>
                     <Route path="/:id" component= {Dropdown}/>
                 </Switch> 
-            </Router>
+            </Router> */}
          
     </>);
   }

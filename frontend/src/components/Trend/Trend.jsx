@@ -13,8 +13,6 @@ import {
   select
 } from 'd3';
 
-// const width = window.screen.width/2;
-// const height = window.screen.height/2;
 const tickLength = 8;
 const margin = {
   left: 100,
@@ -26,14 +24,11 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
 
   const componentRef = useRef();
   const [data, setData] = useState(null);
-<<<<<<< HEAD
   const [height,setHeight] = useState(window.screen.width/2);
   const [width,setWidth] = useState(window.screen.height/2);
   const [check,setCheck] = useState(true);
   const screen = useFullScreenHandle();
 
-=======
->>>>>>> b7827d83d7440f2ab426b93b9a153061a59b0987
   const parseTime = timeParse('%d %b %y');
 	 let tooltip2 = select("body").append("div")
     .attr("class", "tooltip2")
@@ -94,9 +89,6 @@ const yScale = scaleLinear()
   .range([innerHeight, 0]);
 
 
-const xValue = d => d.middle_date;
-const yValue = d => d.data_value;
-
 const lineGenerator = line()
 .x(d => xScale(xValue(d)))
 .y(d => yScale(yValue(d)));
@@ -154,7 +146,6 @@ let yAxis = (
   }
 
   return (
-<<<<<<< HEAD
     <>
     <FullScreen  className="fullscreen_css" handle={screen}  onChange={()=>{
       if(check)setScreen();
@@ -162,11 +153,6 @@ let yAxis = (
     }}>
     <SideNavFirst table={table} dataField="timeperiod" columnName="Time Period" id="trend" screen={screen} title={title}  componentRef={componentRef}/>
     <svg id="svgTrend" width={width} height={height} ref={componentRef}>
-=======
-    <svg width={width} height={height}>
-        {heading}
-
->>>>>>> b7827d83d7440f2ab426b93b9a153061a59b0987
       <g
         transform={`translate(${margin.left},${margin.top})`}
       >

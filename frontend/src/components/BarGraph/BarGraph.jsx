@@ -3,10 +3,8 @@ import {Bar} from 'react-chartjs-2';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "./BarFullScreen.css";
-import PrintComponents from "react-print-components";
 
-const BarGraph = ({indicatorBar, graphTitle, 
-  graphTimeperiod, graphUnit, areaName, toggleStateBurden}) => { 
+const BarGraph = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaName, toggleStateBurden}) => { 
       
     const componentRef = useRef();
    
@@ -14,24 +12,22 @@ const BarGraph = ({indicatorBar, graphTitle,
     let barData=[];
     let datab = [];
     let barUnit = graphUnit;
-    if(toggleStateBurden === false)
-     {
+    if(toggleStateBurden === false){
           barUnit = 'Number';
     }
-      if(indicatorBar)
-      {
-        indicatorBar.map(i=>{
-          barLabel.push(i.subgroup_name+";"+i.sub_category)
-          if(toggleStateBurden == true)
-          {
+    if(indicatorBar){
+
+      indicatorBar.map(i=>{
+        barLabel.push(i.subgroup_name+";"+i.sub_category)
+        if(toggleStateBurden == true){
           barData.push(+i.data_value)
-          }
-          else{
-            barData.push(+i.data_value_num)
-          }
+        }
+        else{
+          barData.push(+i.data_value_num)
+        }
         })
-        var colors = []
-        for(var i = 0; i < barLabel.length; i++){
+      var colors = []
+      for(var i = 0; i < barLabel.length; i++){
           if(barLabel[i].split(";")[1] === 'null')
           {
             colors[i] = 'rgb(0,153,255)';
@@ -66,6 +62,14 @@ const BarGraph = ({indicatorBar, graphTitle,
               borderWidth: 1
               }]
         }
+
+      }
+      let table=[];
+      for(var i=0;i<barLabel.length;i++){
+        table.push({
+          area:barLabel[i].split(";")[0],
+          data:+barData[i]+" ("+graphTimeperiod+")",
+        })
       }
     const screen=useFullScreenHandle();  
     let title=graphTitle +', '+barUnit
@@ -74,7 +78,7 @@ const BarGraph = ({indicatorBar, graphTitle,
       <>
         
         <FullScreen  className="fullscreen_css" handle={screen}>
-        <SideNavSecond chartData={datab} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef}/>
+        <SideNavSecond table={table} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef}/>
         <Bar data={datab} ref={componentRef} id="bar"  options={{
             legend:
             {
@@ -239,6 +243,13 @@ const BarGraph = ({indicatorBar, graphTitle,
                   borderWidth: 1
                   }]
             }
+            let table=[];
+            for(var i=0;i<barLabel.length;i++){
+              table.push({
+                area:barLabel[i],
+                data:+barData[i]+" ("+graphTimeperiod+")",
+              })
+            }    
         
         const screen=useFullScreenHandle();
         let title=graphTitle +', '+barGUnit;
@@ -246,7 +257,7 @@ const BarGraph = ({indicatorBar, graphTitle,
           <>
             
             <FullScreen  className="fullscreen_css" handle={screen}>
-            <SideNavSecond chartData={datab} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
+            <SideNavSecond table={table} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
             <Bar  data={datab} ref={componentRef} id="bar" options={{
                 legend:
                 {

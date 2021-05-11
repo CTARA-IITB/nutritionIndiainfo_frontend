@@ -16,9 +16,7 @@ import jsPDF from 'jspdf';
 import PrintIcon from '@material-ui/icons/Print';
 import { useReactToPrint } from "react-to-print";
 
-
-
-const SideNavSecond = ({chartData,id,screen,title,timePeriod,componentRef}) => {
+const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const togglePopup = () => {
@@ -35,44 +33,18 @@ const SideNavSecond = ({chartData,id,screen,title,timePeriod,componentRef}) => {
     setIsOpenTable(!isOpenTable); 
   }
   
-  //table details
-  let table=[];
-  if(timePeriod==-1){
-    for(var i=0;i<chartData.length;i++){
-      table.push({
-        area:chartData.labels[i],
-        data:+chartData.data[i],
-  
-      })
-    }
-  }
-  else{
-    // for(var i=0;i<chartData.length;i++){
-    //   if(chartData.datasets[0].data[i]){
-    //     table.push({
-    //         area:chartData.labels[i].split(";")[0],
-    //         data:+chartData.datasets[0].data[i]+" ("+timePeriod+")",
-    //     })
-    //   }  
-    // }
-  }  
-
   //print
-  // const handlePrint = ()=>{
-  //   var prtContent = document.getElementById(id);
-  //   var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-  //   WinPrint.document.write(prtContent.innerHTML);
-  //   WinPrint.document.close();
-  //   WinPrint.focus();
-  //   WinPrint.print();
-  //   WinPrint.close();
-  // }
+  const handlePrint = ()=>{
+    var prtContent = document.getElementById(id);
+    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+    WinPrint.document.write(prtContent.innerHTML);
+    WinPrint.document.close();
+    WinPrint.focus();
+    WinPrint.print();
+    WinPrint.close();
+  }
 
-    const handlePrint = ()=>{
-      componentRef.print();
-    }
-    
-  
+     
   //save to png
   const savePng=()=>{
     const canvasSave = document.getElementById(id);

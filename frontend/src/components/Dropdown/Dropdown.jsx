@@ -6,7 +6,7 @@ import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns }
 import { useParams } from "react-router-dom";
 import Cards  from "../../components/Cards/Cards";
 import {Trend}  from "../../components/Trend/Trend";
-import {BarGraph}  from "../../components/BarGraph/BarGraph";
+import {BarGraph,BarGraphArea}  from "../../components/BarGraph/BarGraph";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
@@ -14,7 +14,7 @@ import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import arrow_fullscreen from './arrow_fullscreen.svg';
 import { Switch } from 'antd';
-import Bar from "../../components/Bar/Bar";
+
 
 
 const {Search} = Input;
@@ -574,7 +574,7 @@ export const Dropdown = ({}) =>{
           /> : null}
       </div>
       
-     {/* <div class="layout_left_bar1">
+     <div class="layout_left_bar1">
       {isSelected? <BarGraphArea 
       indicatorBar = {indicatorBar}
       graphTitle = {graphTitle}
@@ -591,18 +591,7 @@ export const Dropdown = ({}) =>{
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}/>: null}
-     </div> */}
-     <div class="layout_left_bar1">
-     {isSelected? <Bar
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      selArea={selArea} 
-      selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}/>: null}
-      </div>
+     </div>
    </div>
     <div class="layout_right">
       <div class="layout_right_trend" >

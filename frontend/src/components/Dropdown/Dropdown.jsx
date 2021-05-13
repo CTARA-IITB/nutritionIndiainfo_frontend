@@ -14,11 +14,14 @@ import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import arrow_fullscreen from './arrow_fullscreen.svg';
 import { Switch } from 'antd';
-
-
+import { useReactToPrint } from 'react-to-print';
+import BarChart from "../../components/Bar/BarChart";
+import BarClassComponent from "../Bar/BarClassComponent";
+import {Print} from "../Bar/Print";
 
 const {Search} = Input;
 export const Dropdown = ({}) =>{
+
   let { id } = useParams();
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
@@ -437,7 +440,7 @@ export const Dropdown = ({}) =>{
         else{
           burdenButton= null;
         }
-
+    
 
     return (
       <>
@@ -574,8 +577,44 @@ export const Dropdown = ({}) =>{
           /> : null}
       </div>
       
-     <div class="layout_left_bar1">
+     {/* <div class="layout_left_bar1">
       {isSelected? <BarGraphArea 
+      indicatorBar = {indicatorBar}
+      graphTitle = {graphTitle}
+      graphTimeperiod = {graphTimeperiod}
+      graphUnit = {graphUnit}
+      selIndiaData={selIndiaData} 
+      level={level} 
+      unit={unit} 
+      unitName={graphUnit} 
+      selArea={selArea} 
+      selIndicator={selIndicator}
+      isLevelThree = {isLevelThree}
+      selTimeperiod = {selTimeperiod}
+      areaName = {areaName}
+      selStateData = {selStateData}
+      toggleStateBurden = {toggleStateBurden}/>: null}
+     </div> */}
+     <div class="layout_left_bar1">
+     {isSelected? <BarClassComponent
+      indicatorBar = {indicatorBar}
+      graphTitle = {graphTitle}
+      graphTimeperiod = {graphTimeperiod}
+      graphUnit = {graphUnit}
+      selIndiaData={selIndiaData} 
+      level={level} 
+      unit={unit} 
+      unitName={graphUnit} 
+      selArea={selArea} 
+      selIndicator={selIndicator}
+      isLevelThree = {isLevelThree}
+      selTimeperiod = {selTimeperiod}
+      areaName = {areaName}
+      selStateData = {selStateData}
+      toggleStateBurden = {toggleStateBurden}/>: null}
+     </div>
+     <div class="layout_left_bar1">
+     {isSelected? <Print
       indicatorBar = {indicatorBar}
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}

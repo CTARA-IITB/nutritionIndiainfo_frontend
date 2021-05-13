@@ -34,15 +34,6 @@ export const Dropdown = ({}) =>{
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
 
-  const lifecycleData = [
-    { value: 1, title: "Adolescence" },
-    { value: 2, title: "Women of Reproductive Age" },
-    // { value: 3, title: "Pregnancy" },
-    // { value: 4, title: "Delivery PNC" },      
-    { value: 5, title: "Early childhood" },
-    { value: 6, title: "School age" },  
-    // { value: 7, title: "All" },               
-];
 
 
 const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
@@ -87,6 +78,42 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
 
+  const lifecycleData = [
+    { value: 1, title: "Adolescence" },
+    { value: 2, title: "Women of Reproductive Age" },
+    // { value: 3, title: "Pregnancy" },
+    // { value: 4, title: "Delivery PNC" },      
+    { value: 5, title: "Early childhood" },
+    { value: 6, title: "School age" },  
+    // { value: 7, title: "All" },               
+];
+
+useEffect(() => {
+  let categoryData = [];
+      if(selLifeycle === 1 || selLifeycle === 6){
+        setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
+      }else if(selLifeycle === 2){
+        setCategoryDropdownOpt([
+          { value: 1, title: "Manifestation" },
+          { value: 4, title: "Underlying Determinants" }            
+        ]);
+      }else if(selLifeycle === 3 || selLifeycle ===4){
+        setCategoryDropdownOpt([
+          { value: 2, title: "Interventions" },
+          { value: 3, title: "Immediate Determinants" },           
+        ]);
+      }else if(selLifeycle ===5){
+        setCategoryDropdownOpt([
+          { value: 1, title: "Manifestation" },
+          { value: 2, title: "Interventions" },
+          { value: 3, title: "Immediate Determinants" },
+        ])
+      }else if(selLifeycle ===7){
+        setCategoryDropdownOpt([
+          { value: 4, title: "Underlying Determinants" }            
+        ])
+      }
+}, [selLifeycle])
 
   
   // let boundaries;
@@ -125,30 +152,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       let subVal = '6';
       setLifecycleDropdownOpt(lifecycleData);
 
-      let categoryData = [];
-      if(selLifeycle === 1 || selLifeycle === 6){
-        setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
-      }else if(selLifeycle === 2){
-        setCategoryDropdownOpt([
-          { value: 1, title: "Manifestation" },
-          { value: 4, title: "Underlying Determinants" }            
-        ]);
-      }else if(selLifeycle === 3 || selLifeycle ===4){
-        setCategoryDropdownOpt([
-          { value: 2, title: "Interventions" },
-          { value: 3, title: "Immediate Determinants" },           
-        ]);
-      }else if(selLifeycle ===5){
-        setCategoryDropdownOpt([
-          { value: 1, title: "Manifestation" },
-          { value: 2, title: "Interventions" },
-          { value: 3, title: "Immediate Determinants" },
-        ])
-      }else if(selLifeycle ===7){
-        setCategoryDropdownOpt([
-          { value: 4, title: "Underlying Determinants" }            
-        ])
-      }
+      
   
       // setCategoryDropdownOpt(categoryData);
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)

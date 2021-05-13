@@ -6,18 +6,17 @@ import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns }
 import { useParams } from "react-router-dom";
 import Cards  from "../../components/Cards/Cards";
 import {Trend}  from "../../components/Trend/Trend";
-import {BarGraph,BarGraphArea}  from "../../components/BarGraph/BarGraph";
+//import {BarGraph,BarGraphArea}  from "../../components/BarGraph/BarGraph";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
 import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import arrow_fullscreen from './arrow_fullscreen.svg';
 import { Switch } from 'antd';
-import { useReactToPrint } from 'react-to-print';
-import BarChart from "../../components/Bar/BarChart";
-import BarClassComponent from "../Bar/BarClassComponent";
-import {Print} from "../Bar/Print";
+import {BarArea} from "../../components/Bar/BarArea";
+import {Bar} from "../../components/Bar/Bar";
+
+
 
 const {Search} = Input;
 export const Dropdown = ({}) =>{
@@ -576,57 +575,14 @@ export const Dropdown = ({}) =>{
           map={map}
           /> : null}
       </div>
-      
-     {/* <div class="layout_left_bar1">
-      {isSelected? <BarGraphArea 
-      indicatorBar = {indicatorBar}
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      unit={unit} 
-      unitName={graphUnit} 
-      selArea={selArea} 
-      selIndicator={selIndicator}
-      isLevelThree = {isLevelThree}
-      selTimeperiod = {selTimeperiod}
-      areaName = {areaName}
-      selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}/>: null}
-     </div> */}
      <div class="layout_left_bar1">
-     {isSelected? <BarClassComponent
-      indicatorBar = {indicatorBar}
+     {isSelected? <BarArea
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}
       selIndiaData={selIndiaData} 
       level={level} 
-      unit={unit} 
-      unitName={graphUnit} 
       selArea={selArea} 
-      selIndicator={selIndicator}
-      isLevelThree = {isLevelThree}
-      selTimeperiod = {selTimeperiod}
-      areaName = {areaName}
-      selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}/>: null}
-     </div>
-     <div class="layout_left_bar1">
-     {isSelected? <Print
-      indicatorBar = {indicatorBar}
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      unit={unit} 
-      unitName={graphUnit} 
-      selArea={selArea} 
-      selIndicator={selIndicator}
-      isLevelThree = {isLevelThree}
-      selTimeperiod = {selTimeperiod}
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}/>: null}
@@ -644,7 +600,7 @@ export const Dropdown = ({}) =>{
       toggleStateBurden = {toggleStateBurden}/>: null}
       </div>
      <div class="layout_right_bar2">
-      {isSelected? <BarGraph indicatorBar = {indicatorBar}
+      {isSelected? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}

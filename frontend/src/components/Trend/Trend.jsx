@@ -156,7 +156,7 @@ let yAxis = (
       <g
         transform={`translate(${margin.left},${margin.top})`}
       >
-        <path d={lineGenerator(data)}></path>							// Draw line Graph
+        <path className="trend-line"d={lineGenerator(data)}></path>							// Draw line Graph
         
         {xAxis} 					//Draw x axis line
         {yAxis} 					//Draw y axis line

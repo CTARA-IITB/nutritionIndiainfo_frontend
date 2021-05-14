@@ -29,7 +29,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
   const [check,setCheck] = useState(true);
   const screen = useFullScreenHandle();
 
-  const parseTime = timeParse('%d %b %y');
+  const parseTime = timeParse('%d-%b-%y');
 	 let tooltip2 = select("body").append("div")
     .attr("class", "tooltip2")
     .style("opacity", 0);
@@ -156,7 +156,7 @@ let yAxis = (
       <g
         transform={`translate(${margin.left},${margin.top})`}
       >
-        <path d={lineGenerator(data)}></path>							// Draw line Graph
+        <path className="trend-line"d={lineGenerator(data)}></path>							// Draw line Graph
         
         {xAxis} 					//Draw x axis line
         {yAxis} 					//Draw y axis line

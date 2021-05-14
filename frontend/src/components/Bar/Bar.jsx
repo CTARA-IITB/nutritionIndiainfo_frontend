@@ -15,7 +15,9 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
     let table=[];
     let options =[];
     let barUnit = graphUnit;
-    let title=graphTitle +', '+barUnit
+    let title=graphTitle +', '+barUnit;
+    let sortedBarData =[];
+    let sortedBarLabel = [];
 
     if(toggleStateBurden === false){
         barUnit = 'Number';
@@ -54,12 +56,47 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
             colors[i] = 'rgb(230,23,173)';
             }
         }
+
+        // table details
+        for(var i=0;i<barLabel.length;i++){
+            table.push({
+              area:barLabel[i].split(";")[0],
+              data:+barData[i],
+            })
+        }
+        // sort the table
+        const compareObjects=(object1, object2, key)=>{
+            const obj1 = object1.data
+            const obj2 = object2.data
+
+            if (obj1 < obj2) {
+            return -1
+            }
+            if (obj1 > obj2) {
+            return 1
+            }
+            return 0
+        }
+        table.sort((d1, d2) => {
+            return compareObjects(d1, d2,)
+        })
+        // reverse the table
+        table.reverse();
+
+        //sort label and data
+        for(var i=0;i<table.length;i++){
+
+            sortedBarLabel[i]=table[i].area;
+            sortedBarData[i]=table[i].data;
+            table[i].data += " ("+graphTimeperiod +")";
+        }   
+        
         data = {
-            labels:barLabel,
+            labels:sortedBarLabel,
             datasets: [{
                 label: [graphTitle, barUnit,graphTimeperiod],
-                data:barData,
-                xAxisID:'xAxis1',
+                data:sortedBarData,
+                yAxisID:'yAxis1',
                 backgroundColor: colors,
                 borderColor: '#ffffff',
                 borderWidth: 1
@@ -77,8 +114,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
               fontColor: "black",
             },
             scales: {
-                xAxes:[{
-                    id:'xAxis1',
+                yAxes:[{
+                    id:'yAxis1',
                     type:"category",
                     ticks:{
                         fontSize: 11,
@@ -93,7 +130,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
                     },
                 },
                 {
-                    id:'xAxis2',
+                    id:'yAxis2',
                     type:"category",
                     gridLines: {
                     drawOnChartArea: false, // only want the grid lines for one axis to show up
@@ -116,7 +153,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
                         drawOnChartArea:false
                     }
                 }],
-                yAxes: [{
+                xAxes: [{
                     ticks: {
                         fontSize: 8,
                         fontColor:"black",
@@ -130,12 +167,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
         }
     }
 
-    for(var i=0;i<barLabel.length;i++){
-      table.push({
-        area:barLabel[i].split(";")[0],
-        data:+barData[i]+" ("+graphTimeperiod+")",
-      })
-    }
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>

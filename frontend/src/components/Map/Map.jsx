@@ -541,7 +541,7 @@ export const Map = ({
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
-      <SideNavFirst table={table} dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
+      <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
       <div className="map">
       <div className="map_area">
       <div className="map_title">

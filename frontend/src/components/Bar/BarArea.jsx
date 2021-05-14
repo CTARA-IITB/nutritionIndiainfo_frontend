@@ -17,6 +17,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let color;
     let table=[];
     let title;
+    let sortedBarLabel =[];
+    let sortedBarData = [];
 
     if(selIndiaData && level=="1"){
 
@@ -62,12 +64,46 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     if(toggleStateBurden === false)
         barGUnit = 'Number';  
 
+    // table details    
+    for(var i=0;i<barLabel.length;i++){
+        table.push({
+            area:barLabel[i],
+            data:+barData[i],
+        })
+    }   
+    // sort the table
+    const compareObjects=(object1, object2, key)=>{
+        const obj1 = object1.data
+        const obj2 = object2.data
+
+        if (obj1 < obj2) {
+          return -1
+        }
+        if (obj1 > obj2) {
+          return 1
+        }
+        return 0
+    }
+    table.sort((d1, d2) => {
+        return compareObjects(d1, d2,)
+    })
+    // reverse the table
+    table.reverse();
+
+    //sort label and data
+    for(var i=0;i<table.length;i++){
+
+        sortedBarLabel[i]=table[i].area;
+        sortedBarData[i]=table[i].data;
+        table[i].data += " ("+graphTimeperiod +")";
+    }   
+
     data = {
-        labels:barLabel,
+        labels:sortedBarLabel,
         datasets: [{
             label: [graphTitle, barGUnit, graphTimeperiod],
-            data:barData,
-            xAxisID:'xAxis1',
+            data:sortedBarData,
+            yAxisID:'yAxis1',
             backgroundColor:color,
             borderColor: "rgb(142, 209, 25)",
             borderWidth: 1
@@ -83,8 +119,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             fontColor: "black",
         },
         scales: {
-            xAxes:[{
-                id:'xAxis1',
+            yAxes:[{
+                id:'yAxis1',
                 type:"category",
                 ticks:{
                     fontSize: 11,
@@ -98,7 +134,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     drawOnChartArea: false, // only want the grid lines for one axis to show up
                 },
             }],
-            yAxes: [{
+            xAxes: [{
                 ticks: {
                     fontSize: 7,
                     fontColor:"black",
@@ -110,14 +146,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             }]
         } 
     }
-
-    for(var i=0;i<barLabel.length;i++){
-        table.push({
-            area:barLabel[i],
-            data:+barData[i]+" ("+graphTimeperiod+")",
-        })
-    }   
-
+    // title of table
     title=graphTitle +', '+barGUnit; 
 
     return (

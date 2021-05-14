@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
+import {HorizontalBar} from 'react-chartjs-2';
 
 class BarComponent extends React.PureComponent {
 
@@ -8,7 +8,7 @@ class BarComponent extends React.PureComponent {
   render() {
     return (
         <div>
-            <Bar ref={this.componentRef} id="Bar" data={this.props.data} options={this.props.options}/>
+            <HorizontalBar ref={this.componentRef} id="Bar" data={this.props.data} options={this.props.options}/>
         </div>
     );
   }

@@ -14,7 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import PrintIcon from '@material-ui/icons/Print';
 import { useReactToPrint } from "react-to-print";
 
-const SideNavFirst = ({table,dataField,columnName,screen,title,componentRef})=>{
+const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})=>{
 
     
     const [isOpen, setIsOpen] = useState(false);
@@ -38,26 +38,26 @@ const SideNavFirst = ({table,dataField,columnName,screen,title,componentRef})=>{
     });
 
     // map download details
-    const mapOptions = {
+    const options = {
         scale: 10,
         encoderOptions: 1,
         backgroundColor: 'white',
     }
-   
+    
     const saveJpeg = () => {
-        saveSvgAsPng(document.getElementById('svgTrend'), 'map.jpeg', mapOptions);
+        saveSvgAsPng(document.getElementById(id), 'image.jpeg', options);
     };
 
     const savePng = () => {
-       saveSvgAsPng(document.getElementById('svgTrend'), 'map.png', mapOptions);
+       saveSvgAsPng(document.getElementById(id), 'image.png', options);
     };
 
     const saveSvg = () => {
-        saveSvgAsPng(document.getElementById('svgTrend'), 'map.svg', mapOptions);
+        saveSvgAsPng(document.getElementById(id), 'image.svg', options);
      };
 
     async function savePdf() {
-        const graph = document.getElementById('svg-chart');
+        const graph = document.getElementById(id);
         const pdf = new jsPDF("l", "pt", [500, 300]);
         const pdfCanvas = document.createElement("canvas");
         pdfCanvas.setAttribute("width", 900);
@@ -66,7 +66,7 @@ const SideNavFirst = ({table,dataField,columnName,screen,title,componentRef})=>{
         const dataURI = await svgAsPngUri(graph);
     
         pdf.addImage(dataURI, "PNG", 0, 0);
-        pdf.save("map.pdf");
+        pdf.save("image.pdf");
     }
 
     return(
@@ -97,7 +97,7 @@ const SideNavFirst = ({table,dataField,columnName,screen,title,componentRef})=>{
             content={<div className="container">
                 <CSVLink 
                     data={table}
-                    filename="map.csv"
+                    filename="image.csv"
                     target="_blank"
                 ><button id="btn">csv</button></CSVLink>
                 <button onClick={saveJpeg} id="btn">jpeg</button>

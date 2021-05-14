@@ -151,7 +151,7 @@ let yAxis = (
       if(check)setScreen();
       else checkchange(); 
     }}>
-    <SideNavFirst table={table} dataField="timeperiod" columnName="Time Period" id="trend" screen={screen} title={title}  componentRef={componentRef}/>
+    <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef}/>
     <svg id="svgTrend" width={width} height={height} ref={componentRef}>
       <g
         transform={`translate(${margin.left},${margin.top})`}

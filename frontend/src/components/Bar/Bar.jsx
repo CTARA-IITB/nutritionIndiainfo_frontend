@@ -1,138 +1,178 @@
-import React, { useRef, useEffect } from 'react';
-//import {axisBottom,axisLeft,select,max,scaleLinear,scaleBand,bandwidth, sort}from 'd3';
-import * as d3 from 'd3';
-import './Bar.css'
+import React, { useRef } from 'react';
+import BarComponent from './BarComponent';
+import SideNavSecond from "../SideNav/SideNavSecond";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
-const width = window.screen.width/2
-const height = window.screen.height/2
-const barSize = 8  
-const margin = {
-    left: 160,
-    top: 30,
-    right: 60,
-    bottom: 15,
-};
+export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaName, toggleStateBurden})=>{
 
-function Bar({ graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea, selStateData, toggleStateBurden}) {
-
-    const svgRef = useRef();
-
-    const innerHeight = height - margin.top - margin.bottom;
-    const innerWidth = width - margin.left - margin.right -165
-
+    const componentRef = useRef();
+    const screen=useFullScreenHandle();
+    
     let barLabel=[];
     let barData=[];
     let data = [];
-    let stateDataValue,stateAreaName;
+    var colors = [];
+    let table=[];
+    let options =[];
+    let barUnit = graphUnit;
+    let title=graphTitle +', '+barUnit;
+    let sortedBarData =[];
+    let sortedBarLabel = [];
 
-    if(selIndiaData && level=="1"){
+    if(toggleStateBurden === false){
+        barUnit = 'Number';
+    }
 
-        selIndiaData.map(i=>{
-            barLabel.push(i.area_name)
-            if(toggleStateBurden === true){
-                barData.push(+i.data_value)
-            }      
-            else{
-                barData.push(+i.data_value_num)
+    if(indicatorBar){
+        indicatorBar.map(i=>{
+            barLabel.push(i.subgroup_name+";"+i.sub_category)
+        if(toggleStateBurden == true){
+            barData.push(+i.data_value)
+        }
+        else{
+            barData.push(+i.data_value_num)
+        }
+        })
+    
+        for(var i = 0; i < barLabel.length; i++){
+            if(barLabel[i].split(";")[1] === 'null')
+            {
+            colors[i] = 'rgb(0,153,255)';
             }
-              
-        })
-    }        
-    if(selStateData && level=="2"){
-
-        for(let j=0;j<selIndiaData.length;j++){
-
-            if(+selArea===selIndiaData[j].area_id){ 
-
-                if(toggleStateBurden === true){
-                    stateDataValue=selIndiaData[j].data_value
-                }
-                else{
-                    stateDataValue=selIndiaData[j].data_value_num
-                }
-                stateAreaName=selIndiaData[j].area_name
-                barLabel.push(stateAreaName)
-                barData.push(stateDataValue)
-            }           
+            else  if(barLabel[i].split(";")[1] === 'Sex')
+            {
+            colors[i] = 'rgb(254,225,211)';
+            }
+            else  if(barLabel[i].split(";")[1] === 'Location')
+            {
+            colors[i] = 'rgb(251,161,167)';
+            }
+            else  if(barLabel[i].split(";")[1] === 'Caste')
+            {
+            colors[i] = 'rgb(247,104,161)';
+            }
+            else  if(barLabel[i].split(";")[1] === 'Wealth Index')
+            {
+            colors[i] = 'rgb(230,23,173)';
+            }
         }
-        selStateData.map(i=>{
-            barLabel.push(i.area_name)
-            if(toggleStateBurden === true)
-                barData.push(+i.data_value)
-            else
-                barData.push(+i.data_value_num)
+
+        // table details
+        for(var i=0;i<barLabel.length;i++){
+            table.push({
+              area:barLabel[i].split(";")[0],
+              data:+barData[i],
+            })
+        }
+        // sort the table
+        const compareObjects=(object1, object2, key)=>{
+            const obj1 = object1.data
+            const obj2 = object2.data
+
+            if (obj1 < obj2) {
+            return -1
+            }
+            if (obj1 > obj2) {
+            return 1
+            }
+            return 0
+        }
+        table.sort((d1, d2) => {
+            return compareObjects(d1, d2,)
         })
-    }           
-    let barGUnit = graphUnit;
-    
-    if(toggleStateBurden === false)
-        barGUnit = 'Number';
-          
-    for(var i=0;i<barLabel.length;i++){
-        data.push({
-            area:barLabel[i],
-            data:+barData[i],
-        })
+        // reverse the table
+        table.reverse();
+
+        //sort label and data
+        for(var i=0;i<table.length;i++){
+
+            sortedBarLabel[i]=table[i].area;
+            sortedBarData[i]=table[i].data;
+            table[i].data += " ("+graphTimeperiod +")";
+        }   
+        
+        data = {
+            labels:sortedBarLabel,
+            datasets: [{
+                label: [graphTitle, barUnit,graphTimeperiod],
+                data:sortedBarData,
+                yAxisID:'yAxis1',
+                backgroundColor: colors,
+                borderColor: '#ffffff',
+                borderWidth: 1
+            }] 
+        }
+
+        options={
+            legend:
+            {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: [graphTitle +','+ barUnit, areaName +', '+ graphTimeperiod],
+              fontColor: "black",
+            },
+            scales: {
+                yAxes:[{
+                    id:'yAxis1',
+                    type:"category",
+                    ticks:{
+                        fontSize: 11,
+                        fontColor: "black",
+                        callback:function(label){
+                            var subgroup = label.split(";")[0];
+                            return subgroup;
+                        }
+                    },
+                    gridLines: {
+                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                },
+                {
+                    id:'yAxis2',
+                    type:"category",
+                    gridLines: {
+                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                    ticks:{
+                        fontSize: 9,
+                        fontColor:"black",
+                        minRotation: 0,
+                        callback:function(label){
+                            var subgroup = label.split(";")[0];
+                            var type = label.split(";")[1];
+                            if(subgroup === "Rural" || subgroup === "Female"  || subgroup ==="ST" || subgroup === "Middle"){
+                            return type
+                            }
+                            else
+                            return ""
+                        }  
+                    },
+                    gridLines: {
+                        drawOnChartArea:false
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontSize: 8,
+                        fontColor:"black",
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        drawOnChartArea:false
+                    }
+                }]
+            }
+        }
     }
 
-    const compareObjects=(object1, object2, key)=>{
-        const obj1 = object1.data
-        const obj2 = object2.data
-      
-        if (obj1 < obj2) {
-          return -1
-        }
-        if (obj1 > obj2) {
-          return 1
-        }
-        return 0
-    }
-    data.sort((d1, d2) => {
-        return compareObjects(d1, d2,)
-    })
-      
-    //data.reverse();
-
-    useEffect(()=>{
-        const svg = d3.select(svgRef.current)
-
-        var x = d3.scaleLinear().range([0, innerWidth]);
-        var y = d3.scaleBand();
-
-        const g = svg.append('g')
-                    .attr('transform',`translate(${margin.left},${margin.top})`)
-
-        x.domain([0, d3.max(data, function(d) { return d.data; })]);
-        y.domain(data.map(function(d) { return d.area; })).padding(0.2)
-            .range([barSize*data.length, 0]);            
-
-
-        g.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + (barSize*data.length) + ")")
-            .call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d / 1000); }).tickSizeInner([-innerHeight]));
-    
-        g.append("g")
-            .attr("class", "y axis")
-            .call(d3.axisLeft(y));
-    
-        g.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", 0)
-            .attr("height", y.bandwidth())
-            .attr("y", function(d) { return y(d.area); })
-            //.attr("font-size",".5px")
-            .attr("width", function(d) { return x(d.data); })   
-    })
-    return (
+    return(
         <div>
-            <svg width={width} height={height+500} ref={svgRef}>
-               
-            </svg>
+            <FullScreen  className="fullscreen_css" handle={screen}>
+                <SideNavSecond table={table} id="Bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
+                <BarComponent ref={componentRef} id="Bar" data={data} options={options}/>
+            </FullScreen>    
         </div>
-    )
-}
-
-export default Bar
+    );
+};

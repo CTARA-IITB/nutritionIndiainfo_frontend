@@ -258,7 +258,7 @@ const BarGraph = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaName
             
             <FullScreen  className="fullscreen_css" handle={screen}>
             <SideNavSecond table={table} id="bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-            <Bar  data={datab} ref={componentRef} id="bar" options={{
+            <Bar  data={datab}  id="bar" options={{
                 legend:
                 {
                   display: false,

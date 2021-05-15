@@ -187,6 +187,7 @@ export const Map = ({
     const svg = select(svgRef.current);
     const legend = select(svgLegRef.current)
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
+    console.log(width,height)
     const projection = geoMercator().fitSize([width, height], geometry);
 
     const pathGenerator = geoPath(projection);
@@ -454,7 +455,8 @@ export const Map = ({
     legend.selectAll("*").remove();
     legend.append("g")
       .attr("class", "legendQuant")
-      .attr("transform", "translate(20,20)")
+      .attr("transform", `translate(700,20)`)
+      .attr("z-index",200)
 
     let formatter;
     if (toggleStateBurden === true) {
@@ -548,7 +550,9 @@ export const Map = ({
         <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
       </div>
       <div className="map_svg" ref={wrapperRef}>
-        <svg  id="svgMap" className="svg-map" ref={svgRef} ></svg>
+        <svg  width="100%" height="100%"  ref={svgRef} ></svg>
+        <svg  width="200%" height="30%" style={{float:"left"}}  ref={svgLegRef}></svg>
+
       </div>
       
     </div>
@@ -563,7 +567,7 @@ export const Map = ({
               {burdenButton}  
             </div> */}
       <div className="map_req_legend">
-        <svg id="svgLegend" className="svg-legend" ref={svgLegRef}></svg>
+        {/* <svg id="svgLegend" className="svg-legend" ref={svgLegRef}></svg> */}
       </div>
       <div className="map_req_text">
           <div id="info-msg" className="msg"></div>

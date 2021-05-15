@@ -142,25 +142,25 @@ button.ant-switch {
 .map_req{
   display:flex;
   flex-direction:column;
-  /* background-color:yellow; */
+  background-color:yellow;
   height:100%;
   width:30%;
   justify-content:flex-end;
   
 }
 .map_req_toggle{
-  /* background-color:blue; */
+  background-color:blue;
   height:20%;
   width:100%;
 }
 
-.map_req_legend{
-  /* background-color:red; */
+/* .map_req_legend{
+  background-color:red;
   height:40%;
   width:100%;
-}
+} */
 .map_req_text{
-  /* background-color:coral; */
+  background-color:coral;
   height:20%;
 }
 

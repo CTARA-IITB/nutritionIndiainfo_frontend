@@ -706,7 +706,7 @@ useEffect(() => {
           map={map}
           /> : null}
       </div>
-     <div class="layout_left_bar1">
+     {/* <div class="layout_left_bar1">
      {isSelected? <BarArea
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
@@ -717,9 +717,9 @@ useEffect(() => {
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}/>: null}
-     </div>
+     </div> */}
    </div>
-    <div class="layout_right">
+    {/* <div class="layout_right">
       <div class="layout_right_trend" >
       {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
@@ -742,7 +742,7 @@ useEffect(() => {
       areaName = {areaName}
       toggleStateBurden = {toggleStateBurden}/>: null}
      </div>
-    </div>
+    </div> */}
   </div>   
    </>
     )

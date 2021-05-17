@@ -185,7 +185,7 @@ export const Map = ({
 
   useEffect(() => {
     const svg = select(svgRef.current);
-    const legend = select(svgLegRef.current)
+    const legend = select(svgRef.current)
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
     console.log(width,height)
     const projection = geoMercator().fitSize([width, height], geometry);
@@ -452,11 +452,10 @@ export const Map = ({
       
     }
 
-    legend.selectAll("*").remove();
+    // legend.selectAll("*").remove();
     legend.append("g")
       .attr("class", "legendQuant")
-      .attr("transform", `translate(700,20)`)
-      .attr("z-index",200)
+        .attr("transform", `translate(${width - 140},${height-100})`)
 
     let formatter;
     if (toggleStateBurden === true) {
@@ -549,9 +548,13 @@ export const Map = ({
       <div className="map_title">
         <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
       </div>
-      <div className="map_svg" ref={wrapperRef}>
-        <svg  width="100%" height="100%"  ref={svgRef} ></svg>
-        <svg  width="200%" height="30%" style={{float:"left"}}  ref={svgLegRef}></svg>
+      <div  className="map_svg" ref={wrapperRef}>
+          <svg  id="svgMap" width="100%" height="100%"  ref={svgRef} >
+
+          </svg>
+
+          {/* <svg  width="100%" height="30%"  ref={svgLegRef}></svg> */}
+       
 
       </div>
       

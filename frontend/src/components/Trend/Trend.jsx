@@ -1,9 +1,9 @@
 import React, { useState, useEffect,useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import SideNavFirst from "../SideNav/SideNavFirst";
+
 import "./Trend.css";
 import {
-  json,
   scaleLinear,
   max,
   min,
@@ -23,17 +23,43 @@ const margin = {
   right: 50,
   bottom: 150,
 };
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName, toggleStateBurden}) => { 
+
+
+const useResizeObserver = ref => {
+  const [dimensions, setDimensions] = useState(null);
+  // console.log(typeof ref.current != 'undefined')
+  useEffect(() => {
+  if(typeof ref.current != 'undefined'){
+    const observeTarget = ref.current;
+
+    const resizeObserver = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        setDimensions(entry.contentRect);
+      });
+    });
+    resizeObserver.observe(observeTarget);
+    return () => {
+      resizeObserver.unobserve(observeTarget);
+    };
+  }
+
+  
+  }, [ref.current]);
+  return dimensions;
+};
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName, toggleStateBurden,trend}) => { 
 
   const componentRef = useRef();
 
   const [data, setData] = useState(null);
   const svgRef = useRef();
  
-  const [height,setHeight] = useState(window.screen.height/2);
-  const [width,setWidth] = useState(window.screen.width/2);
   const [check,setCheck] = useState(true);
 
+  const trendWrapper = useRef();
+  const dimensions = useResizeObserver(trendWrapper);
+  // console.log(trendWrapper)
+  // console.log(dimensions)
   const screen = useFullScreenHandle();
 
   const parseTime = timeParse('%d-%b-%y');
@@ -43,8 +69,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
   
     const formatTime = timeFormat('%b-%y');
     const formatTooltipTime = timeFormat('%B-%Y');
-    const innerHeight = height - margin.top - margin.bottom;
-    const innerWidth = width - margin.left - margin.right;
+    
 
   useEffect(() => {
       let cleanData = [];
@@ -61,6 +86,16 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
 
   useEffect(()=>{
     const svg = select(svgRef.current);
+
+    svg.selectAll("*").remove();
+
+    const { width, height } = dimensions||{width:window.screen.width/2,height:window.screen.height/2}; 
+    // const width =500;
+    // const height = 500;
+    // const { width, height } = [,]; 
+    // || trendWrapper.current.getBoundingClientRect();
+    const innerHeight = height - margin.top - margin.bottom;
+    const innerWidth = width - margin.left - margin.right;
     const bar = svg.attr("width", width)
     		.attr("height", height)
       	.append("g")
@@ -145,7 +180,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
    
    
       
-  },[data])
+  },[data,dimensions,trendWrapper.current])
 
 
 
@@ -155,20 +190,24 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
   let title=graphTitle+',  '+graphUnit+'('+graphSubgroup+')'
 
  
-  const checkchange = ()=>{
-    if(data!='undefined'){
-        setHeight(window.screen.height);
-        setWidth(window.screen.width);
-        setCheck(!check)
+  
+  const checkchange = (state,handle)=>{
+    if(trend){
+      if(state === true){
+        trend[0].style.height = "100vh";
+      }
+      else if(state === false){
+        if(trend[0] != undefined)
+        trend[0].style.height = "50vh";
+      }
     }
-    
   }
 
-  const setScreen = ()=>{
-    setHeight(window.screen.height/2);
-    setWidth(window.screen.width/2);
-    setCheck(!check)
-  }
+  // const setScreen = ()=>{
+  //   setHeight(window.screen.height/2);
+  //   setWidth(window.screen.width/2);
+  //   setCheck(!check)
+  // }
 
   let table=[];
   if(data ){
@@ -183,12 +222,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
 
   return (
     <>
-    <FullScreen  className="fullscreen_css" handle={screen}  onChange={()=>{
-      if(check)setScreen();
-      else checkchange(); 
-    }}>
+    <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef}/>
-    <svg id="svgTrend" ref = {svgRef}></svg>
+    <div className="trend">
+      <div className="trend_svg" ref={trendWrapper}>
+      <svg id="svgTrend" ref = {svgRef}></svg>
+    </div>
+
+    </div>
     </FullScreen>
     </>
   );

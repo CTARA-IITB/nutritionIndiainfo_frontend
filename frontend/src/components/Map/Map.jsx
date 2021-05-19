@@ -187,7 +187,6 @@ export const Map = ({
     const svg = select(svgRef.current);
     const legend = select(svgRef.current)
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
-    console.log(width,height)
     const projection = geoMercator().fitSize([width, height], geometry);
 
     const pathGenerator = geoPath(projection);

@@ -15,10 +15,10 @@ import {
 
 const tickLength = 8;
 const margin = {
-  left: 100,
-  top: 80,
-  right: 50,
-  bottom: 150,
+  left: 40,
+  top: 40,
+  right: 40,
+  bottom: 40,
 };
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName, toggleStateBurden}) => { 
 

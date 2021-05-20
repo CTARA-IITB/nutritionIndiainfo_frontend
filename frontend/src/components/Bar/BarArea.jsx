@@ -31,6 +31,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 barData.push(+i.data_value_num)
             }
             color= 'rgb(142, 209, 25)'   
+
         })
     }        
     if(selStateData && level=="2"){
@@ -56,7 +57,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 barData.push(+i.data_value)
             else
                 barData.push(+i.data_value_num)
-            color=' rgb(142, 209, 25)'    
+            color=' rgb(142, 209, 25)' 
+           
         })
     }           
     let barGUnit = graphUnit;
@@ -101,7 +103,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     data = {
         labels:sortedBarLabel,
         datasets: [{
-            label: [graphTitle, barGUnit, graphTimeperiod],
+            // label: [graphTitle, barGUnit, graphTimeperiod],
             data:sortedBarData,
             yAxisID:'yAxis1',
             backgroundColor:color,
@@ -110,6 +112,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         }]
     }    
     options = {
+        //maintainAspectRatio : false,
         legend:{  
             display: false,
         },
@@ -141,7 +144,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     beginAtZero: true
                 },
                 gridLines: {
-                    drawOnChartArea:false
+                    drawOnChartArea:true
                 }
             }]
         } 

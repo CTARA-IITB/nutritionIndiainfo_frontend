@@ -665,7 +665,7 @@ useEffect(() => {
 
 <div class="layout" id="layoutid">
   <div class="layout_left">
-      <div class="layout_left_map">
+      <div class="layout_left_map" class="shadow p-3 mb-5 bg-white rounded">
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -706,7 +706,7 @@ useEffect(() => {
           map={map}
           /> : null}
       </div>
-     <div class="layout_left_bar1">
+     <div class="layout_left_bar1" class="shadow p-3 mb-5 bg-white rounded">
      {isSelected? <BarArea
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
@@ -720,7 +720,7 @@ useEffect(() => {
      </div>
    </div>
     <div class="layout_right">
-      <div class="layout_right_trend" >
+      {/* <div class="layout_right_trend" class="shadow p-3 mb-5 bg-white rounded">
       {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
@@ -729,8 +729,8 @@ useEffect(() => {
       areaName = {areaName}
       graphTimeperiod = {graphTimeperiod}
       toggleStateBurden = {toggleStateBurden}/>: null}
-      </div>
-     <div class="layout_right_bar2">
+      </div> */}
+     <div class="layout_right_bar2" class="shadow p-3 mb-5 bg-white rounded">
       {isSelected? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}

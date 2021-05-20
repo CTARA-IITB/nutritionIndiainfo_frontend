@@ -7,15 +7,15 @@ import {
     useParams
   } from "react-router-dom";
 //   import Layout from "../../containers/Layout/Layout";
-  import "./navbar.css";
-  import {Navbar, Nav} from 'react-bootstrap';
+import "./navbar.css";
+import {Navbar, Nav} from 'react-bootstrap';
 
 
-  export const Navbars = ({setTabId}) => {
+export const Navbars = ({setTabId}) => {
         return(
             <div>
-                <div className="">
-                    <div className="">
+                <div className="container">
+                    <div className="container-nav">
                         <Router>
                         <Navbar expand="lg">
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -65,4 +65,4 @@ function Child({setTabId}) {
     return (<></>
         // <Layout tabId={id} />
     );
-  }
+}

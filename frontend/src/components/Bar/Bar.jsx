@@ -94,7 +94,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
         data = {
             labels:sortedBarLabel,
             datasets: [{
-                label: [graphTitle, barUnit,graphTimeperiod],
+                // label: [graphTitle, barUnit,graphTimeperiod],
                 data:sortedBarData,
                 yAxisID:'yAxis1',
                 backgroundColor: colors,
@@ -104,6 +104,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
         }
 
         options={
+            //maintainAspectRatio : false,
             legend:
             {
               display: false,
@@ -160,7 +161,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
                         beginAtZero: true
                     },
                     gridLines: {
-                        drawOnChartArea:false
+                        drawOnChartArea:true
                     }
                 }]
             }

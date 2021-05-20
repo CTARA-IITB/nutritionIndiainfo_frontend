@@ -14,8 +14,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import PrintIcon from '@material-ui/icons/Print';
 import { useReactToPrint } from "react-to-print";
 
-const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})=>{
 
+const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})=>{
     
     const [isOpen, setIsOpen] = useState(false);
     const togglePopup = () => {
@@ -37,9 +37,9 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         content: () => componentRef.current
     });
 
-    // map download details
+    //download details
     const options = {
-        scale: 10,
+        scale: 30,
         encoderOptions: 1,
         backgroundColor: 'white',
     }

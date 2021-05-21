@@ -123,14 +123,18 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       let max_date = new Date(max_year, max_month+6, max_day);
 
       const xValue = d => d.middle_date;
-      const yValue = d => d.data_value;
+      let yValue;
+      if(toggleStateBurden)
+        yValue = d => d.data_value;
+      else
+      yValue = d => d.data_value_num;
 
       const xScale = scaleTime()
     		.domain([min_date, max_date])
     		.range([0, innerWidth])
       
     	const yScale = scaleLinear()
-   	 		.domain([0, max(data, (d) => d.data_value)])
+   	 		.domain([0, max(data, (d) => yValue(d))])
     		.range([innerHeight, 0]);
      
       bar.append("g")
@@ -155,8 +159,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       	.on('mouseover', (i,d) => {
         			tooltip2.transition().duration(500).style("opacity", 1);
               tooltip2.html(`${d.timeperiod}:${yValue(d)}</br>start date:${formatTooltipTime(d.start_date)}</br>end date:${formatTooltipTime(d.end_date)}</div>`)
-          		.style("left", xScale(d.middle_date) + "px")
-          		.style("top", yScale(yValue(d))+"px");
+          		.style("left", innerWidth + xScale(d.end_date) + 50 + "px")
+          		.style("top", yScale(yValue(d)) + 100+"px");
               })
      .on('mouseout', ()=>{tooltip2.transition().duration(500).style("opacity", 0)});
       
@@ -180,7 +184,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
    
    
       
-  },[data,dimensions,trendWrapper.current])
+  },[data,dimensions,trendWrapper.current,toggleStateBurden])
 
 
 

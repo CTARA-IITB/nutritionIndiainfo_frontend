@@ -159,7 +159,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       	.on('mouseover', (i,d) => {
         			tooltip2.transition().duration(500).style("opacity", 1);
               tooltip2.html(`${d.timeperiod}:${yValue(d)}</br>start date:${formatTooltipTime(d.start_date)}</br>end date:${formatTooltipTime(d.end_date)}</div>`)
-          		.style("left", innerWidth + xScale(d.end_date) + 50 + "px")
+          		.style("left", xScale(d.middle_date) + 50 + "px")
           		.style("top", yScale(yValue(d)) + 100+"px");
               })
      .on('mouseout', ()=>{tooltip2.transition().duration(500).style("opacity", 0)});

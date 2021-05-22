@@ -19,9 +19,9 @@ import {
 const tickLength = 8;
 const margin = {
   left: 100,
-  top: 80,
+  top: 50,
   right: 50,
-  bottom: 150,
+  bottom: 100,
 };
 
 
@@ -69,6 +69,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
   
     const formatTime = timeFormat('%b-%y');
     const formatTooltipTime = timeFormat('%B-%Y');
+    const formatTitleTime = timeFormat('%Y');
     
 
   useEffect(() => {
@@ -78,6 +79,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
          	d.start_date = parseTime(d.start_date);
           d.end_date = parseTime(d.end_date);
           d["middle_date"] = new Date((d.start_date.getTime() + d.end_date.getTime())/2);
+          d["timeperiod"] = d.timeperiod.split(" ")[0];
         	cleanData.push(d);
         }
       });
@@ -96,12 +98,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
     // || trendWrapper.current.getBoundingClientRect();
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
+  
     const bar = svg.attr("width", width)
     		.attr("height", height)
       	.append("g")
     		.attr("transform",`translate(${margin.left},${margin.top})`);
     
-        
+    
+
     if(data){
 
       let listofDate = [];
@@ -136,7 +140,16 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
     	const yScale = scaleLinear()
    	 		.domain([0, max(data, (d) => yValue(d))])
     		.range([innerHeight, 0]);
-     
+      
+        bar.append("text")
+        .attr('x',width/2 -100)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","13px")
+        .style("font-weight","bold")
+        .attr("dy", "-2em")
+        .text(`${graphTitle},${graphUnit},${areaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
+
       bar.append("g")
       	.attr("class","axis")
         .call(axisLeft(yScale));
@@ -177,7 +190,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
         .attr("y", d => yScale(yValue(d)))
         .attr("dy", "-.2em")
       	.style("text-anchor","middle")
-      	.style("font-size",12)
+      	.style("font-size","10px")
         .text(function(d) { return d.timeperiod; });
     }
     

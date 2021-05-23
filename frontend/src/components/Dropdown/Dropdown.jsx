@@ -75,6 +75,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const screen4 = useFullScreenHandle();
 
   const map = document.getElementsByClassName("map");
+  const trend = document.getElementsByClassName("trend");
   const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
   const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
@@ -663,9 +664,9 @@ useEffect(() => {
             </div>
     </div> */}
 
-<div class="layout" id="layoutid">
-  <div class="layout_left">
-      <div class="layout_left_map" class="shadow p-3 mb-5 bg-white rounded">
+<div className="layout" id="layoutid">
+  <div className="layout_left">
+      <div className="layout_left_map">
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -706,7 +707,7 @@ useEffect(() => {
           map={map}
           /> : null}
       </div>
-     <div class="layout_left_bar1" class="shadow p-3 mb-5 bg-white rounded">
+     <div className="layout_left_bar1">
      {isSelected? <BarArea
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
@@ -719,8 +720,8 @@ useEffect(() => {
       toggleStateBurden = {toggleStateBurden}/>: null}
      </div>
    </div>
-    <div class="layout_right">
-      {/* <div class="layout_right_trend" class="shadow p-3 mb-5 bg-white rounded">
+    <div className="layout_right">
+      <div className="layout_right_trend" >
       {isSelected?
       <Trend indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
@@ -728,9 +729,11 @@ useEffect(() => {
       graphUnit = {graphUnit}
       areaName = {areaName}
       graphTimeperiod = {graphTimeperiod}
-      toggleStateBurden = {toggleStateBurden}/>: null}
-      </div> */}
-     <div class="layout_right_bar2" class="shadow p-3 mb-5 bg-white rounded">
+      toggleStateBurden = {toggleStateBurden}
+      trend = {trend}
+      />: null}
+      </div>
+     <div className="layout_right_bar2">
       {isSelected? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}

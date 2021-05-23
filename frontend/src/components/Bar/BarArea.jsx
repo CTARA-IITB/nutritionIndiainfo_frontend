@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import 'chartjs-plugin-datalabels';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,areaName,selStateData, toggleStateBurden}) => {
 
@@ -19,6 +20,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let title;
     let sortedBarLabel =[];
     let sortedBarData = [];
+    let differenceData = [];
 
     if(selIndiaData && level=="1"){
 
@@ -30,7 +32,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             else{
                 barData.push(+i.data_value_num)
             }
-            color= 'rgb(142, 209, 25)'   
+            color= '#8e0000'   
 
         })
     }        
@@ -57,7 +59,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 barData.push(+i.data_value)
             else
                 barData.push(+i.data_value_num)
-            color=' rgb(142, 209, 25)' 
+            color='#8e0000' 
            
         })
     }           
@@ -98,21 +100,46 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         sortedBarLabel[i]=table[i].area;
         sortedBarData[i]=table[i].data;
         table[i].data += " ("+graphTimeperiod +")";
-    }   
+    } 
+    
+   
+    for(var i=0;i<sortedBarData.length;i++){
+        differenceData[i]=sortedBarData[0];
+    } 
+    
 
     data = {
         labels:sortedBarLabel,
-        datasets: [{
-            // label: [graphTitle, barGUnit, graphTimeperiod],
-            data:sortedBarData,
-            yAxisID:'yAxis1',
-            backgroundColor:color,
-            borderColor: "rgb(142, 209, 25)",
-            borderWidth: 1
-        }]
+        datasets: [
+            
+            {
+                // label: [graphTitle, barGUnit, graphTimeperiod],
+                data:sortedBarData,
+                yAxisID:'yAxis1',
+                backgroundColor:color,
+                borderColor: "#8e0000",
+                borderWidth: 1,
+            },
+            // {
+            //     data:differenceData,
+            //     yAxisID:'yAxis1',
+            //     backgroundColor:"#DEDEDE",
+            //     borderColor: "#DEDEDE",
+            //     borderWidth: 1,
+            // },
+        ]
     }    
     options = {
-        //maintainAspectRatio : false,
+        
+        plugins: {
+            datalabels: {
+               display: true,
+               color: 'black',
+                // formatter: function(value, data) {
+                // return data.datasets.data;
+            }
+        },
+       
         legend:{  
             display: false,
         },
@@ -125,6 +152,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             yAxes:[{
                 id:'yAxis1',
                 type:"category",
+                stacked: true,
                 ticks:{
                     fontSize: 11,
                     fontColor: "black",
@@ -138,19 +166,20 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 },
             }],
             xAxes: [{
+                stacked: false,
                 ticks: {
                     fontSize: 7,
                     fontColor:"black",
-                    beginAtZero: true
+                    beginAtZero: true,
                 },
                 gridLines: {
-                    drawOnChartArea:true
+                    drawOnChartArea:false,
                 }
             }]
         } 
     }
     // title of table
-    title=graphTitle +', '+barGUnit; 
+    title=graphTitle +', '+barGUnit;
 
     return (
         <div>

@@ -88,18 +88,31 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
 
   useEffect(()=>{
     const svg = select(svgRef.current);
+    let windowWidth = window.screen.width;
+    let windowHeight = window.screen.height;
 
-    svg.selectAll("*").remove();
+    if(windowWidth >= 480){
+      windowWidth = windowWidth/2;
+      windowHeight = windowHeight/2;
+    }else{
+      console.log(windowWidth,"ww")
+      windowWidth = windowWidth + 100;
+      windowHeight = windowHeight/2;
+    }
 
-    const { width, height } = dimensions||{width:window.screen.width/2,height:window.screen.height/2}; 
+    
+    let { width, height } = dimensions||{width:windowWidth,height:windowHeight}; 
     // const width =500;
     // const height = 500;
     // const { width, height } = [,]; 
     // || trendWrapper.current.getBoundingClientRect();
+   
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-  
-    const bar = svg.attr("width", width)
+    console.log(width,height)
+    svg.selectAll("*").remove();
+    const bar = svg
+        .attr("width", width)
     		.attr("height", height)
       	.append("g")
     		.attr("transform",`translate(${margin.left},${margin.top})`);
@@ -142,7 +155,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
     		.range([innerHeight, 0]);
       
        bar.append("text")
-        .attr('x',width/2 -100)
+        .attr('x',width/2 -90)
         .attr('y',0)
         .style("text-anchor","middle")
         .style("font-size","13px")
@@ -254,7 +267,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
-      <svg id="svgTrend" ref = {svgRef}></svg>
+      <svg id="svgTrend"  ref = {svgRef}></svg>
     </div>
 
     </div>

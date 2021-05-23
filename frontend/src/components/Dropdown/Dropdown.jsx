@@ -536,53 +536,45 @@ useEffect(() => {
     
 
     return (
-      <>
-      <Row className=' mt-3 mb-3'>
-      <Col>
-
-      <span className="dropdown-title">Lifecycle</span>
-
-        <TreeSelect
-            showSearch
-            // onSearch={onSearch}
-            optionFilterProp="children"
-            className='dropdown'
-            virtual={false}
-            style={{ width: '100%' }}
-            value={selLifeycle}
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            treeData={lifecycledDropdownOpt}
-            filterTreeNode
-            treeNodeFilterProp ='title'
-            onChange={ lifecycleChange }
-            />
-        </Col>
-        <Col>
-        <span className="dropdown-title">Category</span>
-
-        <TreeSelect
-            showSearch
-            // onSearch={onSearch}
-            optionFilterProp="children"
-            className='dropdown'
-            virtual={false}
-            style={{ width: '100%' }}
-            value={selCategory}
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            treeData={categorydDropdownOpt}
-            filterTreeNode
-            treeNodeFilterProp ='title'
-            onChange={ categoryChange }
-            />
-        </Col>
-        <Col>
-
-            <span className="dropdown-title">Select Area</span>
-            {/* <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  ref={searchRef}/> */}
-
-            <TreeSelect
+      <div class="container">
+        <div id="nav">
+          <Row className=' mt-3 mb-3' >
+            <Col>
+              <span className="dropdown-title">Lifecycle</span>
+              <TreeSelect
                 showSearch
-                // filterTreeNode={filterTree}
+                optionFilterProp="children"
+                className='dropdown'
+                virtual={false}
+                style={{ width: '100%' }}
+                value={selLifeycle}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                treeData={lifecycledDropdownOpt}
+                filterTreeNode
+                treeNodeFilterProp ='title'
+                onChange={ lifecycleChange }
+              />
+            </Col>
+            <Col>
+              <span className="dropdown-title">Category</span>
+              <TreeSelect
+                showSearch
+                optionFilterProp="children"
+                className='dropdown'
+                virtual={false}
+                style={{ width: '100%' }}
+                value={selCategory}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                treeData={categorydDropdownOpt}
+                filterTreeNode
+                treeNodeFilterProp ='title'
+                onChange={ categoryChange }
+              />
+            </Col>
+            <Col>
+              <span className="dropdown-title">Select Area</span>
+              <TreeSelect
+                showSearch
                 className='dropdown'
                 virtual={false}
                 style={{ width: '100%' }}
@@ -598,13 +590,10 @@ useEffect(() => {
                 onChange={areaChange}
               />
             </Col>
-
             <Col>
-            <span className="dropdown-title">Select Indicator</span>
-
-            <TreeSelect
+              <span className="dropdown-title">Select Indicator</span>
+              <TreeSelect
                 showSearch
-                // onSearch={onSearch}
                 optionFilterProp="children"
                 className='dropdown'
                 virtual={false}
@@ -615,28 +604,11 @@ useEffect(() => {
                 filterTreeNode
                 treeNodeFilterProp ='title'
                 onChange={ indicatorChange }
-                />
+              />
             </Col>
-                {/* <Col>
-            <span className="dropdown-title">Select subgroup</span>
-
-                <TreeSelect
-                showSearch
-                className='dropdown'
-                virtual={false}
-                style={{ width: '100%' }}
-                value={selSubgroup}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={subgroupDropdownOpt}
-                treeNodeFilterProp ='title'
-                onChange={ subgroupChange}
-                />
-                </Col> */}
-        
-              <Col>
-            <span className="dropdown-title"> Select timeperiod</span>
-
-                <TreeSelect
+            <Col>
+              <span className="dropdown-title"> Select timeperiod</span>
+              <TreeSelect
                 showSearch
                 className='dropdown'
                 virtual={false}
@@ -644,111 +616,101 @@ useEffect(() => {
                 value={selTimeperiod}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={timeperiodDropdownOpt}
-               // onChange={value => setSelTimeperiod(value) }
-               treeNodeFilterProp ='title'
-               onChange={timeperiodChange}
-                />
-              </Col>
-             
-    </Row>
-    {isSelected?
-    <div className="btn_toggle text-center">
-      {burdenButton}
-      </div>: null}
-  
- 
-    
-    {/* <div className="layout__body__left">
-            <div className="layout__body__left__cards">
-            {isSelected? <Cards indicatorDetail = {indicatorDetail} indicatorChange = {indicatorChange}/> : null}
-            </div>
-    </div> */}
-
-<div className="layout" id="layoutid">
-  <div className="layout_left">
-  <div className="layout_left_trend" >
-      {isSelected?
-      <Trend indicatorTrend = {indicatorTrend}
-      graphTitle = {graphTitle}
-      graphSubgroup = {graphSubgroup}
-      graphUnit = {graphUnit}
-      areaName = {areaName}
-      graphTimeperiod = {graphTimeperiod}
-      toggleStateBurden = {toggleStateBurden}
-      trend = {trend}
-      />: null}
-      </div>
-
-    
-     <div className="layout_left_bar1">
-     {isSelected? <BarArea
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      selArea={selArea} 
-      areaName = {areaName}
-      selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}/>: null}
-     </div>
-   </div>
-    <div className="layout_right">
-    <div className="layout_right_map">
-        {isSelected? <Map boundaries={boundaries} 
-          selIndiaData={selIndiaData} 
-          setSelIndiaData ={setSelIndiaData}
-          setLevel={setLevel} 
-          level={level} 
-          setSelArea={setSelArea} 
-          unit={unit} 
-          unitName={graphUnit} 
-          selArea={selArea} 
-          searchRef={searchRef} 
-          setFilterDropdownValue={setFilterDropdownValue} 
-          areaDropdownOpt={areaDropdownOpt} 
-          selIndicator={selIndicator}
-          indicatorSense={indicatorSense} 
-          isLevelThree = {isLevelThree}
-          switchDisplay = {switchDisplay}
-          setSwitchDisplay = {setSwitchDisplay}
-          selTimeperiod = {selTimeperiod}
-          parentArea = {parentArea}
-          toggleState = {toggleState}
-          setToggleState = {setToggleState}
-          setIsLevelThree = {setIsLevelThree}
-          buttonText = {buttonText}
-          changeText = {changeText}
-          areaName = {areaName}
-          selStateData = {selStateData}
-          setSelStateData = {setSelStateData}
-          selDistrictsData = {selDistrictsData}
-          areaChange = {areaChange}
-          graphTitle = {graphTitle}
-          graphTimeperiod = {graphTimeperiod}
-          graphUnit = {graphUnit}
-          areaName = {areaName}
-          toggleStateBurden={toggleStateBurden}
-          setToggleStateBurden={setToggleStateBurden}
-          burdenbuttonText={burdenbuttonText} 
-          changeBurdenText={changeBurdenText}
-          map={map}
+                // onChange={value => setSelTimeperiod(value) }
+                treeNodeFilterProp ='title'
+                onChange={timeperiodChange}
+              />
+            </Col>      
+          </Row>
+        </div>
+        
+        {isSelected?
+        <div className="btn_toggle text-center">
+          {burdenButton}
+        </div>: null}
+        
+        <div className="layout_left_trend" id="trend">
+          {isSelected?
+          <Trend indicatorTrend = {indicatorTrend}
+            graphTitle = {graphTitle}
+            graphSubgroup = {graphSubgroup}
+            graphUnit = {graphUnit}
+            areaName = {areaName}
+            graphTimeperiod = {graphTimeperiod}
+            toggleStateBurden = {toggleStateBurden}
+            trend = {trend}
+          />: null}
+        </div>
+        <div className="layout_right_map" id="map">
+          {isSelected? 
+          <Map boundaries={boundaries} 
+            selIndiaData={selIndiaData} 
+            setSelIndiaData ={setSelIndiaData}
+            setLevel={setLevel} 
+            level={level} 
+            setSelArea={setSelArea} 
+            unit={unit} 
+            unitName={graphUnit} 
+            selArea={selArea} 
+            searchRef={searchRef} 
+            setFilterDropdownValue={setFilterDropdownValue} 
+            areaDropdownOpt={areaDropdownOpt} 
+            selIndicator={selIndicator}
+            indicatorSense={indicatorSense} 
+            isLevelThree = {isLevelThree}
+            switchDisplay = {switchDisplay}
+            setSwitchDisplay = {setSwitchDisplay}
+            selTimeperiod = {selTimeperiod}
+            parentArea = {parentArea}
+            toggleState = {toggleState}
+            setToggleState = {setToggleState}
+            setIsLevelThree = {setIsLevelThree}
+            buttonText = {buttonText}
+            changeText = {changeText}
+            areaName = {areaName}
+            selStateData = {selStateData}
+            setSelStateData = {setSelStateData}
+            selDistrictsData = {selDistrictsData}
+            areaChange = {areaChange}
+            graphTitle = {graphTitle}
+            graphTimeperiod = {graphTimeperiod}
+            graphUnit = {graphUnit}
+            areaName = {areaName}
+            toggleStateBurden={toggleStateBurden}
+            setToggleStateBurden={setToggleStateBurden}
+            burdenbuttonText={burdenbuttonText} 
+            changeBurdenText={changeBurdenText}
+            map={map}
           /> : null}
+        </div>
+        <div className="layout_left_bar1" id="barArea">
+          {isSelected? 
+          <BarArea
+            graphTitle = {graphTitle}
+            graphTimeperiod = {graphTimeperiod}
+            graphUnit = {graphUnit}
+            selIndiaData={selIndiaData} 
+            level={level} 
+            selArea={selArea} 
+            areaName = {areaName}
+            selStateData = {selStateData}
+            toggleStateBurden = {toggleStateBurden}
+          />: null}
+        </div>
+        <div className="layout_right_bar2" id="bar">
+          {isSelected? 
+          <Bar indicatorBar = {indicatorBar}
+            setIndicatorBar = {setIndicatorBar}
+            selIndicator = {selIndicator}
+            selTimeperiod = {selTimeperiod}
+            selArea = {selArea}
+            graphTimeperiod={graphTimeperiod}
+            graphTitle = {graphTitle}
+            graphUnit = {graphUnit}
+            areaName = {areaName}
+            toggleStateBurden = {toggleStateBurden}
+          />: null}
+        </div>
       </div>
-     <div className="layout_right_bar2">
-      {isSelected? <Bar indicatorBar = {indicatorBar}
-      setIndicatorBar = {setIndicatorBar}
-      selIndicator = {selIndicator}
-      selTimeperiod = {selTimeperiod}
-      selArea = {selArea}
-      graphTimeperiod={graphTimeperiod}
-      graphTitle = {graphTitle}
-      graphUnit = {graphUnit}
-      areaName = {areaName}
-      toggleStateBurden = {toggleStateBurden}/>: null}
-     </div>
-    </div>
-  </div>   
-   </>
     )
 }

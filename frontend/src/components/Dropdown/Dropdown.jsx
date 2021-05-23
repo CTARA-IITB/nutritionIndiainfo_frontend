@@ -489,7 +489,7 @@ useEffect(() => {
           setIsSelected(true);
         }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
-          return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
+          return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
         }
       
       //  const makeitFull = ()=> {
@@ -666,7 +666,35 @@ useEffect(() => {
 
 <div className="layout" id="layoutid">
   <div className="layout_left">
-      <div className="layout_left_map">
+  <div className="layout_left_trend" >
+      {isSelected?
+      <Trend indicatorTrend = {indicatorTrend}
+      graphTitle = {graphTitle}
+      graphSubgroup = {graphSubgroup}
+      graphUnit = {graphUnit}
+      areaName = {areaName}
+      graphTimeperiod = {graphTimeperiod}
+      toggleStateBurden = {toggleStateBurden}
+      trend = {trend}
+      />: null}
+      </div>
+
+    
+     <div className="layout_left_bar1">
+     {isSelected? <BarArea
+      graphTitle = {graphTitle}
+      graphTimeperiod = {graphTimeperiod}
+      graphUnit = {graphUnit}
+      selIndiaData={selIndiaData} 
+      level={level} 
+      selArea={selArea} 
+      areaName = {areaName}
+      selStateData = {selStateData}
+      toggleStateBurden = {toggleStateBurden}/>: null}
+     </div>
+   </div>
+    <div className="layout_right">
+    <div className="layout_right_map">
         {isSelected? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -706,32 +734,6 @@ useEffect(() => {
           changeBurdenText={changeBurdenText}
           map={map}
           /> : null}
-      </div>
-     <div className="layout_left_bar1">
-     {isSelected? <BarArea
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      selArea={selArea} 
-      areaName = {areaName}
-      selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}/>: null}
-     </div>
-   </div>
-    <div className="layout_right">
-      <div className="layout_right_trend" >
-      {isSelected?
-      <Trend indicatorTrend = {indicatorTrend}
-      graphTitle = {graphTitle}
-      graphSubgroup = {graphSubgroup}
-      graphUnit = {graphUnit}
-      areaName = {areaName}
-      graphTimeperiod = {graphTimeperiod}
-      toggleStateBurden = {toggleStateBurden}
-      trend = {trend}
-      />: null}
       </div>
      <div className="layout_right_bar2">
       {isSelected? <Bar indicatorBar = {indicatorBar}

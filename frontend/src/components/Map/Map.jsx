@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, ListGroupItem } from 'react-bootstrap';
 // import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
 import { geoMercator, format, geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
 import {poissonDiscSampler} from '../../utils'
@@ -328,9 +328,17 @@ export const Map = ({
       })
       .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      // .attr('transform',`translate(0,-50)`);
+      .attr('transform',`translate(0,50)`);
 
    
+      let title = svg.append("text").text(`${mapTitle}`)
+      .style("text-anchor","middle")
+        .style("font-size","13px")
+        .style("font-weight","bold")
+      .attr('transform',`translate(${width/2},40)`);
+      if(width <= 480){
+        title = title.style("font-size", (width * 0.0025) + "em")
+      }
   
 
     }
@@ -454,7 +462,7 @@ export const Map = ({
     // legend.selectAll("*").remove();
     legend.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width - 140},${height-100})`)
+        .attr("transform", `translate(${width-150},${height-50})`)
 
     let formatter;
     if (toggleStateBurden === true) {
@@ -543,38 +551,28 @@ export const Map = ({
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
       <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
       <div className="map">
-      <div className="map_area">
-      <div className="map_title">
-        <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
-      </div>
-      <div  className="map_svg" ref={wrapperRef}>
-          <svg  id="svgMap" width="100%" height="100%"  ref={svgRef} >
+        {/* <div className="map_area"> */}
+          {/* <div className="map_title">
+            <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
+          </div> */}
+          <div  className="map_svg" ref={wrapperRef}>
+            <svg  id="svgMap" width="100%" height="130%"  ref={svgRef} ></svg>
 
-          </svg>
-
-          {/* <svg  width="100%" height="30%"  ref={svgLegRef}></svg> */}
-       
-
-      </div>
-      
-    </div>
-    {/* <div class="map_svg" ref={wrapperRef}>
-    <svg className="svg-map" ref={svgRef} ></svg>
-    </div> */}
-    <div className="map_req">
+            {/* <svg  width="100%" height="30%"  ref={svgLegRef}></svg> */}
+          </div>
+        {/* </div> */}
+    
+    {/* <div className="map_req">
       <div className="map_req_toggle">
       {switchButton}
       </div>
-      {/* <div className="map__requirements__switch">
-              {burdenButton}  
-            </div> */}
+      
       <div className="map_req_legend">
-        {/* <svg id="svgLegend" className="svg-legend" ref={svgLegRef}></svg> */}
       </div>
       <div className="map_req_text">
           <div id="info-msg" className="msg"></div>
       </div>
-    </div>
+    </div> */}
   </div>
 
       {/* <div className="map">

@@ -18,10 +18,10 @@ import {
 
 const tickLength = 8;
 const margin = {
-  left: 40,
-  top: 40,
-  right: 40,
-  bottom: 40,
+  left: 100,
+  top: 50,
+  right: 50,
+  bottom: 100,
 };
 
 
@@ -68,6 +68,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
   
     const formatTime = timeFormat('%b-%y');
     const formatTooltipTime = timeFormat('%B-%Y');
+    const formatTitleTime = timeFormat('%Y');
     
 
   useEffect(() => {
@@ -77,6 +78,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
          	d.start_date = parseTime(d.start_date);
           d.end_date = parseTime(d.end_date);
           d["middle_date"] = new Date((d.start_date.getTime() + d.end_date.getTime())/2);
+          d["timeperiod"] = d.timeperiod.split(" ")[0];
         	cleanData.push(d);
         }
       });
@@ -85,22 +87,37 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
 
   useEffect(()=>{
     const svg = select(svgRef.current);
+    let windowWidth = window.screen.width;
+    let windowHeight = window.screen.height;
 
-    svg.selectAll("*").remove();
+    if(windowWidth >= 480){
+      windowWidth = windowWidth/2;
+      windowHeight = windowHeight/2;
+    }else{
+      console.log(windowWidth,"ww")
+      windowWidth = windowWidth + 100;
+      windowHeight = windowHeight/2;
+    }
 
-    const { width, height } = dimensions||{width:window.screen.width/2,height:window.screen.height/2}; 
+    
+    let { width, height } = dimensions||{width:windowWidth,height:windowHeight}; 
     // const width =500;
     // const height = 500;
     // const { width, height } = [,]; 
     // || trendWrapper.current.getBoundingClientRect();
+   
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-    const bar = svg.attr("width", width)
+    console.log(width,height)
+    svg.selectAll("*").remove();
+    const bar = svg
+        .attr("width", width)
     		.attr("height", height)
       	.append("g")
     		.attr("transform",`translate(${margin.left},${margin.top})`);
     
-        
+    
+
     if(data){
 
       let listofDate = [];
@@ -122,24 +139,48 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       let max_date = new Date(max_year, max_month+6, max_day);
 
       const xValue = d => d.middle_date;
-      const yValue = d => d.data_value;
+      let yValue;
+      if(toggleStateBurden)
+        yValue = d => d.data_value;
+      else
+      yValue = d => d.data_value_num;
 
       const xScale = scaleTime()
     		.domain([min_date, max_date])
     		.range([0, innerWidth])
       
     	const yScale = scaleLinear()
-   	 		.domain([0, max(data, (d) => d.data_value)])
+   	 		.domain([0, max(data, (d) => yValue(d))])
     		.range([innerHeight, 0]);
-     
+      
+       bar.append("text")
+        .attr('x',width/2 -90)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","13px")
+        .style("font-weight","bold")
+        .attr("dy", "-2em")
+        .text(`${graphTitle},${graphUnit},${areaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
+      
+        
       bar.append("g")
       	.attr("class","axis")
         .call(axisLeft(yScale));
 			
-      bar.append("g")
+      let xaxis = bar.append("g")
       .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
-  			.call(axisBottom(xScale).tickFormat(tick => formatTime(tick)))
+        .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
+        .attr("dx", () => {
+          if(width <= 480)
+           return "1.9em"
+        })
+        .attr("transform", () => {
+          if(width <= 480)
+          return "rotate(45)"
+        });
+        
+        
       	
       
       bar.selectAll("mybar")
@@ -154,8 +195,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       	.on('mouseover', (i,d) => {
         			tooltip2.transition().duration(500).style("opacity", 1);
               tooltip2.html(`${d.timeperiod}:${yValue(d)}</br>start date:${formatTooltipTime(d.start_date)}</br>end date:${formatTooltipTime(d.end_date)}</div>`)
-          		.style("left", xScale(d.middle_date) + "px")
-          		.style("top", yScale(yValue(d))+"px");
+          		.style("left", xScale(d.middle_date) + 50 + "px")
+          		.style("top", yScale(yValue(d)) + 100+"px");
               })
      .on('mouseout', ()=>{tooltip2.transition().duration(500).style("opacity", 0)});
       
@@ -172,14 +213,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
         .attr("y", d => yScale(yValue(d)))
         .attr("dy", "-.2em")
       	.style("text-anchor","middle")
-      	.style("font-size",12)
+      	.style("font-size","10px")
         .text(function(d) { return d.timeperiod; });
     }
     
    
    
       
-  },[data,dimensions,trendWrapper.current])
+  },[data,dimensions,trendWrapper.current,toggleStateBurden])
 
 
 
@@ -225,7 +266,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
-      <svg id="svgTrend" ref = {svgRef}></svg>
+      <svg id="svgTrend"  ref = {svgRef}></svg>
     </div>
 
     </div>

@@ -489,7 +489,7 @@ useEffect(() => {
           setIsSelected(true);
         }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
-          return <div><SkeletonDropdown /><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
+          return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
         }
       
       //  const makeitFull = ()=> {

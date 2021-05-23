@@ -141,7 +141,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
    	 		.domain([0, max(data, (d) => yValue(d))])
     		.range([innerHeight, 0]);
       
-        bar.append("text")
+       bar.append("text")
         .attr('x',width/2 -100)
         .attr('y',0)
         .style("text-anchor","middle")
@@ -149,15 +149,26 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
         .style("font-weight","bold")
         .attr("dy", "-2em")
         .text(`${graphTitle},${graphUnit},${areaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
-
+      
+        
       bar.append("g")
       	.attr("class","axis")
         .call(axisLeft(yScale));
 			
-      bar.append("g")
+      let xaxis = bar.append("g")
       .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
-  			.call(axisBottom(xScale).tickFormat(tick => formatTime(tick)))
+        .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
+        .attr("dx", () => {
+          if(width <= 480)
+           return "1.9em"
+        })
+        .attr("transform", () => {
+          if(width <= 480)
+          return "rotate(45)"
+        });
+        
+        
       	
       
       bar.selectAll("mybar")

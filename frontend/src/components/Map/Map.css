@@ -6,7 +6,7 @@
 
 svg .polygon {
   stroke: black;
-  stroke-width: 1px;
+  stroke-width: .3px;
   cursor: pointer;
 }
 
@@ -132,7 +132,7 @@ button.ant-switch {
 .map_svg {
   /* background-color:grey; */
   width: 100%;
-  height: 80%;
+  height: 90%;
 }
 /* .map_svg{
   background-color:green;

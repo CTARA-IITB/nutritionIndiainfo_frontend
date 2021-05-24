@@ -148,10 +148,16 @@ export const Map = ({
     }
     else {
 
-        if(selTimeperiod === 22)
+        if(selTimeperiod === 22){
           geometry = boundaries.new_dist;
-        else
+          warning=""
+
+        }
+        else{
           geometry = boundaries.dist;
+          warning="Administrative Boundaries as per NFHS4(2015-16)"
+
+        }
       data = selDistrictsData;
     }
     statusMsg ="Click on Map to Drill down to District level";
@@ -451,7 +457,7 @@ export const Map = ({
         for(var i=0; i< points.length; i++)
         {
           select(this).append("circle")
-          .attr("r", 1)
+          .attr("r", 2)
           .attr("cx", x+points[i][0])
           .attr("cy", y+points[i][1])
           .attr("fill", 'red');

@@ -78,7 +78,7 @@ export const Map = ({
 
  
   if (toggleStateBurden === true) {
-    mapTitle = graphTitle + ","+ graphUnit +","+areaName +","+ graphTimeperiod;
+    mapTitle = graphTitle + ","+ graphUnit +","+areaName +","+ graphTimeperiod + `${"\n"}`;
   }
   else{
     mapTitle = graphTitle + ","+ "Number" +","+areaName +","+ graphTimeperiod;
@@ -130,14 +130,19 @@ export const Map = ({
   let statusMsg;
 
   let data = selIndiaData;
+  let warning;
   if (level === 1)
   {
     if (toggleState === true) {
 
-      if (selTimeperiod === 22)    // change state boundaries when timeperiod is NFHS5
+      if (selTimeperiod === 22){    // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
-      else
+        warning=""
+      }   
+      else{
         geometry = boundaries.state;
+        warning="Administrative Boundaries as per NFHS4(2015-16)"
+      }
       
       data = selIndiaData;
     }
@@ -186,7 +191,29 @@ export const Map = ({
   useEffect(() => {
     const svg = select(svgRef.current);
     const legend = select(svgRef.current)
+
+  
+
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
+    svg.selectAll('*').remove();
+
+    let title = svg.append("text").text(`${mapTitle}`)
+      .style("text-anchor","middle")
+      .style("font-size","13px")
+      .style("font-weight","bold")
+      .attr("dy", "-2em")
+      .attr('transform',`translate(${width/2},40)`);
+
+      svg.append("text").text(`${warning}`)
+      .style("text-anchor","middle")
+      .style("font-size","10px")
+      .attr("dy", "-2.5em")
+
+
+      .attr('transform',`translate(${width/2},60)`);
+    if(width <= 480){
+      title = title.style("font-size", (width * 0.0025) + "em")
+    }
     const projection = geoMercator().fitSize([width, height], geometry);
 
     const pathGenerator = geoPath(projection);
@@ -272,7 +299,6 @@ export const Map = ({
     // if(unit !== 2)
     if (toggleStateBurden === true)
     {  
-    svg.selectAll("*").remove();
     svg
       .selectAll(".polygon")
       .data(mergedGeometry)
@@ -326,19 +352,12 @@ export const Map = ({
         }
     
       })
-      .transition().duration(1000)
+      // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
       .attr('transform',`translate(0,50)`);
 
    
-      let title = svg.append("text").text(`${mapTitle}`)
-      .style("text-anchor","middle")
-        .style("font-size","13px")
-        .style("font-weight","bold")
-      .attr('transform',`translate(${width/2},40)`);
-      if(width <= 480){
-        title = title.style("font-size", (width * 0.0025) + "em")
-      }
+
   
 
     }
@@ -347,7 +366,6 @@ export const Map = ({
     // console.log(unit)
     // if (unit === 2) {
     else{
-      svg.selectAll('*').remove();
 
       svg
       .selectAll(".polygon")
@@ -384,8 +402,9 @@ export const Map = ({
         }
     
       })
-      .transition().duration(1000)
-      .attr("d", feature => pathGenerator(feature));
+      .attr("d", feature => pathGenerator(feature))
+      .attr('transform',`translate(0,50)`);
+
 
       svg.selectAll(".mask")
       .data(mergedGeometry)
@@ -394,7 +413,8 @@ export const Map = ({
       .attr("class","mask")
       .attr("id",function(d){return d.areacode;})
       .append("path")
-      .attr("d", pathGenerator);
+      .attr("d", pathGenerator)
+      // .attr('transform',`translate(0,50)`);
   
 
    svg.selectAll(".points")
@@ -403,7 +423,8 @@ export const Map = ({
     .append("g")
     .attr("class","points")
     .attr("clip-path", function(d){return "url(#"+d.areacode+")";})
-    .each(draw_circles);
+    .each(draw_circles)
+    .attr('transform',`translate(0,50)`);
 
 
       function draw_circles(d) {

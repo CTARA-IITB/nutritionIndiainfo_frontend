@@ -543,7 +543,7 @@ useEffect(() => {
           burdenDropdown =    
             <Col>
 
-            <span className="dropdown-title">Prevelance/Burden</span>
+            <span className="dropdown-title">Prevalence/Burden</span>
             <TreeSelect showSearch
               optionFilterProp="children"
               className='dropdown'
@@ -551,7 +551,7 @@ useEffect(() => {
               style={{ width: '100%' }}
               value={selBurden}
               dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-              treeData={[{"value":"1","title":"Prevelance"},{"value":"2","title":"Burden"}]}
+              treeData={[{"value":"1","title":"Prevalence"},{"value":"2","title":"Burden"}]}
               filterTreeNode
               treeNodeFilterProp ='title'
               onChange = {burdenChange}

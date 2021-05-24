@@ -79,7 +79,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
   const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
-
+  const [selBurden,setSelBurden] = useState("1");
   const lifecycleData = [
     { value: 1, title: "Adolescence" },
     { value: 2, title: "Women of Reproductive Age" },
@@ -256,6 +256,18 @@ useEffect(() => {
           // await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
           // //await setCardData(tab, selArea, setIndicatorDetail)
           setIsSelected(true);
+
+        }
+
+        const burdenChange = async(e) =>{
+          if(e === "1"){
+            setSelBurden(e);
+            setToggleStateBurden(true);
+          }
+          else{
+            setToggleStateBurden(false);
+            setSelBurden(e);
+          }
 
         }
 
@@ -526,12 +538,28 @@ useEffect(() => {
       }
 
       let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
-      let burdenButton;
+      let burdenDropdown;
       if (burdenIndicators.includes(selIndicator)) {
-          burdenButton = <Switch className="mb-2" size="large" checkedChildren="Burden" unCheckedChildren="Prevalence" onClick={burdenClick} />
+          burdenDropdown =    
+            <Col>
+
+            <span className="dropdown-title">Prevelance/Burden</span>
+            <TreeSelect showSearch
+              optionFilterProp="children"
+              className='dropdown'
+              virtual={false}
+              style={{ width: '100%' }}
+              value={selBurden}
+              dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+              treeData={[{"value":"1","title":"Prevelance"},{"value":"2","title":"Burden"}]}
+              filterTreeNode
+              treeNodeFilterProp ='title'
+              onChange = {burdenChange}
+            />
+            </Col>
         }
         else{
-          burdenButton= null;
+          burdenDropdown= null;
         }
     
 
@@ -617,21 +645,9 @@ useEffect(() => {
                 onChange={ indicatorChange }
                 />
             </Col>
-                {/* <Col>
-            <span className="dropdown-title">Select subgroup</span>
+            
+            {burdenDropdown}
 
-                <TreeSelect
-                showSearch
-                className='dropdown'
-                virtual={false}
-                style={{ width: '100%' }}
-                value={selSubgroup}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={subgroupDropdownOpt}
-                treeNodeFilterProp ='title'
-                onChange={ subgroupChange}
-                />
-                </Col> */}
         
               <Col>
             <span className="dropdown-title"> Select timeperiod</span>
@@ -649,12 +665,12 @@ useEffect(() => {
                onChange={timeperiodChange}
                 />
               </Col>
-             
+
     </Row>
-    {isSelected?
+    {/* {isSelected?
     <div className="btn_toggle text-center">
       {burdenButton}
-      </div>: null}
+      </div>: null} */}
   
  
     

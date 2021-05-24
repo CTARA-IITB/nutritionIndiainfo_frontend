@@ -39,8 +39,9 @@
 /* responsive */
 
 .container{
+  background-color: aqua;
   display: grid;
-  grid-template-columns: 580px 580px;
+  grid-template-columns: 500px 500px;
   grid-gap: 0.2rem;
   grid-template-areas: 
     "nav nav"
@@ -81,7 +82,7 @@
 @media only screen and (max-width: 550px){
     .container{
       grid-template-columns:auto;
-      grid-template-rows: 0.4fr 1fr 1fr 1fr 1.2fr;
+      grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr;
       grid-template-areas: 
         "nav"
         "trend"

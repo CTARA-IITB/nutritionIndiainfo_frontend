@@ -629,7 +629,7 @@ useEffect(() => {
           {burdenButton}
         </div>: null}
         
-        <div className="layout_left_trend" id="trend">
+        <div className="layout_left_trend" class="shadow-sm p-3 mb-5 bg-white rounded" id="trend">
           {isSelected?
           <Trend indicatorTrend = {indicatorTrend}
             graphTitle = {graphTitle}
@@ -641,7 +641,7 @@ useEffect(() => {
             trend = {trend}
           />: null}
         </div>
-        <div className="layout_right_map" id="map">
+        <div className="layout_right_map" class="shadow-sm p-3 mb-5 bg-white rounded" id="map">
           {isSelected? 
           <Map boundaries={boundaries} 
             selIndiaData={selIndiaData} 
@@ -683,7 +683,7 @@ useEffect(() => {
             map={map}
           /> : null}
         </div>
-        <div className="layout_left_bar1" id="barArea">
+        <div className="layout_left_bar1" class="shadow-sm p-3 mb-5 bg-white rounded" id="barArea">
           {isSelected? 
           <BarArea
             graphTitle = {graphTitle}
@@ -697,7 +697,7 @@ useEffect(() => {
             toggleStateBurden = {toggleStateBurden}
           />: null}
         </div>
-        <div className="layout_right_bar2" id="bar">
+        <div className="layout_right_bar2" class="shadow-sm p-3 mb-5 bg-white rounded" id="bar">
           {isSelected? 
           <Bar indicatorBar = {indicatorBar}
             setIndicatorBar = {setIndicatorBar}

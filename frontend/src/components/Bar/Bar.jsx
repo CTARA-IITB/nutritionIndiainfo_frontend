@@ -84,18 +84,18 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
         table.reverse();
 
         //sort label and data
-        for(var i=0;i<table.length;i++){
+        // for(var i=0;i<table.length;i++){
 
-            sortedBarLabel[i]=table[i].area;
-            sortedBarData[i]=table[i].data;
-            table[i].data += " ("+graphTimeperiod +")";
-        }   
+        //     sortedBarLabel[i]=table[i].area;
+        //     sortedBarData[i]=table[i].data;
+        //     table[i].data += " ("+graphTimeperiod +")";
+        // }   
         
         data = {
-            labels:sortedBarLabel,
+            labels:barLabel,
             datasets: [{
                 // label: [graphTitle, barUnit,graphTimeperiod],
-                data:sortedBarData,
+                data:barData,
                 yAxisID:'yAxis1',
                 backgroundColor: colors,
                 borderColor: '#ffffff',

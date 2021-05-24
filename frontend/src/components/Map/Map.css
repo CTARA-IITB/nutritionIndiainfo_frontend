@@ -140,19 +140,25 @@ button.ant-switch {
   justify-content:center;
 } */
 .map_req {
-  display: flex;
-  flex-direction: column;
-  /* background-color:yellow; */
+  background-color:yellow;
   height: 100%;
-  width: 0%;
-  justify-content: flex-end;
+  width: 0px;
+  margin: 10px;
 }
-.map_req_toggle {
+.map_req_button {
   /* background-color:blue; */
-  height: 20%;
-  width: 100%;
+  margin: 20px;
+  margin-top: 30px;
+  margin-left: -180px;
+  height: 50px;
+  width: 250px;
 }
 
+.req_button{
+  margin: 5px;
+  background-color: #AF5907 !important;
+  border-color: #AF5907 !important;
+}
 .map_req_legend {
   /* background-color:red; */
   height: 40%;
@@ -210,38 +216,28 @@ button.ant-switch {
     width: 200px;
     height: 400px;
   }
-  .map_req_toggle {
-    /* background-color: blue; */
-    height: 20%;
-    width: 100%;
-    margin-left: -5px;
-    margin-bottom: -40px;
+  .map_req_button {
+    /* background-color:blue; */
+    /* display: flex; */
+    margin: 20px;
+    margin-left: -180px;
+    height: 700px;
+    width: 250px;
   }
-  .map_req_legend {
-    /* background-color:red; */
-    height: 50%;
-    font-size: 10px;
-    /* width: 50%; */
+  
+  .req_button{
+    margin: 5px;
+    background-color: #AF5907 !important;
+    border-color: #AF5907 !important;
   }
+  
   .map_req {
-    display: flex;
-    flex-direction: column;
     height: 100%;
-    width: 20%;
-    justify-content: flex-end;
+    width: 0%;
     margin-left: 20px;
   }
-  .map_req_text {
-    /* background-color:coral; */
-    height: 20px;
-  }
-  .map_title {
-    width: 305px;
-    height: 10%;
-    font-weight: 100;
-    margin-top: 25px;
-    margin-left: -5px;
-  }
+  
+
 
   .ant-switch-handle::before {
     height: 25px !important;

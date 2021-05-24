@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
-import { Row, Col, ListGroupItem } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 // import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
 import { geoMercator, format, geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
 import {poissonDiscSampler} from '../../utils'
@@ -507,21 +507,14 @@ export const Map = ({
   }, [unit,geometry, dimensions, data, toggleStateBurden])
 
   let switchButton;
-  // let burdenButton;
-  // let burdenIndicators = ['12', '13', '17', '18', '19', '20', '29', '107', '108', '53', '62'];
 
   if(switchDisplay && level === 1){
-    switchButton = <Switch className="mb-2" size="large" checkedChildren="District Level" unCheckedChildren="State Level" onClick={handleClick} />
+    switchButton = <div><Button className="req_button" active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
+    <Button className="req_button" onClick={()=>{ setToggleState(false)}} size="sm">District Map</Button> </div>
   }else{
     switchButton= null;
   }
- /*  if (burdenIndicators.includes(selIndicator)) {
-    burdenButton = <Switch className="mb-2" size="large" checkedChildren="Burden" unCheckedChildren="Prevalence" onClick={burdenClick} />
-  }
-  else{
-    burdenButton= null;
-  } */
-
+ 
   const screen = useFullScreenHandle();
 
   const checkchange = (state,handle)=>{
@@ -532,7 +525,6 @@ export const Map = ({
       else if(state === false){
         if(map[0] != undefined)
         map[0].style.height = "50vh";
-        // map[0].style.height = "50vh";
       }
     }
   }
@@ -562,37 +554,20 @@ export const Map = ({
           </div>
         {/* </div> */}
     
-    {/* <div className="map_req">
-      <div className="map_req_toggle">
-      {switchButton}
+    <div className="map_req">
+      <div className="map_req_button">
+        {switchButton}
+        
       </div>
       
-      <div className="map_req_legend">
-      </div>
+      {/* <div className="map_req_legend">
+      </div> */}
       <div className="map_req_text">
           <div id="info-msg" className="msg"></div>
       </div>
-    </div> */}
+    </div>
   </div>
 
-      {/* <div className="map">
-        <div ref={wrapperRef} className="map__svg">
-          <svg className="svg-map" ref={svgRef} ></svg>
-        </div>
-        <div className="map__requirements">
-          
-              <div className="map__requirements__switch">
-              {switchButton}
-            </div>
-          
-          <div className="map__requirements__legend">
-            <svg className="svg-legend" ref={svgLegRef}></svg>
-          </div>
-           {statusMsg}
-          </div>
-     
-        </div>
-      </div> */}
     </FullScreen>  
     </>
   )

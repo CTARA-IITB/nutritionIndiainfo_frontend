@@ -15,6 +15,8 @@ import html2canvas from "html2canvas";
 import jsPDF from 'jspdf';
 import PrintIcon from '@material-ui/icons/Print';
 import { useReactToPrint } from "react-to-print";
+import Chart from 'chart.js';
+
 
 const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
 
@@ -38,14 +40,22 @@ const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
     content: () => componentRef.current
   });
 
-     
+  // draw white background 
+  var backgroundColor = 'white';
+  Chart.plugins.register({
+      beforeDraw: function(c) {
+          var ctx = c.chart.ctx;
+          ctx.fillStyle = backgroundColor;
+          ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+      }
+  });
+
   //save to png
   const savePng=()=>{
     const canvasSave = document.getElementById(id);
     canvasSave.toBlob(function (blob) {
           saveAs(blob, "chart.png")
-    })    
-   
+    })     
   } 
   // save to jpeg
   const saveJpeg=()=>{
@@ -53,7 +63,6 @@ const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
     canvasSave.toBlob(function (blob) {
           saveAs(blob, "chart.jpeg")
     })
-   
   } 
 
   // save to svg
@@ -65,11 +74,11 @@ const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
   } 
   // save to pdf
   const savePdf=()=>{
-    let input = window.document.getElementById(id);
+    let input = document.getElementById(id);
     html2canvas(input).then(canvas => {
       const img = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("l", "pt", [700, 300]);
-      pdf.addImage(img,"png",0,0);
+      const pdf = new jsPDF("l", "pt", [700, 700]);
+      pdf.addImage(img,"jpeg",0,0);
       pdf.save("chart.pdf");
     });
   } 

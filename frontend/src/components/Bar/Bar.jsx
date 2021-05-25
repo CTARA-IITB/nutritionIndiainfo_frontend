@@ -94,12 +94,12 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
         data = {
             labels:sortedBarLabel,
             datasets: [{
-                label: [graphTitle, barUnit,graphTimeperiod],
+                // label: [graphTitle, barUnit,graphTimeperiod],
                 data:sortedBarData,
                 yAxisID:'yAxis1',
                 backgroundColor: colors,
                 borderColor: '#ffffff',
-                borderWidth: 1
+                borderWidth: 1,
             }] 
         }
 

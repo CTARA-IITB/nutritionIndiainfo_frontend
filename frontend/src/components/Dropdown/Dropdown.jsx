@@ -16,8 +16,6 @@ import { Switch } from 'antd';
 import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
 
-
-
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   // let { id } = useParams();
@@ -679,7 +677,6 @@ useEffect(() => {
             {isSelected? <Cards indicatorDetail = {indicatorDetail} indicatorChange = {indicatorChange}/> : null}
             </div>
     </div> */}
-
 <div className="layout" id="layoutid">
   <div className="layout_left">
   <div className="layout_left_trend" >

@@ -19,6 +19,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let title;
     let sortedBarLabel =[];
     let sortedBarData = [];
+    let differenceData = [];
 
     if(selIndiaData && level=="1"){
 
@@ -30,7 +31,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             else{
                 barData.push(+i.data_value_num)
             }
-            color= 'rgb(142, 209, 25)'   
+            color='#8e0000'  
         })
     }        
     if(selStateData && level=="2"){
@@ -56,7 +57,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 barData.push(+i.data_value)
             else
                 barData.push(+i.data_value_num)
-            color=' rgb(142, 209, 25)'    
+            color='#8e0000'   
         })
     }           
     let barGUnit = graphUnit;
@@ -98,16 +99,30 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         table[i].data += " ("+graphTimeperiod +")";
     }   
 
+    for(var i=0;i<sortedBarData.length;i++){
+        differenceData[i]=sortedBarData[0]-sortedBarData[i];
+    } 
+
     data = {
         labels:sortedBarLabel,
-        datasets: [{
-            label: [graphTitle, barGUnit, graphTimeperiod],
-            data:sortedBarData,
-            yAxisID:'yAxis1',
-            backgroundColor:color,
-            borderColor: "rgb(142, 209, 25)",
-            borderWidth: 1
-        }]
+        datasets: [
+            {
+                // label: [graphTitle, barGUnit, graphTimeperiod],
+                label :'',
+                data:sortedBarData,
+                yAxisID:'yAxis1',
+                backgroundColor:color,
+                borderColor: "#8e0000",
+                borderWidth: 1
+            },
+             {
+                data:differenceData,
+                yAxisID:'yAxis1',
+                backgroundColor:"#DEDEDE",
+                borderColor: "#DEDEDE",
+                borderWidth: 1,
+            }
+        ]
     }    
     options = {
         legend:{  
@@ -120,6 +135,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         },
         scales: {
             yAxes:[{
+                stacked: true,
                 id:'yAxis1',
                 type:"category",
                 ticks:{
@@ -135,6 +151,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 },
             }],
             xAxes: [{
+                stacked: true,
                 ticks: {
                     fontSize: 7,
                     fontColor:"black",

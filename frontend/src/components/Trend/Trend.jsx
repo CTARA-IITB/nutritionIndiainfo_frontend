@@ -215,7 +215,25 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       	.style("font-size","10px")
         .text(function(d) { return d.timeperiod; });
     }else{
-      // bar.append("text").text("data is not present")
+
+
+      bar.append("text")
+      .attr('x',width/2 -90)
+      .attr('y',0)
+      .style("text-anchor","middle")
+      .style("font-size","13px")
+      .style("font-weight","bold")
+      .attr("dy", "-2em")
+      .text(`${graphTitle},${graphUnit},${areaName}`)
+
+      // bar.append("text")
+      // .attr("x",innerWidth/2)
+      // .attr("y",innerHeight/2)
+      // .attr("dx","-.4em")
+      // .text("Data not found")
+      // .style("text-anchor","middle")
+      // .style("font-size","15px")
+      // .style("font-weight","bold")
     }
     
    

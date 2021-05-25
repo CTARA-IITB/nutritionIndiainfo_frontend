@@ -39,6 +39,7 @@ export const Map = ({
   toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map
 
 }) => {
+  console.log("toggleStateBurden", toggleStateBurden);
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -540,7 +541,7 @@ export const Map = ({
     // legend.selectAll("*").remove();
     legend.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width-150},${height-50})`)
+        .attr("transform", `translate(${width-150},${height-80})`)
 
     let formatter;
     if (toggleStateBurden === true) {

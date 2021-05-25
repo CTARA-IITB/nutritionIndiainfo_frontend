@@ -243,6 +243,8 @@ useEffect(() => {
           let val = e;
           setIsSelected(false);
           setSelLifecycle(e);
+          setSelBurden("1");
+          setToggleStateBurden(true);
           await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod)
           //await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
           // let timeVal = selTimeperiod;
@@ -276,6 +278,8 @@ useEffect(() => {
           let val = e;
           setIsSelected(false);
           setSelCategory(e);
+          setSelBurden("1");
+          setToggleStateBurden(true);
           await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod)
           //await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
           // let timeVal = selTimeperiod;
@@ -297,6 +301,7 @@ useEffect(() => {
           let val = e;
           setIsSelected(false);
           setToggleState(true);
+          setSelBurden("1");
           setToggleStateBurden(true);
           setSelIndicator(e);
           let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
@@ -391,6 +396,7 @@ useEffect(() => {
           let val = e;
           setIsSelected(false);
           setToggleState(true);
+          setSelBurden("1");
           setToggleStateBurden(true);
           setSelTimeperiod(e);
           let timePeriodName = timeperiodDropdownOpt.filter(f => f.value === e)[0].title;
@@ -405,6 +411,7 @@ useEffect(() => {
           let levelThree = false;
           setIsSelected(false);
           setToggleState(true);
+          setSelBurden("1");
           setToggleStateBurden(true);
             if(value === "1"){
                 setLevel(1)

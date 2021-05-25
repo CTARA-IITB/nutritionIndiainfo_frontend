@@ -1,11 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef,useContext } from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import "chartjs-plugin-datalabels";
+import Chart from 'chart.js';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,areaName,selStateData, toggleStateBurden}) => {
 
-    const componentRef = useRef();
+    // const componentRef = useRef();
+    const componentRef = React.createRef();
     const screen=useFullScreenHandle();
 
     let barLabel=[];
@@ -14,13 +17,20 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let options = [];
     let stateDataValue;
     let stateAreaName;
-    let color;
+    let datasets = [];
     let table=[];
     let title;
     let sortedBarLabel =[];
     let sortedBarData = [];
     let differenceData = [];
+    let s;
 
+    // remove last word  graph title i.e olds
+    var lastIndex = graphTitle.lastIndexOf(" ");
+    graphTitle = graphTitle.substring(0, lastIndex);
+    graphTitle = graphTitle + 's'
+
+    
     if(selIndiaData && level=="1"){
 
         selIndiaData.map(i=>{
@@ -31,8 +41,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             else{
                 barData.push(+i.data_value_num)
             }
-            color='#8e0000'  
         })
+        s = ' by State ';
     }        
     if(selStateData && level=="2"){
 
@@ -56,9 +66,9 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             if(toggleStateBurden === true)
                 barData.push(+i.data_value)
             else
-                barData.push(+i.data_value_num)
-            color='#8e0000'   
+                barData.push(+i.data_value_num) 
         })
+        s = ' by District '
     }           
     let barGUnit = graphUnit;
     
@@ -88,34 +98,30 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     table.sort((d1, d2) => {
         return compareObjects(d1, d2,)
     })
-    // reverse the table
-    table.reverse();
-
-    //sort label and data
-    for(var i=0;i<table.length;i++){
-
-        sortedBarLabel[i]=table[i].area;
-        sortedBarData[i]=table[i].data;
-        table[i].data += " ("+graphTimeperiod +")";
-    }   
-
-    for(var i=0;i<sortedBarData.length;i++){
-        differenceData[i]=sortedBarData[0]-sortedBarData[i];
-    } 
-
-    data = {
-        labels:sortedBarLabel,
-        datasets: [
+  
+    if(level=="1"){
+        // reverse the table
+        table.reverse();
+        //sort label and data
+        for(var i=0;i<table.length;i++){
+            sortedBarLabel[i]=table[i].area;
+            sortedBarData[i]=table[i].data;
+            table[i].data += " ("+graphTimeperiod +")";
+        }   
+        for(var i=0;i<sortedBarData.length;i++){
+            differenceData[i]=sortedBarData[0]-sortedBarData[i];
+        } 
+        datasets=[
             {
                 // label: [graphTitle, barGUnit, graphTimeperiod],
                 label :'',
                 data:sortedBarData,
                 yAxisID:'yAxis1',
-                backgroundColor:color,
+                backgroundColor:"#8e0000",
                 borderColor: "#8e0000",
                 borderWidth: 1
             },
-             {
+            {
                 data:differenceData,
                 yAxisID:'yAxis1',
                 backgroundColor:"#DEDEDE",
@@ -123,14 +129,48 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 borderWidth: 1,
             }
         ]
+    }
+    else if(level=="2"){
+
+         //sort label and data
+         for(var i=0;i<table.length;i++){
+            sortedBarLabel[i]=table[i].area;
+            sortedBarData[i]=table[i].data;
+            table[i].data += " ("+graphTimeperiod +")";
+        }   
+        datasets=[
+            {
+                // label: [graphTitle, barGUnit, graphTimeperiod],
+                label :'',
+                data:sortedBarData,
+                yAxisID:'yAxis1',
+                backgroundColor:"#fe0000",
+                borderColor: "#fe0000",
+                borderWidth: 1
+            }
+        ]
+    }
+
+    // graph time period 
+    let chartTitle = graphTimeperiod.split(" ")[0];
+    let lastChar = chartTitle.slice(-1);
+    if(/^[0-9]$/.test(lastChar)){
+        chartTitle = chartTitle.slice(0, -1);
+        chartTitle = chartTitle + '-' + lastChar;
+    }
+
+    data = {
+        labels:sortedBarLabel,
+        datasets: datasets,
     }    
     options = {
+        
         legend:{  
             display: false,
         },
         title:{
             display: true,
-            text: [graphTitle +','+ barGUnit, areaName +','+ graphTimeperiod],
+            text: [graphTitle + s,areaName +' '+ chartTitle + " (" + graphTimeperiod.split(" ")[1] + ")"],
             fontColor: "black",
         },
         scales: {
@@ -160,12 +200,30 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 gridLines: {
                     drawOnChartArea:false
                 }
-            }]
+            }],
+            animation:{
+                duration: 1,
+                onComplete: function() {
+                    var chart = componentRef.current.chartInstance,
+                    ctx = chart.ctx;
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    this.data.datasets.forEach(function(dataset, i) {
+                        var meta = chart.controller.getDatasetMeta(i);
+                        meta.data.forEach(function(bar, index) {
+                            var data = dataset.data[index];
+                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                        });
+                    });
+                }
+            },
+            
         } 
     }
     // title of table
     title=graphTitle +', '+barGUnit; 
-
     return (
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>

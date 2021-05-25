@@ -48,6 +48,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [openDropdown,setOpenDropdown] = useState(false);
   const treeRef = useRef();
   const [areaName, setAreaName] = useState('India');
+  const [titleAreaName,setTitleAreaName] = useState("India");
   const [level, setLevel] = useState(1);
   const [areaList, setAreaList] = useState(null);
   const [isLevelThree, setIsLevelThree] = useState(false);
@@ -424,6 +425,7 @@ useEffect(() => {
             setSelArea(value);
             let title = areaList.filter(f => f.area_id === parseInt(value))[0].area_name;
             setAreaName(title);
+            setTitleAreaName(title);
             treeRef.current.blur()
         
         
@@ -688,7 +690,7 @@ useEffect(() => {
       graphTitle = {graphTitle}
       graphSubgroup = {graphSubgroup}
       graphUnit = {graphUnit}
-      areaName = {areaName}
+      titleAreaName = {titleAreaName}
       graphTimeperiod = {graphTimeperiod}
       toggleStateBurden = {toggleStateBurden}
       trend = {trend}
@@ -704,7 +706,7 @@ useEffect(() => {
       selIndiaData={selIndiaData} 
       level={level} 
       selArea={selArea} 
-      areaName = {areaName}
+      titleAreaName = {titleAreaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}/>: null}
      </div>
@@ -735,7 +737,6 @@ useEffect(() => {
           setIsLevelThree = {setIsLevelThree}
           buttonText = {buttonText}
           changeText = {changeText}
-          areaName = {areaName}
           selStateData = {selStateData}
           setSelStateData = {setSelStateData}
           selDistrictsData = {selDistrictsData}
@@ -744,6 +745,8 @@ useEffect(() => {
           graphTimeperiod = {graphTimeperiod}
           graphUnit = {graphUnit}
           areaName = {areaName}
+          titleAreaName = {titleAreaName}
+
           toggleStateBurden={toggleStateBurden}
           setToggleStateBurden={setToggleStateBurden}
           burdenbuttonText={burdenbuttonText} 
@@ -760,7 +763,7 @@ useEffect(() => {
       graphTimeperiod={graphTimeperiod}
       graphTitle = {graphTitle}
       graphUnit = {graphUnit}
-      areaName = {areaName}
+      titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}/>: null}
      </div>
     </div>

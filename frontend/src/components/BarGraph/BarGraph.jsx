@@ -4,7 +4,7 @@ import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "./BarFullScreen.css";
 
-const BarGraph = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaName, toggleStateBurden}) => { 
+const BarGraph = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden}) => { 
       
     const componentRef = useRef();
    
@@ -86,7 +86,7 @@ const BarGraph = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaName
             },
             title: {
               display: true,
-              text: [graphTitle +','+ barUnit, areaName +', '+ graphTimeperiod],
+              text: [graphTitle +','+ barUnit, titleAreaName +', '+ graphTimeperiod],
               fontColor: "black",
             },
             scales: {
@@ -151,7 +151,7 @@ const BarGraph = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaName
   const BarGraphArea = ({indicatorBar, graphTitle, 
       graphTimeperiod, graphUnit,selIndiaData,level,
       unit,unitName,selArea,selIndicator,indicatorSense, 
-      isLevelThree,selTimeperiod,areaName,
+      isLevelThree,selTimeperiod,titleAreaName,
       selStateData, toggleStateBurden}) => { 
 
         const componentRef = useRef();
@@ -265,7 +265,7 @@ const BarGraph = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaName
                 },
                 title: {
                   display: true,
-                  text: [graphTitle +','+ barGUnit, areaName +','+ graphTimeperiod],
+                  text: [graphTitle +','+ barGUnit, titleAreaName +','+ graphTimeperiod],
                   fontColor: "black",
                 },
                 scales: {

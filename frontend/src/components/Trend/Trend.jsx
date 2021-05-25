@@ -47,7 +47,7 @@ const useResizeObserver = ref => {
   }, [ref.current]);
   return dimensions;
 };
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, areaName, toggleStateBurden,trend}) => { 
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend}) => { 
 
   const componentRef = useRef();
 
@@ -159,7 +159,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
         .style("font-size","13px")
         .style("font-weight","bold")
         .attr("dy", "-2em")
-        .text(`${graphTitle},${graphUnit},${areaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
+        .text(`${graphTitle},${graphUnit},${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
       
         
       bar.append("g")
@@ -224,7 +224,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       .style("font-size","13px")
       .style("font-weight","bold")
       .attr("dy", "-2em")
-      .text(`${graphTitle},${graphUnit},${areaName}`)
+      .text(`${graphTitle},${graphUnit},${titleAreaName}`)
 
       // bar.append("text")
       // .attr("x",innerWidth/2)

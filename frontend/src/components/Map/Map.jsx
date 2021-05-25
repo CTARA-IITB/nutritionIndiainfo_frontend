@@ -33,7 +33,7 @@ export const Map = ({
   indicatorSense,
   isLevelThree,
   switchDisplay, setSwitchDisplay,
-  selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,
+  selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,titleAreaName,
   selStateData, setSelStateData, selDistrictsData, areaChange,
   graphTitle,graphTimeperiod,graphUnit,
   toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map
@@ -78,10 +78,10 @@ export const Map = ({
 
  
   if (toggleStateBurden === true) {
-    mapTitle = graphTitle + ","+ graphUnit +","+areaName +","+ graphTimeperiod + `${"\n"}`;
+    mapTitle = graphTitle + ","+ graphUnit +","+titleAreaName +","+ graphTimeperiod + `${"\n"}`;
   }
   else{
-    mapTitle = graphTitle + ","+ "Number" +","+areaName +","+ graphTimeperiod;
+    mapTitle = graphTitle + ","+ "Number" +","+titleAreaName +","+ graphTimeperiod;
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {

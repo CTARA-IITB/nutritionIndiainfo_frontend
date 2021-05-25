@@ -3,7 +3,7 @@ import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
-export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaName, toggleStateBurden})=>{
+export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden})=>{
 
     const componentRef = useRef();
     const screen=useFullScreenHandle();
@@ -110,7 +110,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
             },
             title: {
               display: true,
-              text: [graphTitle +','+ barUnit, areaName +', '+ graphTimeperiod],
+              text: [graphTitle +','+ barUnit, titleAreaName +', '+ graphTimeperiod],
               fontColor: "black",
             },
             scales: {

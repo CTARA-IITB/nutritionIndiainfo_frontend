@@ -3,7 +3,7 @@ import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
-export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,areaName,selStateData, toggleStateBurden}) => {
+export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName,selStateData, toggleStateBurden}) => {
 
     const componentRef = useRef();
     const screen=useFullScreenHandle();
@@ -115,7 +115,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         },
         title:{
             display: true,
-            text: [graphTitle +','+ barGUnit, areaName +','+ graphTimeperiod],
+            text: [graphTitle +','+ barGUnit, titleAreaName +','+ graphTimeperiod],
             fontColor: "black",
         },
         scales: {

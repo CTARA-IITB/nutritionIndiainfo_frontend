@@ -21,7 +21,7 @@ const margin = {
   left: 100,
   top: 50,
   right: 50,
-  bottom: 100,
+  bottom: 150,
 };
 
 

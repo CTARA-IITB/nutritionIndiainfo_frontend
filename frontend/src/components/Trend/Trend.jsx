@@ -95,7 +95,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       windowWidth = windowWidth/2;
       windowHeight = windowHeight/2;
     }else{
-      console.log(windowWidth,"ww")
       windowWidth = windowWidth + 100;
       windowHeight = windowHeight/2;
     }
@@ -109,7 +108,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
    
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-    console.log(width,height)
     svg.selectAll("*").remove();
     const bar = svg
         .attr("width", width)
@@ -119,7 +117,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
     
     
 
-    if(data){
+    if(data && data.length >0){
 
       let listofDate = [];
       data.map((d) => {
@@ -216,6 +214,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, are
       	.style("text-anchor","middle")
       	.style("font-size","10px")
         .text(function(d) { return d.timeperiod; });
+    }else{
+      // bar.append("text").text("data is not present")
     }
     
    

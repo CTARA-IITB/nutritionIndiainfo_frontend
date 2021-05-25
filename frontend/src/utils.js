@@ -111,14 +111,12 @@ export const createHierarchy = (options) =>{
   export async function populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt,
     setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod)
   {
-    console.log("selCategory", selCategory);
     // const url_6 = await fetch(`http://13.234.11.176/api/indicator/${tab}`);
     const solr_url_6 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv4/select?fl=value:indicator_id%2Ctitle:indicator_name%2Cindi_sense&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`);
     // const body_6 = await url_6.json();
     const solr_body_6 = await solr_url_6.json();
     // console.log(body_6,solr_body_6.response.docs);
     setIndicatorDropdownOpt(solr_body_6.response.docs);
-    console.log("inddop",solr_body_6.response.docs);
     setSelIndicator(solr_body_6.response.docs[0].value);
     setGraphTitle(solr_body_6.response.docs[0].title);
     let indiVal = solr_body_6.response.docs[0].value;

@@ -178,6 +178,7 @@ export const Map = ({
     statusMsg ="Click on Map to Drill down to District level";
   }
   else{
+    
     if(null!== selStateData && selStateData.length > 0)
     {
       data = selStateData;
@@ -186,17 +187,20 @@ export const Map = ({
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
       geometry = {type: "FeatureCollection",features}
+      warning=""
+
     }
     else{
       let features = boundaries.dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
       geometry = {type: "FeatureCollection",features}
+      warning="Administrative Boundaries as per NFHS4(2015-16)"
     }
   }
   else{
     // console.log("testst", document.getElementById("info-msg"));
     //   document.getElementById("info-msg").className += " shake";
         //   setTimeout(removeShake,3000);
-      if (selTimeperiod === 22)    // change state boundaries when timeperiod is NFHS5
+      if (selTimeperiod === 22) // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
       else
         geometry = boundaries.state;

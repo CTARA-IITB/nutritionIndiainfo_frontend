@@ -85,12 +85,27 @@ export const Map = ({
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
+    console.log("legend", i, genLength, generatedLabels,labelDelimiter);
     if (i === 0) {
       const values = generatedLabels[i].split(` ${labelDelimiter} `)
       return `Less than ${values[1]}`
-    } else if (i === genLength - 1) {
+    } else if(i == 1)
+    {
       const values = generatedLabels[i].split(` ${labelDelimiter} `)
-      return `${values[0]} or more`
+      return `${values[0]} to  ${values[1] -0.1}`
+    }else if(i == 2)
+    {
+    const values = generatedLabels[i].split(` ${labelDelimiter} `)
+    return `${values[0]} to  ${values[1] -0.1}`
+    }
+    else if(i == 3)
+    {
+    const values = generatedLabels[i].split(` ${labelDelimiter} `)
+    return `${values[0]} to  ${values[1] -0.1}`
+    }
+    else if (i === genLength -1) {
+      const values = generatedLabels[i].split(` ${labelDelimiter} `)
+      return ` ≥ ${values[0]}`
     }
     return generatedLabels[i]
   };
@@ -228,18 +243,20 @@ export const Map = ({
  
 
     let c2Value;
+    let color_range
     if (toggleStateBurden === true) 
     {
       c2Value = d => d.dataValue;
+      color_range = _.map(data, d => {
+        return +d.data_value
+      });
     }
     else{
-      c2Value = d => d.dataValueNum; 
+      c2Value = d => d.dataValueNum;
+      color_range = _.map(data, d => {
+        return +d.data_value_num
+      }); 
     }
-
-
-    let color_range = _.map(data, d => {
-      return +d.data_value_num
-    });
     
     let sum = color_range.reduce(function(a, b){
       return a + b;
@@ -250,20 +267,50 @@ export const Map = ({
     let low;
     let medium;
     let high;
-    if (selIndicator == 19 || selIndicator == 20 || selIndicator == 92 || selIndicator == 96 || selIndicator == 105) {
+    let highest;
+    let arr20to80 = [31,11,28,6,7,37,51,42,84]
+    if (selIndicator == 19 || selIndicator == 21) {
       low = 5.0;
       medium = 10.0;
       high = 15.0;
+      highest = 20.0
     } else if (selIndicator == 17 || selIndicator == 18 || selIndicator == 12 || selIndicator == 13) {
        low = 10.0;
        medium = 20.0;
        high = 30.0;
+       highest = 40.0;
     } else if(selIndicator == 71 || selIndicator == 124 )
     {
       low = 5.0;
       medium = 20.0;
       high = 40.0;
+      highest = 60.0;
+    } else if(selIndicator == 20 || selIndicator == 108)
+    {
+      low = 1.0;
+      medium = 2.0;
+      high = 5.0;
+      highest = 10.0;
+     }else if(selIndicator == 107)
+    {
+      low = 0.1;
+      medium = 0.5;
+      high = 1;
+      highest = 2.5;
+    }else if(selIndicator == 89)
+    {
+      low = 5.0;
+      medium = 10.0;
+      high = 20.0;
+      highest = 30.0;
+    }else if(arr20to80.includes(selIndicator))
+    {
+      low = 20.0;
+      medium = 40.0;
+      high = 60.0;
+      highest = 80.0;
     }
+    
     
     
     let colorScale;
@@ -279,8 +326,8 @@ export const Map = ({
       .domain([min, max])
       .range(["#B2022F", "#FF0000", "#FFE338", "#DAF7A6"])
 
-    let arrsuw = [12, 19, 17, 18, 20, 13, 71,124];
-    if (arrsuw.includes(selIndicator)) {
+      let arrsuw = [19,21,17,18,12,13,71,124,20,108,107,89,31,11,28,6,7,37,51,42,84];
+      if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }
     else if (indicatorSense === 'Negative') {

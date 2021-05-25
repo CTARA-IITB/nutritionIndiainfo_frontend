@@ -319,8 +319,8 @@ export const Map = ({
     
     let colorScale;
   
-    let colorScale2 = scaleThreshold().domain([low, medium, high])
-    .range(["#DAF7A6", "#FFE338", "#FF0000", "#B2022F"]); 
+    let colorScale2 = scaleThreshold().domain([low, medium, high, highest])
+    .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", '#8e0000']); 
 
     let colorScale4 = scaleQuantize()
       .domain([min, max])

@@ -39,6 +39,7 @@ export const Map = ({
   toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map
 
 }) => {
+  console.log("toggleStateBurden", toggleStateBurden);
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();

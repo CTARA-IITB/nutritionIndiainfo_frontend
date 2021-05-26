@@ -19,6 +19,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let sortedBarData =[];
     let sortedBarLabel = [];
 
+    // remove last word  graph title i.e olds
+    var lastIndex = graphTitle.lastIndexOf(" ");
+    graphTitle = graphTitle.substring(0, lastIndex);
+    graphTitle = graphTitle + 's'
+
     if(toggleStateBurden === false){
         barUnit = 'Number';
     }
@@ -91,15 +96,23 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             table[i].data += " ("+graphTimeperiod +")";
         }   
         
+         // graph time period 
+        let chartTitle = graphTimeperiod.split(" ")[0];
+        let lastChar = chartTitle.slice(-1);
+        if(/^[0-9]$/.test(lastChar)){
+            chartTitle = chartTitle.slice(0, -1);
+            chartTitle = chartTitle + '-' + lastChar;
+        }
+
         data = {
             labels:sortedBarLabel,
             datasets: [{
-                label: [graphTitle, barUnit,graphTimeperiod],
+                // label: [graphTitle, barUnit,graphTimeperiod],
                 data:sortedBarData,
                 yAxisID:'yAxis1',
                 backgroundColor: colors,
                 borderColor: '#ffffff',
-                borderWidth: 1
+                borderWidth: 1,
             }] 
         }
 
@@ -110,7 +123,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             },
             title: {
               display: true,
-              text: [graphTitle +','+ barUnit, titleAreaName +', '+ graphTimeperiod],
+              text: [graphTitle +' '+ 'by background characteristic', titleAreaName +' '+chartTitle + " (" + graphTimeperiod.split(" ")[1] + ")"],
               fontColor: "black",
             },
             scales: {
@@ -166,7 +179,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             }
         }
     }
-
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>

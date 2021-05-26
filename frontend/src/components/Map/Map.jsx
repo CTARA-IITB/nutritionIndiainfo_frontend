@@ -209,8 +209,9 @@ export const Map = ({
 
   }
   }
+  select(".tooltip").remove();
 
-  let tooltip = select("body").append("div")
+  let tooltip = select(".map_svg").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 

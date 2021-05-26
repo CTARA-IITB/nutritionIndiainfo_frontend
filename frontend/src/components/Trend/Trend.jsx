@@ -63,9 +63,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const screen = useFullScreenHandle();
 
   const parseTime = timeParse('%d-%b-%y');
-	 let tooltip2 = select("body").append("div")
-    .attr("class", "tooltip2")
-    .style("opacity", 0);
+
+	 
   
     const formatTime = timeFormat('%b-%y');
     const formatTooltipTime = timeFormat('%B-%Y');
@@ -86,7 +85,13 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       setData(cleanData);
   }, []);
 
+  select(".tooltip2").remove();
   useEffect(()=>{
+    let tooltip2 = select(".trend_svg").append("div")
+    .attr("class", "tooltip2")
+    .style("opacity", 0);
+
+  console.log(tooltip2);
     const svg = select(svgRef.current);
     let windowWidth = window.screen.width;
     let windowHeight = window.screen.height;
@@ -192,6 +197,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("height", d => yScale(0) - yScale(yValue(d)))
         .attr("fill", "rgba(142,209,26,.5)")
       	.on('mouseover', (i,d) => {
+              console.log(d);
         			tooltip2.transition().duration(500).style("opacity", 1);
               tooltip2.html(`${d.timeperiod}:${yValue(d)}</br>start date:${formatTooltipTime(d.start_date)}</br>end date:${formatTooltipTime(d.end_date)}</div>`)
           		.style("left", xScale(d.middle_date) + 50 + "px")
@@ -285,7 +291,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
-      <svg id="svgTrend"  ref = {svgRef}></svg>
+      <svg id="svgTrend" width="100%" height="100%" ref = {svgRef}></svg>
     </div>
 
     </div>

@@ -24,14 +24,13 @@ svg .geoCentroid {
 div.tooltip {
   padding: 10px;
   position: absolute;
+  display: inline-block;
   text-align: center;
-  width: 150px;
-  height: 70px;
-  background-color: white;
+  background-color: rgba(0,0,0,.9);
   border-radius: 10px;
   pointer-events: none;
-  border-bottom: solid;
-  border-left: solid;
+  color: white;
+  font-size: 11px;
 }
 
 button.ant-switch {

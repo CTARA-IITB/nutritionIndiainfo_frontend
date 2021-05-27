@@ -7,8 +7,7 @@ import Chart from 'chart.js';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName,selStateData, toggleStateBurden}) => {
 
-    // const componentRef = useRef();
-    const componentRef = React.createRef();
+    const componentRef = useRef();
     const screen=useFullScreenHandle();
 
     let barLabel=[];
@@ -34,6 +33,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     if(selIndiaData && level=="1"){
 
         selIndiaData.map(i=>{
+            
             barLabel.push(i.area_name)
             if(toggleStateBurden === true){
                 barData.push(+i.data_value)
@@ -41,6 +41,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             else{
                 barData.push(+i.data_value_num)
             }
+            
         })
         s = ' by State ';
     }        
@@ -62,11 +63,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             }           
         }
         selStateData.map(i=>{
-            barLabel.push(i.area_name)
-            if(toggleStateBurden === true)
-                barData.push(+i.data_value)
-            else
-                barData.push(+i.data_value_num) 
+            if(i.area_name!==areaName){
+                barLabel.push(i.area_name)
+                if(toggleStateBurden === true)
+                    barData.push(+i.data_value)
+                else
+                    barData.push(+i.data_value_num) 
+            }
         })
         s = ' by District '
     }           
@@ -228,7 +231,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="BarArea" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options}/>
+                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options} />
             </FullScreen>    
         </div>
     );

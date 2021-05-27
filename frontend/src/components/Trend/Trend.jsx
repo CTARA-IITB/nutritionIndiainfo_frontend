@@ -49,11 +49,9 @@ const useResizeObserver = ref => {
 };
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend}) => { 
 
-  const componentRef = useRef();
-
   const [data, setData] = useState(null);
   const svgRef = useRef();
- 
+
   const [check,setCheck] = useState(true);
 
   const trendWrapper = useRef();
@@ -288,12 +286,11 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   return (
     <>
     <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
-    <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef}/>
+    <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
       <svg id="svgTrend" width="100%" height="100%" ref = {svgRef}></svg>
     </div>
-
     </div>
     </FullScreen>
     </>

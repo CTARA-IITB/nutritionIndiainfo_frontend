@@ -713,6 +713,7 @@ useEffect(() => {
       level={level} 
       selArea={selArea} 
       titleAreaName = {titleAreaName}
+      areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}/>: null}
      </div>

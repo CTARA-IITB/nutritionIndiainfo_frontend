@@ -8,7 +8,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
     const componentRef = useRef();
     const screen=useFullScreenHandle();
     
-    let barLabel=[];
+    let barLabel = [];
     let barData=[];
     let data = [];
     var colors = [];
@@ -16,8 +16,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
     let options =[];
     let barUnit = graphUnit;
     let title=graphTitle +', '+barUnit;
-    let sortedBarData =[];
-    let sortedBarLabel = [];
 
     // remove last word  graph title i.e olds
     var lastIndex = graphTitle.lastIndexOf(" ");
@@ -30,73 +28,51 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
 
     if(indicatorBar){
         indicatorBar.map(i=>{
-            barLabel.push(i.subgroup_name+";"+i.sub_category)
-        if(toggleStateBurden == true){
-            barData.push(+i.data_value)
-        }
-        else{
-            barData.push(+i.data_value_num)
-        }
+            if(i.subgroup_name==='All'){
+                barLabel.push(i.subgroup_name)
+                colors.push("#fe0000")
+                if(toggleStateBurden == true){
+                    barData.push(+i.data_value)
+                }
+                else{
+                    barData.push(+i.data_value_num)
+                }
+                table.push({
+                    area:barLabel[barLabel.length-1],
+                    data:+barData[barData.length-1],
+                })
+            }
+            else if(i.subgroup_name==='Male' || i.subgroup_name==='Female'){
+                barLabel.push(i.subgroup_name)
+                colors.push('#DEDEDE')
+                if(toggleStateBurden == true){
+                    barData.push(+i.data_value)
+                }
+                else{
+                    barData.push(+i.data_value_num)
+                }
+                table.push({
+                    area:barLabel[barLabel.length-1],
+                    data:+barData[barData.length-1],
+                })
+            }
+            else if(i.subgroup_name==='Poorest' || i.subgroup_name==='Middle' || i.subgroup_name==='Second' || i.subgroup_name==='Fourth' || i.subgroup_name==='Richest'){
+                barLabel.push(i.subgroup_name)
+                colors.push('#fe0000')
+                if(toggleStateBurden == true){
+                    barData.push(+i.data_value)
+                }
+                else{
+                    barData.push(+i.data_value_num)
+                }
+                table.push({
+                    area:barLabel[barLabel.length-1],
+                    data:+barData[barData.length-1],
+                })
+            }
         })
-    
-        for(var i = 0; i < barLabel.length; i++){
-            if(barLabel[i].split(";")[1] === 'null')
-            {
-                colors[i] = 'rgb(0,153,255)';
-            }
-            else  if(barLabel[i].split(";")[1] === 'Sex')
-            {
-                colors[i] = 'rgb(254,225,211)';
-            }
-            else  if(barLabel[i].split(";")[1] === 'Location')
-            {
-                colors[i] = 'rgb(251,161,167)';
-            }
-            else  if(barLabel[i].split(";")[1] === 'Caste')
-            {
-                colors[i] = 'rgb(247,104,161)';
-            }
-            else  if(barLabel[i].split(";")[1] === 'Wealth Index')
-            {
-                colors[i] = 'rgb(230,23,173)';
-            }
-        }
 
-        // table details
-        for(var i=0;i<barLabel.length;i++){
-            table.push({
-              area:barLabel[i].split(";")[0],
-              data:+barData[i],
-            })
-        }
-        // sort the table
-        const compareObjects=(object1, object2, key)=>{
-            const obj1 = object1.data
-            const obj2 = object2.data
-
-            if (obj1 < obj2) {
-            return -1
-            }
-            if (obj1 > obj2) {
-            return 1
-            }
-            return 0
-        }
-        table.sort((d1, d2) => {
-            return compareObjects(d1, d2,)
-        })
-        // reverse the table
-        table.reverse();
-
-        //sort label and data
-        for(var i=0;i<table.length;i++){
-
-            sortedBarLabel[i]=table[i].area;
-            sortedBarData[i]=table[i].data;
-            table[i].data += " ("+graphTimeperiod +")";
-        }   
-        
-         // graph time period 
+        // graph time period 
         let chartTitle = graphTimeperiod.split(" ")[0];
         let lastChar = chartTitle.slice(-1);
         if(/^[0-9]$/.test(lastChar)){
@@ -105,14 +81,15 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
         }
 
         data = {
-            labels:sortedBarLabel,
+            labels:barLabel,
             datasets: [{
                 // label: [graphTitle, barUnit,graphTimeperiod],
-                data:sortedBarData,
+                data:barData,
                 yAxisID:'yAxis1',
                 backgroundColor: colors,
-                borderColor: '#ffffff',
-                borderWidth: 1,
+                borderColor: '#fe0000',
+                borderWidth:0.5,
+                barThickness: 10,
             }] 
         }
 
@@ -127,45 +104,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
               fontColor: "black",
             },
             scales: {
-                yAxes:[{
-                    id:'yAxis1',
-                    type:"category",
-                    ticks:{
-                        fontSize: 11,
-                        fontColor: "black",
-                        callback:function(label){
-                            var subgroup = label.split(";")[0];
-                            return subgroup;
-                        }
+                yAxes:[
+                    {
+                        id:'yAxis1',
+                        type:"category",
+                        ticks:{
+                            fontSize: 11,
+                            fontColor: "black",
+                        },
+                        gridLines: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                        },
                     },
-                    gridLines: {
-                    drawOnChartArea: false, // only want the grid lines for one axis to show up
-                    },
-                },
-                {
-                    id:'yAxis2',
-                    type:"category",
-                    gridLines: {
-                    drawOnChartArea: false, // only want the grid lines for one axis to show up
-                    },
-                    ticks:{
-                        fontSize: 9,
-                        fontColor:"black",
-                        minRotation: 0,
-                        callback:function(label){
-                            var subgroup = label.split(";")[0];
-                            var type = label.split(";")[1];
-                            if(subgroup === "Rural" || subgroup === "Female"  || subgroup ==="ST" || subgroup === "Middle"){
-                            return type
-                            }
-                            else
-                            return ""
-                        }  
-                    },
-                    gridLines: {
-                        drawOnChartArea:false
-                    }
-                }],
+                   
+                ],
                 xAxes: [{
                     ticks: {
                         fontSize: 8,

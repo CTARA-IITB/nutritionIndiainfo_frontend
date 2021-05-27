@@ -8,7 +8,7 @@ class BarComponent extends React.PureComponent {
   render() {
     return (
         <div>
-            <HorizontalBar ref={this.componentRef} id="Bar" data={this.props.data} options={this.props.options}/>
+            <HorizontalBar ref={this.componentRef} id="Bar"  data={this.props.data} options={this.props.options}/>
         </div>
     );
   }

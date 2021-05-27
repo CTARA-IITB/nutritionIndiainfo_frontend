@@ -126,8 +126,11 @@
 
 .layout_left_bar1 {
   /* background-color:red; */
-  width: 100%;
+  width: 80%;
   height: 50%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+ 
 }
 .layout_left_trend {
   /* background-color:blue; */
@@ -137,7 +140,7 @@
 
 .layout_right_bar2 {
   /* background-color:green; */
-  width: 100%;
+  width: 80%;
   height: 50%;
 }
 .btn_toggle {

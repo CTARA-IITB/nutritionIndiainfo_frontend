@@ -474,9 +474,11 @@ useEffect(() => {
                 });
                
                 if(!flag) {
-                  timeValue = solr_body_1[0].value;
-                  setSelTimeperiod(solr_body_1[0].value);
-                  setGraphTimeperiod(solr_body_1[0].title);
+                  if(typeof solr_body_1[0] !== 'undefined'){  // added this condition to resolve issue when UT data not present for CNNS Obesity in 10-14 year old
+                    timeValue = solr_body_1[0].value;
+                    setSelTimeperiod(solr_body_1[0].value);
+                    setGraphTimeperiod(solr_body_1[0].title);
+                  }
                 }
             } 
             await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);

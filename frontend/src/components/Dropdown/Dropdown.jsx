@@ -706,6 +706,7 @@ useEffect(() => {
     
      <div className="layout_left_bar1">
      {isSelected? <BarArea
+      indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
       graphUnit = {graphUnit}

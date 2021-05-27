@@ -5,7 +5,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "chartjs-plugin-datalabels";
 import Chart from 'chart.js';
 
-export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName,selStateData, toggleStateBurden}) => {
+export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden}) => {
 
     const componentRef = useRef();
     const screen=useFullScreenHandle();

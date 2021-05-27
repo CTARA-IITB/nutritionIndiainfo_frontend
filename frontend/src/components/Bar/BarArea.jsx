@@ -49,7 +49,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
         for(let j=0;j<selIndiaData.length;j++){
 
-            if(+selArea===selIndiaData[j].area_id){ 
+            if(+selArea===selIndiaData[j].area_id && selIndiaData[j].area_name!==areaName){ 
 
                 if(toggleStateBurden === true){
                     stateDataValue=selIndiaData[j].data_value

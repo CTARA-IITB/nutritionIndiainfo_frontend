@@ -52,13 +52,14 @@ export const useData = (selArea) => {
 
   }
   
-const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/95d3e079cd1933a0fae19bf3b99b9eec/raw/d0b9a50879e7fb01816cd4ae578219abeb4ec0ac/india_state_nfhs5.json';
+const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/88ca1582aae1960b739339013a43a228/raw/5a0a4ef6e454afcda1cf5de43fc24ed5bd2ddf53/india-state_26may.json';
 const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/262881c21197aa8da0524550b128d639/raw/ffd5cb39d90469934c1072ab7399c16e823fc82e/india_district_new_v3.json'
 
 export const useNewBoundaries = () => {
     let [data, setData] = useState(null);
     useEffect(() => {
     json(jsonNewIndianstate).then(stateTopology => {
+      console.log(stateTopology)
       const state = stateTopology.objects["india_state_nfhs5"]
       json(jsonNewIndiaDistrict).then(districtTopology =>{
         const dist = districtTopology.objects.india_district_new_v3;

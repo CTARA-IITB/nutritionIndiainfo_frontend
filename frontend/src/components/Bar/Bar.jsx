@@ -4,7 +4,6 @@ import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden})=>{
-
     const componentRef = useRef();
     const screen=useFullScreenHandle();
     

@@ -228,7 +228,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="BarArea" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options}/>
+                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options} />
             </FullScreen>    
         </div>
     );

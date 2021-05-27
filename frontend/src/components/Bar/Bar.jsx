@@ -42,23 +42,23 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
         for(var i = 0; i < barLabel.length; i++){
             if(barLabel[i].split(";")[1] === 'null')
             {
-            colors[i] = 'rgb(0,153,255)';
+                colors[i] = 'rgb(0,153,255)';
             }
             else  if(barLabel[i].split(";")[1] === 'Sex')
             {
-            colors[i] = 'rgb(254,225,211)';
+                colors[i] = 'rgb(254,225,211)';
             }
             else  if(barLabel[i].split(";")[1] === 'Location')
             {
-            colors[i] = 'rgb(251,161,167)';
+                colors[i] = 'rgb(251,161,167)';
             }
             else  if(barLabel[i].split(";")[1] === 'Caste')
             {
-            colors[i] = 'rgb(247,104,161)';
+                colors[i] = 'rgb(247,104,161)';
             }
             else  if(barLabel[i].split(";")[1] === 'Wealth Index')
             {
-            colors[i] = 'rgb(230,23,173)';
+                colors[i] = 'rgb(230,23,173)';
             }
         }
 
@@ -173,7 +173,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, areaNa
                         beginAtZero: true
                     },
                     gridLines: {
-                        drawOnChartArea:false
+                        drawOnChartArea:true
                     }
                 }]
             }

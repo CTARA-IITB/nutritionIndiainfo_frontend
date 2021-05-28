@@ -39,7 +39,7 @@ export const Map = ({
   toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map
 
 }) => {
-  console.log("toggleStateBurden", toggleStateBurden);
+  // console.log("toggleStateBurden", toggleStateBurden);
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -86,7 +86,7 @@ export const Map = ({
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
-    console.log("legend", i, genLength, generatedLabels,labelDelimiter);
+    // console.log("legend", i, genLength, generatedLabels,labelDelimiter);
     if (i === 0) {
       const values = generatedLabels[i].split(` ${labelDelimiter} `)
       return `Less than ${values[1]}`

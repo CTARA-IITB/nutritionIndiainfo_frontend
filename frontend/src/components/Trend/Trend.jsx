@@ -51,7 +51,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   const [data, setData] = useState(null);
   const svgRef = useRef();
-
+  
   const [check,setCheck] = useState(true);
 
   const trendWrapper = useRef();

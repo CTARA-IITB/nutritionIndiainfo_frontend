@@ -5,7 +5,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "chartjs-plugin-datalabels";
 import Chart from 'chart.js';
 
-export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden}) => {
+export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden}) => {
 
     const componentRef = useRef();
     const screen=useFullScreenHandle();
@@ -28,12 +28,24 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     var lastIndex = graphTitle.lastIndexOf(" ");
     graphTitle = graphTitle.substring(0, lastIndex);
     graphTitle = graphTitle + 's'
-
     
-    if(selIndiaData && level=="1"){
+    console.log(indicatorTrend,graphTimeperiod)
+    if(selIndiaData && level=="1" ){
 
+        indicatorTrend.map(i=>{
+            // console.log(i.data_value,graphTimeperiod)
+            if(i.timeperiod.split(" ")[0]==graphTimeperiod.split(" ")[0]){
+
+                barLabel.push(areaName)
+                if(toggleStateBurden === true){
+                    barData.push(+i.data_value)
+                }      
+                else{
+                    barData.push(+i.data_value_num)
+                } 
+            }    
+        })
         selIndiaData.map(i=>{
-            
             barLabel.push(i.area_name)
             if(toggleStateBurden === true){
                 barData.push(+i.data_value)

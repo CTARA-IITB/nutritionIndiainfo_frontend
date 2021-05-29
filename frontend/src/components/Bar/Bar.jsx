@@ -124,7 +124,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         beginAtZero: true
                     },
                     gridLines: {
-                        drawOnChartArea:true
+                        drawOnChartArea:true,
+                        color:'#C1C1C1'
                     }
                 }]
             }

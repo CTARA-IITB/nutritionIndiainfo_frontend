@@ -289,7 +289,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
-      <svg id="svgTrend" width="100%" height="100%" ref = {svgRef}></svg>
+      <svg id="svgTrend" width="100%" height="130%" ref = {svgRef}></svg>
     </div>
     </div>
     </FullScreen>

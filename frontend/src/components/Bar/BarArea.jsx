@@ -135,8 +135,8 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             label :'',
             data:sortedBarData,
             yAxisID:'yAxis1',
-            backgroundColor:"#8e0000",
-            borderColor: "#8e0000",
+            backgroundColor:colorScale,
+            borderColor: colorScale,
             borderWidth: 1
         },
         {

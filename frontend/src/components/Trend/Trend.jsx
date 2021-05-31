@@ -266,7 +266,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
       else if(state === false){
         if(trend[0] != undefined)
-        trend[0].style.height = "50vh";
+        trend[0].style.height = "750px";
       }
     }
   }

@@ -142,6 +142,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                 backgroundColor:"#DEDEDE",
                 borderColor: "#DEDEDE",
                 borderWidth: 1,
+                showTooltips:'false'
             }
         ]
     }
@@ -161,7 +162,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                 yAxisID:'yAxis1',
                 backgroundColor:"#fe0000",
                 borderColor: "#fe0000",
-                borderWidth: 1
+                borderWidth: 1,
             }
         ]
     }
@@ -179,7 +180,11 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         datasets: datasets,
     }    
     options = {
-        
+        tooltips:{
+            filter: function (tooltipItem) {
+                return tooltipItem.datasetIndex === 0;
+            }
+        },
         legend:{  
             display: false,
         },

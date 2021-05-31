@@ -128,9 +128,7 @@
   /* background-color:red; */
   width: 80%;
   height: 50%;
-  overflow-x: hidden;
-  overflow-y: scroll;
- 
+  
 }
 .layout_left_trend {
   /* background-color:blue; */

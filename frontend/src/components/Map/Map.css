@@ -106,7 +106,8 @@ button.ant-switch {
 
 .map {
   /* background-color:red; */
-  height: 500px;
+  height: 750px;
+  width: 100%;
   display: flex;
 }
 
@@ -139,7 +140,7 @@ button.ant-switch {
   justify-content:center;
 } */
 .map_req {
-  background-color:yellow;
+  /* background-color:yellow; */
   height: 100%;
   width: 0px;
   margin: 10px;

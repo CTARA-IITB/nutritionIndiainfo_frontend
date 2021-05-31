@@ -603,8 +603,8 @@ export const Map = ({
         map[0].style.height = "100vh";
       }
       else if(state === false){
-        if(map[0] != undefined)
-        map[0].style.height = "50vh";
+        if(map[0] != undefined){}
+        map[0].style.height = "700px";
       }
     }
   }

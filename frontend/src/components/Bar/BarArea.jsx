@@ -29,7 +29,6 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     graphTitle = graphTitle.substring(0, lastIndex);
     graphTitle = graphTitle + 's'
     
-    console.log(indicatorTrend,graphTimeperiod)
     if(selIndiaData && level=="1" ){
 
         selIndiaData.map(i=>{

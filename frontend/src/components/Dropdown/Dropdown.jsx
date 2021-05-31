@@ -700,6 +700,7 @@ useEffect(() => {
       graphTimeperiod = {graphTimeperiod}
       toggleStateBurden = {toggleStateBurden}
       trend = {trend}
+      selIndicator={selIndicator}
       />: null}
       </div>
 
@@ -716,7 +717,8 @@ useEffect(() => {
       titleAreaName = {titleAreaName}
       areaName = {areaName}
       selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}/>: null}
+      toggleStateBurden = {toggleStateBurden}
+      selIndicator={selIndicator}/>: null}
      </div>
    </div>
     <div className="layout_right">
@@ -772,7 +774,8 @@ useEffect(() => {
       graphTitle = {graphTitle}
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
-      toggleStateBurden = {toggleStateBurden}/>: null}
+      toggleStateBurden = {toggleStateBurden}
+      selIndicator={selIndicator}/>: null}
      </div>
     </div>
   </div>   

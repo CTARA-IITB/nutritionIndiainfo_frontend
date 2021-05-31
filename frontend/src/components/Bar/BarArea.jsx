@@ -31,18 +31,6 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     
     if(selIndiaData && level=="1" ){
 
-        indicatorTrend.map(i=>{
-            if(i.timeperiod.split(" ")[0]==graphTimeperiod.split(" ")[0]){
-
-                barLabel.push(areaName)
-                if(toggleStateBurden === true){
-                    barData.push(+i.data_value)
-                }      
-                else{
-                    barData.push(+i.data_value_num)
-                } 
-            }    
-        })
         selIndiaData.map(i=>{
             barLabel.push(i.area_name)
             if(toggleStateBurden === true){
@@ -112,58 +100,36 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         return compareObjects(d1, d2,)
     })
   
-    if(level=="1"){
-        // reverse the table
-        table.reverse();
-        //sort label and data
-        for(var i=0;i<table.length;i++){
-            sortedBarLabel[i]=table[i].area;
-            sortedBarData[i]=table[i].data;
-            table[i].data += " ("+graphTimeperiod +")";
-        }   
-        for(var i=0;i<sortedBarData.length;i++){
-            differenceData[i]=sortedBarData[0]-sortedBarData[i];
-        } 
-        datasets=[
-            {
-                // label: [graphTitle, barGUnit, graphTimeperiod],
-                label :'',
-                data:sortedBarData,
-                yAxisID:'yAxis1',
-                backgroundColor:"#8e0000",
-                borderColor: "#8e0000",
-                borderWidth: 1
-            },
-            {
-                data:differenceData,
-                yAxisID:'yAxis1',
-                backgroundColor:"#DEDEDE",
-                borderColor: "#DEDEDE",
-                borderWidth: 1,
-                showTooltips:'false'
-            }
-        ]
-    }
-    else if(level=="2"){
-
-         //sort label and data
-         for(var i=0;i<table.length;i++){
-            sortedBarLabel[i]=table[i].area;
-            sortedBarData[i]=table[i].data;
-            table[i].data += " ("+graphTimeperiod +")";
-        }   
-        datasets=[
-            {
-                // label: [graphTitle, barGUnit, graphTimeperiod],
-                label :'',
-                data:sortedBarData,
-                yAxisID:'yAxis1',
-                backgroundColor:"#fe0000",
-                borderColor: "#fe0000",
-                borderWidth: 1,
-            }
-        ]
-    }
+    // reverse the table
+    table.reverse();
+    //sort label and data
+    for(var i=0;i<table.length;i++){
+        sortedBarLabel[i]=table[i].area;
+        sortedBarData[i]=table[i].data;
+        table[i].data += " ("+graphTimeperiod +")";
+    }   
+    for(var i=0;i<sortedBarData.length;i++){
+        differenceData[i]=sortedBarData[0]-sortedBarData[i];
+    } 
+    datasets=[
+        {
+            // label: [graphTitle, barGUnit, graphTimeperiod],
+            label :'',
+            data:sortedBarData,
+            yAxisID:'yAxis1',
+            backgroundColor:"#8e0000",
+            borderColor: "#8e0000",
+            borderWidth: 1
+        },
+        {
+            data:differenceData,
+            yAxisID:'yAxis1',
+            backgroundColor:"#DEDEDE",
+            borderColor: "#DEDEDE",
+            borderWidth: 1,
+            showTooltips:'false'
+        }
+    ]
 
     // graph time period 
     let chartTitle = graphTimeperiod.split(" ")[0];
@@ -219,25 +185,14 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                     drawOnChartArea:false
                 }
             }],
-            animation:{
-                duration: 1,
-                onComplete: function() {
-                    var chart = componentRef.current.chartInstance,
-                    ctx = chart.ctx;
-                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'bottom';
-
-                    this.data.datasets.forEach(function(dataset, i) {
-                        var meta = chart.controller.getDatasetMeta(i);
-                        meta.data.forEach(function(bar, index) {
-                            var data = dataset.data[index];
-                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                        });
-                    });
+            datalabels: {
+                anchor :'end',
+                align :'top',
+                // and if you need to format how the value is displayed...
+                callback: function(value, context) {
+                    return 0;
                 }
-            },
-            
+            }
         } 
     }
     // title of table

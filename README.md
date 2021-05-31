@@ -12,4 +12,6 @@
 
 > [Harmonized IFPRI UNICEF Cut-offs for Nutrition Indicators](https://drive.google.com/file/d/1Z1ZtUtbAqEuhuVjtA-5vw1RfCm7SAOO8/view?usp=sharing)
 
-> [Lifecycle-Category-Indicator list](https://drive.google.com/file/d/1xOp01L-CpuN4YRuJ-vJ6TgG9e3ByZ0Bf/view?usp=sharing)
+> [NutritionINDIA.info indicators](https://drive.google.com/file/d/1BRUFOA1yq0z2JDodM03ZXlKWtubbZZf2/view?usp=sharing)
+
+> [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1EDn-bqO2_WnAF3evOuZi34hY5ERmMHvA/view)

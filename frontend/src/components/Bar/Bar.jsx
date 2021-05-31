@@ -3,7 +3,7 @@ import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
-export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden})=>{
+export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
     const componentRef = useRef();
     const screen=useFullScreenHandle();
     
@@ -15,6 +15,38 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let options =[];
     let barUnit = graphUnit;
     let title=graphTitle +', '+barUnit;
+    let colorScale ='#eda143';
+    let lightColor = '#F7D9B3';
+
+    let arrObese = [91,95,104,92,96,105,21];
+        if(selIndicator == 12 || selIndicator == 13){
+          colorScale = '#a3c00f'; 
+          lightColor = '#DAE59F';
+         }
+        else if(selIndicator == 19 || selIndicator == 20){
+          colorScale = '#e53935'; 
+          lightColor = '#F4AFAE';
+        }
+        else if(selIndicator == 17 || selIndicator == 18){
+          colorScale = '#039be5'; 
+          lightColor = '#9AD7F4';
+        }
+        else if(selIndicator == 107 || selIndicator == 108){
+          colorScale = '#e53935'; 
+          lightColor = '#F4AFAE';
+        }
+        else  if(arrObese.includes(selIndicator)){
+          colorScale = '#7b1fa2'; 
+          lightColor = '#CAA5D9';
+        }
+        else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125){
+          colorScale = '#b71c1c'; 
+          lightColor = '#E2A4A4';
+        }
+        else{
+          colorScale = '#eda143'; 
+          lightColor = '#F7D9B3';
+        }
 
     // remove last word  graph title i.e olds
     var lastIndex = graphTitle.lastIndexOf(" ");
@@ -29,7 +61,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         indicatorBar.map(i=>{
             if(i.subgroup_name==='All'){
                 barLabel.push(i.subgroup_name)
-                colors.push("#fe0000")
+                colors.push(colorScale)
                 if(toggleStateBurden == true){
                     barData.push(+i.data_value)
                 }
@@ -43,7 +75,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             }
             else if(i.subgroup_name==='Male' || i.subgroup_name==='Female'){
                 barLabel.push(i.subgroup_name)
-                colors.push('#DEDEDE')
+                colors.push(lightColor)
                 if(toggleStateBurden == true){
                     barData.push(+i.data_value)
                 }
@@ -57,7 +89,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             }
             else if(i.subgroup_name==='Poorest' || i.subgroup_name==='Middle' || i.subgroup_name==='Second' || i.subgroup_name==='Fourth' || i.subgroup_name==='Richest'){
                 barLabel.push(i.subgroup_name)
-                colors.push('#fe0000')
+                colors.push(colorScale)
                 if(toggleStateBurden == true){
                     barData.push(+i.data_value)
                 }
@@ -86,7 +118,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 data:barData,
                 yAxisID:'yAxis1',
                 backgroundColor: colors,
-                borderColor: '#fe0000',
+                borderColor: colorScale,
                 borderWidth:0.5,
                 barThickness: 10,
             }] 

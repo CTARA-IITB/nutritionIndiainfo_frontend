@@ -47,7 +47,7 @@ const useResizeObserver = ref => {
   }, [ref.current]);
   return dimensions;
 };
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend}) => { 
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend, selIndicator}) => { 
 
   const [data, setData] = useState(null);
   const svgRef = useRef();
@@ -59,6 +59,23 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   // console.log(trendWrapper)
   // console.log(dimensions)
   const screen = useFullScreenHandle();
+  let colorScale ='#eda143';
+
+  let arrObese = [91,95,104,92,96,105,21];
+  if(selIndicator == 12 || selIndicator == 13)
+    colorScale = '#a3c00f'; 
+  else if(selIndicator == 19 || selIndicator == 20)
+    colorScale = '#e53935'; 
+  else if(selIndicator == 17 || selIndicator == 18)
+    colorScale = '#039be5'; 
+  else if(selIndicator == 107 || selIndicator == 108)
+    colorScale = '#e53935'; 
+  else  if(arrObese.includes(selIndicator))
+    colorScale = '#7b1fa2'; 
+  else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125)
+    colorScale = '#b71c1c'; 
+  else
+    colorScale = '#eda143'; 
 
   const parseTime = timeParse('%d-%b-%y');
 
@@ -67,6 +84,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     const formatTime = timeFormat('%b-%y');
     const formatTooltipTime = timeFormat('%B-%Y');
     const formatTitleTime = timeFormat('%Y');
+
+
     
 
   useEffect(() => {
@@ -198,7 +217,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("y", d => yScale(yValue(d)))
         .attr("width", d => xScale(d.end_date) - xScale(d.start_date))
         .attr("height", d => yScale(0) - yScale(yValue(d)))
-        .attr("fill", "rgba(142,209,26,.5)")
+        .attr("fill", colorScale)
       	.on('mouseover', (i,d) => {
               console.log(d);
         			tooltip2.transition().duration(500).style("opacity", 1);

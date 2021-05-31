@@ -77,5 +77,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "chartjs-plugin-datalabels": "^1.0.0"
   }
 }

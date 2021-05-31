@@ -14,4 +14,3 @@
 
 > [NutritionINDIA.info indicators](https://drive.google.com/file/d/1BRUFOA1yq0z2JDodM03ZXlKWtubbZZf2/view?usp=sharing)
 
-> [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1EDn-bqO2_WnAF3evOuZi34hY5ERmMHvA/view)

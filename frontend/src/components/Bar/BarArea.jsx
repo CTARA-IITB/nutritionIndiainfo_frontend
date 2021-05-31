@@ -29,11 +29,9 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     graphTitle = graphTitle.substring(0, lastIndex);
     graphTitle = graphTitle + 's'
     
-    console.log(indicatorTrend,graphTimeperiod)
     if(selIndiaData && level=="1" ){
 
         indicatorTrend.map(i=>{
-            // console.log(i.data_value,graphTimeperiod)
             if(i.timeperiod.split(" ")[0]==graphTimeperiod.split(" ")[0]){
 
                 barLabel.push(areaName)

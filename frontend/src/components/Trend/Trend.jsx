@@ -80,6 +80,12 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         	cleanData.push(d);
         }
       });
+      
+
+      cleanData = cleanData.sort(function (a, b) {  // sort the data according to start date.. specifically for AHS
+        return a.start_date - b.start_date;
+      });
+
       setData(cleanData);
   }, []);
 
@@ -89,7 +95,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     .attr("class", "tooltip2")
     .style("opacity", 0);
 
-  console.log(tooltip2);
     const svg = select(svgRef.current);
     let windowWidth = window.screen.width;
     let windowHeight = window.screen.height;

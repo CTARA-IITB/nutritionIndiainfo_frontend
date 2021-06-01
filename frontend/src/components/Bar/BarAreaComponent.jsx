@@ -8,7 +8,7 @@ class BarAreaComponent extends React.PureComponent {
   render() {
     return (
         <div>
-            <HorizontalBar ref={this.componentRef} id="BarArea" height={235} data={this.props.data} options={this.props.options}/>
+            <HorizontalBar ref={this.componentRef} id="BarArea"  data={this.props.data} options={this.props.options}/>
         </div>
     );
   }

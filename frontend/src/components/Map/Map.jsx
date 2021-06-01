@@ -333,37 +333,16 @@ export const Map = ({
       .range(["#B2022F", "#FF0000", "#FFE338", "#DAF7A6"])
 
       let arrsuw = [19,21,17,18,12,13,71,124,20,108,107,89,31,11,28,6,7,37,51,42,84];
-    if (toggleStateBurden === true)
-    { 
-          if (arrsuw.includes(selIndicator)) {
-          colorScale = colorScale2;
-        }
-        else if (indicatorSense === 'Negative') {
-          colorScale = colorScale4;
+      if (arrsuw.includes(selIndicator)) {
+      colorScale = colorScale2;
+    }
+    else if (indicatorSense === 'Negative') {
+      colorScale = colorScale4;
 
-        } else if (indicatorSense === 'Positive') {
-          colorScale = colorScale4_p;
+    } else if (indicatorSense === 'Positive') {
+      colorScale = colorScale4_p;
 
-        }
-      }
-  else{
-        let arrObese = [91,95,104,92,96,105,21];
-        if(selIndicator == 12 || selIndicator == 13)
-          colorScale = '#a3c00f'; 
-        else if(selIndicator == 19 || selIndicator == 20)
-          colorScale = '#e53935'; 
-        else if(selIndicator == 17 || selIndicator == 18)
-          colorScale = '#039be5'; 
-        else if(selIndicator == 107 || selIndicator == 108)
-          colorScale = '#e53935'; 
-        else  if(arrObese.includes(selIndicator))
-          colorScale = '#7b1fa2'; 
-        else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125)
-          colorScale = '#b71c1c'; 
-        else
-          colorScale = '#eda143'; 
-  }
-     
+    }
     
 
     const onMouseMove = (event, d) => {
@@ -534,7 +513,7 @@ export const Map = ({
           .attr("r", 2)
           .attr("cx", x+points[i][0])
           .attr("cy", y+points[i][1])
-          .attr("fill", colorScale);
+          .attr("fill", 'red');
 
         }
         }
@@ -625,7 +604,7 @@ export const Map = ({
       }
       else if(state === false){
         if(map[0] != undefined){}
-        map[0].style.height = "700px";
+        map[0].style.height = "50vh";
       }
     }
   }

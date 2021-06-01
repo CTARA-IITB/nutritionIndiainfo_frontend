@@ -100,56 +100,46 @@
 }
 
 .layout {
-  height: 1500px;
+  height: 100vh;
   display: flex;
-  /* background-color: blue; */
 }
 .layout_left {
-  /* background-color: red; */
-
-  height: 1500px;
+  height: 100%;
   width: 50%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 .layout_right {
-  height: 1500;
+  height: 100%;
   width: 50%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+.layout_right_map {
+  /* background-color:yellow; */
+  width: 100%;
+  height: 50%;
+  /* display: flex; */
+}
 
 .layout_left_bar1 {
-  /* background-color:purple; */
+  /* background-color:red; */
   width: 100%;
-  height: 750px;
+  height: 50%;
   
 }
 .layout_left_trend {
   /* background-color:blue; */
   width: 100%;
   height: 50%;
-  height: 750px;
-
-}
-
-.layout_right_map {
-  /* background-color:yellow; */
-  width: 100%;
-  height: 50%;
-  height: 750px;
-
-  /* display: flex; */
 }
 
 .layout_right_bar2 {
   /* background-color:green; */
   width: 100%;
   height: 50%;
-  height: 750px;
-
 }
 .btn_toggle {
   height: 10%;

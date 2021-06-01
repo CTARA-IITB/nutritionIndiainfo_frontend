@@ -3,7 +3,7 @@ import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "chartjs-plugin-datalabels";
-import Chart from 'chart.js';
+
 
 export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
@@ -44,9 +44,12 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
 
     // remove last word  graph title i.e olds
     var lastIndex = graphTitle.lastIndexOf(" ");
-    graphTitle = graphTitle.substring(0, lastIndex);
-    graphTitle = graphTitle + 's'
-    
+    var lastWord =  graphTitle.substring(lastIndex+1,graphTitle.length);
+    if(lastWord.localeCompare("olds")===0){
+        graphTitle = graphTitle.substring(0, lastIndex);
+        graphTitle = graphTitle + 's'
+    }
+
     if(selIndiaData && level=="1" ){
 
         selIndiaData.map(i=>{

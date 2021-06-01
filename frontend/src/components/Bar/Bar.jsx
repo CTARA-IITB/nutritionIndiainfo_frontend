@@ -50,8 +50,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 
     // remove last word  graph title i.e olds
     var lastIndex = graphTitle.lastIndexOf(" ");
-    graphTitle = graphTitle.substring(0, lastIndex);
-    graphTitle = graphTitle + 's'
+    var lastWord =  graphTitle.substring(lastIndex+1,graphTitle.length);
+    if(lastWord.localeCompare("olds")===0){
+        graphTitle = graphTitle.substring(0, lastIndex);
+        graphTitle = graphTitle + 's'
+    }
 
     if(toggleStateBurden === false){
         barUnit = 'Number';

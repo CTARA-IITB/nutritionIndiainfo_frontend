@@ -154,6 +154,16 @@ button.ant-switch {
   width: 250px;
 }
 
+.map_req_text {
+  margin: 20px;
+  margin-top: 30px;
+  margin-left: -190px;
+  height: 50px;
+  width: 250px;
+  font-size: 10px;
+  font-weight:bold;
+}
+
 .req_button{
   margin: 5px;
   background-color: #AF5907 !important;
@@ -225,6 +235,16 @@ button.ant-switch {
     width: 250px;
   }
   
+
+  .map_req_text {
+    /* background-color:blue; */
+    /* display: flex; */
+    margin: 20px;
+    margin-left: -180px;
+    height: 1000px;
+    width: 250px;
+  }
+
   .req_button{
     margin: 5px;
     background-color: #AF5907 !important;

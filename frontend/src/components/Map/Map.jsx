@@ -176,14 +176,14 @@ export const Map = ({
         }
       data = selDistrictsData;
     }
-    statusMsg ="Click on Map to Drill down to District level";
+    statusMsg ="Click on map to drill down to district level";
   }
   else{
     
     if(null!== selStateData && selStateData.length > 0)
     {
       data = selStateData;
-      statusMsg ="Click on Map to go back to India Map";
+      statusMsg ="Click on map to go back to India level";
     if(selTimeperiod == 22)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
@@ -640,10 +640,8 @@ export const Map = ({
         
       </div>
       
-      {/* <div className="map_req_legend">
-      </div> */}
       <div className="map_req_text">
-          <div id="info-msg" className="msg"></div>
+          <div id="info-msg" className="msg">{statusMsg}</div>
       </div>
     </div>
   </div>

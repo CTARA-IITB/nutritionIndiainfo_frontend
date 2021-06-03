@@ -65,7 +65,7 @@ export const createHierarchy = (options) =>{
      const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_level%3A2&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=100&omitHeader=true&q=*%3A*`);
     //  const body_3 = await url_3.json();
      const solr_body_3 = await solr_url_3.json();
-    //  console.log(body_3,solr_body_3)
+    console.log("mapdata",solr_body_3.response.docs);
      setSelIndiaData(solr_body_3.response.docs);
     // }
     // else
@@ -109,15 +109,15 @@ export const createHierarchy = (options) =>{
   }
 
   export async function populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt,
-    setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod)
+    setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
   {
     // const url_6 = await fetch(`http://13.234.11.176/api/indicator/${tab}`);
     const solr_url_6 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=value:indicator_id%2Ctitle:indicator_name%2Cindi_sense&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`);
     // const body_6 = await url_6.json();
     const solr_body_6 = await solr_url_6.json();
-    // console.log(body_6,solr_body_6.response.docs);
     setIndicatorDropdownOpt(solr_body_6.response.docs);
     setSelIndicator(solr_body_6.response.docs[0].value);
+    setIndicatorSense(solr_body_6.response.docs[0].indi_sense);
     setGraphTitle(solr_body_6.response.docs[0].title);
     let indiVal = solr_body_6.response.docs[0].value;
 
@@ -135,10 +135,19 @@ export const createHierarchy = (options) =>{
     setUnit(solr_body_8.response.docs[0].unit_id);
     setGraphUnit(solr_body_8.response.docs[0].unit_name);
 
-    const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
+   // const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
         // const body_2 = await url_2.json();
+    let solr_url;
+    if(isLevelThree){
+          // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
+          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+
+    }
+    else{
+          // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
+          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+    }
     const solr_body_2 = await solr_url.json();
-        // console.log(body_2);
     setTimeperiodDropdownOpt(solr_body_2.response.docs);
     setSelTimeperiod(solr_body_2.response.docs[0].value);
     let timeVal = solr_body_2.response.docs[0].value;

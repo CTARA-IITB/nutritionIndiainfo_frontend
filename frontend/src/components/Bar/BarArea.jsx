@@ -43,9 +43,9 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
 
 
     // remove last word  graph title i.e olds
-    var lastIndex = graphTitle.lastIndexOf(" ");
-    graphTitle = graphTitle.substring(0, lastIndex);
-    graphTitle = graphTitle + 's'
+    // var lastIndex = graphTitle.lastIndexOf(" ");
+    // graphTitle = graphTitle.substring(0, lastIndex);
+    // graphTitle = graphTitle + 's'
     
     if(selIndiaData && level=="1" ){
 
@@ -59,7 +59,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             }
             
         })
-        s = ' by State ';
+        // s = ' by State ';
     }        
     if(selStateData && level=="2"){
 
@@ -87,7 +87,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                     barData.push(+i.data_value_num) 
             }
         })
-        s = ' by District '
+        // s = ' by District '
     }           
     let barGUnit = graphUnit;
     
@@ -172,7 +172,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         },
         title:{
             display: true,
-            text: [graphTitle + s,titleAreaName +' '+ chartTitle + " (" + graphTimeperiod.split(" ")[1] + ")"],
+            text: [`${graphTitle}, ${barGUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
             fontColor: "black",
         },
         scales: {

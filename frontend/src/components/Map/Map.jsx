@@ -79,10 +79,10 @@ export const Map = ({
 
  
   if (toggleStateBurden === true) {
-    mapTitle = graphTitle + ","+ graphUnit +","+titleAreaName +","+ graphTimeperiod + `${"\n"}`;
+    mapTitle = `${graphTitle},${graphUnit},${areaName},${graphTimeperiod}`;
   }
   else{
-    mapTitle = graphTitle + ","+ "Number" +","+titleAreaName +","+ graphTimeperiod;
+    mapTitle =  `${graphTitle},Number,${titleAreaName},${graphTimeperiod}`;
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {

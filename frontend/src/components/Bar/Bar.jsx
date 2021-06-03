@@ -131,7 +131,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             },
             title: {
               display: true,
-              text: [graphTitle +' '+ 'by background characteristic', titleAreaName +' '+chartTitle + " (" + graphTimeperiod.split(" ")[1] + ")"],
+              text: [`${graphTitle}, ${barUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
               fontColor: "black",
             },
             scales: {

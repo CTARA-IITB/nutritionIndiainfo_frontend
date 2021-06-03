@@ -135,21 +135,17 @@ export const createHierarchy = (options) =>{
     setUnit(solr_body_8.response.docs[0].unit_id);
     setGraphUnit(solr_body_8.response.docs[0].unit_name);
 
-<<<<<<< HEAD
-    const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
-=======
-   // const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
->>>>>>> b89ce38c9978222cc2414d952f133d138040243d
+   // const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
         // const body_2 = await url_2.json();
     let solr_url;
     if(isLevelThree){
           // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
 
     }
     else{
           // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     }
     const solr_body_2 = await solr_url.json();
     setTimeperiodDropdownOpt(solr_body_2.response.docs);

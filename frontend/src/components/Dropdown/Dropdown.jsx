@@ -314,21 +314,12 @@ useEffect(() => {
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-<<<<<<< HEAD
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${parentArea}`);
-
-            }
-            else{
-              // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
-=======
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             }
             else{
                   // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
->>>>>>> b89ce38c9978222cc2414d952f133d138040243d
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
 
 

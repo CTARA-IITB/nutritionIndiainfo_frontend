@@ -153,7 +153,7 @@ export const Map = ({
 
       if (selTimeperiod === 22){    // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
-        warning=""
+        warning="Administrative Boundaries as per NFHS5(2019-20)"
       }   
       else{
         geometry = boundaries.state;
@@ -166,7 +166,7 @@ export const Map = ({
 
         if(selTimeperiod === 22){
           geometry = boundaries.new_dist;
-          warning=""
+          warning="Administrative Boundaries as per NFHS5(2019-20)"
 
         }
         else{

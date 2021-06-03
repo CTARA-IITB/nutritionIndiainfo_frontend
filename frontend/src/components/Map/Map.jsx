@@ -544,15 +544,7 @@ export const Map = ({
       .attr("class", "legendQuant")
         .attr("transform", `translate(${width-150},${height-80})`)
 
-    let formatter;
-    if (toggleStateBurden === true) {
-      //formatter = format(',.0f');
-      formatter = format('.2s');
-    }
-    else {
-      formatter = format(".1f");
-    }
-
+    let formatter = format(".1f");
     let myLegend;
    
     if (toggleStateBurden === false) 

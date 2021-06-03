@@ -1,6 +1,6 @@
 .trend-line{
     fill:none;
-    stroke:#90AC85;
+    stroke:#757564;
     stroke-width:2;
 }
 
@@ -19,7 +19,6 @@ div.tooltip2 {
 }
 
 .trend{
-  /* background-color:red; */
   height:750px;
   display:flex;
   /* width: 100%; */

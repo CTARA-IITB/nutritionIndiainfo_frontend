@@ -125,6 +125,10 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         }
 
         options={
+            tooltips:{
+                displayColors:false,
+                bodyAlign:"center"
+            },
             legend:
             {
               display: false,

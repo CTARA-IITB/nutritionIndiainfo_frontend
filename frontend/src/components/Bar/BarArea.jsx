@@ -163,6 +163,9 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     }    
     options = {
         tooltips:{
+            displayColors:false,
+            bodyAlign:"center",
+            padding:10,
             filter: function (tooltipItem) {
                 return tooltipItem.datasetIndex === 0;
             }

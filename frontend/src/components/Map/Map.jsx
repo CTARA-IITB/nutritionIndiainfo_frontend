@@ -61,22 +61,6 @@ export const Map = ({
       text = 'District';
     changeText(text);
   }
-
-  // const burdenClick = () => {
-  //   setToggleStateBurden(!toggleStateBurden); 
-  //   let text = null;
-  //   if (burdenbuttonText === 'Burden')
-  //   {
-  //     text = 'Prevalence';
-  //   }
-  //   else
-  //   {
-  //     text = 'Burden';
-  //   }
-
-  //     changeBurdenText(text);
-  // }
-
  
   if (toggleStateBurden === true) {
     mapTitle = `${graphTitle},${graphUnit},${areaName},${graphTimeperiod}`;
@@ -350,7 +334,7 @@ export const Map = ({
         // tooltip.style("opacity", .9);
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b>Value:</b>" + c2Value(d))
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + c2Value(d))
           .style("left", event.clientX + "px")
           .style("top", event.clientY - 30 + "px");
       }

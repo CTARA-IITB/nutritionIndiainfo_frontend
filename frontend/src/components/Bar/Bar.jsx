@@ -22,34 +22,34 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let groupedColor = [];
 
     let arrObese = [91,95,104,92,96,105,21];
-        if(selIndicator == 12 || selIndicator == 13){
-          colorScale = '#a3c00f'; 
-          lightColor = '#DAE59F';
-         }
-        else if(selIndicator == 19 || selIndicator == 20){
-          colorScale = '#e53935'; 
-          lightColor = '#F4AFAE';
+    if(selIndicator == 12 || selIndicator == 13){
+        colorScale = '#a3c00f'; 
+        lightColor = '#DAE59F';
         }
-        else if(selIndicator == 17 || selIndicator == 18){
-          colorScale = '#039be5'; 
-          lightColor = '#9AD7F4';
-        }
-        else if(selIndicator == 107 || selIndicator == 108){
-          colorScale = '#e53935'; 
-          lightColor = '#F4AFAE';
-        }
-        else  if(arrObese.includes(selIndicator)){
-          colorScale = '#7b1fa2'; 
-          lightColor = '#CAA5D9';
-        }
-        else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125){
-          colorScale = '#b71c1c'; 
-          lightColor = '#E2A4A4';
-        }
-        else{
-          colorScale = '#eda143'; 
-          lightColor = '#F7D9B3';
-        }
+    else if(selIndicator == 19 || selIndicator == 20){
+        colorScale = '#e53935'; 
+        lightColor = '#F4AFAE';
+    }
+    else if(selIndicator == 17 || selIndicator == 18){
+        colorScale = '#039be5'; 
+        lightColor = '#9AD7F4';
+    }
+    else if(selIndicator == 107 || selIndicator == 108){
+        colorScale = '#e53935'; 
+        lightColor = '#F4AFAE';
+    }
+    else  if(arrObese.includes(selIndicator)){
+        colorScale = '#7b1fa2'; 
+        lightColor = '#CAA5D9';
+    }
+    else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125){
+        colorScale = '#b71c1c'; 
+        lightColor = '#E2A4A4';
+    }
+    else{
+        colorScale = '#eda143'; 
+        lightColor = '#F7D9B3';
+    }
 
     if(toggleStateBurden === false){
         barUnit = 'Number';
@@ -100,7 +100,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 })
             }
         })
-        
+
         var j=0;
         if(barLabel.length>1){
             for(var i=0;i<barLabel.length;i++){
@@ -222,12 +222,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         
         // graph time period 
         let chartTitle = graphTimeperiod.split(" ")[0];
-        let lastChar = chartTitle.slice(-1);
-        if(/^[0-9]$/.test(lastChar)){
-            chartTitle = chartTitle.slice(0, -1);
-            chartTitle = chartTitle + '-' + lastChar;
-        }
-
         data = {
             labels:groupedLabel,
             datasets: [{

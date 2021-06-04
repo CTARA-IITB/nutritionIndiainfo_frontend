@@ -33,8 +33,6 @@ export const Dropdown = ({}) =>{
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
 
-
-
 const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [categorydDropdownOpt, setCategoryDropdownOpt] = useState([]);
   const [selLifeycle, setSelLifecycle] = useState(1);
@@ -82,7 +80,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const lifecycleData = [
     { value: 1, title: "Adolescence" },
     { value: 2, title: "Women of Reproductive Age" },
-    // { value: 3, title: "Pregnancy" },
+    { value: 3, title: "Pregnancy" },
     // { value: 4, title: "Delivery PNC" },      
     { value: 5, title: "Early childhood" },
     { value: 6, title: "School age" },  
@@ -158,7 +156,7 @@ useEffect(() => {
       // setCategoryDropdownOpt(categoryData);
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
-      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod)
+      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
       // console.log("selIndicator", selIndicator);
       // let timeVal = selTimeperiod;
       // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
@@ -180,7 +178,7 @@ useEffect(() => {
 
       useEffect(() => {
         // const url_4 = 'http://13.234.11.176/api/area';
-        const solr_url_4 = 'http://nutritionindia.communitygis.net:8983/solr/nutritionv5/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
+        const solr_url_4 = 'http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
         json(solr_url_4).then( options =>{
         const [country,statesID] = createHierarchy(options.response.docs);
         setStateID(statesID)
@@ -243,7 +241,7 @@ useEffect(() => {
           setSelLifecycle(e);
           setSelBurden("1");
           setToggleStateBurden(true);
-          await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod)
+          await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
           //await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
           // let timeVal = selTimeperiod;
           // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
@@ -278,7 +276,7 @@ useEffect(() => {
           setSelCategory(e);
           setSelBurden("1");
           setToggleStateBurden(true);
-          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod)
+          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
           //await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
           // let timeVal = selTimeperiod;
           // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
@@ -316,12 +314,12 @@ useEffect(() => {
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv5/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${parentArea}`);
-
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+    
             }
             else{
-              // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv5/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
+                  // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
 
 
@@ -344,7 +342,7 @@ useEffect(() => {
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
-            const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv5/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+            const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
 
             // const body_3 = await url_3.json()
             const solr_body_3 = await solr_url_3.json()
@@ -449,17 +447,16 @@ useEffect(() => {
           let url;
           let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(levelThree){
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv5/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${areaParentId}`);
-
-              // url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${areaParentId}`);
+            if(isLevelThree){
+              // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+    
             }
             else{
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv5/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}`);
-
-              // url = await fetch(`http://13.234.11.176/api/timeperiod/${selIndicator}/6/${value}`);
-
+                  // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
+           
             // const body_1 = await url.json()
             let solr_body_1 = await solr_url.json()
             solr_body_1 = solr_body_1.response.docs;

@@ -17,45 +17,41 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let title=graphTitle +', '+barUnit;
     let colorScale ='#eda143';
     let lightColor = '#F7D9B3';
-    let flag =true;
-    
+
     let arrObese = [91,95,104,92,96,105,21];
-    if(selIndicator == 12 || selIndicator == 13){
-        colorScale = '#a3c00f'; 
-        lightColor = '#DAE59F';
+        if(selIndicator == 12 || selIndicator == 13){
+          colorScale = '#a3c00f'; 
+          lightColor = '#DAE59F';
+         }
+        else if(selIndicator == 19 || selIndicator == 20){
+          colorScale = '#e53935'; 
+          lightColor = '#F4AFAE';
         }
-    else if(selIndicator == 19 || selIndicator == 20){
-        colorScale = '#e53935'; 
-        lightColor = '#F4AFAE';
-    }
-    else if(selIndicator == 17 || selIndicator == 18){
-        colorScale = '#039be5'; 
-        lightColor = '#9AD7F4';
-    }
-    else if(selIndicator == 107 || selIndicator == 108){
-        colorScale = '#e53935'; 
-        lightColor = '#F4AFAE';
-    }
-    else  if(arrObese.includes(selIndicator)){
-        colorScale = '#7b1fa2'; 
-        lightColor = '#CAA5D9';
-    }
-    else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125){
-        colorScale = '#b71c1c'; 
-        lightColor = '#E2A4A4';
-    }
-    else{
-        colorScale = '#eda143'; 
-        lightColor = '#F7D9B3';
-    }
+        else if(selIndicator == 17 || selIndicator == 18){
+          colorScale = '#039be5'; 
+          lightColor = '#9AD7F4';
+        }
+        else if(selIndicator == 107 || selIndicator == 108){
+          colorScale = '#e53935'; 
+          lightColor = '#F4AFAE';
+        }
+        else  if(arrObese.includes(selIndicator)){
+          colorScale = '#7b1fa2'; 
+          lightColor = '#CAA5D9';
+        }
+        else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125){
+          colorScale = '#b71c1c'; 
+          lightColor = '#E2A4A4';
+        }
+        else{
+          colorScale = '#eda143'; 
+          lightColor = '#F7D9B3';
+        }
 
     // remove last word  graph title i.e olds
     var lastIndex = graphTitle.lastIndexOf(" ");
-    var lastWord =  graphTitle.substring(lastIndex+1,graphTitle.length);
-    if(lastWord.localeCompare("olds")===0){
-        graphTitle = graphTitle.substring(0, lastIndex);
-        graphTitle = graphTitle + 's'
-    }
+    graphTitle = graphTitle.substring(0, lastIndex);
+    graphTitle = graphTitle + 's'
 
     if(toggleStateBurden === false){
         barUnit = 'Number';
@@ -114,75 +110,69 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             chartTitle = chartTitle.slice(0, -1);
             chartTitle = chartTitle + '-' + lastChar;
         }
-        console.log(barData)
-        console.log(barLabel)
 
-        if(barData.length===1){
-            flag=true;
+        data = {
+            labels:barLabel,
+            datasets: [{
+                // label: [graphTitle, barUnit,graphTimeperiod],
+                data:barData,
+                yAxisID:'yAxis1',
+                backgroundColor: colors,
+                borderColor: colorScale,
+                borderWidth:0.5,
+                barThickness: 10,
+            }] 
         }
-        else{
-            flag = false;
-            data = {
-                labels:barLabel,
-                datasets: [{
-                    // label: [graphTitle, barUnit,graphTimeperiod],
-                    data:barData,
-                    yAxisID:'yAxis1',
-                    backgroundColor: colors,
-                    borderColor: colorScale,
-                    borderWidth:0.5,
-                    barThickness: 10,
-                }] 
-            }
-            options={
-                legend:
-                {
-                  display: false,
-                },
-                title: {
-                  display: true,
-                  text: [graphTitle +' '+ 'by background characteristic', titleAreaName +' '+chartTitle + " (" + graphTimeperiod.split(" ")[1] + ")"],
-                  fontColor: "black",
-                },
-                scales: {
-                    yAxes:[
-                        {
-                            id:'yAxis1',
-                            type:"category",
-                            ticks:{
-                                fontSize: 11,
-                                fontColor: "black",
-                            },
-                            gridLines: {
-                            drawOnChartArea: false, // only want the grid lines for one axis to show up
-                            },
-                        },
-                       
-                    ],
-                    xAxes: [{
-                        ticks: {
-                            fontSize: 8,
-                            fontColor:"black",
-                            beginAtZero: true
+
+        options={
+            tooltips:{
+                displayColors:false,
+                bodyAlign:"center"
+            },
+            legend:
+            {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: [`${graphTitle}, ${barUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+              fontColor: "black",
+            },
+            scales: {
+                yAxes:[
+                    {
+                        id:'yAxis1',
+                        type:"category",
+                        ticks:{
+                            fontSize: 11,
+                            fontColor: "black",
                         },
                         gridLines: {
-                            drawOnChartArea:true,
-                            color:'#C1C1C1'
-                        }
-                    }]
-                }
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                        },
+                    },
+                   
+                ],
+                xAxes: [{
+                    ticks: {
+                        // fontSize: 8,
+                        fontColor:"black",
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        drawOnChartArea:true,
+                        color:'#C1C1C1'
+                    }
+                }]
             }
         }
-        
     }
-   
     return(
         <div>
-            {flag ?<div >No data, please select another survey</div> :
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="Bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
                 <BarComponent ref={componentRef} id="Bar" data={data} options={options}/>
-            </FullScreen>}
+            </FullScreen>    
         </div>
     );
 };

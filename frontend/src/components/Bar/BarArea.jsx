@@ -43,13 +43,10 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
 
 
     // remove last word  graph title i.e olds
-    var lastIndex = graphTitle.lastIndexOf(" ");
-    var lastWord =  graphTitle.substring(lastIndex+1,graphTitle.length);
-    if(lastWord.localeCompare("olds")===0){
-        graphTitle = graphTitle.substring(0, lastIndex);
-        graphTitle = graphTitle + 's'
-    }
-
+    // var lastIndex = graphTitle.lastIndexOf(" ");
+    // graphTitle = graphTitle.substring(0, lastIndex);
+    // graphTitle = graphTitle + 's'
+    
     if(selIndiaData && level=="1" ){
 
         selIndiaData.map(i=>{
@@ -62,7 +59,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             }
             
         })
-        s = ' by State ';
+        // s = ' by State ';
     }        
     if(selStateData && level=="2"){
 
@@ -90,7 +87,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                     barData.push(+i.data_value_num) 
             }
         })
-        s = ' by District '
+        // s = ' by District '
     }           
     let barGUnit = graphUnit;
     
@@ -141,14 +138,6 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             backgroundColor:colorScale,
             borderColor: colorScale,
             borderWidth: 1
-        },
-        {
-            data:differenceData,
-            yAxisID:'yAxis1',
-            backgroundColor:"#DEDEDE",
-            borderColor: "#DEDEDE",
-            borderWidth: 1,
-            showTooltips:'false'
         }
     ]
 
@@ -166,6 +155,9 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     }    
     options = {
         tooltips:{
+            displayColors:false,
+            bodyAlign:"center",
+            padding:10,
             filter: function (tooltipItem) {
                 return tooltipItem.datasetIndex === 0;
             }
@@ -175,7 +167,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         },
         title:{
             display: true,
-            text: [graphTitle + s,titleAreaName +' '+ chartTitle + " (" + graphTimeperiod.split(" ")[1] + ")"],
+            text: [`${graphTitle}, ${barGUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
             fontColor: "black",
         },
         scales: {
@@ -198,7 +190,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             xAxes: [{
                 stacked: true,
                 ticks: {
-                    fontSize: 7,
+                    // fontSize: 11,
                     fontColor:"black",
                     beginAtZero: true
                 },

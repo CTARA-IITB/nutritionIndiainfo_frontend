@@ -59,23 +59,23 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   // console.log(trendWrapper)
   // console.log(dimensions)
   const screen = useFullScreenHandle();
-  let colorScale ='#eda143';
+  let colorScale;
 
   let arrObese = [91,95,104,92,96,105,21];
   if(selIndicator == 12 || selIndicator == 13)
-    colorScale = '#a3c00f'; 
+    colorScale = '#a3c00f80'; 
   else if(selIndicator == 19 || selIndicator == 20)
-    colorScale = '#e53935'; 
+    colorScale = '#e5393580'; 
   else if(selIndicator == 17 || selIndicator == 18)
-    colorScale = '#039be5'; 
+    colorScale = '#039be580'; 
   else if(selIndicator == 107 || selIndicator == 108)
-    colorScale = '#e53935'; 
+    colorScale = '#e5393580'; 
   else  if(arrObese.includes(selIndicator))
-    colorScale = '#7b1fa2'; 
+    colorScale = '#7b1fa280'; 
   else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125)
-    colorScale = '#b71c1c'; 
+    colorScale = '#b71c1c80'; 
   else
-    colorScale = '#eda143'; 
+    colorScale = '#eda14380'; 
 
   const parseTime = timeParse('%d-%b-%y');
 
@@ -191,12 +191,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         
       bar.append("g")
       	.attr("class","axis")
-        .call(axisLeft(yScale));
+        .call(axisLeft(yScale))
+        .style('font-size',12);
 			
       let xaxis = bar.append("g")
       .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
+        .style('font-size',12)
         .attr("dx", () => {
           if(width <= 480)
            return "1.9em"
@@ -221,7 +223,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       	.on('mouseover', (i,d) => {
               console.log(d);
         			tooltip2.transition().duration(500).style("opacity", 1);
-              tooltip2.html(`${d.timeperiod}:${yValue(d)}</br>start date:${formatTooltipTime(d.start_date)}</br>end date:${formatTooltipTime(d.end_date)}</div>`)
+              tooltip2.html(`<b>${d.timeperiod}</b> : ${yValue(d)}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
           		.style("left", xScale(d.middle_date) + 50 + "px")
           		.style("top", yScale(yValue(d)) + 100+"px");
               })
@@ -254,14 +256,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .attr("dy", "-2em")
       .text(`${graphTitle},${graphUnit},${titleAreaName}`)
 
-      // bar.append("text")
-      // .attr("x",innerWidth/2)
-      // .attr("y",innerHeight/2)
-      // .attr("dx","-.4em")
-      // .text("Data not found")
-      // .style("text-anchor","middle")
-      // .style("font-size","15px")
-      // .style("font-weight","bold")
+      bar.append("text")
+      .attr("x",innerWidth/2)
+      .attr("y",innerHeight/2)
+      .attr("dx","-.4em")
+      .text("No data: please select another survey")
+      .style("text-anchor","middle")
+      .style("font-size","10px")
+      .style("font-weight","bold")
     }
     
    

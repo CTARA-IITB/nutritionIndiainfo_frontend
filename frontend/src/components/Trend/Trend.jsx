@@ -170,7 +170,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       if(toggleStateBurden)
         yValue = d => d.data_value;
       else
+      {
       yValue = d => d.data_value_num;
+      graphUnit ='Number';
+      }
 
       const xScale = scaleTime()
     		.domain([min_date, max_date])

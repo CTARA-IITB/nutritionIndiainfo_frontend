@@ -339,9 +339,15 @@ useEffect(() => {
                   }
                 });
                 if(!flag){
-                  timeValue = solr_body_1.response.docs[0].value;
-                  setSelTimeperiod(solr_body_1.response.docs[0].value);
-                  setGraphTimeperiod(solr_body_1.response.docs[0].title);
+                  if(typeof solr_body_1.response.docs[0] !== 'undefined'){  // added this condition to resolve issue when UT data not present for CNNS Obesity in 10-14 year old
+                    timeValue = solr_body_1.response.docs[0].value;
+                    setSelTimeperiod(solr_body_1.response.docs[0].value);
+                    setGraphTimeperiod(solr_body_1.response.docs[0].title);
+                  }
+                  else{
+                    setSelTimeperiod("");
+                    setGraphTimeperiod("");
+                  }
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
@@ -450,7 +456,7 @@ useEffect(() => {
           let url;
           let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(isLevelThree){
+            if(levelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
               solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
@@ -705,7 +711,7 @@ useEffect(() => {
       toggleStateBurden = {toggleStateBurden}
       trend = {trend}
       selIndicator={selIndicator}
-      />: <div id="msg">No data: please select another area</div>}
+      />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>
 
     
@@ -722,7 +728,7 @@ useEffect(() => {
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: <div id="msg">No data: please select another area</div>}
+      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
    </div>
     <div className="layout_right">
@@ -766,7 +772,7 @@ useEffect(() => {
           burdenbuttonText={burdenbuttonText} 
           changeBurdenText={changeBurdenText}
           map={map}
-          /> : <div id="msg">No data: please select another area</div>}
+          /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>
      <div className="layout_right_bar2">
       {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
@@ -779,7 +785,7 @@ useEffect(() => {
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: <div id="msg">No data: please select another area</div>}
+      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
     </div>
   </div>   

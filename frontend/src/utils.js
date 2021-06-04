@@ -148,9 +148,17 @@ export const createHierarchy = (options) =>{
     }
     const solr_body_2 = await solr_url.json();
     setTimeperiodDropdownOpt(solr_body_2.response.docs);
+    let timeVal ="";
+    if(typeof solr_body_2.response.docs[0] !== 'undefined'){
     setSelTimeperiod(solr_body_2.response.docs[0].value);
-    let timeVal = solr_body_2.response.docs[0].value;
+    timeVal = solr_body_2.response.docs[0].value;
     setGraphTimeperiod(solr_body_2.response.docs[0].title);
+    }
+    else{
+      setSelTimeperiod("");
+      setGraphTimeperiod("");
+    }
+    if(timeVal != "")
     await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
   }
 

@@ -3,7 +3,6 @@ import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "chartjs-plugin-datalabels";
-import Chart from 'chart.js';
 
 export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
@@ -41,12 +40,6 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     else
       colorScale = '#eda143'; 
 
-
-    // remove last word  graph title i.e olds
-    // var lastIndex = graphTitle.lastIndexOf(" ");
-    // graphTitle = graphTitle.substring(0, lastIndex);
-    // graphTitle = graphTitle + 's'
-    
     if(selIndiaData && level=="1" ){
 
         selIndiaData.map(i=>{
@@ -139,25 +132,11 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             borderColor: colorScale,
             borderWidth: 1
         },
-        // grey bar
-        // {
-        //     data:differenceData,
-        //     yAxisID:'yAxis1',
-        //     backgroundColor:"#DEDEDE",
-        //     borderColor: "#DEDEDE",
-        //     borderWidth: 1,
-        //     showTooltips:'false'
-        // }
     ]
 
     // graph time period 
     let chartTitle = graphTimeperiod.split(" ")[0];
-    let lastChar = chartTitle.slice(-1);
-    if(/^[0-9]$/.test(lastChar)){
-        chartTitle = chartTitle.slice(0, -1);
-        chartTitle = chartTitle + '-' + lastChar;
-    }
-
+    
     data = {
         labels:sortedBarLabel,
         datasets: datasets,

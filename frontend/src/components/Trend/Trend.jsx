@@ -194,7 +194,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       	.attr("class","axis")
         .call(axisLeft(yScale)
         .tickFormat(function (d) {
-          console.log(d, "d")
           if ((d / 100000) >= 1) {
               d = d / 100000 + " Lakh";
           }

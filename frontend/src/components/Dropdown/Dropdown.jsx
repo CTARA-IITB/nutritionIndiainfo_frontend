@@ -240,8 +240,10 @@ useEffect(() => {
           setIsSelected(false);
           setSelLifecycle(e);
           setSelBurden("1");
+          setSelCategory(1);
+          let selCat = 1;
           setToggleStateBurden(true);
-          await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
+          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
           //await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
           // let timeVal = selTimeperiod;
           // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
@@ -314,13 +316,14 @@ useEffect(() => {
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             }
             else{
                   // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
+
 
 
             // const body_1 = await url.json()
@@ -449,12 +452,12 @@ useEffect(() => {
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             }
             else{
                   // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
            
             // const body_1 = await url.json()
@@ -475,6 +478,10 @@ useEffect(() => {
                     timeValue = solr_body_1[0].value;
                     setSelTimeperiod(solr_body_1[0].value);
                     setGraphTimeperiod(solr_body_1[0].title);
+                  }
+                  else{
+                    setSelTimeperiod("");
+                    setGraphTimeperiod("");
                   }
                 }
             } 
@@ -688,7 +695,7 @@ useEffect(() => {
 <div className="layout" id="layoutid">
   <div className="layout_left">
   <div className="layout_left_trend" >
-      {isSelected?
+      {(isSelected  & selTimeperiod != "")?
       <Trend indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphSubgroup = {graphSubgroup}
@@ -698,12 +705,12 @@ useEffect(() => {
       toggleStateBurden = {toggleStateBurden}
       trend = {trend}
       selIndicator={selIndicator}
-      />: null}
+      />: <div id="msg">No data: please select another area</div>}
       </div>
 
     
      <div className="layout_left_bar1">
-     {isSelected? <BarArea
+     {(isSelected  & selTimeperiod != "")?<BarArea
       indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
@@ -715,12 +722,12 @@ useEffect(() => {
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: null}
+      selIndicator={selIndicator}/>: <div id="msg">No data: please select another area</div>}
      </div>
    </div>
     <div className="layout_right">
     <div className="layout_right_map">
-        {isSelected? <Map boundaries={boundaries} 
+        {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
           setLevel={setLevel} 
@@ -759,10 +766,10 @@ useEffect(() => {
           burdenbuttonText={burdenbuttonText} 
           changeBurdenText={changeBurdenText}
           map={map}
-          /> : null}
+          /> : <div id="msg">No data: please select another area</div>}
       </div>
      <div className="layout_right_bar2">
-      {isSelected? <Bar indicatorBar = {indicatorBar}
+      {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
@@ -772,7 +779,7 @@ useEffect(() => {
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: null}
+      selIndicator={selIndicator}/>: <div id="msg">No data: please select another area</div>}
      </div>
     </div>
   </div>   

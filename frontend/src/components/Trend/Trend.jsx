@@ -191,12 +191,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         
       bar.append("g")
       	.attr("class","axis")
-        .call(axisLeft(yScale));
+        .call(axisLeft(yScale))
+        .style('font-size',12);
 			
       let xaxis = bar.append("g")
       .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
+        .style('font-size',12)
         .attr("dx", () => {
           if(width <= 480)
            return "1.9em"
@@ -254,14 +256,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .attr("dy", "-2em")
       .text(`${graphTitle},${graphUnit},${titleAreaName}`)
 
-      // bar.append("text")
-      // .attr("x",innerWidth/2)
-      // .attr("y",innerHeight/2)
-      // .attr("dx","-.4em")
-      // .text("Data not found")
-      // .style("text-anchor","middle")
-      // .style("font-size","15px")
-      // .style("font-weight","bold")
+      bar.append("text")
+      .attr("x",innerWidth/2)
+      .attr("y",innerHeight/2)
+      .attr("dx","-.4em")
+      .text("No data: please select another survey")
+      .style("text-anchor","middle")
+      .style("font-size","10px")
+      .style("font-weight","bold")
     }
     
    

@@ -155,7 +155,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 ],
                 xAxes: [{
                     ticks: {
-                        fontSize: 8,
+                        // fontSize: 8,
                         fontColor:"black",
                         beginAtZero: true
                     },

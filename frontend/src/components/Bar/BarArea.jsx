@@ -198,7 +198,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             xAxes: [{
                 stacked: true,
                 ticks: {
-                    fontSize: 7,
+                    // fontSize: 11,
                     fontColor:"black",
                     beginAtZero: true
                 },

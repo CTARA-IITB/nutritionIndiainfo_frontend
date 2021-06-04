@@ -10,6 +10,7 @@ import {
   scaleTime,
   timeParse,
   timeFormat,
+  format,
   line,
   select,
   axisLeft,
@@ -80,7 +81,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const parseTime = timeParse('%d-%b-%y');
 
 	 
-  
+    const formatUnit = format(".3s");
     const formatTime = timeFormat('%b-%y');
     const formatTooltipTime = timeFormat('%B-%Y');
     const formatTitleTime = timeFormat('%Y');
@@ -191,7 +192,15 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         
       bar.append("g")
       	.attr("class","axis")
-        .call(axisLeft(yScale))
+        .call(axisLeft(yScale)
+        .tickFormat(function (d) {
+          console.log(d, "d")
+          if ((d / 100000) >= 1) {
+              d = d / 100000 + " Lakh";
+          }
+          return d;
+      }))
+        // (formatUnit))
         .style('font-size',12);
 			
       let xaxis = bar.append("g")

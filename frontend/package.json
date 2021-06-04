@@ -11,6 +11,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@turf/buffer": "^6.3.0",
+    "@turf/collect": "^6.3.0",
+    "@turf/turf": "^6.3.0",
     "antd": "^4.7.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
@@ -56,7 +59,8 @@
     "recharts": "^2.0.7",
     "resize-observer-polyfill": "^1.5.1",
     "save-svg-as-png": "^1.4.17",
-    "topojson": "3.0.2"
+    "topojson": "3.0.2",
+    "turf": "^3.0.14"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -80,6 +84,7 @@
     ]
   },
   "devDependencies": {
-    "chartjs-plugin-datalabels": "^1.0.0"
+    "chartjs-plugin-datalabels": "^1.0.0",
+    "random-points-on-polygon": "0.0.4"
   }
 }

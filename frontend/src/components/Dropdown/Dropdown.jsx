@@ -197,7 +197,7 @@ useEffect(() => {
         
     
             const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/88ca1582aae1960b739339013a43a228/raw/5a0a4ef6e454afcda1cf5de43fc24ed5bd2ddf53/india-state_26may.json';
-            const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/262881c21197aa8da0524550b128d639/raw/ffd5cb39d90469934c1072ab7399c16e823fc82e/india_district_new_v3.json';   
+            const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/125da85ce3704409cb25dd53c0d86e98/raw/0117055a2adf7df234b4830b3f09f0b4c572a41c/india_new_dist.json';   
 
             const stateTopology = await json(jsonIndianstate);
             const districtTopology = await json(jsonIndiaDistrict);
@@ -207,7 +207,7 @@ useEffect(() => {
             const stateObject = stateTopology.objects.india_state_old;
             const districtObject = districtTopology.objects.india_district_old_v2;
             const newStateObject = newStateTopology.objects["india-state_26may"];
-            const newDistrictObject = newDistrictTopology.objects.india_district_new_v3;
+            const newDistrictObject = newDistrictTopology.objects["india_new_dist (1)"];
             
             setBoundaries({
               'state':feature(stateTopology,stateObject),
@@ -240,8 +240,10 @@ useEffect(() => {
           setIsSelected(false);
           setSelLifecycle(e);
           setSelBurden("1");
+          setSelCategory(1);
+          let selCat = 1;
           setToggleStateBurden(true);
-          await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
+          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
           //await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
           // let timeVal = selTimeperiod;
           // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
@@ -314,13 +316,14 @@ useEffect(() => {
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             }
             else{
                   // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
+
 
 
             // const body_1 = await url.json()
@@ -336,9 +339,15 @@ useEffect(() => {
                   }
                 });
                 if(!flag){
-                  timeValue = solr_body_1.response.docs[0].value;
-                  setSelTimeperiod(solr_body_1.response.docs[0].value);
-                  setGraphTimeperiod(solr_body_1.response.docs[0].title);
+                  if(typeof solr_body_1.response.docs[0] !== 'undefined'){  // added this condition to resolve issue when UT data not present for CNNS Obesity in 10-14 year old
+                    timeValue = solr_body_1.response.docs[0].value;
+                    setSelTimeperiod(solr_body_1.response.docs[0].value);
+                    setGraphTimeperiod(solr_body_1.response.docs[0].title);
+                  }
+                  else{
+                    setSelTimeperiod("");
+                    setGraphTimeperiod("");
+                  }
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
@@ -447,14 +456,14 @@ useEffect(() => {
           let url;
           let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(isLevelThree){
+            if(levelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             }
             else{
                   // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
            
             // const body_1 = await url.json()
@@ -475,6 +484,10 @@ useEffect(() => {
                     timeValue = solr_body_1[0].value;
                     setSelTimeperiod(solr_body_1[0].value);
                     setGraphTimeperiod(solr_body_1[0].title);
+                  }
+                  else{
+                    setSelTimeperiod("");
+                    setGraphTimeperiod("");
                   }
                 }
             } 
@@ -688,7 +701,7 @@ useEffect(() => {
 <div className="layout" id="layoutid">
   <div className="layout_left">
   <div className="layout_left_trend" >
-      {isSelected?
+      {(isSelected  & selTimeperiod != "")?
       <Trend indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphSubgroup = {graphSubgroup}
@@ -698,12 +711,12 @@ useEffect(() => {
       toggleStateBurden = {toggleStateBurden}
       trend = {trend}
       selIndicator={selIndicator}
-      />: null}
+      />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>
 
     
      <div className="layout_left_bar1">
-     {isSelected? <BarArea
+     {(isSelected  & selTimeperiod != "")?<BarArea
       indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
@@ -715,12 +728,12 @@ useEffect(() => {
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: null}
+      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
    </div>
     <div className="layout_right">
     <div className="layout_right_map">
-        {isSelected? <Map boundaries={boundaries} 
+        {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
           setLevel={setLevel} 
@@ -759,10 +772,10 @@ useEffect(() => {
           burdenbuttonText={burdenbuttonText} 
           changeBurdenText={changeBurdenText}
           map={map}
-          /> : null}
+          /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>
      <div className="layout_right_bar2">
-      {isSelected? <Bar indicatorBar = {indicatorBar}
+      {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
@@ -772,7 +785,7 @@ useEffect(() => {
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: null}
+      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
     </div>
   </div>   

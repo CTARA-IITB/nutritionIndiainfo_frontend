@@ -168,7 +168,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       if(toggleStateBurden)
         yValue = d => d.data_value;
       else
+      {
       yValue = d => d.data_value_num;
+      graphUnit ='Number';
+      }
 
       const xScale = scaleTime()
     		.domain([min_date, max_date])
@@ -227,7 +230,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("height", d => yScale(0) - yScale(yValue(d)))
         .attr("fill", colorScale)
       	.on('mouseover', (i,d) => {
-              console.log(d);
         			tooltip2.transition().duration(500).style("opacity", 1);
               tooltip2.html(`<b>${d.timeperiod}</b> : ${commaSeparated(yValue(d))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
           		.style("left", xScale(d.middle_date) + 50 + "px")

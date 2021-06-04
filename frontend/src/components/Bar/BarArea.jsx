@@ -139,14 +139,15 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             borderColor: colorScale,
             borderWidth: 1
         },
-        {
-            data:differenceData,
-            yAxisID:'yAxis1',
-            backgroundColor:"#DEDEDE",
-            borderColor: "#DEDEDE",
-            borderWidth: 1,
-            showTooltips:'false'
-        }
+        // grey bar
+        // {
+        //     data:differenceData,
+        //     yAxisID:'yAxis1',
+        //     backgroundColor:"#DEDEDE",
+        //     borderColor: "#DEDEDE",
+        //     borderWidth: 1,
+        //     showTooltips:'false'
+        // }
     ]
 
     // graph time period 

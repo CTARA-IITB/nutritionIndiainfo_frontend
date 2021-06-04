@@ -197,7 +197,7 @@ useEffect(() => {
         
     
             const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/88ca1582aae1960b739339013a43a228/raw/5a0a4ef6e454afcda1cf5de43fc24ed5bd2ddf53/india-state_26may.json';
-            const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/262881c21197aa8da0524550b128d639/raw/ffd5cb39d90469934c1072ab7399c16e823fc82e/india_district_new_v3.json';   
+            const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/125da85ce3704409cb25dd53c0d86e98/raw/0117055a2adf7df234b4830b3f09f0b4c572a41c/india_new_dist.json';   
 
             const stateTopology = await json(jsonIndianstate);
             const districtTopology = await json(jsonIndiaDistrict);
@@ -207,7 +207,7 @@ useEffect(() => {
             const stateObject = stateTopology.objects.india_state_old;
             const districtObject = districtTopology.objects.india_district_old_v2;
             const newStateObject = newStateTopology.objects["india-state_26may"];
-            const newDistrictObject = newDistrictTopology.objects.india_district_new_v3;
+            const newDistrictObject = newDistrictTopology.objects["india_new_dist (1)"];
             
             setBoundaries({
               'state':feature(stateTopology,stateObject),

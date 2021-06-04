@@ -201,7 +201,13 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                 ticks: {
                     // fontSize: 11,
                     fontColor:"black",
-                    beginAtZero: true
+                    beginAtZero: true,
+                    callback: function(value) {
+                        if ((value / 100000) >= 1) {
+                            value = value / 100000 + " Lakh";
+                        }
+                        return value;
+                    }
                 },
                 gridLines: {
                     drawOnChartArea:false

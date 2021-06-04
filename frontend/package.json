@@ -29,7 +29,6 @@
     "lodash": "4.17.20",
     "mdbreact": "^4.27.0",
     "npm-install-all": "^1.1.21",
-    "random-points-on-polygon": "0.0.4",
     "react": "^16.13.1",
     "react-animation": "^1.2.2",
     "react-awesome-slider": "^4.1.0",
@@ -85,6 +84,7 @@
     ]
   },
   "devDependencies": {
-    "chartjs-plugin-datalabels": "^1.0.0"
+    "chartjs-plugin-datalabels": "^1.0.0",
+    "random-points-on-polygon": "0.0.4"
   }
 }

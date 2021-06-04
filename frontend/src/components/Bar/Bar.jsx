@@ -100,68 +100,124 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 })
             }
         })
+        
         var j=0;
-        for(var i=0;i<barLabel.length;i++){
+        if(barLabel.length>1){
+            for(var i=0;i<barLabel.length;i++){
 
-            if(barLabel[i]==='All'){
-                groupedLabel[j]="Overall";
+                if(barLabel[i]==='All'){
+                    groupedLabel[j]="Overall";
+                    groupedColor[j]=colorScale;
+                    groupedData[j++]=barData[i];
+                    groupedLabel[j]=" ";
+                    groupedColor[j]="white";
+                    groupedData[j++]=0;
+                    continue;
+                }
+                if(barLabel[i]==='Male'){
+                    groupedLabel[j]=barLabel[i]
+                    groupedColor[j]=lightColor;
+                    groupedData[j++]=barData[i];
+                    continue;
+                }
+                if(barLabel[i]==='Female'){
+                    groupedLabel[j]=barLabel[i]
+                    groupedColor[j]=lightColor;
+                    groupedData[j++]=barData[i];
+                    groupedLabel[j]=" ";
+                    groupedColor[j]="white";
+                    groupedData[j++]=0;
+    
+                    groupedLabel[j]="Low Coverage";
+                    groupedColor[j]=colorScale;
+                    groupedData[j++]=0;
+                    groupedLabel[j]="Mid Coverage";
+                    groupedColor[j]=colorScale;
+                    groupedData[j++]=0;
+                    groupedLabel[j]="High Coverage";
+                    groupedColor[j]=colorScale;
+                    groupedData[j++]=0;
+                    groupedLabel[j]=" ";
+                    groupedColor[j]="white";
+                    groupedData[j++]=0;
+    
+                    groupedLabel[j]="No Education";
+                    groupedColor[j]=lightColor;
+                    groupedData[j++]=0;
+                    groupedLabel[j]="<5 year completed";
+                    groupedColor[j]=lightColor;
+                    groupedData[j++]=0;
+                    groupedLabel[j]="5-9 year completed";
+                    groupedColor[j]=lightColor;
+                    groupedData[j++]=0;
+                    groupedLabel[j]="10-11 year completed";
+                    groupedColor[j]=lightColor;
+                    groupedData[j++]=0;
+                    groupedLabel[j]="12+ year completed";
+                    groupedColor[j]=lightColor;
+                    groupedData[j++]=0;
+                    groupedLabel[j]=" ";
+                    groupedColor[j]="white";
+                    groupedData[j++]=0;
+                    continue;
+                }
+                groupedLabel[j]=barLabel[i];
                 groupedColor[j]=colorScale;
                 groupedData[j++]=barData[i];
-                groupedLabel[j]=" ";
-                groupedColor[j]="white";
-                groupedData[j++]=0;
-                continue;
             }
-            if(barLabel[i]==='Male'){
-                groupedLabel[j]=barLabel[i]
-                groupedColor[j]=lightColor;
-                groupedData[j++]=barData[i];
-                continue;
-            }
-            if(barLabel[i]==='Female'){
-                groupedLabel[j]=barLabel[i]
-                groupedColor[j]=lightColor;
-                groupedData[j++]=barData[i];
-                groupedLabel[j]=" ";
-                groupedColor[j]="white";
-                groupedData[j++]=0;
-
-                groupedLabel[j]="Low Coverage";
-                groupedColor[j]=colorScale;
-                groupedData[j++]=0;
-                groupedLabel[j]="Mid Coverage";
-                groupedColor[j]=colorScale;
-                groupedData[j++]=0;
-                groupedLabel[j]="High Coverage";
-                groupedColor[j]=colorScale;
-                groupedData[j++]=0;
-                groupedLabel[j]=" ";
-                groupedColor[j]="white";
-                groupedData[j++]=0;
-
-                groupedLabel[j]="No Education";
-                groupedColor[j]=lightColor;
-                groupedData[j++]=0;
-                groupedLabel[j]="<5 year completed";
-                groupedColor[j]=lightColor;
-                groupedData[j++]=0;
-                groupedLabel[j]="5-9 year completed";
-                groupedColor[j]=lightColor;
-                groupedData[j++]=0;
-                groupedLabel[j]="10-11 year completed";
-                groupedColor[j]=lightColor;
-                groupedData[j++]=0;
-                groupedLabel[j]="12+ year completed";
-                groupedColor[j]=lightColor;
-                groupedData[j++]=0;
-                groupedLabel[j]=" ";
-                groupedColor[j]="white";
-                groupedData[j++]=0;
-                continue;
-            }
-            groupedLabel[j]=barLabel[i];
+            
+        }else{
+            groupedLabel[j]="Overall";
             groupedColor[j]=colorScale;
-            groupedData[j++]=barData[i];
+            groupedData[j++]=0;
+            groupedLabel[j]=" ";
+            groupedColor[j]="white";
+            groupedData[j++]=0;
+            
+            groupedLabel[j]="Male"
+            groupedColor[j]=lightColor;
+            groupedData[j++]=0;
+            groupedLabel[j]="Female"
+            groupedColor[j]=lightColor;
+            groupedData[j++]=0;
+            groupedLabel[j]=" ";
+            groupedColor[j]="white";
+            groupedData[j++]=0;
+
+            groupedLabel[j]="No Education";
+            groupedColor[j]=lightColor;
+            groupedData[j++]=0;
+            groupedLabel[j]="<5 year completed";
+            groupedColor[j]=lightColor;
+            groupedData[j++]=0;
+            groupedLabel[j]="5-9 year completed";
+            groupedColor[j]=lightColor;
+            groupedData[j++]=0;
+            groupedLabel[j]="10-11 year completed";
+            groupedColor[j]=lightColor;
+            groupedData[j++]=0;
+            groupedLabel[j]="12+ year completed";
+            groupedColor[j]=lightColor;
+            groupedData[j++]=0;
+            groupedLabel[j]=" ";
+            groupedColor[j]="white";
+            groupedData[j++]=0;
+
+            groupedLabel[j]="Poorest"
+            groupedColor[j]=colorScale;
+            groupedData[j++]=0;
+            groupedLabel[j]="Second"
+            groupedColor[j]=colorScale;
+            groupedData[j++]=0;
+            groupedLabel[j]="Middle"
+            groupedColor[j]=colorScale;
+            groupedData[j++]=0;
+            groupedLabel[j]="Fourth"
+            groupedColor[j]=colorScale;
+            groupedData[j++]=0;
+            groupedLabel[j]="Richest"
+            groupedColor[j]=colorScale;
+            groupedData[j++]=0;
         }
         
         // graph time period 

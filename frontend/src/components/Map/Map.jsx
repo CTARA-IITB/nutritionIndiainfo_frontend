@@ -90,7 +90,12 @@ export const Map = ({
   //merge geometry and data
 
   function addProperties(geojson, data) {
-
+    // console.log(geojson,data,"geojson and data")
+    geojson.map(geo =>{
+      if (geo.properties.ID_ === "IND022004"){
+        console.log(geo)
+      }
+    })
     let newArr = _.map(data, function (item) {
       return {
         areacode: item.area_code,

@@ -65,7 +65,6 @@ export const createHierarchy = (options) =>{
      const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_level%3A2&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=100&omitHeader=true&q=*%3A*`);
     //  const body_3 = await url_3.json();
      const solr_body_3 = await solr_url_3.json();
-    console.log("mapdata",solr_body_3.response.docs);
      setSelIndiaData(solr_body_3.response.docs);
     // }
     // else

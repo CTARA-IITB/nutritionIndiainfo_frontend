@@ -159,10 +159,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         fontColor:"black",
                         beginAtZero: true,
                         callback: function(value) {
-                            if ((value / 100000) >= 1) {
-                                value = value / 100000 + " Lakh";
-                            }
-                            return value;
+                            return value.toLocaleString("en-IN");
                         }
                     },
                     gridLines: {

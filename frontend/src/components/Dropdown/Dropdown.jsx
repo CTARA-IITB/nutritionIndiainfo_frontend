@@ -316,12 +316,12 @@ useEffect(() => {
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             }
             else{
                   // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
 
 
@@ -452,12 +452,12 @@ useEffect(() => {
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             }
             else{
                   // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv6/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             }
            
             // const body_1 = await url.json()

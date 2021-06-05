@@ -4,7 +4,7 @@ import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "chartjs-plugin-datalabels";
 
-export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
+export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
     const componentRef = useRef();
     const screen=useFullScreenHandle();
@@ -130,7 +130,8 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             yAxisID:'yAxis1',
             backgroundColor:colorScale,
             borderColor: colorScale,
-            borderWidth: 1
+            borderWidth: 1,
+            // barThickness: 6,
         },
     ]
 

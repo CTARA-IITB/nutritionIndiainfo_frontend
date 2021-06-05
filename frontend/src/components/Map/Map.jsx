@@ -187,7 +187,7 @@ export const Map = ({
         geometry = boundaries.new_state;
       else
         geometry = boundaries.state;
-      statusMsg ="No data: please select another survey";
+      //statusMsg ="No data: please select another survey";
 
   }
   }
@@ -200,10 +200,9 @@ export const Map = ({
   useEffect(() => {
     const svg = select(svgRef.current);
     const legend = select(svgRef.current)
-
-  
-
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
+    if((level == 1 && null!= selIndiaData && selIndiaData.length > 0) || ((level == 2 || level == 3) && null  != selStateData && selStateData.length > 0))
+    {
     svg.selectAll('*').remove();
 
     let title = svg.append("text").text(`${mapTitle}`)
@@ -649,6 +648,16 @@ export const Map = ({
 
       
     }
+  }
+  else{
+    svg.selectAll('*').remove();
+    const svg_2 = select(svgRef.current);
+    svg_2.append("text").text("No data: please select another survey")
+    .style("text-anchor", "middle")
+    .style("font-weight","bold")
+    .style("fill", "red")
+    .attr('transform',`translate(${width/2}, ${height/2})`);
+  }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit,geometry, dimensions, data, toggleStateBurden])
 

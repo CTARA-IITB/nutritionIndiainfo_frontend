@@ -142,6 +142,8 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         datasets: datasets,
     }    
     options = {
+        responsive:true,
+        maintainAspectRatio:false,
         tooltips:{
             displayColors:false,
             bodyAlign:"center",
@@ -201,11 +203,13 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     }
     // title of table
     title=graphTitle +', '+barGUnit; 
+    let calculatedHeight=data.labels.length*15;
+    calculatedHeight = (calculatedHeight < 450)?450:calculatedHeight;
     return (
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="BarArea" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options} />
+                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options} calculatedHeight={calculatedHeight}/>
             </FullScreen>    
         </div>
     );

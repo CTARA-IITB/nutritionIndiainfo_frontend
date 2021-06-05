@@ -21,7 +21,8 @@ import "./Map.css";
 
 export const Map = ({ 
   boundaries, 
-  selIndiaData,  
+  selIndiaData,
+  setLevel,  
   level, 
   setSelArea, 
   unit, 
@@ -64,7 +65,7 @@ export const Map = ({
   }
  
   if (toggleStateBurden === true) {
-    mapTitle = `${graphTitle},${graphUnit},${areaName},${graphTimeperiod}`;
+    mapTitle = `${graphTitle},${graphUnit},${titleAreaName},${graphTimeperiod}`;
   }
   else{
     mapTitle =  `${graphTitle},Number,${titleAreaName},${graphTimeperiod}`;
@@ -380,26 +381,52 @@ export const Map = ({
       })
       .on('click', (i, d) => {
         if(toggleState){
-          setIsLevelThree(false);
+          // setIsLevelThree(false);
           // let id = d.area_id
           tooltip.style('opacity', 0);
-          if (level === 1) {
+          // if (level === 1) {
 
             if (typeof c2Value(d) != "undefined") {
               areaChange(d.area_id.toString());
+
+              if(level === 1){
+                // console.log("LEVEL 2");
+                setLevel(2);
+              }else if(level === 2){
+                setLevel(3);
+                // console.log("LEVEL 3"); 
+                setIsLevelThree(true);
+              }else if(level === 3){
+                setLevel(3);
+                // console.log("STILL IN LEVEL 3");
+              }
               // setSelArea('' + d.area_id);
               // setLevel(2);
               // onMapClick(d.areaname);
             }
-          } else if (level === 2) {
-            areaChange("1");
+          // } 
+          // else if (level === 2) {
+            // areaChange("1");
             // setSelArea("1");  //india
             // setLevel(1);
             // searchRef.current.state.value = "";  //reset search to
             // setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
-          }
+          // }
         }
     
+      })
+      .on('contextmenu',(event,d) =>{    //On Right click
+        event.preventDefault();
+        if(level === 3){
+          // setLevel(2);
+          // console.log("LEVEL 2");
+          areaChange(parentArea);
+          // areaChange()
+        }
+        if(level === 2){
+          // console.log("LEVEL 1"); 
+          areaChange("1");
+        }
       })
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))

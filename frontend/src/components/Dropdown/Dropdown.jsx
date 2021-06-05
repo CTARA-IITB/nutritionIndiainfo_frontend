@@ -81,10 +81,10 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     { value: 1, title: "Adolescence" },
     { value: 2, title: "Women of Reproductive Age" },
     { value: 3, title: "Pregnancy" },
-    // { value: 4, title: "Delivery PNC" },      
+    { value: 4, title: "Delivery PNC" },      
     { value: 5, title: "Early childhood" },
     { value: 6, title: "School age" },  
-    // { value: 7, title: "All" },               
+    { value: 7, title: "All" },               
 ];
 
 // useEffect(() => {

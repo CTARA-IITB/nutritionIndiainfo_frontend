@@ -420,7 +420,7 @@ export const Map = ({
         if(level === 3){
           // setLevel(2);
           // console.log("LEVEL 2");
-          areaChange(parentArea);
+          areaChange(""+parentArea);
           // areaChange()
         }
         if(level === 2){

@@ -87,32 +87,32 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     // { value: 7, title: "All" },               
 ];
 
-useEffect(() => {
-  let categoryData = [];
-      if(selLifeycle === 1 || selLifeycle === 6){
-        setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
-      }else if(selLifeycle === 2){
-        setCategoryDropdownOpt([
-          { value: 1, title: "Manifestation" },
-          { value: 4, title: "Underlying Determinants" }            
-        ]);
-      }else if(selLifeycle === 3 || selLifeycle ===4){
-        setCategoryDropdownOpt([
-          { value: 2, title: "Interventions" },
-          { value: 3, title: "Immediate Determinants" },           
-        ]);
-      }else if(selLifeycle ===5){
-        setCategoryDropdownOpt([
-          { value: 1, title: "Manifestation" },
-          { value: 2, title: "Interventions" },
-          { value: 3, title: "Immediate Determinants" },
-        ])
-      }else if(selLifeycle ===7){
-        setCategoryDropdownOpt([
-          { value: 4, title: "Underlying Determinants" }            
-        ])
-      }
-}, [selLifeycle])
+// useEffect(() => {
+//   let categoryData = [];
+//       if(selLifeycle === 1 || selLifeycle === 6){
+//         setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
+//       }else if(selLifeycle === 2){
+//         setCategoryDropdownOpt([
+//           { value: 1, title: "Manifestation" },
+//           { value: 4, title: "Underlying Determinants" }            
+//         ]);
+//       }else if(selLifeycle === 3 || selLifeycle ===4){
+//         setCategoryDropdownOpt([
+//           { value: 2, title: "Interventions" },
+//           { value: 3, title: "Immediate Determinants" },           
+//         ]);
+//       }else if(selLifeycle ===5){
+//         setCategoryDropdownOpt([
+//           { value: 1, title: "Manifestation" },
+//           { value: 2, title: "Interventions" },
+//           { value: 3, title: "Immediate Determinants" },
+//         ])
+//       }else if(selLifeycle ===7){
+//         setCategoryDropdownOpt([
+//           { value: 4, title: "Underlying Determinants" }            
+//         ])
+//       }
+// }, [selLifeycle])
 
   
   // let boundaries;
@@ -150,8 +150,7 @@ useEffect(() => {
       setToggleStateBurden(true);
       let subVal = '6';
       setLifecycleDropdownOpt(lifecycleData);
-
-      
+      setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
   
       // setCategoryDropdownOpt(categoryData);
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
@@ -240,8 +239,33 @@ useEffect(() => {
           setIsSelected(false);
           setSelLifecycle(e);
           setSelBurden("1");
-          setSelCategory(1);
           let selCat = 1;
+          if(val === 1 || val === 6){
+            setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
+          }else if(val === 2){
+            setCategoryDropdownOpt([
+              { value: 1, title: "Manifestation" },
+              { value: 4, title: "Underlying Determinants" }                  
+            ]);
+          }else if(val === 3 || val ===4){
+            setCategoryDropdownOpt([
+              { value: 2, title: "Interventions" },
+              { value: 3, title: "Immediate Determinants" },           
+            ]);
+            selCat = 2;
+          }else if(val ===5){
+            setCategoryDropdownOpt([
+              { value: 1, title: "Manifestation" },
+              { value: 2, title: "Interventions" },
+              { value: 3, title: "Immediate Determinants" },
+            ])
+          }else if(val ===7){
+            setCategoryDropdownOpt([
+              { value: 4, title: "Underlying Determinants" }            
+            ])
+            selCat = 4;
+          }
+          setSelCategory(selCat);
           setToggleStateBurden(true);
           await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
           //await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
@@ -314,15 +338,15 @@ useEffect(() => {
           let url;
           let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(isLevelThree){
+            // if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
               solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
-            }
-            else{
-                  // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-            }
+            // }
+            // else{
+            //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
+            //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+            // }
 
 
 
@@ -456,15 +480,15 @@ useEffect(() => {
           let url;
           let solr_url;
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            if(levelThree){
+            // if(levelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
               solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
-            }
-            else{
-                  // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-                  solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-            }
+            // }
+            // else{
+            //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
+            //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+            // }
            
             // const body_1 = await url.json()
             let solr_body_1 = await solr_url.json()

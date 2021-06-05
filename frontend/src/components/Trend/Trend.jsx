@@ -80,7 +80,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const parseTime = timeParse('%d-%b-%y');
 
 	 
-  
     const formatTime = timeFormat('%b-%y');
     const formatTooltipTime = timeFormat('%B-%Y');
     const formatTitleTime = timeFormat('%Y');
@@ -168,10 +167,19 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       let yValue;
       if(toggleStateBurden)
         yValue = d => d.data_value;
+<<<<<<< HEAD
       else{
         graphUnit="Number";
         yValue = d => d.data_value_num;
       }
+=======
+      else
+      {
+      yValue = d => d.data_value_num;
+      graphUnit ='Number';
+      }
+
+>>>>>>> ed257201ea0313f8917953cf3611ba8abb86a333
       const xScale = scaleTime()
     		.domain([min_date, max_date])
     		.range([0, innerWidth])
@@ -192,7 +200,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         
       bar.append("g")
       	.attr("class","axis")
-        .call(axisLeft(yScale))
+        .call(axisLeft(yScale)
+        .tickFormat(function (d) {
+          // if ((d / 100000) >= 1) {
+          //     d = d / 100000 + " Lakh";
+          // }
+          return commaSeparated(d);
+      }))
+        // (formatUnit))
         .style('font-size',12);
 			
       let xaxis = bar.append("g")
@@ -222,9 +237,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("height", d => yScale(0) - yScale(yValue(d)))
         .attr("fill", colorScale)
       	.on('mouseover', (i,d) => {
-              console.log(d);
         			tooltip2.transition().duration(500).style("opacity", 1);
-              tooltip2.html(`<b>${d.timeperiod}</b> : ${yValue(d)}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
+              tooltip2.html(`<b>${d.timeperiod}</b> : ${commaSeparated(yValue(d))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
           		.style("left", xScale(d.middle_date) + 50 + "px")
           		.style("top", yScale(yValue(d)) + 100+"px");
               })
@@ -267,6 +281,9 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .style("font-weight","bold")
     }
     
+    function commaSeparated(x) {
+      return x.toLocaleString("en-IN");
+  }
    
    
       

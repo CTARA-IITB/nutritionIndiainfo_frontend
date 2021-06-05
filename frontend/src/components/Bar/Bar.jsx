@@ -51,6 +51,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         lightColor = '#F7D9B3';
     }
 
+    // remove last word  graph title i.e olds
+    // var lastIndex = graphTitle.lastIndexOf(" ");
+    // graphTitle = graphTitle.substring(0, lastIndex);
+    // graphTitle = graphTitle + 's'
+
     if(toggleStateBurden === false){
         barUnit = 'Number';
     }
@@ -268,7 +273,10 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     ticks: {
                         // fontSize: 8,
                         fontColor:"black",
-                        beginAtZero: true
+                        beginAtZero: true,
+                        callback: function(value) {
+                            return value.toLocaleString("en-IN");
+                        }
                     },
                     gridLines: {
                         drawOnChartArea:true,

@@ -65,7 +65,6 @@ export const createHierarchy = (options) =>{
      const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_level%3A2&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=100&omitHeader=true&q=*%3A*`);
     //  const body_3 = await url_3.json();
      const solr_body_3 = await solr_url_3.json();
-    console.log("mapdata",solr_body_3.response.docs);
      setSelIndiaData(solr_body_3.response.docs);
     // }
     // else
@@ -139,94 +138,29 @@ export const createHierarchy = (options) =>{
         // const body_2 = await url_2.json();
     let solr_url;
     if(isLevelThree){
-          // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+      // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
+      solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
 
     }
     else{
           // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+          solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     }
     const solr_body_2 = await solr_url.json();
     setTimeperiodDropdownOpt(solr_body_2.response.docs);
+    let timeVal ="";
+    if(typeof solr_body_2.response.docs[0] !== 'undefined'){
     setSelTimeperiod(solr_body_2.response.docs[0].value);
-    let timeVal = solr_body_2.response.docs[0].value;
+    timeVal = solr_body_2.response.docs[0].value;
     setGraphTimeperiod(solr_body_2.response.docs[0].title);
+    }
+    else{
+      setSelTimeperiod("");
+      setGraphTimeperiod("");
+    }
+    if(timeVal != "")
     await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
   }
-        
-  export function poissonDiscSampler(width, height, radius) {
-    var k = 30, // maximum number of samples before rejection
-        radius2 = radius * radius,
-        R = 0.1 * radius2,
-        cellSize = radius * Math.SQRT1_2,
-        gridWidth = Math.ceil(width / cellSize),
-        gridHeight = Math.ceil(height / cellSize),
-        // grid = new Array(gridWidth * gridHeight);
-        queue = [],
-        queueSize = 0,
-        sampleSize = 0;
 
-
-        let  gridSize = Math.round(gridWidth*gridHeight);
-        let  grid = new Array(gridSize);
-
-    return function() {
-      if (!sampleSize) return sample(Math.random() * width, Math.random() * height);
-
-      // Pick a random existing sample and remove it from the queue.
-      while (queueSize) {
-        var i = Math.random() * queueSize | 0,
-            s = queue[i];
-
-        // Make a new candidate between [radius, 2 * radius] from the existing sample.
-        for (var j = 0; j < k; ++j) {
-          var a = 2 * Math.PI * Math.random(),
-              r = Math.sqrt(Math.random() * R + radius2),
-              x = s[0] + r * Math.cos(a),
-              y = s[1] + r * Math.sin(a);
-
-          // Reject candidates that are outside the allowed extent,
-          // or closer than 2 * radius to any existing sample.
-          if (0 <= x && x < width && 0 <= y && y < height && far(x, y)) return sample(x, y);
-        }
-
-        queue[i] = queue[--queueSize];
-        queue.length = queueSize;
-      }
-    };
-
-    function far(x, y) {
-      var i = x / cellSize | 0,
-          j = y / cellSize | 0,
-          i0 = Math.max(i - 2, 0),
-          j0 = Math.max(j - 2, 0),
-          i1 = Math.min(i + 3, gridWidth),
-          j1 = Math.min(j + 3, gridHeight);
-
-      for (j = j0; j < j1; ++j) {
-        var o = j * gridWidth;
-        for (i = i0; i < i1; ++i) {
-          if (s = grid[o + i]) {
-            var s,
-                dx = s[0] - x,
-                dy = s[1] - y;
-            if (dx * dx + dy * dy < radius2) return false;
-          }
-        }
-      }
-
-      return true;
-    }
-
-    function sample(x, y) {
-      var s = [x, y];
-      queue.push(s);
-      grid[gridWidth * (y / cellSize | 0) + (x / cellSize | 0)] = s;
-      ++sampleSize;
-      ++queueSize;
-      return s;
-    }
-  }
 
   

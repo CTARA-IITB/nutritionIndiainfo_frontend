@@ -125,7 +125,7 @@ export const Map = ({
     var element = document.getElementById("info-msg");
     element.classList.remove("shake");
   }
-  let statusMsg;
+  let statusMsg = "Use Left Click to Drilldown and Right Click to Drillup the Map";
 
   let data = selIndiaData;
   let warning;
@@ -158,14 +158,14 @@ export const Map = ({
         }
       data = selDistrictsData;
     }
-    statusMsg ="Click on map to drill down to district level";
+    // statusMsg ="Left Click on map to drill down to district level";
   }
   else{
     
     if(null!== selStateData && selStateData.length > 0)
     {
       data = selStateData;
-      statusMsg ="Click on map to go back to India level";
+      // statusMsg ="Click on map to go back to India level";
     if(selTimeperiod == 22)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
@@ -187,7 +187,7 @@ export const Map = ({
         geometry = boundaries.new_state;
       else
         geometry = boundaries.state;
-      statusMsg ="No data: please select another survey";
+      //statusMsg ="No data: please select another survey";
 
   }
   }
@@ -200,10 +200,9 @@ export const Map = ({
   useEffect(() => {
     const svg = select(svgRef.current);
     const legend = select(svgRef.current)
-
-  
-
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
+    if((level == 1 && null!= selIndiaData && selIndiaData.length > 0) || ((level == 2 || level == 3) && null  != selStateData && selStateData.length > 0))
+    {
     svg.selectAll('*').remove();
 
     let title = svg.append("text").text(`${mapTitle}`)
@@ -420,7 +419,7 @@ export const Map = ({
         if(level === 3){
           // setLevel(2);
           // console.log("LEVEL 2");
-          areaChange(parentArea);
+          areaChange(""+parentArea);
           // areaChange()
         }
         if(level === 2){
@@ -649,6 +648,16 @@ export const Map = ({
 
       
     }
+  }
+  else{
+    svg.selectAll('*').remove();
+    const svg_2 = select(svgRef.current);
+    svg_2.append("text").text("No data: please select another survey")
+    .style("text-anchor", "middle")
+    .style("font-weight","bold")
+    .style("fill", "red")
+    .attr('transform',`translate(${width/2}, ${height/2})`);
+  }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit,geometry, dimensions, data, toggleStateBurden])
 

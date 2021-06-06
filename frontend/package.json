@@ -54,6 +54,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-share": "^4.4.0",
+    "react-share-button": "^0.0.4",
+    "react-share-social": "^0.1.47",
     "react-split-pane": "^0.1.92",
     "react-tabs-redux": "^4.0.0",
     "react-to-image": "^0.1.0",
@@ -62,6 +64,7 @@
     "recharts": "^2.0.7",
     "resize-observer-polyfill": "^1.5.1",
     "save-svg-as-png": "^1.4.17",
+    "share-buttons": "^1.7.0",
     "topojson": "3.0.2",
     "turf": "^3.0.14"
   },
@@ -87,7 +90,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.14.3",
     "chartjs-plugin-datalabels": "^1.0.0",
-    "random-points-on-polygon": "0.0.4"
+    "random-points-on-polygon": "^0.0.4"
   }
 }

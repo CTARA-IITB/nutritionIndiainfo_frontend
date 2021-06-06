@@ -15,7 +15,6 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Switch } from 'antd';
 import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
-
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   // let { id } = useParams();
@@ -26,7 +25,6 @@ export const Dropdown = ({}) =>{
   // const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
   // const iniSelSubgroup = '6';  //All
   // const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
-  const iniSelTimeperiod = '22';  //NHHS5
   const [selTimeperiod, setSelTimeperiod] = useState();
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
@@ -87,60 +85,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     { value: 7, title: "All" },               
 ];
 
-// useEffect(() => {
-//   let categoryData = [];
-//       if(selLifeycle === 1 || selLifeycle === 6){
-//         setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
-//       }else if(selLifeycle === 2){
-//         setCategoryDropdownOpt([
-//           { value: 1, title: "Manifestation" },
-//           { value: 4, title: "Underlying Determinants" }            
-//         ]);
-//       }else if(selLifeycle === 3 || selLifeycle ===4){
-//         setCategoryDropdownOpt([
-//           { value: 2, title: "Interventions" },
-//           { value: 3, title: "Immediate Determinants" },           
-//         ]);
-//       }else if(selLifeycle ===5){
-//         setCategoryDropdownOpt([
-//           { value: 1, title: "Manifestation" },
-//           { value: 2, title: "Interventions" },
-//           { value: 3, title: "Immediate Determinants" },
-//         ])
-//       }else if(selLifeycle ===7){
-//         setCategoryDropdownOpt([
-//           { value: 4, title: "Underlying Determinants" }            
-//         ])
-//       }
-// }, [selLifeycle])
-
-  
-  // let boundaries;
-  // let newBoundaries;
-  // let Dboundaries;
-  // let NewDboundaries;
-
-
-    // let tab =8;
-    // let indiVal ='12'
-
-    //   if(id === undefined || id === 'section1')
-    //   {
-    //     tab =8;
-    //     indiVal ='12';
-    //   }
-    //   else if(id === 'section2'){
-    //     tab=1;
-    //     indiVal = '2';  
-    //   }
-    //   else if(id === 'section3'){
-    //     tab=3;
-    //     indiVal = '74';
-    //   }
-    //   else if(id === 'section4'){ 
-    //     tab=6;
-    //     indiVal = '56';
-    //   }
 
     useEffect(() => {
       async function populateTabData()

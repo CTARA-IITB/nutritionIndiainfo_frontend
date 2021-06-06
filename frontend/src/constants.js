@@ -1,0 +1,1 @@
+export const NFHS5 = 24;

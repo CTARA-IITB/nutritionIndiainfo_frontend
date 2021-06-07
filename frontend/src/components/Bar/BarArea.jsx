@@ -1,10 +1,10 @@
-import React, { useRef,useContext } from 'react';
+import React, { useRef,useEffect,useState} from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "chartjs-plugin-datalabels";
 
-export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
+export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
     const componentRef = useRef();
     const screen=useFullScreenHandle();
@@ -23,7 +23,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     let differenceData = [];
     let s;
     let colorScale ='#eda143';
-
+    
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13)
       colorScale = '#a3c00f'; 
@@ -130,7 +130,8 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             yAxisID:'yAxis1',
             backgroundColor:colorScale,
             borderColor: colorScale,
-            borderWidth: 1
+            borderWidth: 1,
+            // barThickness: 6,
         },
     ]
 

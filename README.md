@@ -12,7 +12,7 @@
 
 > [Harmonized IFPRI UNICEF Cut-offs for Nutrition Indicators](https://drive.google.com/file/d/1Z1ZtUtbAqEuhuVjtA-5vw1RfCm7SAOO8/view?usp=sharing)
 
-> [NutritionINDIA.info indicators](https://drive.google.com/file/d/1BRUFOA1yq0z2JDodM03ZXlKWtubbZZf2/view?usp=sharing)
+> [NutritionINDIA.info indicators](https://drive.google.com/file/d/1ZqHSh680HKGtSQ5CUvmrslyLKKl9lLVm/view?usp=sharing)(7 June)
 
 
 ## Publically available CNNS version 1.0 data 

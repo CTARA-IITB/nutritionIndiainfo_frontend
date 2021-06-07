@@ -15,8 +15,6 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Switch } from 'antd';
 import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
-
-
 const {Search} = Input;
 export const Dropdown = ({}) =>{
   // let { id } = useParams();
@@ -27,7 +25,6 @@ export const Dropdown = ({}) =>{
   // const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
   // const iniSelSubgroup = '6';  //All
   // const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
-  const iniSelTimeperiod = '22';  //NHHS5
   const [selTimeperiod, setSelTimeperiod] = useState();
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
@@ -88,60 +85,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     { value: 7, title: "All" },               
 ];
 
-// useEffect(() => {
-//   let categoryData = [];
-//       if(selLifeycle === 1 || selLifeycle === 6){
-//         setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
-//       }else if(selLifeycle === 2){
-//         setCategoryDropdownOpt([
-//           { value: 1, title: "Manifestation" },
-//           { value: 4, title: "Underlying Determinants" }            
-//         ]);
-//       }else if(selLifeycle === 3 || selLifeycle ===4){
-//         setCategoryDropdownOpt([
-//           { value: 2, title: "Interventions" },
-//           { value: 3, title: "Immediate Determinants" },           
-//         ]);
-//       }else if(selLifeycle ===5){
-//         setCategoryDropdownOpt([
-//           { value: 1, title: "Manifestation" },
-//           { value: 2, title: "Interventions" },
-//           { value: 3, title: "Immediate Determinants" },
-//         ])
-//       }else if(selLifeycle ===7){
-//         setCategoryDropdownOpt([
-//           { value: 4, title: "Underlying Determinants" }            
-//         ])
-//       }
-// }, [selLifeycle])
-
-  
-  // let boundaries;
-  // let newBoundaries;
-  // let Dboundaries;
-  // let NewDboundaries;
-
-
-    // let tab =8;
-    // let indiVal ='12'
-
-    //   if(id === undefined || id === 'section1')
-    //   {
-    //     tab =8;
-    //     indiVal ='12';
-    //   }
-    //   else if(id === 'section2'){
-    //     tab=1;
-    //     indiVal = '2';  
-    //   }
-    //   else if(id === 'section3'){
-    //     tab=3;
-    //     indiVal = '74';
-    //   }
-    //   else if(id === 'section4'){ 
-    //     tab=6;
-    //     indiVal = '56';
-    //   }
 
     useEffect(() => {
       async function populateTabData()
@@ -178,7 +121,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
       useEffect(() => {
         // const url_4 = 'http://13.234.11.176/api/area';
-        const solr_url_4 = 'http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
+        const solr_url_4 = 'http://nutritionindia.communitygis.net:8983/solr/nutritionv9/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
         json(solr_url_4).then( options =>{
         const [country,statesID] = createHierarchy(options.response.docs);
         setStateID(statesID)
@@ -341,12 +284,12 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             // if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv9/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             // }
             // else{
             //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-            //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+            //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv9/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             // }
 
 
@@ -376,7 +319,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
-            const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+            const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv9/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
 
             // const body_3 = await url_3.json()
             const solr_body_3 = await solr_url_3.json()
@@ -483,12 +426,12 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             // if(levelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv9/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             // }
             // else{
             //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-            //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv7/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+            //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv9/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             // }
            
             // const body_1 = await url.json()

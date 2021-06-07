@@ -26,4 +26,3 @@ const Share =({id})=> {
   );
 }
 export default Share;
-

@@ -4,7 +4,8 @@ import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Button } from 'react-bootstrap';
-import * as turf from 'turf'
+import * as turf from 'turf';
+import {NFHS5} from "../../constants";
 
 // import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
 import { geoMercator, format, geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
@@ -92,12 +93,7 @@ export const Map = ({
   //merge geometry and data
 
   function addProperties(geojson, data) {
-    // console.log(geojson,data,"geojson and data")
-    geojson.map(geo =>{
-      if (geo.properties.ID_ === "IND022004"){
-        console.log(geo)
-      }
-    })
+ 
     let newArr = _.map(data, function (item) {
       return {
         areacode: item.area_code,
@@ -133,7 +129,7 @@ export const Map = ({
   {
     if (toggleState === true) {
 
-      if (selTimeperiod === 22){    // change state boundaries when timeperiod is NFHS5
+      if (selTimeperiod === NFHS5){    // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
         warning="Administrative Boundaries as per NFHS5(2019-20)"
       }   
@@ -146,7 +142,7 @@ export const Map = ({
     }
     else {
 
-        if(selTimeperiod === 22){
+        if(selTimeperiod === NFHS5){
           geometry = boundaries.new_dist;
           warning="Administrative Boundaries as per NFHS5(2019-20)"
 
@@ -166,7 +162,7 @@ export const Map = ({
     {
       data = selStateData;
       // statusMsg ="Click on map to go back to India level";
-    if(selTimeperiod == 22)
+    if(selTimeperiod == NFHS5)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
       geometry = {type: "FeatureCollection",features}
@@ -183,7 +179,7 @@ export const Map = ({
     // console.log("testst", document.getElementById("info-msg"));
     //   document.getElementById("info-msg").className += " shake";
         //   setTimeout(removeShake,3000);
-      if (selTimeperiod === 22) // change state boundaries when timeperiod is NFHS5
+      if (selTimeperiod === NFHS5) // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
       else
         geometry = boundaries.state;

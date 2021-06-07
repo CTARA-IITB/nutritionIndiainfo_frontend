@@ -61,6 +61,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
 
     if(indicatorBar){
+        console.log(indicatorBar,'')
         indicatorBar.map(i=>{
             if(i.subgroup_name==='All'){
                 barLabel.push(i.subgroup_name)

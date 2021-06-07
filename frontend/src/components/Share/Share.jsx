@@ -23,8 +23,9 @@ import {
     LinkedinIcon 
 } from "react-share";
 
-const Share =()=> {
+const Share =({id})=> {
     const currentURL = window.location.href // returns the absolute URL of a page
+    console.log(id, "id")
     return (
     <div className="container">
         <FacebookShareButton

@@ -646,7 +646,7 @@ useEffect(() => {
               />
             </Col>
 
-            <Col>
+            <Col xs={4}>
             <span className="dropdown-title">Select Indicator</span>
 
             <TreeSelect

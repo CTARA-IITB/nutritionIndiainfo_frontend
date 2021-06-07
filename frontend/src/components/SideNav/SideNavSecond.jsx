@@ -117,7 +117,7 @@ const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
 
         {isOpenShare && <Popup
           content={<>
-            <Share/>
+            <Share id={id}/>
           </>}
           handleClose={toggleShare}
         />}

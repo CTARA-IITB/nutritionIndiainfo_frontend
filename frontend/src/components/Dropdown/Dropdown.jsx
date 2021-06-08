@@ -84,6 +84,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     { value: 6, title: "School age" },  
     { value: 7, title: "All" },               
 ];
+  const [drillDirection,setDrillDirection] = useState(true);
 
 
     useEffect(() => {
@@ -739,6 +740,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setToggleStateBurden={setToggleStateBurden}
           burdenbuttonText={burdenbuttonText} 
           changeBurdenText={changeBurdenText}
+          drillDirection = {drillDirection}
+          setDrillDirection ={setDrillDirection}
           map={map}
           /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>

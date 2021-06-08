@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect,useState } from 'react';
 // import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
@@ -39,8 +39,8 @@ export const Map = ({
   selTimeperiod, parentArea, toggleState, setToggleState, setSelIndiaData, setIsLevelThree, buttonText, changeText, areaName,titleAreaName,
   selStateData, setSelStateData, selDistrictsData, areaChange,
   graphTitle,graphTimeperiod,graphUnit,
-  toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map
-
+  toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map,
+  drillDirection,setDrillDirection
 }) => {
   // console.log("toggleStateBurden", toggleStateBurden);
   let geometry = boundaries.new_state;
@@ -121,7 +121,7 @@ export const Map = ({
     var element = document.getElementById("info-msg");
     element.classList.remove("shake");
   }
-  let statusMsg = "Use Left Click to Drilldown and Right Click to Drillup the Map";
+  let statusMsg = "Click to drilldown";
 
   let data = selIndiaData;
   let warning;
@@ -154,14 +154,22 @@ export const Map = ({
         }
       data = selDistrictsData;
     }
-    // statusMsg ="Left Click on map to drill down to district level";
+    statusMsg ="Click on map to select state";
   }
   else{
     
     if(null!== selStateData && selStateData.length > 0)
     {
       data = selStateData;
-      // statusMsg ="Click on map to go back to India level";
+      if(level === 2){
+        if(drillDirection)
+          statusMsg ="Click on map to select district";
+       else
+          statusMsg=" Click on map to go back to India"
+      }else if(level === 3){
+        statusMsg=`Click on map to go back to state`
+      }
+      
     if(selTimeperiod == NFHS5)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
@@ -407,18 +415,29 @@ export const Map = ({
           // if (level === 1) {
 
             if (typeof c2Value(d) != "undefined") {
-              areaChange(d.area_id.toString());
-
+              // console.log("MYLEVEL",level);
+              // console.log("drillDirection",drillDirection);
               if(level === 1){
                 // console.log("LEVEL 2");
+                areaChange(d.area_id.toString());
                 setLevel(2);
-              }else if(level === 2){
-                setLevel(3);
+                setDrillDirection(true);
+              }else if(level === 2 && drillDirection){
                 // console.log("LEVEL 3"); 
                 setIsLevelThree(true);
-              }else if(level === 3){
+                areaChange(d.area_id.toString());
                 setLevel(3);
-                // console.log("STILL IN LEVEL 3");
+              }else if(level === 3){
+                areaChange(""+parentArea);
+                // console.log("Going back");
+                setLevel(2);
+                setDrillDirection(false);
+
+              }else if(level === 2 && !drillDirection){
+              // console.log("Going back to level 1");
+                areaChange("1");
+                setLevel(1);
+                setDrillDirection(true);
               }
               // setSelArea('' + d.area_id);
               // setLevel(2);
@@ -435,19 +454,7 @@ export const Map = ({
         }
     
       })
-      .on('contextmenu',(event,d) =>{    //On Right click
-        event.preventDefault();
-        if(level === 3){
-          // setLevel(2);
-          // console.log("LEVEL 2");
-          areaChange(""+parentArea);
-          // areaChange()
-        }
-        if(level === 2){
-          // console.log("LEVEL 1"); 
-          areaChange("1");
-        }
-      })
+
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
       .attr('transform',`translate(0,50)`);

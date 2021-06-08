@@ -243,7 +243,13 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         options={
             tooltips:{
                 displayColors:false,
-                bodyAlign:"center"
+                bodyAlign:"center",
+                callbacks: {
+                    label: function(context) {
+                        var label = context.xLabel; 
+                        return label.toLocaleString("en-IN");
+                    }
+                },
             },
             legend:
             {

@@ -6,7 +6,6 @@ class BarAreaComponent extends React.PureComponent {
 
   componentRef = React.createRef();
   render() {
-    console.log("data", this.props.data.labels.length);
     if(this.props.data.labels.length > 0)
     {
     return (

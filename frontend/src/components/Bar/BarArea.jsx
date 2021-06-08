@@ -147,6 +147,12 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         tooltips:{
             displayColors:false,
             bodyAlign:"center",
+            callbacks: {
+                label: function(context) {
+                    var label = context.xLabel; 
+                    return label.toLocaleString("en-IN");
+                }
+            },
             padding:10,
             filter: function (tooltipItem) {
                 return tooltipItem.datasetIndex === 0;

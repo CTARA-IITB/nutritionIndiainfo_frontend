@@ -116,6 +116,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     barData.push(+i.data_value_num)
                 }
             }
+            else if(i.subgroup_id>=18 && i.subgroup_id<=22){
+                barLabel.push({
+                    subgroup_name: i.subgroup_name,
+                    subgroup_id : i.subgroup_id,
+                })
+                colors.push(lightColor)
+                if(toggleStateBurden == true){
+                    barData.push(+i.data_value)
+                }
+                else{
+                    barData.push(+i.data_value_num)
+                }
+
+            }
         })
 
         var j=0;

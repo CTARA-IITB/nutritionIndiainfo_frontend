@@ -1,0 +1,11 @@
+#statMsg{
+    text-align: center;
+    font-weight: bold;
+    color:red;
+    width: 50%;
+    height: 50%;
+    margin: 100px auto; 
+    padding: 10px;
+    position: absolute;
+  
+  }

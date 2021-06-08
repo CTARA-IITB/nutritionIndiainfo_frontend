@@ -20,6 +20,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let groupedData = [];
     let groupedLabel =[];
     let groupedColor = [];
+    
 
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13){
@@ -51,19 +52,19 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         lightColor = '#F7D9B3';
     }
 
-    // remove last word  graph title i.e olds
-    // var lastIndex = graphTitle.lastIndexOf(" ");
-    // graphTitle = graphTitle.substring(0, lastIndex);
-    // graphTitle = graphTitle + 's'
-
     if(toggleStateBurden === false){
         barUnit = 'Number';
     }
 
     if(indicatorBar){
+        console.log(indicatorBar,'')
         indicatorBar.map(i=>{
-            if(i.subgroup_name==='All'){
-                barLabel.push(i.subgroup_name)
+            
+            if(i.subgroup_id===6){
+                barLabel.push({
+                   subgroup_name: i.subgroup_name,
+                   subgroup_id : i.subgroup_id,
+                })
                 colors.push(colorScale)
                 if(toggleStateBurden == true){
                     barData.push(+i.data_value)
@@ -71,13 +72,12 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 else{
                     barData.push(+i.data_value_num)
                 }
-                table.push({
-                    area:barLabel[barLabel.length-1],
-                    data:+barData[barData.length-1],
-                })
             }
-            else if(i.subgroup_name==='Male' || i.subgroup_name==='Female'){
-                barLabel.push(i.subgroup_name)
+            else if(i.subgroup_id>=14 && i.subgroup_id<=15){
+                barLabel.push({
+                    subgroup_name: i.subgroup_name,
+                    subgroup_id : i.subgroup_id,
+                })
                 colors.push(lightColor)
                 if(toggleStateBurden == true){
                     barData.push(+i.data_value)
@@ -85,13 +85,12 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 else{
                     barData.push(+i.data_value_num)
                 }
-                table.push({
-                    area:barLabel[barLabel.length-1],
-                    data:+barData[barData.length-1],
-                })
             }
-            else if(i.subgroup_name==='Poorest' || i.subgroup_name==='Middle' || i.subgroup_name==='Second' || i.subgroup_name==='Fourth' || i.subgroup_name==='Richest'){
-                barLabel.push(i.subgroup_name)
+            else if(i.subgroup_id>=8 && i.subgroup_id<=12){
+                barLabel.push({
+                    subgroup_name: i.subgroup_name,
+                    subgroup_id : i.subgroup_id,
+                })
                 colors.push(colorScale)
                 if(toggleStateBurden == true){
                     barData.push(+i.data_value)
@@ -99,79 +98,102 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 else{
                     barData.push(+i.data_value_num)
                 }
-                table.push({
-                    area:barLabel[barLabel.length-1],
-                    data:+barData[barData.length-1],
+            }
+            else if(i.subgroup_id>=18 && i.subgroup_id<=22){
+                barLabel.push({
+                    subgroup_name: i.subgroup_name,
+                    subgroup_id : i.subgroup_id,
                 })
+                colors.push(lightColor)
+                if(toggleStateBurden == true){
+                    barData.push(+i.data_value)
+                }
+                else{
+                    barData.push(+i.data_value_num)
+                }
             }
         })
 
         var j=0;
+        let flag=false,check=false;
+        let subgroupId = [6,15,14,23,24,25,18,19,20,21,22,10,12,9,8,11];
+        let colorCode = [colorScale,lightColor,lightColor,colorScale,colorScale,colorScale,lightColor,lightColor,lightColor,lightColor,lightColor,colorScale,colorScale,colorScale,colorScale,colorScale]
         if(barLabel.length>1){
-            for(var i=0;i<barLabel.length;i++){
-
-                if(barLabel[i]==='All'){
-                    groupedLabel[j]="Overall";
-                    groupedColor[j]=colorScale;
-                    groupedData[j++]=barData[i];
-                    groupedLabel[j]=" ";
-                    groupedColor[j]="white";
-                    groupedData[j++]=0;
+            var k=0;
+            while(k<subgroupId.length){
+                for(var i=0;i<barLabel.length;i++){
+                    if(subgroupId[k]===23){
+                        groupedLabel[j]="Low Coverage";
+                        groupedColor[j]=colorCode[k];
+                        groupedData[j++]=0;
+                        groupedLabel[j]="Mid Coverage";
+                        groupedColor[j]=colorCode[k+1];
+                        groupedData[j++]=0;
+                        groupedLabel[j]="High Coverage";
+                        groupedColor[j]=colorCode[k+2];
+                        groupedData[j++]=0;
+                        groupedLabel[j]=" ";
+                        groupedColor[j]="white";
+                        groupedData[j++]=0;
+                        flag=true;
+                        break;
+                    }
+                    if(barLabel[i].subgroup_id===subgroupId[k]){
+                        if(subgroupId[k]===6)
+                            groupedLabel[j]="Overall";
+                        else  
+                            groupedLabel[j]=barLabel[i].subgroup_name; 
+                        groupedColor[j]=colorCode[k];
+                        groupedData[j++]=barData[i];
+                        table.push({
+                            area:groupedLabel[groupedLabel.length-1],
+                            data:+groupedData[groupedData.length-1],
+                        })
+                        if(subgroupId[k]===6 ||subgroupId[k]===14|| subgroupId[k]===22){
+                            groupedLabel[j]=" ";
+                            groupedColor[j]="white";
+                            groupedData[j++]=0;
+                        }
+                        check=true;
+                        break;
+                    }
+                }
+                if(flag){
+                    flag=false;
+                    k+=3;
                     continue;
                 }
-                if(barLabel[i]==='Male'){
-                    groupedLabel[j]=barLabel[i]
-                    groupedColor[j]=lightColor;
-                    groupedData[j++]=barData[i];
+                if(check){
+                    check=false;
+                    k++;
                     continue;
                 }
-                if(barLabel[i]==='Female'){
-                    groupedLabel[j]=barLabel[i]
-                    groupedColor[j]=lightColor;
-                    groupedData[j++]=barData[i];
-                    groupedLabel[j]=" ";
-                    groupedColor[j]="white";
-                    groupedData[j++]=0;
-    
-                    groupedLabel[j]="Low Coverage";
-                    groupedColor[j]=colorScale;
-                    groupedData[j++]=0;
-                    groupedLabel[j]="Mid Coverage";
-                    groupedColor[j]=colorScale;
-                    groupedData[j++]=0;
-                    groupedLabel[j]="High Coverage";
-                    groupedColor[j]=colorScale;
-                    groupedData[j++]=0;
-                    groupedLabel[j]=" ";
-                    groupedColor[j]="white";
-                    groupedData[j++]=0;
-    
+                if(check===false && subgroupId[k]===18){
                     groupedLabel[j]="No Education";
                     groupedColor[j]=lightColor;
                     groupedData[j++]=0;
-                    groupedLabel[j]="<5 year completed";
+                    groupedLabel[j]="<5 years completed";
                     groupedColor[j]=lightColor;
                     groupedData[j++]=0;
-                    groupedLabel[j]="5-9 year completed";
+                    groupedLabel[j]="5-9 years completed";
                     groupedColor[j]=lightColor;
                     groupedData[j++]=0;
-                    groupedLabel[j]="10-11 year completed";
+                    groupedLabel[j]="10-11 years completed";
                     groupedColor[j]=lightColor;
                     groupedData[j++]=0;
-                    groupedLabel[j]="12+ year completed";
+                    groupedLabel[j]="12+ years completed";
                     groupedColor[j]=lightColor;
                     groupedData[j++]=0;
                     groupedLabel[j]=" ";
                     groupedColor[j]="white";
                     groupedData[j++]=0;
+                    k+=5;
                     continue;
-                }
-                groupedLabel[j]=barLabel[i];
-                groupedColor[j]=colorScale;
-                groupedData[j++]=barData[i];
+                }  
+                k++;    
             }
-            
-        }else{
+        }      
+        else{
             groupedLabel[j]="Overall";
             groupedColor[j]=colorScale;
             groupedData[j++]=0;
@@ -189,19 +211,32 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             groupedColor[j]="white";
             groupedData[j++]=0;
 
+            groupedLabel[j]="Low Coverage";
+            groupedColor[j]=colorScale;
+            groupedData[j++]=0;
+            groupedLabel[j]="Mid Coverage";
+            groupedColor[j]=colorScale;
+            groupedData[j++]=0;
+            groupedLabel[j]="High Coverage";
+            groupedColor[j]=colorScale;
+            groupedData[j++]=0;
+            groupedLabel[j]=" ";
+            groupedColor[j]="white";
+            groupedData[j++]=0;
+
             groupedLabel[j]="No Education";
             groupedColor[j]=lightColor;
             groupedData[j++]=0;
-            groupedLabel[j]="<5 year completed";
+            groupedLabel[j]="<5 years completed";
             groupedColor[j]=lightColor;
             groupedData[j++]=0;
-            groupedLabel[j]="5-9 year completed";
+            groupedLabel[j]="5-9 years completed";
             groupedColor[j]=lightColor;
             groupedData[j++]=0;
-            groupedLabel[j]="10-11 year completed";
+            groupedLabel[j]="10-11 years completed";
             groupedColor[j]=lightColor;
             groupedData[j++]=0;
-            groupedLabel[j]="12+ year completed";
+            groupedLabel[j]="12+ years completed";
             groupedColor[j]=lightColor;
             groupedData[j++]=0;
             groupedLabel[j]=" ";
@@ -224,7 +259,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             groupedColor[j]=colorScale;
             groupedData[j++]=0;
         }
-        
+       
         // graph time period 
         let chartTitle = graphTimeperiod.split(" ")[0];
         data = {

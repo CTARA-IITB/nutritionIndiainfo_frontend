@@ -6,7 +6,7 @@
 
 > [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1EDn-bqO2_WnAF3evOuZi34hY5ERmMHvA/view?usp=sharing)
 
-> [Burden Calculation](https://drive.google.com/file/d/1paZtY_dsQgVceV7ueteGfZDOf6juCHgs/view?usp=sharing)(8 June)
+> [Burden Calculation](https://docs.google.com/document/d/1PF7L9ZlY69wceifenImPfasvzfNsVT5IAZ15Vl7AAtg/edit?usp=sharing)(8 June)
 
 > [Statewise Data collection Dates](https://drive.google.com/file/d/1XsIq_BvZfhXGWDLvTpW_1PetzSaOGAOO/view?usp=sharing)
 

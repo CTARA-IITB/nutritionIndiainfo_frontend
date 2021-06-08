@@ -81,8 +81,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     { value: 3, title: "Pregnancy" },
     { value: 4, title: "Delivery PNC" },      
     { value: 5, title: "Early childhood" },
-    { value: 6, title: "School age" },  
-    { value: 7, title: "All" },               
+    { value: 6, title: "School age" },          
 ];
   const [drillDirection,setDrillDirection] = useState(true);
 

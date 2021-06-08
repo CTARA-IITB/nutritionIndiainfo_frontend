@@ -187,13 +187,16 @@ export const Map = ({
 
   }
   }
-  select(".tooltip").remove();
-
-  let tooltip = select(".map_svg").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
+  
 
   useEffect(() => {
+
+    select(".tooltip").remove();
+
+    let tooltip = select(".map_svg").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+  
     const svg = select(svgRef.current);
     const legend = select(svgRef.current)
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();

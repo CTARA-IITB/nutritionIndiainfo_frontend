@@ -121,7 +121,7 @@ export const Map = ({
     var element = document.getElementById("info-msg");
     element.classList.remove("shake");
   }
-  let statusMsg = "Use Left Click to Drilldown and Right Click to Drillup the Map";
+  let statusMsg = "Click to drilldown";
 
   let data = selIndiaData;
   let warning;
@@ -154,14 +154,22 @@ export const Map = ({
         }
       data = selDistrictsData;
     }
-    // statusMsg ="Left Click on map to drill down to district level";
+    statusMsg ="Click on map to select state";
   }
   else{
     
     if(null!== selStateData && selStateData.length > 0)
     {
       data = selStateData;
-      // statusMsg ="Click on map to go back to India level";
+      if(level === 2){
+        if(drillDirection)
+          statusMsg ="Click on map to select district";
+       else
+          statusMsg=" Click on map to go back to India"
+      }else if(level === 3){
+        statusMsg=`Click on map to go back to state`
+      }
+      
     if(selTimeperiod == NFHS5)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 

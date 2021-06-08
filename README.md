@@ -4,7 +4,7 @@
 ## NutritionINDIA.info Standards and Methods
 > [Mockup presentation](https://drive.google.com/file/d/1b5FpCotZIF8ZH-_XkyTEY9jQPn74dygl/view?usp=sharing)
 
-> [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1EDn-bqO2_WnAF3evOuZi34hY5ERmMHvA/view?usp=sharing)
+> [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1LSFgXqEj3xiAb4-pgyQpapfmhqO9vqB5/view?usp=sharing)(8 June)
 
 > [Burden Calculation](https://docs.google.com/document/d/1PF7L9ZlY69wceifenImPfasvzfNsVT5IAZ15Vl7AAtg/edit?usp=sharing)(8 June)
 

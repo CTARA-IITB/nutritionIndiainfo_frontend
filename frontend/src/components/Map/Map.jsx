@@ -1,4 +1,5 @@
-import React, { useRef, useEffect,useState } from 'react';
+
+import React, { useRef, useEffect } from 'react';
 // import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
@@ -8,7 +9,7 @@ import * as turf from 'turf';
 import {NFHS5} from "../../constants";
 
 // import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
-import { geoMercator, format, geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
+import { geoMercator, format,geoCircle ,geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
 import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
@@ -41,8 +42,8 @@ export const Map = ({
   graphTitle,graphTimeperiod,graphUnit,
   toggleStateBurden, setToggleStateBurden, burdenbuttonText, changeBurdenText,map,
   drillDirection,setDrillDirection
+
 }) => {
-  // console.log("toggleStateBurden", toggleStateBurden);
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -51,7 +52,7 @@ export const Map = ({
   const dimensions = useResizeObserver(wrapperRef);
   // const [colorScale,setColorScale] = useState();
   function removeShake() {
-    var element = document.getElementById("info-msg");
+    let element = document.getElementById("info-msg");
     element.classList.remove("shake");
   }
 
@@ -118,10 +119,10 @@ export const Map = ({
   }
 
   function removeShake() {
-    var element = document.getElementById("info-msg");
+    let element = document.getElementById("info-msg");
     element.classList.remove("shake");
   }
-  let statusMsg = "Click to drilldown";
+  let statusMsg = "";
 
   let data = selIndiaData;
   let warning;
@@ -169,7 +170,6 @@ export const Map = ({
       }else if(level === 3){
         statusMsg=`Click on map to go back to state`
       }
-      
     if(selTimeperiod == NFHS5)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
@@ -195,16 +195,13 @@ export const Map = ({
 
   }
   }
-  
+  select(".tooltip").remove();
 
-  useEffect(() => {
-
-    select(".tooltip").remove();
-
-    let tooltip = select(".map_svg").append("div")
+  let tooltip = select(".map_svg").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
-  
+
+  useEffect(() => {
     const svg = select(svgRef.current);
     const legend = select(svgRef.current)
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
@@ -234,8 +231,7 @@ export const Map = ({
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
     let mergedGeometry = addProperties(geometry.features, data);
- 
-
+console.log(data)
     let c2Value;
     let color_range
     if (toggleStateBurden === true) 
@@ -311,10 +307,8 @@ export const Map = ({
   
     let colorScale2;
     let arrsuw = [19,21,17,18,12,13,71,124,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
-
     if(toggleStateBurden == true)
     {
-
     if(indicatorSense == 'Positive')
     {
     colorScale2 = scaleThreshold().domain([low, medium, high, highest])
@@ -333,6 +327,7 @@ export const Map = ({
       .domain([min, max])
       .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"])
 
+      // let arrsuw = [19,21,17,18,12,13,71,124,20,108,107,89,31,11,28,6,7,37,51,42,84];
       if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }
@@ -343,6 +338,7 @@ export const Map = ({
       colorScale = colorScale4_p;
 
     }
+    
   }
   else{
       let arrObese = [91,95,104,92,96,105,21];
@@ -362,8 +358,6 @@ export const Map = ({
         colorScale = '#eda14380'; 
 
   }
-    
-
     const onMouseMove = (event, d) => {
       if (typeof c2Value(d) != 'undefined') {
         // tooltip.style("opacity", .9);
@@ -454,7 +448,7 @@ export const Map = ({
         }
     
       })
-
+  
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
       .attr('transform',`translate(0,50)`);
@@ -469,157 +463,102 @@ export const Map = ({
     // console.log(unit)
     // if (unit === 2) {
     else{
-
+      for(let i =0;i<mergedGeometry.length;i++){
+    
+        draw_circles(mergedGeometry[i]);}
       svg
       .selectAll(".polygon")
       .data(mergedGeometry)
       .join("path").attr("class", "polygon")
       .style("fill", "#fff")
+      
+      .attr("fill-opacity","0")
+      
       .on("mousemove", (i, d) => onMouseMove(i, d))
       .on("mouseout", function (d) {
         tooltip
-          // .transition()    
-          // .duration(500)    
+           
           .style("opacity", 0);
       })
+  
       .on('click', (i, d) => {
         if(toggleState){
-          setIsLevelThree(false);
+          // setIsLevelThree(false);
           // let id = d.area_id
           tooltip.style('opacity', 0);
-          if (level === 1) {
+          // if (level === 1) {
 
             if (typeof c2Value(d) != "undefined") {
-              areaChange(d.area_id.toString());
+              // console.log("MYLEVEL",level);
+              // console.log("drillDirection",drillDirection);
+              if(level === 1){
+                // console.log("LEVEL 2");
+                areaChange(d.area_id.toString());
+                setLevel(2);
+                setDrillDirection(true);
+              }else if(level === 2 && drillDirection){
+                // console.log("LEVEL 3"); 
+                setIsLevelThree(true);
+                areaChange(d.area_id.toString());
+                setLevel(3);
+              }else if(level === 3){
+                areaChange(""+parentArea);
+                // console.log("Going back");
+                setLevel(2);
+                setDrillDirection(false);
+
+              }else if(level === 2 && !drillDirection){
+              // console.log("Going back to level 1");
+                areaChange("1");
+                setLevel(1);
+                setDrillDirection(true);
+              }
               // setSelArea('' + d.area_id);
               // setLevel(2);
               // onMapClick(d.areaname);
             }
-          } else if (level === 2) {
-            areaChange("1");
+          // } 
+          // else if (level === 2) {
+            // areaChange("1");
             // setSelArea("1");  //india
             // setLevel(1);
             // searchRef.current.state.value = "";  //reset search to
             // setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
-          }
+          // }
         }
     
       })
+      // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
       .attr('transform',`translate(0,50)`);
 
-
-      // svg.selectAll(".mask")
-      // .data(mergedGeometry)
-      // .enter()
-      // .append("clipPath")
-      // .attr("class","mask")
-      // .attr("id",function(d){return d.areacode;})
-      // .append("path")
-      // .attr("d", pathGenerator)
-      // .attr('transform',`translate(0,50)`);
-      let randomPointInPoly = function(polygonGeoJson) {
-        var bounds = getPolygonBoundingBox(polygonGeoJson); 
-        console.log('bounds are ' + bounds);
-        console.log(bounds[0][0]);
-        //[xMin, yMin][xMax, yMax]
-        var x_min  = bounds[0][0];
-        var x_max  = bounds[1][0];
-        var y_min  = bounds[0][1];
-        var y_max  = bounds[1][1];
-    
-        var lat = y_min + (Math.random() * (y_max - y_min));
-        var lng = x_min + (Math.random() * (x_max - x_min));
-        console.log(lat,lng)
-        var poly = polygonGeoJson;
-        var pt = turf.point([lng, lat]);
-        var inside = turf.booleanPointInPolygon(pt, polygonGeoJson);
-        
-        console.log(inside);
-    
-    
-        if (inside) {
-            return pt
-        } else {
-            return randomPointInPoly(poly)
-        }
-    }
-    
-    
-    function getPolygonBoundingBox(feature) {
-        console.log(feature.geometry.coordinates.length);
-        // bounds [xMin, yMin][xMax, yMax]
-        var bounds = [[], []];
-        var polygon;
-        var latitude;
-        var longitude;
-    
-        for (var i = 0; i < feature.geometry.coordinates.length; i++) {
-            if (feature.geometry.coordinates.length === 1) {
-                // Polygon coordinates[0][nodes]
-                polygon = feature.geometry.coordinates[0];
-            } else {
-                // Polygon coordinates[poly][0][nodes]
-                polygon = feature.geometry.coordinates[i][0];
-            }
-    
-            for (var j = 0; j < polygon.length; j++) {
-                longitude = polygon[j][0];
-                latitude = polygon[j][1];
-    
-                bounds[0][0] = bounds[0][0] < longitude ? bounds[0][0] : longitude;
-                bounds[1][0] = bounds[1][0] > longitude ? bounds[1][0] : longitude;
-                bounds[0][1] = bounds[0][1] < latitude ? bounds[0][1] : latitude;
-                bounds[1][1] = bounds[1][1] > latitude ? bounds[1][1] : latitude;
-            }
-        }
-    
-        return bounds;
-    }
-    
-   svg.selectAll(".points")
-    .data(mergedGeometry)
-    .enter()
-    .append("g")
-    .attr("class","points")
-    // .attr("clip-path", function(d){return "url(#"+d.areacode+")";})
-    .each(draw_circles)
-    .attr('transform',`translate(0,50)`);
-
-
-    
-    
-    // Usage Example.
-    // Generates 100 points that is in a 1km radius from the given lat and lng point.
-    // var randomGeoPoints = 
-
       function draw_circles(d) {
+        console.log(d)
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = (bounds[1][1] - bounds[0][1])/2;
-        let x = bounds[0][0];
-        let y = bounds[0][1];
-        let x2 = bounds[1][0];
-        let y2 = bounds[1][1];
-      
-        let p = d.properties.AREA_ / (width_d * height_d);
-        let p_ = d.properties.AREA_
+        
         // let n = d.dataValue / (dotVal);
         let n = d.dataValueNum / (dotVal);
         if (typeof d.dataValueNum !== 'undefined' && d.dataValueNum > 0 
 && isFinite(width_d) && isFinite(height_d))
 
         {
-        // var points = generateRandomPoints(center, 100000, n)
-        // var points = randomPointInPoly(d);
-        var randomPointsOnPolygon = require('random-points-on-polygon');
+      
+        let randomPointsOnPolygon = require('random-points-on-polygon');
       
        
-        // var polygon = turf.random('polygon').features[0];
          
-        var points = randomPointsOnPolygon(n, d);
-        console.log(points)
-        
+        let points = randomPointsOnPolygon(n, d);
+        for(let i =0;i<points.length;i++){
+          points[i].areaname = d.areaname
+          points[i].dataValueNum = d.areaname
+          points[i].area_id = d.area_id
+          points[i].dataValue = d.dataValue
+
+        }
+
+      
         svg
         .selectAll("myCircles")
         .data(points)
@@ -627,11 +566,11 @@ export const Map = ({
         .append("circle")
           .attr("cx", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[0] })
           .attr("cy", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1] })
-          .attr("r", 2)
+          .attr("r",2)
           .style("fill", colorScale)
-          .style('opacity',0.5)
-    .attr('transform',`translate(0,50)`);
-          
+          .style('opacity',0.7)
+          .attr('transform',`translate(0,50)`)
+      
         
    
         }
@@ -713,7 +652,7 @@ export const Map = ({
   }
   let table=[];
   if(data){
-    for(var i=0;i<data.length;i++){
+    for(let i=0;i<data.length;i++){
         table.push({
             area:data[i].area_name,
             data:+data[i].data_value+" ("+graphTimeperiod + ")",

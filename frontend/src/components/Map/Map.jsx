@@ -231,7 +231,6 @@ export const Map = ({
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
     let mergedGeometry = addProperties(geometry.features, data);
-console.log(data)
     let c2Value;
     let color_range
     if (toggleStateBurden === true) 
@@ -533,7 +532,6 @@ console.log(data)
       .attr('transform',`translate(0,50)`);
 
       function draw_circles(d) {
-        console.log(d)
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = (bounds[1][1] - bounds[0][1])/2;

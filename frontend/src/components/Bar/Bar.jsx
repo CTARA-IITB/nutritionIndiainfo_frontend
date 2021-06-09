@@ -57,7 +57,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
 
     if(indicatorBar){
-        console.log(indicatorBar,'')
         indicatorBar.map(i=>{
             
             if(i.subgroup_id===6){
@@ -118,7 +117,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         let flag=false,check=false;
         let subgroupId = [6,15,14,23,24,25,18,19,20,21,22,10,12,9,8,11];
         let colorCode = [colorScale,lightColor,lightColor,colorScale,colorScale,colorScale,lightColor,lightColor,lightColor,lightColor,lightColor,colorScale,colorScale,colorScale,colorScale,colorScale]
-        if(barLabel.length>1){
+        if(barLabel.length>0){
             var k=0;
             while(k<subgroupId.length){
                 for(var i=0;i<barLabel.length;i++){

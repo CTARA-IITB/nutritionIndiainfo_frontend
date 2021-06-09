@@ -362,7 +362,7 @@ export const Map = ({
         // tooltip.style("opacity", .9);
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + c2Value(d))
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
           .style("left", event.clientX + "px")
           .style("top", event.clientY - 30 + "px");
       }
@@ -636,6 +636,10 @@ export const Map = ({
   }
  
   const screen = useFullScreenHandle();
+
+  function commaSeparated(x) {
+    return x.toLocaleString("en-IN");
+}
 
   const checkchange = (state,handle)=>{
     if(map){

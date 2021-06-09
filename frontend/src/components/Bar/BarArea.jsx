@@ -162,6 +162,11 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         legend:{  
             display: false,
         },
+        layout: {
+            padding: {
+              right: 70,
+            },
+          },
         title:{
             display: true,
             text: [`${graphTitle}, ${barGUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
@@ -224,7 +229,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                 // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
                 // console.log(scaleMax, "ScaleMax")
                 var yPos =  model.y + 7;
-                var xPos = model.x + 26;
+                var xPos = model.x + 28;
                 ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
               }
             });

@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import SideNavFirst from "../SideNav/SideNavFirst";
-
+// import commaSeparated from "../../utils.js";
 import "./Trend.css";
 import {
   scaleLinear,

@@ -229,7 +229,6 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             ctx.textBaseline = 'bottom';
             // ctx.fillStyle = "black";
             ctx.fontWeight = 'none';
-            console.log(chartInstance.data.datasets, "data");
             chartInstance.data.datasets.forEach(function (dataset) {
               for (var i = 0; i < dataset.data.length; i++) {
                 var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;

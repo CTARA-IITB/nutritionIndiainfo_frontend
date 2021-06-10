@@ -4,7 +4,7 @@
 ## NutritionINDIA.info Standards and Methods
 > [Mockup presentation](https://drive.google.com/file/d/1b5FpCotZIF8ZH-_XkyTEY9jQPn74dygl/view?usp=sharing)
 
-> [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1EDn-bqO2_WnAF3evOuZi34hY5ERmMHvA/view?usp=sharing)
+> [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1LSFgXqEj3xiAb4-pgyQpapfmhqO9vqB5/view?usp=sharing)(8 June)
 
 > [Burden Calculation](https://docs.google.com/document/d/1PF7L9ZlY69wceifenImPfasvzfNsVT5IAZ15Vl7AAtg/edit?usp=sharing)(8 June)
 
@@ -13,6 +13,8 @@
 > [Harmonized IFPRI UNICEF Cut-offs for Nutrition Indicators](https://drive.google.com/file/d/1Z1ZtUtbAqEuhuVjtA-5vw1RfCm7SAOO8/view?usp=sharing)
 
 > [NutritionINDIA.info indicators](https://drive.google.com/file/d/1ZqHSh680HKGtSQ5CUvmrslyLKKl9lLVm/view?usp=sharing)(7 June)
+
+> [NutritionINDIA % age group Census 2011](https://drive.google.com/file/d/1pdajCfgQzey8RWI_0EDBETxBDKWD1oIU/view?usp=sharing)(8 June)
 
 
 ## Publically available CNNS version 1.0 data 

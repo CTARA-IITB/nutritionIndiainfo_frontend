@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import SideNavFirst from "../SideNav/SideNavFirst";
-
+// import commaSeparated from "../../utils.js";
 import "./Trend.css";
 import {
   scaleLinear,
@@ -107,8 +107,9 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       setData(cleanData);
   }, []);
 
-  select(".tooltip2").remove();
   useEffect(()=>{
+    select(".tooltip2").remove();
+
     let tooltip2 = select(".trend_svg").append("div")
     .attr("class", "tooltip2")
     .style("opacity", 0);

@@ -241,7 +241,8 @@ button.ant-switch {
     /* display: flex; */
     margin: 20px;
     margin-left: -180px;
-    height: 1000px;
+    margin-top: -20px;
+    height: 12500px;
     width: 250px;
   }
 

@@ -2,7 +2,7 @@ import React, { useRef,useContext } from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import "chartjs-plugin-datalabels";
+import Chart from 'chart.js';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
@@ -143,6 +143,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         datasets: datasets,
     }    
     options = {
+        showDatapoints:true,
         responsive:true,
         maintainAspectRatio:false,
         tooltips:{
@@ -162,6 +163,11 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         legend:{  
             display: false,
         },
+        layout: {
+            padding: {
+              right: 70,
+            },
+          },
         title:{
             display: true,
             text: [`${graphTitle}, ${barGUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
@@ -198,16 +204,44 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     drawOnChartArea:false
                 }
             }],
-            datalabels: {
-                anchor :'end',
-                align :'top',
-                // and if you need to format how the value is displayed...
-                callback: function(value, context) {
-                    return 0;
-                }
-            }
         } 
     }
+
+    Chart.plugins.register({
+        afterDraw: function(chartInstance) {
+          if (chartInstance.config.options.showDatapoints) {
+            var helpers = Chart.helpers;
+            var ctx = chartInstance.chart.ctx;
+            var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
+      
+            // render the value of the chart above the bar
+            ctx.font = Chart.helpers.fontString(12, 'normal', Chart.defaults.global.defaultFontFamily);
+            // ctx.fontFamily = 'Verdana';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillStyle = "black";
+            ctx.fontWeight = "normal";
+            // console.log(Chart.helpers.fontString, "ctx.font")
+    
+      
+            chartInstance.data.datasets.forEach(function (dataset) {
+              for (var i = 0; i < dataset.data.length; i++) {
+                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                // console.log(scaleMax, "ScaleMax")
+                var yPos =  model.y + 7;
+                var xPos = model.x + 28;
+                ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
+              }
+            });
+          }
+        }
+      });
+
+      function commaSeparated(x) {
+        return x.toLocaleString("en-IN");
+    }
+
     // title of table
     title=graphTitle +', '+barGUnit; 
     let calculatedHeight=data.labels.length*15;

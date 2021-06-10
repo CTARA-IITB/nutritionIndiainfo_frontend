@@ -268,7 +268,7 @@ export const Map = ({
        medium = 20.0;
        high = 30.0;
        highest = 40.0;
-    } else if(selIndicator == 71 || selIndicator == 124 )
+    } else if(selIndicator == 71 || selIndicator == 26 )
     {
       low = 5.0;
       medium = 20.0;
@@ -305,7 +305,7 @@ export const Map = ({
     let colorScale;
   
     let colorScale2;
-    let arrsuw = [19,21,17,18,12,13,71,124,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
+    let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
     if(toggleStateBurden == true)
     {
     if(indicatorSense == 'Positive')
@@ -326,7 +326,7 @@ export const Map = ({
       .domain([min, max])
       .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"])
 
-      // let arrsuw = [19,21,17,18,12,13,71,124,20,108,107,89,31,11,28,6,7,37,51,42,84];
+      // let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84];
       if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }
@@ -351,7 +351,7 @@ export const Map = ({
         colorScale = '#e5393580'; 
       else  if(arrObese.includes(selIndicator))
         colorScale = '#7b1fa280'; 
-      else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125)
+      else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
         colorScale = '#b71c1c80'; 
       else
         colorScale = '#eda14380'; 

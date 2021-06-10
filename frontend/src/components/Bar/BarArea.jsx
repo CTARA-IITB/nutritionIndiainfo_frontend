@@ -35,7 +35,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
       colorScale = '#e53935'; 
     else  if(arrObese.includes(selIndicator))
       colorScale = '#7b1fa2'; 
-    else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125)
+    else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
       colorScale = '#b71c1c'; 
     else
       colorScale = '#eda143'; 

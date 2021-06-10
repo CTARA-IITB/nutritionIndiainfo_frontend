@@ -189,7 +189,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .style("font-size","13px")
         .style("font-weight","bold")
         .attr("dy", "-2em")
-        .text(`${graphTitle},${graphUnit},${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
+        .text(`${graphTitle},${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
       
         
       bar.append("g")
@@ -263,7 +263,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .style("font-size","13px")
       .style("font-weight","bold")
       .attr("dy", "-2em")
-      .text(`${graphTitle},${graphUnit},${titleAreaName}`)
+      .text(`${graphTitle},${titleAreaName}`)
 
       bar.append("text")
       .attr("x",innerWidth/2)
@@ -275,6 +275,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .style("font-weight","bold")
     }
     
+    bar.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 10 - margin.left)
+    .attr("x",0 - (innerHeight / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text(graphUnit);   
+
     function commaSeparated(x) {
       return x.toLocaleString("en-IN");
   }

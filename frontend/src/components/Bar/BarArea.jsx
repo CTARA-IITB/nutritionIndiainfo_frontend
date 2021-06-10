@@ -164,12 +164,13 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         },
         layout: {
             padding: {
+              left: 20,  
               right: 70,
             },
           },
         title:{
             display: true,
-            text: [`${graphTitle}, ${barGUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+            text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
             fontColor: "black",
         },
         scales: {
@@ -179,12 +180,20 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                 type:"category",
                 ticks:{
                     fontSize: 11,
+                    fontFamily:'Comic Sans MS',
                     fontColor: "black",
                     callback:function(label){
                         var subgroup = label.split(";")[0];
                         return subgroup;
                     }
                 },
+                scaleLabel: {
+                    display: true,
+                    labelString: barGUnit,
+                    fontSize: 12,
+                    fontFamily:'Comic Sans MS',
+                    fontColor: "black",
+                  },
                 gridLines: {
                     drawOnChartArea: false, // only want the grid lines for one axis to show up
                 },
@@ -193,10 +202,11 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                 stacked: true,
                 ticks: {
                     // fontSize: 11,
+                    fontFamily:'Comic Sans MS',
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {
-                        return value.toLocaleString("en-IN");
+                        return commaSeparated(value);
                     }
                 },
                 gridLines: {
@@ -214,15 +224,12 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
       
             // render the value of the chart above the bar
-            ctx.font = Chart.helpers.fontString(12, 'normal', Chart.defaults.global.defaultFontFamily);
-            // ctx.fontFamily = 'Verdana';
+            ctx.font = Chart.helpers.fontString(11, 'normal', 'Comic Sans MS');
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
-            ctx.fillStyle = "black";
-            ctx.fontWeight = "normal";
-            // console.log(Chart.helpers.fontString, "ctx.font")
-    
-      
+            // ctx.fillStyle = "black";
+            ctx.fontWeight = 'none';
+            console.log(chartInstance.data.datasets, "data");
             chartInstance.data.datasets.forEach(function (dataset) {
               for (var i = 0; i < dataset.data.length; i++) {
                 var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
@@ -237,7 +244,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         }
       });
 
-      function commaSeparated(x) {
+    function commaSeparated(x) {
         return x.toLocaleString("en-IN");
     }
 

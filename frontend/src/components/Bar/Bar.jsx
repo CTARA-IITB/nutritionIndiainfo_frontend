@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import Chart from 'chart.js';
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
     const componentRef = useRef();
@@ -275,6 +276,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         }
 
         options={
+            showDatapoints:true,
             tooltips:{
                 displayColors:false,
                 bodyAlign:"center",
@@ -289,9 +291,15 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             {
               display: false,
             },
+            layout: {
+                padding: {
+                  left: 20,  
+                  right: 50,
+                },
+              },
             title: {
               display: true,
-              text: [`${graphTitle}, ${barUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+              text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
               fontColor: "black",
             },
             scales: {
@@ -301,10 +309,18 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         type:"category",
                         ticks:{
                             fontSize: 11,
+                            fontFamily:'Comic Sans MS',
                             fontColor: "black",
                         },
+                        scaleLabel: {
+                            display: true,
+                            labelString: barUnit,
+                            fontSize: 12,
+                            fontFamily:'Comic Sans MS',
+                            fontColor: "black",
+                          },
                         gridLines: {
-                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                         drawOnChartArea: false, // only want the grid lines for one axis to show up
                         },
                     },
                    
@@ -312,6 +328,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 xAxes: [{
                     ticks: {
                         // fontSize: 8,
+                        fontFamily:'Comic Sans MS',
                         fontColor:"black",
                         beginAtZero: true,
                         callback: function(value) {
@@ -319,13 +336,16 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         }
                     },
                     gridLines: {
-                        drawOnChartArea:true,
-                        color:'#C1C1C1'
+                        drawOnChartArea:false,
+                        // color:'#C1C1C1'
                     }
                 }]
             }
         }
     }
+
+    //To Display Data Value on Chart
+    
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>

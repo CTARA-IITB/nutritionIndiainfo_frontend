@@ -55,7 +55,7 @@ export const createHierarchy = (options) =>{
 
 
    // const url_2 = await fetch(`http://localhost:8000/api/getIndicatorBar/${indicator}/${timeperiod}/${area}`);
-    const url_2 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=unit_id%2Cunit_name%2Csubgroup_name%2Csub_category%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name_subgroup_category&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=timeperiod_id%3A${timeperiod}&omitHeader=true&q=*%3A*&rows=100`);
+    const url_2 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=unit_id%2Cunit_name%2Csubgroup_name%2Csub_category%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name_subgroup_category&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=timeperiod_id%3A${timeperiod}&omitHeader=true&q=*%3A*&rows=100&sort=subgroup_order%20asc`);
     const body_2 = await url_2.json();
     setIndicatorBar(body_2.response.docs);
 

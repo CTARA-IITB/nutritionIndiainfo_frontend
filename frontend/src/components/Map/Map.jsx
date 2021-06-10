@@ -555,7 +555,17 @@ export const Map = ({
           points[i].dataValue = d.dataValue
 
         }
+let r;
+console.log(height)
+if(height <= 400){
+ r = 1;
+}
+else if(height > 800){
+  r =2;
 
+}else{
+  r=1.5
+}
       
         svg
         .selectAll("myCircles")
@@ -564,7 +574,7 @@ export const Map = ({
         .append("circle")
           .attr("cx", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[0] })
           .attr("cy", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1] })
-          .attr("r",2)
+          .attr("r",r)
           .style("fill", colorScale)
           .style('opacity',0.7)
           .attr('transform',`translate(0,50)`)
@@ -587,7 +597,8 @@ export const Map = ({
    
     if (toggleStateBurden === false) 
     {
-      legend.select(".legendQuant").append('text').text("1 dot =" + dotVal);
+      
+      legend.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");
     }
     else{
        if (!arrsuw.includes(selIndicator)) {

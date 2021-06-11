@@ -5,6 +5,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import ShareIcon from '@material-ui/icons/Share';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import Share  from "../Share/Share";
 import {saveSvgAsPng,svgAsPngUri}  from 'save-svg-as-png';
@@ -19,6 +20,9 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenTable, setIsOpenTable] = useState(false);
     const [isOpenShare,setIsOpenShare]=useState(false);
+    const [isFullscreen,setIsFullscreen]=useState(true);
+    const [icon,setIcon] = useState(<FullscreenIcon/>)
+    const [text,setText]=useState('Full View')
 
     let imageNameJpeg;
     let imageNamePng;
@@ -41,7 +45,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         imageNamePdf = 'trend.pdf'
         imageNameCsv = 'trend.csv'
     }
-       
+    
     const togglePopup = () => {
         setIsOpen(!isOpen);
     }
@@ -50,6 +54,19 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
     }
     const toggleShare=()=>{
         setIsOpenShare(!isOpenShare);
+    }
+
+    //toggle fullscreen
+    const OpenFullscreen = () =>{
+        setIcon(<FullscreenExitIcon/>);
+        setText("Exit");
+        setIsFullscreen(false);
+    }
+
+    const closeFullscreen = ()=>{
+        setIcon(<FullscreenIcon/>);
+        setText("Full View");
+        setIsFullscreen(true);
     }
 
     //print
@@ -131,7 +148,18 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
                 </Dropdown.Toggle>
                 <Dropdown.Menu align="right" >
                     <Dropdown.Item  onClick={togglePopup} eventKey="1" style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
-                    <Dropdown.Item onClick={()=>{screen.enter()}} eventKey="2" style={{fontSize:'15px'}}><FullscreenIcon/> Full View</Dropdown.Item>
+                    <Dropdown.Item 
+                        onClick={(e)=>{
+                            if(isFullscreen){
+                                screen.enter();
+                                OpenFullscreen();
+                            }else{
+                                screen.exit();
+                                closeFullscreen();
+                            }
+                        }}
+                        eventKey="2" style={{fontSize:'15px'}}>{icon} {text}
+                    </Dropdown.Item>
                     <Dropdown.Item onClick={toggleTablePopup} eventKey="3" style={{fontSize:'15px'}}><TableChartIcon  style={{fontSize:'20px'}}/> Table</Dropdown.Item>
                     <Dropdown.Item onClick={toggleShare} eventKey="4"  style={{fontSize:'15px'}}><ShareIcon  style={{fontSize:'20px'}}/> Share </Dropdown.Item>
                     <Dropdown.Item onClick={handlePrint} eventKey="5"  style={{fontSize:'15px'}}><PrintIcon  style={{fontSize:'20px'}}/> Print</Dropdown.Item>

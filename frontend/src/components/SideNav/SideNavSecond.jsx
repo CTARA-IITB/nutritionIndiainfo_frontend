@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect,useCallback} from "react";
 import Dropdown from 'react-bootstrap/Dropdown'
 import Popup from "../Popup/Popup";
 import { saveAs } from 'file-saver'; 
@@ -6,6 +6,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import ShareIcon from '@material-ui/icons/Share';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import "./SideNav.css";
 import Share  from "../Share/Share";
@@ -22,6 +23,10 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenShare,setIsOpenShare]=useState(false);
   const [isOpenTable, setIsOpenTable] = useState(false);
+  const [isFullscreen,setIsFullscreen]=useState(true);
+  const [icon,setIcon] = useState(<FullscreenIcon/>)
+  const [isEventFire,setEventFire]=useState(false);
+  const [text,setText]=useState('Full View')
 
   let imageNameJpeg;
   let imageNamePng;
@@ -55,10 +60,32 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
     setIsOpenTable(!isOpenTable); 
   }
   
+  //toggle fullscreen
+  const OpenFullscreen = () =>{
+    setIcon(<FullscreenExitIcon/>);
+    setText("Exit");
+    setIsFullscreen(false);
+  }
+
+  const closeFullscreen = ()=>{
+    setIcon(<FullscreenIcon/>);
+    setText("Full View");
+    setIsFullscreen(true);
+  }
+
   //print
   const handlePrint = useReactToPrint({
     content: () => componentRef.current
   });
+
+  // const escFunction = useCallback((event) => {
+  //   if(event.keyCode === 27) {
+  //     console.log('event capture');
+  //     setIcon(<FullscreenIcon/>);
+  //     setText("Full View");
+  //     setIsFullscreen(true);
+  //   }
+  // },[])
 
   useEffect(()=>{
     // set white background of downloaded image
@@ -69,9 +96,30 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
             ctx.fillStyle = backgroundColor;
             ctx.fillRect(0, 0, c.chart.width, c.chart.height);
         }
-    });
+    }); 
   },[])
- 
+
+  const escFunction = (event) => {
+    if(event.keyCode === "Escape") {
+      setEventFire(true);
+    }
+  }
+  useEffect(()=>{
+    window.addEventListener("keydown", escFunction);
+    return () => {
+      window.removeEventListener("keydown", escFunction);
+    };
+  },[])
+  
+  useEffect(()=>{
+    if(isEventFire){
+      setIsFullscreen(true);
+      setIcon(<FullscreenIcon/>);
+      setText("Full View");
+      setEventFire(false);
+    }
+  },[isEventFire])
+
   const savePng=()=>{
     const canvasSave = document.getElementById(id);
     canvasSave.toBlob(function (blob) {
@@ -148,7 +196,18 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
           </Dropdown.Toggle>
           <Dropdown.Menu align="right">
             <Dropdown.Item onClick={togglePopup} eventKey="1"  style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
-            <Dropdown.Item onClick={()=>{screen.enter()}} eventKey="2"  style={{fontSize:'15px'}}><FullscreenIcon/> Full View </Dropdown.Item>
+            <Dropdown.Item 
+              onClick={(e)=>{
+                  if(isFullscreen){
+                      screen.enter();
+                      OpenFullscreen();
+                  }else{
+                    screen.exit(); 
+                    closeFullscreen();
+                  }
+              }}
+              eventKey="2" style={{fontSize:'15px'}}>{icon} {text}
+            </Dropdown.Item>
             <Dropdown.Item onClick={toggleTablePopup} eventKey="3"  style={{fontSize:'15px'}}><TableChartIcon  style={{fontSize:'20px'}}/> Table</Dropdown.Item>
             <Dropdown.Item onClick={toggleShare} eventKey="4"  style={{fontSize:'15px'}}><ShareIcon  style={{fontSize:'20px'}}/> Share </Dropdown.Item>
             <Dropdown.Item onClick={handlePrint} eventKey="5"  style={{fontSize:'15px'}}><PrintIcon  style={{fontSize:'20px'}}/> Print</Dropdown.Item>
@@ -157,4 +216,5 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
       </div>
     )
 }
+
 export default SideNavSecond;

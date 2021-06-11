@@ -207,7 +207,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 id:'yAxis1',
                 type:"category",
                 ticks:{
-                    fontSize: 11,
+                    fontSize: 12,
                     fontColor: "black",
                     callback:function(label){
                         var subgroup = label.split(";")[0];
@@ -222,7 +222,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             xAxes: [{
                 stacked: true,
                 ticks: {
-                    // fontSize: 11,
+                    // fontSize: 12,
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {

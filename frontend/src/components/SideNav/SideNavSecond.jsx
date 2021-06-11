@@ -94,13 +94,14 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
   } 
  
   const savePdf=()=>{
-    let input = document.getElementById(id);
-    html2canvas(input).then(canvas => {
-      const img = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("l", "pt", [700, 700]);
-      pdf.addImage(img,"jpeg",0,0);
-      pdf.save(imageNamePdf);
-    });
+    const input = document.getElementById(id);
+    html2canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.save(imageNamePdf);
+      });
   } 
 
     return(

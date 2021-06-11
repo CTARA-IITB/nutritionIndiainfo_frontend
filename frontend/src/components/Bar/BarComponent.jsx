@@ -10,14 +10,14 @@ class BarComponent extends React.PureComponent {
       return(
         <div>
           <div id="statMsg">No data: please select another survey</div>
-          <HorizontalBar ref={this.componentRef} id="Bar"    data={this.props.data} options={this.props.options}/>
+          <HorizontalBar ref={this.componentRef} id="bar"    data={this.props.data} options={this.props.options}/>
         </div>
       );
     }
     else{
       return (
         <div>
-          <HorizontalBar ref={this.componentRef} id="Bar"    data={this.props.data} options={this.props.options}/>
+          <HorizontalBar ref={this.componentRef} id="bar" data={this.props.data} options={this.props.options}/>
         </div>
       );
     }

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import Dropdown from 'react-bootstrap/Dropdown'
 import Popup from "../Popup/Popup";
 import { saveAs } from 'file-saver'; 
@@ -17,20 +17,40 @@ import PrintIcon from '@material-ui/icons/Print';
 import { useReactToPrint } from "react-to-print";
 import Chart from 'chart.js';
 
-
-const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
+const SideNavSecond = ({table,id,screen,title,componentRef}) => {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenShare,setIsOpenShare]=useState(false);
+  const [isOpenTable, setIsOpenTable] = useState(false);
+
+  let imageNameJpeg;
+  let imageNamePng;
+  let imageNameSvg;
+  let imageNamePdf;
+  let imageNameCsv;
+
+  // downloaded image name 
+  if(id==="bar"){
+    imageNameJpeg = 'bar.jpeg';
+    imageNamePng = 'bar.png';
+    imageNameSvg = 'bar.svg';
+    imageNamePdf = 'bar.pdf'
+    imageNameCsv = 'bar.csv'
+  }
+  else{
+    imageNameJpeg = 'barArea.jpeg';
+    imageNamePng = 'barArea.png';
+    imageNameSvg = 'barArea.svg';
+    imageNamePdf = 'barArea.pdf'
+    imageNameCsv = 'barArea.csv'
+  }
+
   const togglePopup = () => {
     setIsOpen(!isOpen);
   }
-
-  const [isOpenShare,setIsOpenShare]=useState(false);
   const toggleShare=()=>{
     setIsOpenShare(!isOpenShare);
   }
-
-  const [isOpenTable, setIsOpenTable] = useState(false);
   const toggleTablePopup = ()=>{
     setIsOpenTable(!isOpenTable); 
   }
@@ -40,46 +60,46 @@ const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
     content: () => componentRef.current
   });
 
-  // draw white background 
-  var backgroundColor = 'white';
-  Chart.plugins.register({
-      beforeDraw: function(c) {
-          var ctx = c.chart.ctx;
-          ctx.fillStyle = backgroundColor;
-          ctx.fillRect(0, 0, c.chart.width, c.chart.height);
-      }
-  });
-
-  //save to png
+  useEffect(()=>{
+    // set white background of downloaded image
+    var backgroundColor = 'white';
+    Chart.plugins.register({
+        beforeDraw: function(c) {
+            var ctx = c.chart.ctx;
+            ctx.fillStyle = backgroundColor;
+            ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+        }
+    });
+  },[])
+ 
   const savePng=()=>{
     const canvasSave = document.getElementById(id);
     canvasSave.toBlob(function (blob) {
-          saveAs(blob, "chart.png")
-    })     
+          saveAs(blob, imageNamePng)
+    }) 
   } 
-  // save to jpeg
+ 
   const saveJpeg=()=>{
     const canvasSave = document.getElementById(id);
     canvasSave.toBlob(function (blob) {
-          saveAs(blob, "chart.jpeg")
+          saveAs(blob, imageNameJpeg)
     })
   } 
 
-  // save to svg
   const saveSvg=()=>{
     const canvasSave = document.getElementById(id);
     canvasSave.toBlob(function (blob) {
-          saveAs(blob, "chart.svg")
+          saveAs(blob, imageNameSvg)
     })
   } 
-  // save to pdf
+ 
   const savePdf=()=>{
     let input = document.getElementById(id);
     html2canvas(input).then(canvas => {
       const img = canvas.toDataURL("image/png");
       const pdf = new jsPDF("l", "pt", [700, 700]);
       pdf.addImage(img,"jpeg",0,0);
-      pdf.save("chart.pdf");
+      pdf.save(imageNamePdf);
     });
   } 
 
@@ -104,7 +124,7 @@ const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
           content={<div className="container">
             <CSVLink 
               data={table}
-              filename="chart.csv"
+              filename={imageNameCsv}
               target="_blank"
             ><button id="btn">csv</button></CSVLink>
             <button onClick={saveJpeg} id="btn">jpeg</button>
@@ -121,7 +141,6 @@ const SideNavSecond = ({table,id,screen,title,timePeriod,componentRef}) => {
           </>}
           handleClose={toggleShare}
         />}
-
         <Dropdown  style={{float:'right'}}>
           <Dropdown.Toggle variant="link" bsPrefix="p-0">
             <MenuIcon id="icon"/>

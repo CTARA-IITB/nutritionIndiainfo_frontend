@@ -1,4 +1,4 @@
-import React, { useRef,useContext } from 'react';
+import React, { useRef,useEffect} from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -21,10 +21,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let sortedBarLabel =[];
     let sortedBarData = [];
     let differenceData = [];
-    let s;
     let colorScale ='#eda143';
    
-
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13)
       colorScale = '#a3c00f'; 
@@ -41,6 +39,37 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     else
       colorScale = '#eda143'; 
 
+    useEffect(()=>{
+        Chart.plugins.register({
+            afterDraw: function(chartInstance) {
+              if (chartInstance.config.options.showDatapoints) {
+                var helpers = Chart.helpers;
+                var ctx = chartInstance.chart.ctx;
+                var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
+          
+                // render the value of the chart above the bar
+                ctx.font = Chart.helpers.fontString(12, 'normal', Chart.defaults.global.defaultFontFamily);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillStyle = "black";
+                ctx.fontWeight = "normal";
+                
+                chartInstance.data.datasets.forEach(function (dataset) {
+                  for (var i = 0; i < dataset.data.length; i++) {
+                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                    var yPos =  model.y + 7;
+                    var xPos = model.x + 28;
+                    ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
+                  }
+                });
+              }
+            }
+        });
+        function commaSeparated(x) {
+            return x.toLocaleString("en-IN");
+        }
+    },[])  
+    
     if(selIndiaData && level=="1" ){
 
         selIndiaData.map(i=>{
@@ -53,7 +82,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             }
             
         })
-        // s = ' by State ';
     }        
     if(selStateData && level=="2"){
 
@@ -81,7 +109,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     barData.push(+i.data_value_num) 
             }
         })
-        // s = ' by District '
     }           
     let barGUnit = graphUnit;
     
@@ -114,6 +141,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   
     // reverse the table
     table.reverse();
+
     //sort label and data
     for(var i=0;i<table.length;i++){
         sortedBarLabel[i]=table[i].area;
@@ -125,7 +153,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     } 
     datasets=[
         {
-            // label: [graphTitle, barGUnit, graphTimeperiod],
             label :'',
             data:sortedBarData,
             yAxisID:'yAxis1',
@@ -188,7 +215,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     }
                 },
                 gridLines: {
-                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    drawOnChartArea: false, 
+                    zeroLineColor:'transparent',
                 },
             }],
             xAxes: [{
@@ -208,50 +236,18 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         } 
     }
 
-    Chart.plugins.register({
-        afterDraw: function(chartInstance) {
-          if (chartInstance.config.options.showDatapoints) {
-            var helpers = Chart.helpers;
-            var ctx = chartInstance.chart.ctx;
-            var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
-      
-            // render the value of the chart above the bar
-            ctx.font = Chart.helpers.fontString(12, 'normal', Chart.defaults.global.defaultFontFamily);
-            // ctx.fontFamily = 'Verdana';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
-            ctx.fillStyle = "black";
-            ctx.fontWeight = "normal";
-            // console.log(Chart.helpers.fontString, "ctx.font")
-    
-      
-            chartInstance.data.datasets.forEach(function (dataset) {
-              for (var i = 0; i < dataset.data.length; i++) {
-                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                // console.log(scaleMax, "ScaleMax")
-                var yPos =  model.y + 7;
-                var xPos = model.x + 28;
-                ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
-              }
-            });
-          }
-        }
-      });
-
-      function commaSeparated(x) {
-        return x.toLocaleString("en-IN");
-    }
-
     // title of table
     title=graphTitle +', '+barGUnit; 
+
+    // bar height
     let calculatedHeight=data.labels.length*15;
     calculatedHeight = (calculatedHeight < 450)?450:calculatedHeight;
+
     return (
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
-                <SideNavSecond table={table} id="BarArea" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options} calculatedHeight={calculatedHeight}/>
+                <SideNavSecond table={table} id="barArea" screen={screen} title={title} componentRef={componentRef} />
+                <BarAreaComponent ref={componentRef} id="barArea" data={data} options={options} calculatedHeight={calculatedHeight}/>
             </FullScreen>    
         </div>
     );

@@ -95,8 +95,13 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       setToggleStateBurden(true);
       let subVal = '6';
       setLifecycleDropdownOpt(lifecycleData);
-      setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
-  
+      // setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
+      setCategoryDropdownOpt([
+        { value: 1, title: "Manifestation" },
+        { value: 2, title: "Interventions" },
+        { value: 3, title: "Immediate Determinants" },
+        { value: 4, title: "Underlying Determinants" }
+      ])
       // setCategoryDropdownOpt(categoryData);
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
@@ -186,16 +191,17 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setSelBurden("1");
           let selCat = 1;
           if(val === 1 || val === 6){
-            setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
+            setCategoryDropdownOpt([{value:1,title:"Manifestation"},{ value: 4, title: "Underlying Determinants" }])
           }else if(val === 2){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
-              { value: 4, title: "Underlying Determinants" }                  
+              { value: 4, title: "Underlying Determinants" }                 
             ]);
           }else if(val === 3 || val ===4){
             setCategoryDropdownOpt([
               { value: 2, title: "Interventions" },
-              { value: 3, title: "Immediate Determinants" },           
+              { value: 3, title: "Immediate Determinants" },
+              { value: 4, title: "Underlying Determinants" }           
             ]);
             selCat = 2;
           }else if(val ===5){
@@ -203,13 +209,15 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
               { value: 1, title: "Manifestation" },
               { value: 2, title: "Interventions" },
               { value: 3, title: "Immediate Determinants" },
+              { value: 4, title: "Underlying Determinants" }
             ])
-          }else if(val ===7){
-            setCategoryDropdownOpt([
-              { value: 4, title: "Underlying Determinants" }            
-            ])
-            selCat = 4;
           }
+          // else if(val ===7){
+          //   setCategoryDropdownOpt([
+          //     { value: 4, title: "Underlying Determinants" }            
+          //   ])
+          //   selCat = 4;
+          // }
           setSelCategory(selCat);
           setToggleStateBurden(true);
           await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)

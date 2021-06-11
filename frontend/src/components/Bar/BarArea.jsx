@@ -145,6 +145,17 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         showDatapoints:true,
         responsive:true,
         maintainAspectRatio:false,
+        // plugins: {
+        //     p1: {
+        //         color: function(context) {
+        //             console.log(context, "context")
+        //         //     var value = context.dataset.data[context.dataIndex];
+        //         //   return value < 0 ? '#ff2020'
+        //         //       : value < 50 ? '#223388'
+        //         //     : '#22cc22'
+        //         },
+        //     },
+        // },    
         tooltips:{
             displayColors:false,
             bodyAlign:"center",
@@ -164,12 +175,13 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         },
         layout: {
             padding: {
+              bottom: 20,  
               right: 70,
             },
           },
         title:{
             display: true,
-            text: [`${graphTitle}, ${barGUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+            text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
             fontColor: "black",
         },
         scales: {
@@ -179,6 +191,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                 type:"category",
                 ticks:{
                     fontSize: 11,
+                    fontFamily:'Comic Sans MS',
                     fontColor: "black",
                     callback:function(label){
                         var subgroup = label.split(";")[0];
@@ -193,11 +206,19 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                 stacked: true,
                 ticks: {
                     // fontSize: 11,
+                    fontFamily:'Comic Sans MS',
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {
-                        return value.toLocaleString("en-IN");
+                        return commaSeparated(value);
                     }
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: barGUnit,
+                    fontSize: 12,
+                    fontFamily:'Comic Sans MS',
+                    fontColor: "black",
                 },
                 gridLines: {
                     drawOnChartArea:false
@@ -207,6 +228,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     }
 
     Chart.plugins.register({
+        // id: 'p1',
         afterDraw: function(chartInstance) {
           if (chartInstance.config.options.showDatapoints) {
             var helpers = Chart.helpers;
@@ -214,30 +236,25 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
       
             // render the value of the chart above the bar
-            ctx.font = Chart.helpers.fontString(12, 'normal', Chart.defaults.global.defaultFontFamily);
-            // ctx.fontFamily = 'Verdana';
+            ctx.font = Chart.helpers.fontString(11, 'normal', 'Comic Sans MS');
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
-            ctx.fillStyle = "black";
-            ctx.fontWeight = "normal";
-            // console.log(Chart.helpers.fontString, "ctx.font")
-    
-      
+            // ctx.fillStyle = "black";
+            ctx.fontWeight = 'none';
             chartInstance.data.datasets.forEach(function (dataset) {
-              for (var i = 0; i < dataset.data.length; i++) {
-                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                // console.log(scaleMax, "ScaleMax")
-                var yPos =  model.y + 7;
-                var xPos = model.x + 28;
-                ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
-              }
+                for (var i = 0; i < dataset.data.length; i++) {
+                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                    // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                    var yPos =  model.y + 7;
+                    var xPos = model.x + 28;
+                    ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
+                }
             });
           }
         }
-      });
+    });
 
-      function commaSeparated(x) {
+    function commaSeparated(x) {
         return x.toLocaleString("en-IN");
     }
 

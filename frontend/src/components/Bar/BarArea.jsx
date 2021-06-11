@@ -23,6 +23,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let differenceData = [];
     let s;
     let colorScale ='#eda143';
+   
 
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13)

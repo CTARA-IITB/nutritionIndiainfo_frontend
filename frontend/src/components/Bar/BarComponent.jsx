@@ -6,11 +6,22 @@ class BarComponent extends React.PureComponent {
   componentRef = React.createRef();
 
   render() {
-    return (
+    if(this.props.message){
+      return(
         <div>
-            <HorizontalBar ref={this.componentRef} id="Bar"    data={this.props.data} options={this.props.options}/>
+          <div id="statMsg">No data: please select another survey</div>
+          <HorizontalBar ref={this.componentRef} id="Bar"    data={this.props.data} options={this.props.options}/>
         </div>
-    );
+      );
+    }
+    else{
+      return (
+        <div>
+          <HorizontalBar ref={this.componentRef} id="Bar"    data={this.props.data} options={this.props.options}/>
+        </div>
+      );
+    }
+    
   }
 }
 export default BarComponent;

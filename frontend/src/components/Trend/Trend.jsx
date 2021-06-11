@@ -265,14 +265,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .attr("dy", "-2em")
       .text(`${graphTitle},${graphUnit},${titleAreaName}`)
 
-      bar.append("text")
-      .attr("x",innerWidth/2)
-      .attr("y",innerHeight/2)
-      .attr("dx","-.4em")
-      .text("No data: please select another survey")
-      .style("text-anchor","middle")
-      .style("font-size","10px")
-      .style("font-weight","bold")
+      // bar.append("text")
+      // .attr("x",innerWidth/2)
+      // .attr("y",innerHeight/2)
+      // .attr("dx","-.4em")
+      // .text("No data: please select another survey")
+      // .style("text-anchor","middle")
+      // .style("font-size","10px")
+      // .style("font-weight","bold")
     }
     
     function commaSeparated(x) {

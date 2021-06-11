@@ -696,7 +696,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       areaName = {areaName}
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
+      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
      </div>
    </div>
     <div className="layout_right">

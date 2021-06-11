@@ -20,7 +20,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let groupedData = [];
     let groupedLabel =[];
     let groupedColor = [];
-
+   
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13){
         colorScale = '#a3c00f'; 
@@ -132,10 +132,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         })
 
         var j=0;
-        let flag=false,check=false;
+        let flag=false,check=false,message=true;
         let subgroupId = [6,15,14,23,24,25,18,19,20,21,22,10,12,9,8,11];
         let colorCode = [colorScale,lightColor,lightColor,colorScale,colorScale,colorScale,lightColor,lightColor,lightColor,lightColor,lightColor,colorScale,colorScale,colorScale,colorScale,colorScale]
         if(barLabel.length>0){
+            message = false;
             var k=0;
             while(k<subgroupId.length){
                 for(var i=0;i<barLabel.length;i++){
@@ -342,7 +343,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="Bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarComponent ref={componentRef} id="Bar" data={data} options={options}/>
+                <BarComponent ref={componentRef} id="Bar" data={data} options={options} />
             </FullScreen>    
         </div>
     );

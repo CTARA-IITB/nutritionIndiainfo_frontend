@@ -125,16 +125,16 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     if(subgroupId[k]===23){
                         groupedLabel[j]="Low Coverage";
                         groupedColor[j]=colorCode[k];
-                        groupedData[j++]=0;
+                        groupedData[j++]=NaN;
                         groupedLabel[j]="Mid Coverage";
                         groupedColor[j]=colorCode[k+1];
-                        groupedData[j++]=0;
+                        groupedData[j++]=NaN;
                         groupedLabel[j]="High Coverage";
                         groupedColor[j]=colorCode[k+2];
-                        groupedData[j++]=0;
+                        groupedData[j++]=NaN;
                         groupedLabel[j]=" ";
                         groupedColor[j]="white";
-                        groupedData[j++]=0;
+                        groupedData[j++]=NaN;
                         flag=true;
                         break;
                     }
@@ -152,7 +152,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         if(subgroupId[k]===6 ||subgroupId[k]===14|| subgroupId[k]===22){
                             groupedLabel[j]=" ";
                             groupedColor[j]="white";
-                            groupedData[j++]=0;
+                            groupedData[j++]=NaN;
                         }
                         check=true;
                         break;
@@ -171,22 +171,22 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 if(check===false && subgroupId[k]===18){
                     groupedLabel[j]="No Education";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]="<5 years completed";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]="5-9 years completed";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]="10-11 years completed";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]="12+ years completed";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]=" ";
                     groupedColor[j]="white";
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     k+=5;
                     continue;
                 }  
@@ -196,68 +196,68 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         else{
             groupedLabel[j]="Overall";
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]=" ";
             groupedColor[j]="white";
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             
             groupedLabel[j]="Male"
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Female"
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]=" ";
             groupedColor[j]="white";
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
 
             groupedLabel[j]="Low Coverage";
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Mid Coverage";
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="High Coverage";
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]=" ";
             groupedColor[j]="white";
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
 
             groupedLabel[j]="No Education";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="<5 years completed";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="5-9 years completed";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="10-11 years completed";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="12+ years completed";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]=" ";
             groupedColor[j]="white";
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
 
             groupedLabel[j]="Poorest"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Second"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Middle"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Fourth"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Richest"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
         }
        
         // graph time period 
@@ -313,7 +313,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                             fontColor: "black",
                         },
                         gridLines: {
-                         drawOnChartArea: false, // only want the grid lines for one axis to show up
+                          drawOnChartArea: false, // only want the grid lines for one axis to show up
                         },
                     },
                    
@@ -336,8 +336,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         fontColor: "black",
                     },
                     gridLines: {
-                        drawOnChartArea:false,
-                        // color:'#C1C1C1'
+                        drawOnChartArea: false,
                     }
                 }]
             }

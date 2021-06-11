@@ -145,6 +145,17 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         showDatapoints:true,
         responsive:true,
         maintainAspectRatio:false,
+        // plugins: {
+        //     p1: {
+        //         color: function(context) {
+        //             console.log(context, "context")
+        //         //     var value = context.dataset.data[context.dataIndex];
+        //         //   return value < 0 ? '#ff2020'
+        //         //       : value < 50 ? '#223388'
+        //         //     : '#22cc22'
+        //         },
+        //     },
+        // },    
         tooltips:{
             displayColors:false,
             bodyAlign:"center",
@@ -217,6 +228,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     }
 
     Chart.plugins.register({
+        // id: 'p1',
         afterDraw: function(chartInstance) {
           if (chartInstance.config.options.showDatapoints) {
             var helpers = Chart.helpers;
@@ -230,17 +242,17 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             // ctx.fillStyle = "black";
             ctx.fontWeight = 'none';
             chartInstance.data.datasets.forEach(function (dataset) {
-              for (var i = 0; i < dataset.data.length; i++) {
-                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                var yPos =  model.y + 7;
-                var xPos = model.x + 28;
-                ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
-              }
+                for (var i = 0; i < dataset.data.length; i++) {
+                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                    // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                    var yPos =  model.y + 7;
+                    var xPos = model.x + 28;
+                    ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
+                }
             });
           }
         }
-      });
+    });
 
     function commaSeparated(x) {
         return x.toLocaleString("en-IN");

@@ -44,7 +44,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         colorScale = '#7b1fa2'; 
         lightColor = '#CAA5D9';
     }
-    else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125){
+    else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125){
         colorScale = '#b71c1c'; 
         lightColor = '#E2A4A4';
     }

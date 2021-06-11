@@ -203,7 +203,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         },
         scales: {
             yAxes:[{
-                stacked: true,
                 id:'yAxis1',
                 type:"category",
                 ticks:{
@@ -217,12 +216,11 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 gridLines: {
                     drawOnChartArea: false, 
                     zeroLineColor:'transparent',
+                    color:'black'
                 },
             }],
             xAxes: [{
-                stacked: true,
                 ticks: {
-                    // fontSize: 12,
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {
@@ -230,7 +228,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     }
                 },
                 gridLines: {
-                    drawOnChartArea:false
+                    drawOnChartArea:false,
+                    color:'black'
                 }
             }],
         } 

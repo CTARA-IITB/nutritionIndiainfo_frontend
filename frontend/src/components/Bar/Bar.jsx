@@ -316,6 +316,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         gridLines: {
                             drawOnChartArea: false, 
                             zeroLineColor:'transparent',
+                            color:'black'
                         },
                     },
                    
@@ -331,7 +332,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     },
                     gridLines: {
                         drawOnChartArea:true,
-                        color:'#C1C1C1'
+                        // color:'#C1C1C1'
+                        color:'black'
                     }
                 }]
             }

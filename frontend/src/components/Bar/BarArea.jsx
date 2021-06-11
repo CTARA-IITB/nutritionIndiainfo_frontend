@@ -164,7 +164,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         },
         layout: {
             padding: {
-              left: 20,  
+              bottom: 20,  
               right: 70,
             },
           },
@@ -187,13 +187,6 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                         return subgroup;
                     }
                 },
-                scaleLabel: {
-                    display: true,
-                    labelString: barGUnit,
-                    fontSize: 12,
-                    fontFamily:'Comic Sans MS',
-                    fontColor: "black",
-                  },
                 gridLines: {
                     drawOnChartArea: false, // only want the grid lines for one axis to show up
                 },
@@ -208,6 +201,13 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                     callback: function(value) {
                         return commaSeparated(value);
                     }
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: barGUnit,
+                    fontSize: 12,
+                    fontFamily:'Comic Sans MS',
+                    fontColor: "black",
                 },
                 gridLines: {
                     drawOnChartArea:false
@@ -233,7 +233,6 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
               for (var i = 0; i < dataset.data.length; i++) {
                 var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
                 // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                // console.log(scaleMax, "ScaleMax")
                 var yPos =  model.y + 7;
                 var xPos = model.x + 28;
                 ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);

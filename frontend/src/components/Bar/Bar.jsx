@@ -293,7 +293,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             },
             layout: {
                 padding: {
-                  left: 20,  
+                  bottom: 20,   
                   right: 50,
                 },
               },
@@ -312,13 +312,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                             fontFamily:'Comic Sans MS',
                             fontColor: "black",
                         },
-                        scaleLabel: {
-                            display: true,
-                            labelString: barUnit,
-                            fontSize: 12,
-                            fontFamily:'Comic Sans MS',
-                            fontColor: "black",
-                          },
                         gridLines: {
                          drawOnChartArea: false, // only want the grid lines for one axis to show up
                         },
@@ -334,6 +327,13 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         callback: function(value) {
                             return value.toLocaleString("en-IN");
                         }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: barUnit,
+                        fontSize: 12,
+                        fontFamily:'Comic Sans MS',
+                        fontColor: "black",
                     },
                     gridLines: {
                         drawOnChartArea:false,

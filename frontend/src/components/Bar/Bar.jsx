@@ -309,7 +309,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         type:"category",
                         ticks:{
                             fontSize: 11,
-                            fontFamily:'Comic Sans MS',
                             fontColor: "black",
                         },
                         gridLines: {
@@ -321,7 +320,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 xAxes: [{
                     ticks: {
                         // fontSize: 8,
-                        fontFamily:'Comic Sans MS',
                         fontColor:"black",
                         beginAtZero: true,
                         callback: function(value) {
@@ -332,7 +330,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         display: true,
                         labelString: barUnit,
                         fontSize: 12,
-                        fontFamily:'Comic Sans MS',
                         fontColor: "black",
                     },
                     gridLines: {

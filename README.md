@@ -4,13 +4,13 @@
 ## NutritionINDIA.info Standards and Methods
 > [Mockup presentation](https://drive.google.com/file/d/1b5FpCotZIF8ZH-_XkyTEY9jQPn74dygl/view?usp=sharing)
 
-> [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1LSFgXqEj3xiAb4-pgyQpapfmhqO9vqB5/view?usp=sharing)(8 June)
+> [Standards for NutritionINDIA.info](https://drive.google.com/file/d/1E4SubCD6FY0UEz2kHkG4HSW8mNJeoVD0/view)(10 June)
 
-> [Burden Calculation](https://docs.google.com/document/d/1PF7L9ZlY69wceifenImPfasvzfNsVT5IAZ15Vl7AAtg/edit?usp=sharing)(8 June)
+> ~~[Burden Calculation](https://docs.google.com/document/d/1PF7L9ZlY69wceifenImPfasvzfNsVT5IAZ15Vl7AAtg/edit?usp=sharing)(8 June)~~
 
 > [Statewise Data collection Dates](https://drive.google.com/file/d/1XsIq_BvZfhXGWDLvTpW_1PetzSaOGAOO/view?usp=sharing)
 
-> [Harmonized IFPRI UNICEF Cut-offs for Nutrition Indicators](https://drive.google.com/file/d/1Z1ZtUtbAqEuhuVjtA-5vw1RfCm7SAOO8/view?usp=sharing)
+> [Harmonized IFPRI UNICEF Cut-offs for Nutrition Indicators](https://drive.google.com/file/d/1M2Smk_5ZivI-E91CnK2lZfFBpfHvtmuo/view)(10 june)
 
 > [NutritionINDIA.info indicators](https://drive.google.com/file/d/1ZqHSh680HKGtSQ5CUvmrslyLKKl9lLVm/view?usp=sharing)(7 June)
 

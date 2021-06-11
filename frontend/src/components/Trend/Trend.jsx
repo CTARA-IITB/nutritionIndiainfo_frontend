@@ -72,7 +72,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     colorScale = '#e5393580'; 
   else  if(arrObese.includes(selIndicator))
     colorScale = '#7b1fa280'; 
-  else if(selIndicator == 123 || selIndicator == 124 || selIndicator == 125)
+  else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
     colorScale = '#b71c1c80'; 
   else
     colorScale = '#eda14380'; 

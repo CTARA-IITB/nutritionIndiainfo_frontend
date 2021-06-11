@@ -94,7 +94,7 @@ export const Map = ({
   //merge geometry and data
 
   function addProperties(geojson, data) {
- 
+    console.log('DDAATTAA',data)
     let newArr = _.map(data, function (item) {
       return {
         areacode: item.area_code,
@@ -248,6 +248,9 @@ export const Map = ({
     }
     
     let sum = color_range.reduce(function(a, b){
+      if (isNaN(b)){
+        b=0;
+      }
       return a + b;
   }, 0);
     let dotVal = Math.round(sum/4000);
@@ -463,7 +466,6 @@ export const Map = ({
     // if (unit === 2) {
     else{
       for(let i =0;i<mergedGeometry.length;i++){
-    
         draw_circles(mergedGeometry[i]);}
       svg
       .selectAll(".polygon")
@@ -488,8 +490,6 @@ export const Map = ({
           // if (level === 1) {
 
             if (typeof c2Value(d) != "undefined") {
-              // console.log("MYLEVEL",level);
-              // console.log("drillDirection",drillDirection);
               if(level === 1){
                 // console.log("LEVEL 2");
                 areaChange(d.area_id.toString());
@@ -538,6 +538,7 @@ export const Map = ({
         
         // let n = d.dataValue / (dotVal);
         let n = d.dataValueNum / (dotVal);
+
         if (typeof d.dataValueNum !== 'undefined' && d.dataValueNum > 0 
 && isFinite(width_d) && isFinite(height_d))
 
@@ -545,8 +546,8 @@ export const Map = ({
       
         let randomPointsOnPolygon = require('random-points-on-polygon');
       
-       
-         
+        
+        
         let points = randomPointsOnPolygon(n, d);
         for(let i =0;i<points.length;i++){
           points[i].areaname = d.areaname
@@ -556,7 +557,6 @@ export const Map = ({
 
         }
 let r;
-console.log(height)
 if(height <= 400){
  r = 1;
 }

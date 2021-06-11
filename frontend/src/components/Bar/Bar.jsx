@@ -57,6 +57,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
 
     if(indicatorBar){
+        console.log(indicatorBar)
         indicatorBar.map(i=>{
             
             if(i.subgroup_id===6){

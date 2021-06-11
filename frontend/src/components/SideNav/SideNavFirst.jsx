@@ -88,7 +88,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
             {isOpenShare && <Popup
             content={<>
-                <Share/>
+                <Share id={id}/>
             </>}
                 handleClose={toggleShare}
             />}

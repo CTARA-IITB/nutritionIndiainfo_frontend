@@ -21,7 +21,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let groupedData = [];
     let groupedLabel =[];
     let groupedColor = [];
-    
 
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13){
@@ -52,6 +51,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         colorScale = '#eda143'; 
         lightColor = '#F7D9B3';
     }
+
+    // remove last word  graph title i.e olds
+    // var lastIndex = graphTitle.lastIndexOf(" ");
+    // graphTitle = graphTitle.substring(0, lastIndex);
+    // graphTitle = graphTitle + 's'
 
     if(toggleStateBurden === false){
         barUnit = 'Number';
@@ -113,6 +117,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     barData.push(+i.data_value_num)
                 }
             }
+            else if(i.subgroup_id>=18 && i.subgroup_id<=22){
+                barLabel.push({
+                    subgroup_name: i.subgroup_name,
+                    subgroup_id : i.subgroup_id,
+                })
+                colors.push(lightColor)
+                if(toggleStateBurden == true){
+                    barData.push(+i.data_value)
+                }
+                else{
+                    barData.push(+i.data_value_num)
+                }
+
+            }
         })
 
         var j=0;
@@ -148,7 +166,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         groupedData[j++]=barData[i];
                         table.push({
                             area:groupedLabel[groupedLabel.length-1],
-                            data:+groupedData[groupedData.length-1],
+                            data:+ groupedData[ groupedData.length-1],
                         })
                         if(subgroupId[k]===6 ||subgroupId[k]===14|| subgroupId[k]===22){
                             groupedLabel[j]=" ";
@@ -190,8 +208,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     groupedData[j++]=NaN;
                     k+=5;
                     continue;
-                }  
-                k++;    
+                }   
+                k++;   
             }
         }      
         else{
@@ -280,13 +298,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             showDatapoints:true,
             tooltips:{
                 displayColors:false,
-                bodyAlign:"center",
-                callbacks: {
-                    label: function(context) {
-                        var label = context.xLabel; 
-                        return label.toLocaleString("en-IN");
-                    }
-                },
+                bodyAlign:"center"
             },
             legend:
             {

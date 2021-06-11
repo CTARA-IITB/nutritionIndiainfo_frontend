@@ -54,7 +54,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         })
         // s = ' by State ';
     }        
-    if(selStateData && level=="2"){
+    if(selStateData && (level=="2" || level=="3")){
 
         for(let j=0;j<selIndiaData.length;j++){
 

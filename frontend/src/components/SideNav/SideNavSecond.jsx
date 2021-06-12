@@ -25,7 +25,6 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
   const [isOpenTable, setIsOpenTable] = useState(false);
   const [isFullscreen,setIsFullscreen]=useState(true);
   const [icon,setIcon] = useState(<FullscreenIcon/>)
-  const [isEventFire,setEventFire]=useState(false);
   const [text,setText]=useState('Full View')
 
   let imageNameJpeg;
@@ -78,15 +77,6 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
     content: () => componentRef.current
   });
 
-  // const escFunction = useCallback((event) => {
-  //   if(event.keyCode === 27) {
-  //     console.log('event capture');
-  //     setIcon(<FullscreenIcon/>);
-  //     setText("Full View");
-  //     setIsFullscreen(true);
-  //   }
-  // },[])
-
   useEffect(()=>{
     // set white background of downloaded image
     var backgroundColor = 'white';
@@ -98,27 +88,6 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
         }
     }); 
   },[])
-
-  const escFunction = (event) => {
-    if(event.keyCode === "Escape") {
-      setEventFire(true);
-    }
-  }
-  useEffect(()=>{
-    window.addEventListener("keydown", escFunction);
-    return () => {
-      window.removeEventListener("keydown", escFunction);
-    };
-  },[])
-  
-  useEffect(()=>{
-    if(isEventFire){
-      setIsFullscreen(true);
-      setIcon(<FullscreenIcon/>);
-      setText("Full View");
-      setEventFire(false);
-    }
-  },[isEventFire])
 
   const savePng=()=>{
     const canvasSave = document.getElementById(id);

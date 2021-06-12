@@ -22,7 +22,7 @@ export const Dropdown = ({}) =>{
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
   const iniSelIndicator = '12';
-  const [selIndicator, setSelIndicator] = useState();
+  const [selIndicator, setSelIndicator] = useState();
   // const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
   // const iniSelSubgroup = '6';  //All
   // const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
@@ -77,8 +77,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
   const [selBurden,setSelBurden] = useState("1");
   const lifecycleData = [
-    { value: 1, title: "Adolescence" },
-    { value: 2, title: "Women of Reproductive Age" },
+    {  title: "Adolescence", value: 1 },
+    { title: "Women of Reproductive Age",value: 2 },
     { value: 3, title: "Pregnancy" },
     { value: 4, title: "Delivery PNC" },      
     { value: 5, title: "Early childhood" },
@@ -579,6 +579,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             className='dropdown'
             virtual={false}
             style={{ width: '100%' }}
+            // defaultValue ={{ value:2 }}
             value={selLifeycle}
             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
             treeData={lifecycledDropdownOpt}

@@ -1,4 +1,5 @@
 export const NFHS5 = 24;
+export const EARLY_CHILDHOOD = 5;
 export const COLORS = {
     diarrhea_green: "#a3c00f", 	 // Stunting 
     emergency_red: 	"#e53935",   // Wasting , MUAC

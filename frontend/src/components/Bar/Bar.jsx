@@ -7,11 +7,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 
     const componentRef = useRef();
     const screen=useFullScreenHandle();
-    
-    let barLabel = [];
-    let barData=[];
+
     let data = [];
-    var colors = [];
     let table=[];
     let options =[];
     let barUnit = graphUnit;
@@ -21,7 +18,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let groupedData = [];
     let groupedLabel =[];
     let groupedColor = [];
-   
+
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13){
         colorScale = '#a3c00f'; 
@@ -51,86 +48,84 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         colorScale = '#eda143'; 
         lightColor = '#F7D9B3';
     }
-
     if(toggleStateBurden === false){
         barUnit = 'Number';
     }
-
     var j=0;
     groupedLabel[j]="Overall";
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]=" ";
     groupedColor[j]="white";
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     
     groupedLabel[j]="Male"
     groupedColor[j]=lightColor;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="Female"
     groupedColor[j]=lightColor;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]=" ";
     groupedColor[j]="white";
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
 
     groupedLabel[j]="Low Coverage";
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="Mid Coverage";
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="High Coverage";
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]=" ";
     groupedColor[j]="white";
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
 
     groupedLabel[j]="No Education";
     groupedColor[j]=lightColor;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="< 5 years completed";
     groupedColor[j]=lightColor;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="5-9 years completed";
     groupedColor[j]=lightColor;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="10-11 years completed";
     groupedColor[j]=lightColor;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="12+ years completed";
     groupedColor[j]=lightColor;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]=" ";
     groupedColor[j]="white";
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
 
     groupedLabel[j]="Poorest"
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="Second"
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="Middle"
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="Fourth"
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
     groupedLabel[j]="Richest"
     groupedColor[j]=colorScale;
-    groupedData[j++]=0;
+    groupedData[j++]=NaN;
 
     var hashTable = {};
-    for(var i=0;i<groupedLabel.length;i++){
+    for(var i=0;i<groupedLabel.length;i++)
         hashTable[groupedLabel[i]]=i;
-    }
-    console.log(indicatorBar,"bar")
+   
     if(indicatorBar){
         indicatorBar.map(i=>{
-            if(i.subgroup_name==='All'){
-                if(toggleStateBurden === true){
+            
+            if(i.subgroup_name==="All"){
+                if(toggleStateBurden == true){
                     groupedData[hashTable["Overall"]]=i.data_value;
                 }
                 else{
@@ -138,11 +133,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 }
                 table.push({
                     area:i.subgroup_name,
-                    data:+groupedData[hashTable["Overall"]],
+                    data:+ groupedData[hashTable["Overall"]],
                 })
             }
-            else if(typeof hashTable[i.subgroup_name] !== 'undefined'){
-                if(toggleStateBurden === true){
+            else if(typeof hashTable[i.subgroup_name]!=='undefined'){
+                if(toggleStateBurden == true){
                     groupedData[hashTable[i.subgroup_name]]=i.data_value;
                 }
                 else{
@@ -150,15 +145,17 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 }
                 table.push({
                     area:i.subgroup_name,
-                    data:+groupedData[hashTable[i.subgroup_name]],
+                    data:+ groupedData[hashTable[i.subgroup_name]],
                 })
             }
         })
+        
         // graph time period 
         let chartTitle = graphTimeperiod.split(" ")[0];
         data = {
             labels:groupedLabel,
             datasets: [{
+                // label: [graphTitle, barUnit,graphTimeperiod],
                 data:groupedData,
                 yAxisID:'yAxis1',
                 backgroundColor: groupedColor,
@@ -169,6 +166,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         }
 
         options={
+            showDatapoints:true,
             tooltips:{
                 displayColors:false,
                 bodyAlign:"center"
@@ -177,9 +175,15 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             {
               display: false,
             },
+            layout: {
+                padding: {
+                  bottom: 20,   
+                  right: 50,
+                },
+              },
             title: {
               display: true,
-              text: [`${graphTitle}, ${barUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+              text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
               fontColor: "black",
             },
             scales: {
@@ -192,9 +196,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                             fontColor: "black",
                         },
                         gridLines: {
-                            drawOnChartArea: false, 
-                            zeroLineColor:'transparent',
-                            color:'black'
+                          drawOnChartArea: false, // only want the grid lines for one axis to show up
                         },
                     },
                    
@@ -208,20 +210,25 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                             return value.toLocaleString("en-IN");
                         }
                     },
+                    scaleLabel: {
+                        display: true,
+                        labelString: barUnit,
+                        fontSize: 12,
+                        fontColor: "black",
+                    },
                     gridLines: {
-                        drawOnChartArea:false,
-                        // color:'#C1C1C1'
-                        color:'black'
+                        drawOnChartArea: false,
                     }
                 }]
             }
         }
     }
+ 
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
-                <SideNavSecond table={table} id="bar" screen={screen} title={title} componentRef={componentRef} />
-                <BarComponent ref={componentRef} id="bar" data={data} options={options} />
+                <SideNavSecond table={table} id="Bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
+                <BarComponent ref={componentRef} id="Bar" data={data} options={options}/>
             </FullScreen>    
         </div>
     );

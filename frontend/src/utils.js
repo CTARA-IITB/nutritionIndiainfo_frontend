@@ -162,5 +162,9 @@ export const createHierarchy = (options) =>{
     await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
   }
 
-
+  // export function commaSeparated(x) {
+  //   console.log(x,'x');
+  //   if(x==='undefined')return " ";
+  //   else return x.toLocaleString("en-IN");
+  // }  
   

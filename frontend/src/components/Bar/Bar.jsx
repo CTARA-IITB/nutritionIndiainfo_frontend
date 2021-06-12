@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { commaSeparated } from "../../utils.js";
+import Chart from 'chart.js';
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
     const componentRef = useRef();
@@ -20,7 +22,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let groupedData = [];
     let groupedLabel =[];
     let groupedColor = [];
-    
 
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13){
@@ -52,12 +53,17 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         lightColor = '#F7D9B3';
     }
 
+    // remove last word  graph title i.e olds
+    // var lastIndex = graphTitle.lastIndexOf(" ");
+    // graphTitle = graphTitle.substring(0, lastIndex);
+    // graphTitle = graphTitle + 's'
+
     if(toggleStateBurden === false){
         barUnit = 'Number';
     }
 
     if(indicatorBar){
-        console.log(indicatorBar)
+        // console.log(indicatorBar)
         indicatorBar.map(i=>{
             
             if(i.subgroup_id===6){
@@ -112,6 +118,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     barData.push(+i.data_value_num)
                 }
             }
+            else if(i.subgroup_id>=18 && i.subgroup_id<=22){
+                barLabel.push({
+                    subgroup_name: i.subgroup_name,
+                    subgroup_id : i.subgroup_id,
+                })
+                colors.push(lightColor)
+                if(toggleStateBurden == true){
+                    barData.push(+i.data_value)
+                }
+                else{
+                    barData.push(+i.data_value_num)
+                }
+
+            }
         })
 
         var j=0;
@@ -125,16 +145,16 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     if(subgroupId[k]===23){
                         groupedLabel[j]="Low Coverage";
                         groupedColor[j]=colorCode[k];
-                        groupedData[j++]=0;
+                        groupedData[j++]=NaN;
                         groupedLabel[j]="Mid Coverage";
                         groupedColor[j]=colorCode[k+1];
-                        groupedData[j++]=0;
+                        groupedData[j++]=NaN;
                         groupedLabel[j]="High Coverage";
                         groupedColor[j]=colorCode[k+2];
-                        groupedData[j++]=0;
+                        groupedData[j++]=NaN;
                         groupedLabel[j]=" ";
                         groupedColor[j]="white";
-                        groupedData[j++]=0;
+                        groupedData[j++]=NaN;
                         flag=true;
                         break;
                     }
@@ -147,12 +167,12 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         groupedData[j++]=barData[i];
                         table.push({
                             area:groupedLabel[groupedLabel.length-1],
-                            data:+groupedData[groupedData.length-1],
+                            data:+ groupedData[ groupedData.length-1],
                         })
                         if(subgroupId[k]===6 ||subgroupId[k]===14|| subgroupId[k]===22){
                             groupedLabel[j]=" ";
                             groupedColor[j]="white";
-                            groupedData[j++]=0;
+                            groupedData[j++]=NaN;
                         }
                         check=true;
                         break;
@@ -171,93 +191,93 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 if(check===false && subgroupId[k]===18){
                     groupedLabel[j]="No Education";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]="<5 years completed";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]="5-9 years completed";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]="10-11 years completed";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]="12+ years completed";
                     groupedColor[j]=lightColor;
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     groupedLabel[j]=" ";
                     groupedColor[j]="white";
-                    groupedData[j++]=0;
+                    groupedData[j++]=NaN;
                     k+=5;
                     continue;
-                }  
-                k++;    
+                }   
+                k++;   
             }
         }      
         else{
             groupedLabel[j]="Overall";
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]=" ";
             groupedColor[j]="white";
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             
             groupedLabel[j]="Male"
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Female"
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]=" ";
             groupedColor[j]="white";
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
 
             groupedLabel[j]="Low Coverage";
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Mid Coverage";
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="High Coverage";
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]=" ";
             groupedColor[j]="white";
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
 
             groupedLabel[j]="No Education";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="<5 years completed";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="5-9 years completed";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="10-11 years completed";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="12+ years completed";
             groupedColor[j]=lightColor;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]=" ";
             groupedColor[j]="white";
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
 
             groupedLabel[j]="Poorest"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Second"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Middle"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Fourth"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
             groupedLabel[j]="Richest"
             groupedColor[j]=colorScale;
-            groupedData[j++]=0;
+            groupedData[j++]=NaN;
         }
        
         // graph time period 
@@ -276,23 +296,30 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         }
 
         options={
+            showDatapoints:true,
             tooltips:{
                 displayColors:false,
                 bodyAlign:"center",
                 callbacks: {
                     label: function(context) {
                         var label = context.xLabel; 
-                        return label.toLocaleString("en-IN");
-                    }
+                        return commaSeparated(label);
+                    },
                 },
-            },
+            },    
             legend:
             {
               display: false,
             },
+            layout: {
+                padding: {
+                  bottom: 20,   
+                  right: 50,
+                },
+              },
             title: {
               display: true,
-              text: [`${graphTitle}, ${barUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+              text: [`${graphTitle}, ${titleAreaName}, ${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
               fontColor: "black",
             },
             scales: {
@@ -305,7 +332,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                             fontColor: "black",
                         },
                         gridLines: {
-                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                          drawOnChartArea: false, // only want the grid lines for one axis to show up
                         },
                     },
                    
@@ -316,17 +343,25 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         fontColor:"black",
                         beginAtZero: true,
                         callback: function(value) {
-                            return value.toLocaleString("en-IN");
+                            return commaSeparated(value);
                         }
                     },
+                    scaleLabel: {
+                        display: true,
+                        labelString: barUnit,
+                        fontSize: 12,
+                        fontColor: "black",
+                    },
                     gridLines: {
-                        drawOnChartArea:true,
-                        color:'#C1C1C1'
+                        drawOnChartArea: false,
                     }
                 }]
             }
         }
     }
+
+    //To Display Data Value on Chart
+    
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>

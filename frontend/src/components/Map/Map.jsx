@@ -18,7 +18,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
 import "./Map.css";
-
+import { commaSeparated } from "../../utils.js";
 
 
 export const Map = ({ 
@@ -44,6 +44,7 @@ export const Map = ({
   drillDirection,setDrillDirection
 
 }) => {
+
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -66,7 +67,7 @@ export const Map = ({
     changeText(text);
   }
  
-  if (toggleStateBurden === true) {
+  if ((unit == 1 && toggleStateBurden == true)) {
     mapTitle = `${graphTitle},${graphUnit},${titleAreaName},${graphTimeperiod}`;
   }
   else{
@@ -226,14 +227,14 @@ export const Map = ({
     if(width <= 480){
       title = title.style("font-size", (width * 0.0025) + "em")
     }
-    const projection = geoMercator().fitSize([width, height], geometry);
+    const projection = geoMercator().fitSize([width/2, height], geometry);
 
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
-    let mergedGeometry = addProperties(geometry.features, data);
+    let mergedGeometry = addProperties(geojson, data);
     let c2Value;
     let color_range
-    if (toggleStateBurden === true) 
+    if ((unit == 1 && toggleStateBurden == true) || (unit == 2))
     {
       c2Value = d => d.dataValue;
       color_range = _.map(data, d => {
@@ -309,7 +310,7 @@ export const Map = ({
   
     let colorScale2;
     let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
-    if(toggleStateBurden == true)
+    if (unit == 1  && toggleStateBurden == true)
     {
     if(indicatorSense == 'Positive')
     {
@@ -345,19 +346,19 @@ export const Map = ({
   else{
       let arrObese = [91,95,104,92,96,105,21];
       if(selIndicator == 12 || selIndicator == 13)
-        colorScale = '#a3c00f80'; 
+        colorScale = '#a3c00f'; 
       else if(selIndicator == 19 || selIndicator == 20)
-        colorScale = '#e5393580'; 
+        colorScale = '#e53935'; 
       else if(selIndicator == 17 || selIndicator == 18)
-        colorScale = '#039be580'; 
+        colorScale = '#039be5'; 
       else if(selIndicator == 107 || selIndicator == 108)
-        colorScale = '#e5393580'; 
+        colorScale = '#e53935'; 
       else  if(arrObese.includes(selIndicator))
-        colorScale = '#7b1fa280'; 
+        colorScale = '#7b1fa2'; 
       else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
-        colorScale = '#b71c1c80'; 
+        colorScale = '#b71c1c'; 
       else
-        colorScale = '#eda14380'; 
+        colorScale = '#eda143'; 
 
   }
     const onMouseMove = (event, d) => {
@@ -371,7 +372,8 @@ export const Map = ({
       }
     };
     // if(unit !== 2)
-    if (toggleStateBurden === true)
+
+    if (unit == 1  && toggleStateBurden == true)
     {  
     svg
       .selectAll(".polygon")
@@ -453,7 +455,7 @@ export const Map = ({
   
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(0,50)`);
+      .attr('transform',`translate(250,50)`);
 
    
 
@@ -465,6 +467,7 @@ export const Map = ({
     // console.log(unit)
     // if (unit === 2) {
     else{
+
       for(let i =0;i<mergedGeometry.length;i++){
         draw_circles(mergedGeometry[i]);}
       svg
@@ -533,7 +536,7 @@ export const Map = ({
       })
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(0,50)`);
+      .attr('transform',`translate(250,50)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -541,35 +544,41 @@ export const Map = ({
         let height_d = (bounds[1][1] - bounds[0][1])/2;
         
         // let n = d.dataValue / (dotVal);
-        let n = d.dataValueNum / (dotVal);
+        let n;
+        let data_value_num;
+        if(unit == 2)
+        {
+          n = d.dataValue / (dotVal);
+          data_value_num = d.dataValue
+        }
+        else{
+          n = d.dataValueNum / (dotVal);
+          data_value_num = d.dataValueNum
+        }
+         
 
-        if (typeof d.dataValueNum !== 'undefined' && d.dataValueNum > 0 
+        if (typeof data_value_num !== 'undefined' && data_value_num > 0 
 && isFinite(width_d) && isFinite(height_d))
 
         {
       
         let randomPointsOnPolygon = require('random-points-on-polygon');
-      
-        
-        
+         
         let points = randomPointsOnPolygon(n, d);
         for(let i =0;i<points.length;i++){
-          points[i].areaname = d.areaname
-          points[i].dataValueNum = d.areaname
-          points[i].area_id = d.area_id
-          points[i].dataValue = d.dataValue
+     
 
         }
-let r;
-if(height <= 400){
- r = 1;
-}
-else if(height > 800){
-  r =2;
+        let r,sw;
+        if(height <= 400){
+        r = 1;
+        }
+        else if(height > 800){
+          r =2;
 
-}else{
-  r=1.5
-}
+        }else{
+          r=1.5
+        }
       
         svg
         .selectAll("myCircles")
@@ -582,9 +591,9 @@ else if(height > 800){
           .style("fill", colorScale)
           .style("stroke", "#4a4740")
           .style("stroke-width",.3)
-          .style('stroke-opacity',.4)
+          .style('stroke-opacity',1)
           .style('fill-opacity',1)
-          .attr('transform',`translate(0,50)`)
+          .attr('transform',`translate(250,50)`)
       
         
    
@@ -602,7 +611,7 @@ else if(height > 800){
     let formatter = format(".1f");
     let myLegend;
    
-    if (toggleStateBurden === false) 
+    if ((unit == 1  && toggleStateBurden == false) || unit == 2) 
     {
       
       legend.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");
@@ -633,13 +642,13 @@ else if(height > 800){
     }
   }
   else{
-    svg.selectAll('*').remove();
-    const svg_2 = select(svgRef.current);
-    svg_2.append("text").text("No data: please select another survey")
-    .style("text-anchor", "middle")
-    .style("font-weight","bold")
-    .style("fill", "red")
-    .attr('transform',`translate(${width/2}, ${height/2})`);
+    // svg.selectAll('*').remove();
+    // const svg_2 = select(svgRef.current);
+    // svg_2.append("text").text("No data: please select another survey")
+    // .style("text-anchor", "middle")
+    // .style("font-weight","bold")
+    // .style("fill", "red")
+    // .attr('transform',`translate(${width/2}, ${height/2})`);
   }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit,geometry, dimensions, data, toggleStateBurden])
@@ -654,10 +663,6 @@ else if(height > 800){
   }
  
   const screen = useFullScreenHandle();
-
-  function commaSeparated(x) {
-    return x.toLocaleString("en-IN");
-}
 
   const checkchange = (state,handle)=>{
     if(map){

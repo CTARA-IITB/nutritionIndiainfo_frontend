@@ -2,9 +2,10 @@ import React, { useRef,useContext } from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { commaSeparated } from "../../utils.js"
 import Chart from 'chart.js';
 
-export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
+export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
     const componentRef = useRef();
     const screen=useFullScreenHandle();
@@ -21,7 +22,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     let sortedBarLabel =[];
     let sortedBarData = [];
     let differenceData = [];
-    let s;
+    let s, maxWidth;
     let colorScale ='#eda143';
 
     let arrObese = [91,95,104,92,96,105,21];
@@ -54,7 +55,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         })
         // s = ' by State ';
     }        
-    if(selStateData && level=="2"){
+    if(selStateData && (level=="2" || level=="3")){
 
         for(let j=0;j<selIndiaData.length;j++){
 
@@ -130,7 +131,8 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             yAxisID:'yAxis1',
             backgroundColor:colorScale,
             borderColor: colorScale,
-            borderWidth: 1
+            borderWidth: 1,
+            // barThickness: 6,
         },
     ]
 
@@ -140,21 +142,43 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     data = {
         labels:sortedBarLabel,
         datasets: datasets,
-    }    
+    }  
+    
+    //Condition for Varying Bar Width
+    if (datasets[0].data.length <= 6 ){
+        maxWidth = 20;
+    };
+
     options = {
         showDatapoints:true,
         responsive:true,
         maintainAspectRatio:false,
+        // plugins: {
+        //     p1: {
+        //         color: function(context) {
+        //             console.log(context, "context")
+        //         //     var value = context.dataset.data[context.dataIndex];
+        //         //   return value < 0 ? '#ff2020'
+        //         //       : value < 50 ? '#223388'
+        //         //     : '#22cc22'
+        //         },
+        //     },
+        // },    
+        
         tooltips:{
             displayColors:false,
             bodyAlign:"center",
             callbacks: {
                 label: function(context) {
                     var label = context.xLabel; 
-                    return label.toLocaleString("en-IN");
-                }
+                    return commaSeparated(label);
+                },
+                // labelTextColor: function(context) {
+                //     return 'white';
+                // }
             },
             padding:10,
+            backgroundColor: 'black',
             filter: function (tooltipItem) {
                 return tooltipItem.datasetIndex === 0;
             }
@@ -164,17 +188,19 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
         },
         layout: {
             padding: {
+              bottom: 20,  
               right: 70,
             },
           },
         title:{
             display: true,
-            text: [`${graphTitle}, ${barGUnit},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+            text: [`${graphTitle}, ${titleAreaName}, ${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
             fontColor: "black",
         },
         scales: {
             yAxes:[{
                 stacked: true,
+                barThickness: maxWidth,
                 id:'yAxis1',
                 type:"category",
                 ticks:{
@@ -196,8 +222,14 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {
-                        return value.toLocaleString("en-IN");
+                        return commaSeparated(value);
                     }
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: barGUnit,
+                    fontSize: 12,
+                    fontColor: "black",
                 },
                 gridLines: {
                     drawOnChartArea:false
@@ -207,6 +239,7 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
     }
 
     Chart.plugins.register({
+        // id: 'p1',
         afterDraw: function(chartInstance) {
           if (chartInstance.config.options.showDatapoints) {
             var helpers = Chart.helpers;
@@ -214,32 +247,24 @@ export const BarArea = ({indicatorTrend,graphTitle,graphTimeperiod, graphUnit,se
             var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
       
             // render the value of the chart above the bar
-            ctx.font = Chart.helpers.fontString(12, 'normal', Chart.defaults.global.defaultFontFamily);
-            // ctx.fontFamily = 'Verdana';
+            ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
-            ctx.fillStyle = "black";
-            ctx.fontWeight = "normal";
-            // console.log(Chart.helpers.fontString, "ctx.font")
-    
-      
+            // ctx.fillStyle = "black";
+            ctx.fontWeight = 'none';
             chartInstance.data.datasets.forEach(function (dataset) {
-              for (var i = 0; i < dataset.data.length; i++) {
-                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                // console.log(scaleMax, "ScaleMax")
-                var yPos =  model.y + 7;
-                var xPos = model.x + 28;
-                ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
-              }
+                for (var i = 0; i < dataset.data.length; i++) {
+                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                    // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                    var yPos =  model.y + 7;
+                    var xPos = model.x + 28;
+                    ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
+                }
             });
           }
         }
-      });
+    });
 
-      function commaSeparated(x) {
-        return x.toLocaleString("en-IN");
-    }
 
     // title of table
     title=graphTitle +', '+barGUnit; 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import SideNavFirst from "../SideNav/SideNavFirst";
-// import commaSeparated from "../../utils.js";
+import { commaSeparated } from "../../utils.js";
 import "./Trend.css";
 import {
   scaleLinear,
@@ -19,7 +19,7 @@ import {
 const tickLength = 8;
 const margin = {
   left: 100,
-  top: 50,
+  top: 65,
   right: 50,
   bottom: 150,
 };
@@ -127,7 +127,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     }
 
     
-    let { width, height } = dimensions||{width:windowWidth,height:windowHeight}; 
+    // let { width, height } = dimensions||{width:windowWidth,height:windowHeight}; 
+    let { width, height } = {width:windowWidth,height:windowHeight}; 
     // const width =500;
     // const height = 500;
     // const { width, height } = [,]; 
@@ -189,7 +190,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .style("font-size","13px")
         .style("font-weight","bold")
         .attr("dy", "-2em")
-        .text(`${graphTitle},${graphUnit},${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
+        .text(`${graphTitle}, ${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
       
         
       bar.append("g")
@@ -210,11 +211,11 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
         .style('font-size',12)
         .attr("dx", () => {
-          if(width <= 480)
+          if(width <= 780)
            return "1.9em"
         })
         .attr("transform", () => {
-          if(width <= 480)
+          if(width <= 780)
           return "rotate(45)"
         });
         
@@ -236,7 +237,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
           		.style("left", xScale(d.middle_date) + 50 + "px")
           		.style("top", yScale(yValue(d)) + 100+"px");
               })
-     .on('mouseout', ()=>{tooltip2.transition().duration(500).style("opacity", 0)});
+     .on('mouseout', ()=>{tooltip2.transition().duration(100).style("opacity", 0)});
       
       const lineGenerator = line()
     		.x(d => xScale(xValue(d)))
@@ -249,7 +250,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       bar.selectAll("mytext").data(data).enter().append("text")
         .attr("x", function(d) { return xScale(xValue(d)); })
         .attr("y", d => yScale(yValue(d)))
-        .attr("dy", "-.2em")
+        .attr("dy", "-1em")
       	.style("text-anchor","middle")
       	.style("font-size","10px")
         .text(function(d) { return d.timeperiod; });
@@ -263,7 +264,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .style("font-size","13px")
       .style("font-weight","bold")
       .attr("dy", "-2em")
-      .text(`${graphTitle},${graphUnit},${titleAreaName}`)
+      .text(`${graphTitle},${titleAreaName}`)
 
       bar.append("text")
       .attr("x",innerWidth/2)
@@ -275,20 +276,25 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .style("font-weight","bold")
     }
     
-    function commaSeparated(x) {
-      return x.toLocaleString("en-IN");
-  }
-   
+    bar.append("text")
+    .attr("transform", "rotate(-0)")
+    .attr("y", 70 - margin.left)
+    .attr("x",60 - (height / 8))
+    .attr("dy", "1em")
+    .style("font-size","10px")
+    .style("font-weight","bold")
+    .style("text-anchor", "middle")
+    .text(graphUnit);    
    
       
-  },[data,dimensions,trendWrapper.current,toggleStateBurden])
+  },[data,toggleStateBurden])
 
 
 
   if (!data) {
     return <pre>Loading...</pre>;
   }
-  let title=graphTitle+',  '+graphUnit+'('+graphSubgroup+')'
+  let title=graphTitle+ ',  '+ graphUnit+'('+graphSubgroup+')'
 
  
   

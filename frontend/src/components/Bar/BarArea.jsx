@@ -192,7 +192,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 type:"category",
                 ticks:{
                     fontSize: 11,
-                    fontFamily:'Comic Sans MS',
                     fontColor: "black",
                     callback:function(label){
                         var subgroup = label.split(";")[0];
@@ -207,7 +206,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 stacked: true,
                 ticks: {
                     // fontSize: 11,
-                    fontFamily:'Comic Sans MS',
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {
@@ -218,7 +216,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     display: true,
                     labelString: barGUnit,
                     fontSize: 12,
-                    fontFamily:'Comic Sans MS',
                     fontColor: "black",
                 },
                 gridLines: {
@@ -237,7 +234,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
       
             // render the value of the chart above the bar
-            ctx.font = Chart.helpers.fontString(11, 'normal', 'Comic Sans MS');
+            ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
             // ctx.fillStyle = "black";

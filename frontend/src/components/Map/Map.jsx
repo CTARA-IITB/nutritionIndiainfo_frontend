@@ -44,6 +44,7 @@ export const Map = ({
   drillDirection,setDrillDirection
 
 }) => {
+
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -66,7 +67,7 @@ export const Map = ({
     changeText(text);
   }
  
-  if (toggleStateBurden === true) {
+  if ((unit == 1 && toggleStateBurden == true)) {
     mapTitle = `${graphTitle},${graphUnit},${titleAreaName},${graphTimeperiod}`;
   }
   else{
@@ -233,7 +234,7 @@ export const Map = ({
     let mergedGeometry = addProperties(geometry.features, data);
     let c2Value;
     let color_range
-    if (toggleStateBurden === true) 
+    if ((unit == 1 && toggleStateBurden == true) || (unit == 2))
     {
       c2Value = d => d.dataValue;
       color_range = _.map(data, d => {
@@ -309,7 +310,7 @@ export const Map = ({
   
     let colorScale2;
     let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
-    if(toggleStateBurden == true)
+    if (unit == 1  && toggleStateBurden == true)
     {
     if(indicatorSense == 'Positive')
     {
@@ -371,7 +372,8 @@ export const Map = ({
       }
     };
     // if(unit !== 2)
-    if (toggleStateBurden === true)
+
+    if (unit == 1  && toggleStateBurden == true)
     {  
     svg
       .selectAll(".polygon")
@@ -465,6 +467,7 @@ export const Map = ({
     // console.log(unit)
     // if (unit === 2) {
     else{
+
       for(let i =0;i<mergedGeometry.length;i++){
         draw_circles(mergedGeometry[i]);}
       svg
@@ -537,17 +540,26 @@ export const Map = ({
         let height_d = (bounds[1][1] - bounds[0][1])/2;
         
         // let n = d.dataValue / (dotVal);
-        let n = d.dataValueNum / (dotVal);
+        let n;
+        let data_value_num;
+        if(unit == 2)
+        {
+          n = d.dataValue / (dotVal);
+          data_value_num = d.dataValue
+        }
+        else{
+          n = d.dataValueNum / (dotVal);
+          data_value_num = d.dataValueNum
+        }
+         
 
-        if (typeof d.dataValueNum !== 'undefined' && d.dataValueNum > 0 
+        if (typeof data_value_num !== 'undefined' && data_value_num > 0 
 && isFinite(width_d) && isFinite(height_d))
 
         {
       
         let randomPointsOnPolygon = require('random-points-on-polygon');
-      
-        
-        
+         
         let points = randomPointsOnPolygon(n, d);
         for(let i =0;i<points.length;i++){
           points[i].areaname = d.areaname
@@ -595,7 +607,7 @@ else if(height > 800){
     let formatter = format(".1f");
     let myLegend;
    
-    if (toggleStateBurden === false) 
+    if ((unit == 1  && toggleStateBurden == false) || unit == 2) 
     {
       
       legend.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");

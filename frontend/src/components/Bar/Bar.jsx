@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { commaSeparated } from "../../utils.js";
 import Chart from 'chart.js';
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
@@ -62,7 +63,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
 
     if(indicatorBar){
-        console.log(indicatorBar)
+        // console.log(indicatorBar)
         indicatorBar.map(i=>{
             
             if(i.subgroup_id===6){
@@ -298,8 +299,14 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             showDatapoints:true,
             tooltips:{
                 displayColors:false,
-                bodyAlign:"center"
-            },
+                bodyAlign:"center",
+                callbacks: {
+                    label: function(context) {
+                        var label = context.xLabel; 
+                        return commaSeparated(label);
+                    },
+                },
+            },    
             legend:
             {
               display: false,
@@ -312,7 +319,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
               },
             title: {
               display: true,
-              text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+              text: [`${graphTitle}, ${titleAreaName}, ${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
               fontColor: "black",
             },
             scales: {
@@ -336,7 +343,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         fontColor:"black",
                         beginAtZero: true,
                         callback: function(value) {
-                            return value.toLocaleString("en-IN");
+                            return commaSeparated(value);
                         }
                     },
                     scaleLabel: {

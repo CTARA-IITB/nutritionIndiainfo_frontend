@@ -190,7 +190,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .style("font-size","13px")
         .style("font-weight","bold")
         .attr("dy", "-2em")
-        .text(`${graphTitle},${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
+        .text(`${graphTitle}, ${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
       
         
       bar.append("g")
@@ -294,7 +294,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   if (!data) {
     return <pre>Loading...</pre>;
   }
-  let title=graphTitle+',  '+graphUnit+'('+graphSubgroup+')'
+  let title=graphTitle+ ',  '+ graphUnit+'('+graphSubgroup+')'
 
  
   

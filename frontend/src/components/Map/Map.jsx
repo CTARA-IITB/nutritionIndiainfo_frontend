@@ -474,7 +474,11 @@ export const Map = ({
       .style("fill", "#fff")
       
       .attr("fill-opacity","0")
-      
+      .style("opacity", d => {
+        if (d.area_id !== parseInt(selArea) && isLevelThree) {
+          return ".2"
+        }
+      })
       .on("mousemove", (i, d) => onMouseMove(i, d))
       .on("mouseout", function (d) {
         tooltip
@@ -576,7 +580,10 @@ else if(height > 800){
           .attr("cy", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1] })
           .attr("r",r)
           .style("fill", colorScale)
-          .style('opacity',0.7)
+          .style("stroke", "#4a4740")
+          .style("stroke-width",.3)
+          .style('stroke-opacity',.4)
+          .style('fill-opacity',1)
           .attr('transform',`translate(0,50)`)
       
         

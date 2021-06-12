@@ -164,4 +164,6 @@ export const createHierarchy = (options) =>{
   }
 
 
-  
+  export function commaSeparated(x) {
+    return x.toLocaleString("en-IN");
+}

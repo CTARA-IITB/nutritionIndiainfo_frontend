@@ -18,7 +18,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
 import "./Map.css";
-
+import { commaSeparated } from "../../utils.js";
 
 
 export const Map = ({ 
@@ -659,10 +659,6 @@ else if(height > 800){
   }
  
   const screen = useFullScreenHandle();
-
-  function commaSeparated(x) {
-    return x.toLocaleString("en-IN");
-}
 
   const checkchange = (state,handle)=>{
     if(map){

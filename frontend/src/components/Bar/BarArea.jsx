@@ -2,6 +2,7 @@ import React, { useRef,useContext } from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { commaSeparated } from "../../utils.js"
 import Chart from 'chart.js';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
@@ -21,7 +22,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let sortedBarLabel =[];
     let sortedBarData = [];
     let differenceData = [];
-    let s;
+    let s, maxWidth;
     let colorScale ='#eda143';
 
     let arrObese = [91,95,104,92,96,105,21];
@@ -141,7 +142,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     data = {
         labels:sortedBarLabel,
         datasets: datasets,
-    }    
+    }  
+    
+    //Condition for Varying Bar Width
+    if (datasets[0].data.length <= 6 ){
+        maxWidth = 20;
+    };
+
     options = {
         showDatapoints:true,
         responsive:true,
@@ -157,16 +164,21 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         //         },
         //     },
         // },    
+        
         tooltips:{
             displayColors:false,
             bodyAlign:"center",
             callbacks: {
                 label: function(context) {
                     var label = context.xLabel; 
-                    return label.toLocaleString("en-IN");
-                }
+                    return commaSeparated(label);
+                },
+                // labelTextColor: function(context) {
+                //     return 'white';
+                // }
             },
             padding:10,
+            backgroundColor: 'black',
             filter: function (tooltipItem) {
                 return tooltipItem.datasetIndex === 0;
             }
@@ -182,12 +194,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
           },
         title:{
             display: true,
-            text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+            text: [`${graphTitle}, ${titleAreaName}, ${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
             fontColor: "black",
         },
         scales: {
             yAxes:[{
                 stacked: true,
+                barThickness: maxWidth,
                 id:'yAxis1',
                 type:"category",
                 ticks:{
@@ -252,9 +265,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         }
     });
 
-    function commaSeparated(x) {
-        return x.toLocaleString("en-IN");
-    }
 
     // title of table
     title=graphTitle +', '+barGUnit; 

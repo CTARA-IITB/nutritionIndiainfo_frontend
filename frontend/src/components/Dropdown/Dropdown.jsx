@@ -85,6 +85,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     { value: 6, title: "School age" },          
 ];
   const [drillDirection,setDrillDirection] = useState(true);
+  let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
 
 
     useEffect(() => {
@@ -276,8 +277,11 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           let val = e;
           setIsSelected(false);
           setToggleState(true);
+          if(!burdenIndicators.includes(val))
+          {
           setSelBurden("1");
           setToggleStateBurden(true);
+          }
           setSelIndicator(e);
           let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
           let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
@@ -293,8 +297,10 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             // if(isLevelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              //solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
+
             // }
             // else{
             //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
@@ -435,8 +441,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
             // if(levelThree){
               // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-    
+              //solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             // }
             // else{
             //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
@@ -533,7 +539,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           changeBurdenText(text);   
       }
 
-      let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
+     
       let burdenDropdown;
       if (burdenIndicators.includes(selIndicator)) {
           burdenDropdown =    

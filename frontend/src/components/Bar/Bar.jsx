@@ -149,7 +149,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 })
             }
         })
-        
+       
         // graph time period 
         let chartTitle = graphTimeperiod.split(" ")[0];
         data = {
@@ -196,7 +196,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                             fontColor: "black",
                         },
                         gridLines: {
-                          drawOnChartArea: false, // only want the grid lines for one axis to show up
+                          drawOnChartArea: false,
                         },
                     },
                    

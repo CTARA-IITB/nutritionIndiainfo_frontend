@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import SideNavFirst from "../SideNav/SideNavFirst";
-// import commaSeparated from "../../utils.js";
+import { commaSeparated } from "../../utils.js";
 import "./Trend.css";
 import {
   scaleLinear,
@@ -190,7 +190,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .style("font-size","13px")
         .style("font-weight","bold")
         .attr("dy", "-2em")
-        .text(`${graphTitle},${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
+        .text(`${graphTitle}, ${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
       
         
       bar.append("g")
@@ -277,17 +277,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     }
     
     bar.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 10 - margin.left)
-    .attr("x",0 - (innerHeight / 2))
+    .attr("transform", "rotate(-0)")
+    .attr("y", 70 - margin.left)
+    .attr("x",60 - (height / 8))
     .attr("dy", "1em")
+    .style("font-size","10px")
+    .style("font-weight","bold")
     .style("text-anchor", "middle")
-    .text(graphUnit);   
-
-    function commaSeparated(x) {
-      return x.toLocaleString("en-IN");
-  }
-   
+    .text(graphUnit);    
    
       
   },[data,toggleStateBurden])
@@ -297,7 +294,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   if (!data) {
     return <pre>Loading...</pre>;
   }
-  let title=graphTitle+',  '+graphUnit+'('+graphSubgroup+')'
+  let title=graphTitle+ ',  '+ graphUnit+'('+graphSubgroup+')'
 
  
   

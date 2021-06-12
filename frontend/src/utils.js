@@ -53,7 +53,6 @@ export const createHierarchy = (options) =>{
     setIndicatorTrend(body_1.response.docs)
 
 
-
    // const url_2 = await fetch(`http://localhost:8000/api/getIndicatorBar/${indicator}/${timeperiod}/${area}`);
     const url_2 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=unit_id%2Cunit_name%2Csubgroup_name%2Csub_category%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name_subgroup_category&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=timeperiod_id%3A${timeperiod}&omitHeader=true&q=*%3A*&rows=100&sort=subgroup_order%20asc`);
     const body_2 = await url_2.json();
@@ -139,7 +138,7 @@ export const createHierarchy = (options) =>{
     let solr_url;
     // if(isLevelThree){
       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-      solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+      solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
 
     // }
     // else{
@@ -147,6 +146,7 @@ export const createHierarchy = (options) =>{
     //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv11/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     // }
     const solr_body_2 = await solr_url.json();
+    console.log("time", solr_body_2);
     setTimeperiodDropdownOpt(solr_body_2.response.docs);
     let timeVal ="";
     if(typeof solr_body_2.response.docs[0] !== 'undefined'){
@@ -158,13 +158,10 @@ export const createHierarchy = (options) =>{
       setSelTimeperiod("");
       setGraphTimeperiod("");
     }
+    console.log("timeval", timeVal);
     if(timeVal != "")
     await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
   }
-
-  // export function commaSeparated(x) {
-  //   console.log(x,'x');
-  //   if(x==='undefined')return " ";
-  //   else return x.toLocaleString("en-IN");
-  // }  
-  
+  export function commaSeparated(x) {
+    return x.toLocaleString("en-IN");
+  }

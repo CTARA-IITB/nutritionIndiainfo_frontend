@@ -2,8 +2,8 @@ import React, { useRef,useEffect} from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+// import { commaSeparated } from "../../utils.js"
 import Chart from 'chart.js';
-// import { commaSeparated } from '../../utils';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
@@ -21,6 +21,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let title;
     let sortedBarLabel =[];
     let sortedBarData = [];
+    let maxWidth;
     let colorScale ='#eda143';
 
     let arrObese = [91,95,104,92,96,105,21];
@@ -40,32 +41,32 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       colorScale = '#eda143'; 
 
    
-        Chart.plugins.register({
-            // id: 'p1',
-            afterDraw: function(chartInstance) {
-                if (chartInstance.config.options.showDatapoints) {
-                var helpers = Chart.helpers;
-                var ctx = chartInstance.chart.ctx;
-                var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
-                selIndiaData = selIndiaData.map( d => (!isNaN(d.data_value_num)));
-                // render the value of the chart above the bar
-                ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
-                // ctx.fillStyle = "black";
-                ctx.fontWeight = 'none';
-                chartInstance.data.datasets.forEach(function (dataset) {
-                    for (var i = 0; i < dataset.data.length; i++) {
-                        var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                        // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                        var yPos =  model.y + 7;
-                        var xPos = model.x + 28;
-                        ctx.fillText((dataset.data[i]), xPos, yPos);
-                    }
-                });
+    Chart.plugins.register({
+        // id: 'p1',
+        afterDraw: function(chartInstance) {
+            if (chartInstance.config.options.showDatapoints) {
+            var helpers = Chart.helpers;
+            var ctx = chartInstance.chart.ctx;
+            var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
+            selIndiaData = selIndiaData.map( d => (!isNaN(d.data_value_num)));
+            // render the value of the chart above the bar
+            ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            // ctx.fillStyle = "black";
+            ctx.fontWeight = 'none';
+            chartInstance.data.datasets.forEach(function (dataset) {
+                for (var i = 0; i < dataset.data.length; i++) {
+                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                    // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                    var yPos =  model.y + 7;
+                    var xPos = model.x + 28;
+                    ctx.fillText((dataset.data[i]), xPos, yPos);
                 }
+            });
             }
-        });   
+        }
+    });   
     
     
     if(selIndiaData && level=="1" ){
@@ -186,7 +187,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     data = {
         labels:sortedBarLabel,
         datasets: datasets,
-    }    
+    }  
+    
+    //Condition for Varying Bar Width
+    if (datasets[0].data.length <= 6 ){
+        maxWidth = 20;
+    };
+
     options = {
         showDatapoints:true,
         responsive:true,
@@ -197,10 +204,14 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             callbacks: {
                 label: function(context) {
                     var label = context.xLabel; 
-                    return label.toLocaleString("en-IN");
-                }
+                    return (label);
+                },
+                // labelTextColor: function(context) {
+                //     return 'white';
+                // }
             },
             padding:10,
+            backgroundColor: 'black',
             filter: function (tooltipItem) {
                 return tooltipItem.datasetIndex === 0;
             }
@@ -216,12 +227,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
           },
         title:{
             display: true,
-            text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+            text: [`${graphTitle}, ${titleAreaName}, ${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
             fontColor: "black",
         },
         scales: {
             yAxes:[{
                 stacked: true,
+                barThickness: maxWidth,
                 id:'yAxis1',
                 type:"category",
                 ticks:{
@@ -258,7 +270,35 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             }],
         } 
     }
-   
+
+    Chart.plugins.register({
+        // id: 'p1',
+        afterDraw: function(chartInstance) {
+          if (chartInstance.config.options.showDatapoints) {
+            var helpers = Chart.helpers;
+            var ctx = chartInstance.chart.ctx;
+            var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
+      
+            // render the value of the chart above the bar
+            ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            // ctx.fillStyle = "black";
+            ctx.fontWeight = 'none';
+            chartInstance.data.datasets.forEach(function (dataset) {
+                for (var i = 0; i < dataset.data.length; i++) {
+                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                    // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                    var yPos =  model.y + 7;
+                    var xPos = model.x + 28;
+                    ctx.fillText((dataset.data[i]), xPos, yPos);
+                }
+            });
+          }
+        }
+    });
+
+
     // title of table
     title=graphTitle +', '+barGUnit; 
     // graph height

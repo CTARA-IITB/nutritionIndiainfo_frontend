@@ -112,7 +112,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         }
         selStateData.map(i=>{
             if(i.area_name!==areaName){
-                barLabel.push(i.area_name)
+                // barLabel.push(i.area_name)
                 if(toggleStateBurden === true){
                     if(!isNaN(i.data_value)){
                         barLabel.push(i.area_name)

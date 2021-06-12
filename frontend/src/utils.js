@@ -162,8 +162,6 @@ export const createHierarchy = (options) =>{
     if(timeVal != "")
     await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
   }
-
-
   export function commaSeparated(x) {
     return x.toLocaleString("en-IN");
-}
+  }

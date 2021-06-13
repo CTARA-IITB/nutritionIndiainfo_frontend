@@ -245,6 +245,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 },
                 gridLines: {
                     drawOnChartArea: false, 
+                    color:"black",
+                    zeroLineColor:'transparent'
                 },
             }],
             xAxes: [{
@@ -264,7 +266,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     fontColor: "black",
                 },
                 gridLines: {
-                    drawOnChartArea:false
+                    drawOnChartArea:false,
+                    color:"black",
                 }
             }],
         } 

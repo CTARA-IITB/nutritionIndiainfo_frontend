@@ -227,11 +227,11 @@ export const Map = ({
     if(width <= 480){
       title = title.style("font-size", (width * 0.0025) + "em")
     }
-    const projection = geoMercator().fitSize([width, height], geometry);
+    const projection = geoMercator().fitSize([width/2, height], geometry);
 
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
-    let mergedGeometry = addProperties(geometry.features, data);
+    let mergedGeometry = addProperties(geojson, data);
     let c2Value;
     let color_range
     if ((unit == 1 && toggleStateBurden == true) || (unit == 2))
@@ -346,19 +346,19 @@ export const Map = ({
   else{
       let arrObese = [91,95,104,92,96,105,21];
       if(selIndicator == 12 || selIndicator == 13)
-        colorScale = '#a3c00f80'; 
+        colorScale = '#a3c00f'; 
       else if(selIndicator == 19 || selIndicator == 20)
-        colorScale = '#e5393580'; 
+        colorScale = '#e53935'; 
       else if(selIndicator == 17 || selIndicator == 18)
-        colorScale = '#039be580'; 
+        colorScale = '#039be5'; 
       else if(selIndicator == 107 || selIndicator == 108)
-        colorScale = '#e5393580'; 
+        colorScale = '#e53935'; 
       else  if(arrObese.includes(selIndicator))
-        colorScale = '#7b1fa280'; 
+        colorScale = '#7b1fa2'; 
       else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
-        colorScale = '#b71c1c80'; 
+        colorScale = '#b71c1c'; 
       else
-        colorScale = '#eda14380'; 
+        colorScale = '#eda143'; 
 
   }
     const onMouseMove = (event, d) => {
@@ -455,7 +455,7 @@ export const Map = ({
   
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(0,50)`);
+      .attr('transform',`translate(250,50)`);
 
    
 
@@ -477,7 +477,11 @@ export const Map = ({
       .style("fill", "#fff")
       
       .attr("fill-opacity","0")
-      
+      .style("opacity", d => {
+        if (d.area_id !== parseInt(selArea) && isLevelThree) {
+          return ".2"
+        }
+      })
       .on("mousemove", (i, d) => onMouseMove(i, d))
       .on("mouseout", function (d) {
         tooltip
@@ -532,7 +536,7 @@ export const Map = ({
       })
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(0,50)`);
+      .attr('transform',`translate(250,50)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -562,22 +566,19 @@ export const Map = ({
          
         let points = randomPointsOnPolygon(n, d);
         for(let i =0;i<points.length;i++){
-          points[i].areaname = d.areaname
-          points[i].dataValueNum = d.areaname
-          points[i].area_id = d.area_id
-          points[i].dataValue = d.dataValue
+     
 
         }
-let r;
-if(height <= 400){
- r = 1;
-}
-else if(height > 800){
-  r =2;
+        let r,sw;
+        if(height <= 400){
+        r = 1;
+        }
+        else if(height > 800){
+          r =2;
 
-}else{
-  r=1.5
-}
+        }else{
+          r=1.5
+        }
       
         svg
         .selectAll("myCircles")
@@ -588,8 +589,11 @@ else if(height > 800){
           .attr("cy", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1] })
           .attr("r",r)
           .style("fill", colorScale)
-          .style('opacity',0.7)
-          .attr('transform',`translate(0,50)`)
+          .style("stroke", "#4a4740")
+          .style("stroke-width",.3)
+          .style('stroke-opacity',1)
+          .style('fill-opacity',1)
+          .attr('transform',`translate(250,50)`)
       
         
    

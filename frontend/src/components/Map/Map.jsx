@@ -360,12 +360,26 @@ export const Map = ({
         colorScale = '#eda143'; 
 
   }
+
+    //For One Decimel Precision    
+    function decimelPrecision(d){
+      let oneDecimel;
+      if(toggleStateBurden === false){
+          return oneDecimel = d;
+      }
+      else{
+          oneDecimel = d.toFixed(1);  
+          return oneDecimel;
+      }
+      
+  }  
+
     const onMouseMove = (event, d) => {
       if (typeof c2Value(d) != 'undefined') {
         // tooltip.style("opacity", .9);
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(decimelPrecision(c2Value(d))))
           .style("left", event.clientX + "px")
           .style("top", event.clientY - 30 + "px");
       }

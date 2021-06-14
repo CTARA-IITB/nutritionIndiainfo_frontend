@@ -348,11 +348,11 @@ export const Map = ({
       if(selIndicator == 12 || selIndicator == 13)
         colorScale = '#a3c00f'; 
       else if(selIndicator == 19 || selIndicator == 20)
-        colorScale = '#e53935'; 
+        colorScale = 'red'; 
       else if(selIndicator == 17 || selIndicator == 18)
         colorScale = '#039be5'; 
       else if(selIndicator == 107 || selIndicator == 108)
-        colorScale = '#e53935'; 
+        colorScale = '#e35829'; 
       else  if(arrObese.includes(selIndicator))
         colorScale = '#7b1fa2'; 
       else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
@@ -455,7 +455,7 @@ export const Map = ({
   
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(110,50)`);
+      .attr('transform',`translate(130,50)`);
 
    
 
@@ -536,7 +536,7 @@ export const Map = ({
       })
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(110,50)`);
+      .attr('transform',`translate(130,50)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -592,8 +592,8 @@ export const Map = ({
           .style("stroke", "#4a4740")
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
-          .style('fill-opacity',1)
-          .attr('transform',`translate(110,50)`)
+          .style('fill-opacity',0.8)
+          .attr('transform',`translate(130,50)`)
       
         
    

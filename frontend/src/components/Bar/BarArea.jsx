@@ -215,11 +215,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
           },
         scales: {
             yAxes:[{
+                offset: true,
                 stacked: true,
                 barThickness: maxWidth,
                 id:'yAxis1',
                 type:"category",
                 ticks:{
+                    padding:5,
                     fontSize: 11,
                     fontColor: "black",
                     callback:function(label){
@@ -228,6 +230,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     }
                 },
                 gridLines: {
+                    drawTicks:false,
                     drawOnChartArea: false, 
                     color:"black",
                     zeroLineColor:'transparent'

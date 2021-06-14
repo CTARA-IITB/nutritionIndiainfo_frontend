@@ -167,7 +167,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         table[i].data += " ("+graphTimeperiod +")";
     }   
     
-    console.log(barData,'bardata')
     datasets=[
         {
             // label: [graphTitle, barGUnit, graphTimeperiod],

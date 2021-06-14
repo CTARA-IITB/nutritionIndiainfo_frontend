@@ -1,8 +1,8 @@
-import React, { useRef,useContext } from 'react';
+import React, { useRef,useEffect} from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { commaSeparated } from "../../utils.js"
+// import { commaSeparated } from "../../utils.js"
 import Chart from 'chart.js';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
@@ -21,8 +21,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let title;
     let sortedBarLabel =[];
     let sortedBarData = [];
-    let differenceData = [];
-    let s, maxWidth;
+    let maxWidth;
     let colorScale ='#eda143';
 
     let arrObese = [91,95,104,92,96,105,21];
@@ -41,47 +40,93 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     else
       colorScale = '#eda143'; 
 
+   
+    Chart.plugins.register({
+        // id: 'p1',
+        afterDraw: function(chartInstance) {
+            if (chartInstance.config.options.showDatapoints) {
+            var helpers = Chart.helpers;
+            var ctx = chartInstance.chart.ctx;
+            var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
+            selIndiaData = selIndiaData.map( d => (!isNaN(d.data_value_num)));
+            // render the value of the chart above the bar
+            ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            // ctx.fillStyle = "black";
+            ctx.fontWeight = 'none';
+            chartInstance.data.datasets.forEach(function (dataset) {
+                for (var i = 0; i < dataset.data.length; i++) {
+                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                    // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                    var yPos =  model.y + 7;
+                    var xPos = model.x + 28;
+                    ctx.fillText((dataset.data[i]), xPos, yPos);
+                }
+            });
+            }
+        }
+    });   
+    
+    
     if(selIndiaData && level=="1" ){
-
+        
         selIndiaData.map(i=>{
-            barLabel.push(i.area_name)
             if(toggleStateBurden === true){
-                barData.push(+i.data_value)
+                if(!isNaN(i.data_value)){
+                    barLabel.push(i.area_name)
+                    barData.push(+i.data_value)
+                }
             }      
             else{
-                barData.push(+i.data_value_num)
+                if(!isNaN(i.data_value_num)){
+                    barLabel.push(i.area_name)
+                    barData.push(+i.data_value_num)
+                }
             }
             
         })
-        // s = ' by State ';
     }        
     if(selStateData && (level=="2" || level=="3")){
-
         for(let j=0;j<selIndiaData.length;j++){
 
             if(+selArea===selIndiaData[j].area_id && selIndiaData[j].area_name!==areaName){ 
 
                 if(toggleStateBurden === true){
-                    stateDataValue=selIndiaData[j].data_value
+                    if(!isNaN(selIndiaData[j].data_value)){
+                        stateDataValue=selIndiaData[j].data_value;
+                        stateAreaName=selIndiaData[j].area_name;
+                    }
+                    
                 }
                 else{
-                    stateDataValue=selIndiaData[j].data_value_num
+                    if(!isNaN(selIndiaData[j].data_value_num)){
+                        stateDataValue=selIndiaData[j].data_value_num;
+                        stateAreaName=selIndiaData[j].area_name;
+                    }
                 }
-                stateAreaName=selIndiaData[j].area_name
+               
                 barLabel.push(stateAreaName)
                 barData.push(stateDataValue)
             }           
         }
         selStateData.map(i=>{
             if(i.area_name!==areaName){
-                barLabel.push(i.area_name)
-                if(toggleStateBurden === true)
-                    barData.push(+i.data_value)
-                else
-                    barData.push(+i.data_value_num) 
+                // barLabel.push(i.area_name)
+                if(toggleStateBurden === true){
+                    if(!isNaN(i.data_value)){
+                        barLabel.push(i.area_name)
+                        barData.push(+i.data_value)
+                    }
+                }      
+                else{
+                    if(!isNaN(i.data_value_num)){
+                        barLabel.push(i.area_name)
+                        barData.push(+i.data_value_num)
+                    }
+                }
             }
         })
-        // s = ' by District '
     }           
     let barGUnit = graphUnit;
     
@@ -114,15 +159,15 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   
     // reverse the table
     table.reverse();
+
     //sort label and data
     for(var i=0;i<table.length;i++){
         sortedBarLabel[i]=table[i].area;
         sortedBarData[i]=table[i].data;
         table[i].data += " ("+graphTimeperiod +")";
     }   
-    for(var i=0;i<sortedBarData.length;i++){
-        differenceData[i]=sortedBarData[0]-sortedBarData[i];
-    } 
+    
+    console.log(barData,'bardata')
     datasets=[
         {
             // label: [graphTitle, barGUnit, graphTimeperiod],
@@ -153,25 +198,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         showDatapoints:true,
         responsive:true,
         maintainAspectRatio:false,
-        // plugins: {
-        //     p1: {
-        //         color: function(context) {
-        //             console.log(context, "context")
-        //         //     var value = context.dataset.data[context.dataIndex];
-        //         //   return value < 0 ? '#ff2020'
-        //         //       : value < 50 ? '#223388'
-        //         //     : '#22cc22'
-        //         },
-        //     },
-        // },    
-        
         tooltips:{
             displayColors:false,
             bodyAlign:"center",
             callbacks: {
                 label: function(context) {
                     var label = context.xLabel; 
-                    return commaSeparated(label);
+                    return (label);
                 },
                 // labelTextColor: function(context) {
                 //     return 'white';
@@ -212,7 +245,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     }
                 },
                 gridLines: {
-                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    drawOnChartArea: false, 
                 },
             }],
             xAxes: [{
@@ -222,7 +255,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {
-                        return commaSeparated(value);
+                        return value.toLocaleString("en-IN");
                     }
                 },
                 scaleLabel: {
@@ -258,7 +291,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
                     var yPos =  model.y + 7;
                     var xPos = model.x + 28;
-                    ctx.fillText(commaSeparated(dataset.data[i]), xPos, yPos);
+                    ctx.fillText((dataset.data[i]), xPos, yPos);
                 }
             });
           }
@@ -268,8 +301,10 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
     // title of table
     title=graphTitle +', '+barGUnit; 
+    // graph height
     let calculatedHeight=data.labels.length*15;
     calculatedHeight = (calculatedHeight < 450)?450:calculatedHeight;
+
     return (
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>

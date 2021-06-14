@@ -2,17 +2,13 @@ import React, { useRef } from 'react';
 import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { commaSeparated } from "../../utils.js";
-import Chart from 'chart.js';
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
+
     const componentRef = useRef();
     const screen=useFullScreenHandle();
-    
-    let barLabel = [];
-    let barData=[];
+
     let data = [];
-    var colors = [];
     let table=[];
     let options =[];
     let barUnit = graphUnit;
@@ -52,233 +48,107 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         colorScale = '#eda143'; 
         lightColor = '#F7D9B3';
     }
-
-    // remove last word  graph title i.e olds
-    // var lastIndex = graphTitle.lastIndexOf(" ");
-    // graphTitle = graphTitle.substring(0, lastIndex);
-    // graphTitle = graphTitle + 's'
-
     if(toggleStateBurden === false){
         barUnit = 'Number';
     }
+    var j=0;
+    groupedLabel[j]="Overall";
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+    groupedLabel[j]=" ";
+    groupedColor[j]="white";
+    groupedData[j++]=NaN;
+    
+    groupedLabel[j]="Male"
+    groupedColor[j]=lightColor;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="Female"
+    groupedColor[j]=lightColor;
+    groupedData[j++]=NaN;
+    groupedLabel[j]=" ";
+    groupedColor[j]="white";
+    groupedData[j++]=NaN;
 
+    groupedLabel[j]="Low Coverage";
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="Mid Coverage";
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="High Coverage";
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+    groupedLabel[j]=" ";
+    groupedColor[j]="white";
+    groupedData[j++]=NaN;
+
+    groupedLabel[j]="No Education";
+    groupedColor[j]=lightColor;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="< 5 years completed";
+    groupedColor[j]=lightColor;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="5-9 years completed";
+    groupedColor[j]=lightColor;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="10-11 years completed";
+    groupedColor[j]=lightColor;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="12+ years completed";
+    groupedColor[j]=lightColor;
+    groupedData[j++]=NaN;
+    groupedLabel[j]=" ";
+    groupedColor[j]="white";
+    groupedData[j++]=NaN;
+
+    groupedLabel[j]="Poorest"
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="Second"
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="Middle"
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="Fourth"
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+    groupedLabel[j]="Richest"
+    groupedColor[j]=colorScale;
+    groupedData[j++]=NaN;
+
+    var hashTable = {};
+    for(var i=0;i<groupedLabel.length;i++)
+        hashTable[groupedLabel[i]]=i;
+   
     if(indicatorBar){
-        // console.log(indicatorBar)
         indicatorBar.map(i=>{
             
-            if(i.subgroup_id===6){
-                barLabel.push({
-                   subgroup_name: i.subgroup_name,
-                   subgroup_id : i.subgroup_id,
-                })
-                colors.push(colorScale)
+            if(i.subgroup_name==="All"){
                 if(toggleStateBurden == true){
-                    barData.push(+i.data_value)
+                    groupedData[hashTable["Overall"]]=i.data_value;
                 }
                 else{
-                    barData.push(+i.data_value_num)
+                    groupedData[hashTable["Overall"]]=i.data_value_num;
                 }
+                table.push({
+                    area:i.subgroup_name,
+                    data:+ groupedData[hashTable["Overall"]],
+                })
             }
-            else if(i.subgroup_id>=14 && i.subgroup_id<=15){
-                barLabel.push({
-                    subgroup_name: i.subgroup_name,
-                    subgroup_id : i.subgroup_id,
-                })
-                colors.push(lightColor)
+            else if(typeof hashTable[i.subgroup_name]!=='undefined'){
                 if(toggleStateBurden == true){
-                    barData.push(+i.data_value)
+                    groupedData[hashTable[i.subgroup_name]]=i.data_value;
                 }
                 else{
-                    barData.push(+i.data_value_num)
+                    groupedData[hashTable[i.subgroup_name]]=i.data_value_num;
                 }
-            }
-            else if(i.subgroup_id>=8 && i.subgroup_id<=12){
-                barLabel.push({
-                    subgroup_name: i.subgroup_name,
-                    subgroup_id : i.subgroup_id,
+                table.push({
+                    area:i.subgroup_name,
+                    data:+ groupedData[hashTable[i.subgroup_name]],
                 })
-                colors.push(colorScale)
-                if(toggleStateBurden == true){
-                    barData.push(+i.data_value)
-                }
-                else{
-                    barData.push(+i.data_value_num)
-                }
-            }
-            else if(i.subgroup_id>=18 && i.subgroup_id<=22){
-                barLabel.push({
-                    subgroup_name: i.subgroup_name,
-                    subgroup_id : i.subgroup_id,
-                })
-                colors.push(lightColor)
-                if(toggleStateBurden == true){
-                    barData.push(+i.data_value)
-                }
-                else{
-                    barData.push(+i.data_value_num)
-                }
-            }
-            else if(i.subgroup_id>=18 && i.subgroup_id<=22){
-                barLabel.push({
-                    subgroup_name: i.subgroup_name,
-                    subgroup_id : i.subgroup_id,
-                })
-                colors.push(lightColor)
-                if(toggleStateBurden == true){
-                    barData.push(+i.data_value)
-                }
-                else{
-                    barData.push(+i.data_value_num)
-                }
-
             }
         })
-
-        var j=0;
-        let flag=false,check=false;
-        let subgroupId = [6,15,14,23,24,25,18,19,20,21,22,10,12,9,8,11];
-        let colorCode = [colorScale,lightColor,lightColor,colorScale,colorScale,colorScale,lightColor,lightColor,lightColor,lightColor,lightColor,colorScale,colorScale,colorScale,colorScale,colorScale]
-        if(barLabel.length>0){
-            var k=0;
-            while(k<subgroupId.length){
-                for(var i=0;i<barLabel.length;i++){
-                    if(subgroupId[k]===23){
-                        groupedLabel[j]="Low Coverage";
-                        groupedColor[j]=colorCode[k];
-                        groupedData[j++]=NaN;
-                        groupedLabel[j]="Mid Coverage";
-                        groupedColor[j]=colorCode[k+1];
-                        groupedData[j++]=NaN;
-                        groupedLabel[j]="High Coverage";
-                        groupedColor[j]=colorCode[k+2];
-                        groupedData[j++]=NaN;
-                        groupedLabel[j]=" ";
-                        groupedColor[j]="white";
-                        groupedData[j++]=NaN;
-                        flag=true;
-                        break;
-                    }
-                    if(barLabel[i].subgroup_id===subgroupId[k]){
-                        if(subgroupId[k]===6)
-                            groupedLabel[j]="Overall";
-                        else  
-                            groupedLabel[j]=barLabel[i].subgroup_name; 
-                        groupedColor[j]=colorCode[k];
-                        groupedData[j++]=barData[i];
-                        table.push({
-                            area:groupedLabel[groupedLabel.length-1],
-                            data:+ groupedData[ groupedData.length-1],
-                        })
-                        if(subgroupId[k]===6 ||subgroupId[k]===14|| subgroupId[k]===22){
-                            groupedLabel[j]=" ";
-                            groupedColor[j]="white";
-                            groupedData[j++]=NaN;
-                        }
-                        check=true;
-                        break;
-                    }
-                }
-                if(flag){
-                    flag=false;
-                    k+=3;
-                    continue;
-                }
-                if(check){
-                    check=false;
-                    k++;
-                    continue;
-                }
-                if(check===false && subgroupId[k]===18){
-                    groupedLabel[j]="No Education";
-                    groupedColor[j]=lightColor;
-                    groupedData[j++]=NaN;
-                    groupedLabel[j]="<5 years completed";
-                    groupedColor[j]=lightColor;
-                    groupedData[j++]=NaN;
-                    groupedLabel[j]="5-9 years completed";
-                    groupedColor[j]=lightColor;
-                    groupedData[j++]=NaN;
-                    groupedLabel[j]="10-11 years completed";
-                    groupedColor[j]=lightColor;
-                    groupedData[j++]=NaN;
-                    groupedLabel[j]="12+ years completed";
-                    groupedColor[j]=lightColor;
-                    groupedData[j++]=NaN;
-                    groupedLabel[j]=" ";
-                    groupedColor[j]="white";
-                    groupedData[j++]=NaN;
-                    k+=5;
-                    continue;
-                }   
-                k++;   
-            }
-        }      
-        else{
-            groupedLabel[j]="Overall";
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-            groupedLabel[j]=" ";
-            groupedColor[j]="white";
-            groupedData[j++]=NaN;
-            
-            groupedLabel[j]="Male"
-            groupedColor[j]=lightColor;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="Female"
-            groupedColor[j]=lightColor;
-            groupedData[j++]=NaN;
-            groupedLabel[j]=" ";
-            groupedColor[j]="white";
-            groupedData[j++]=NaN;
-
-            groupedLabel[j]="Low Coverage";
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="Mid Coverage";
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="High Coverage";
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-            groupedLabel[j]=" ";
-            groupedColor[j]="white";
-            groupedData[j++]=NaN;
-
-            groupedLabel[j]="No Education";
-            groupedColor[j]=lightColor;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="<5 years completed";
-            groupedColor[j]=lightColor;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="5-9 years completed";
-            groupedColor[j]=lightColor;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="10-11 years completed";
-            groupedColor[j]=lightColor;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="12+ years completed";
-            groupedColor[j]=lightColor;
-            groupedData[j++]=NaN;
-            groupedLabel[j]=" ";
-            groupedColor[j]="white";
-            groupedData[j++]=NaN;
-
-            groupedLabel[j]="Poorest"
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="Second"
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="Middle"
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="Fourth"
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-            groupedLabel[j]="Richest"
-            groupedColor[j]=colorScale;
-            groupedData[j++]=NaN;
-        }
        
         // graph time period 
         let chartTitle = graphTimeperiod.split(" ")[0];
@@ -299,14 +169,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             showDatapoints:true,
             tooltips:{
                 displayColors:false,
-                bodyAlign:"center",
-                callbacks: {
-                    label: function(context) {
-                        var label = context.xLabel; 
-                        return commaSeparated(label);
-                    },
-                },
-            },    
+                bodyAlign:"center"
+            },
             legend:
             {
               display: false,
@@ -319,7 +183,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
               },
             title: {
               display: true,
-              text: [`${graphTitle}, ${titleAreaName}, ${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
+              text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
               fontColor: "black",
             },
             scales: {
@@ -332,7 +196,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                             fontColor: "black",
                         },
                         gridLines: {
-                          drawOnChartArea: false, // only want the grid lines for one axis to show up
+                          drawOnChartArea: false,
                         },
                     },
                    
@@ -343,7 +207,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         fontColor:"black",
                         beginAtZero: true,
                         callback: function(value) {
-                            return commaSeparated(value);
+                            return value.toLocaleString("en-IN");
                         }
                     },
                     scaleLabel: {
@@ -359,9 +223,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             }
         }
     }
-
-    //To Display Data Value on Chart
-    
+ 
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>

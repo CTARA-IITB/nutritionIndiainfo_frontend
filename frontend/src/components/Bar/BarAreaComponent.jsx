@@ -8,16 +8,19 @@ class BarAreaComponent extends React.PureComponent {
   render() {
     if(this.props.data.labels.length > 0)
     {
-    return (
-        <div>
-            <HorizontalBar ref={this.componentRef} height={this.props.calculatedHeight} id="BarArea"  data={this.props.data} options={this.props.options}/>
-        </div>
-    );
+      return (
+          <div>
+              <HorizontalBar ref={this.componentRef} height={this.props.calculatedHeight} id="barArea"  data={this.props.data} options={this.props.options}/>
+          </div>
+      );
     }
     else{
       return (
-        <div id="statMsg">No data: please select another survey</div>
-    );
+        <div>
+          <div id="statMsg">No data: please select another survey</div>
+          <HorizontalBar ref={this.componentRef} height={this.props.calculatedHeight} id="barArea"  data={this.props.data} options={this.props.options}/>
+        </div>
+      );
     }
   }
 }

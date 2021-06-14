@@ -18,7 +18,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
 import "./Map.css";
-import { commaSeparated } from "../../utils.js";
+ import { commaSeparated } from "../../utils.js";
 
 
 export const Map = ({ 

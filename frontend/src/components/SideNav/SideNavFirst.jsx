@@ -5,6 +5,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import ShareIcon from '@material-ui/icons/Share';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import Share  from "../Share/Share";
 import {saveSvgAsPng,svgAsPngUri}  from 'save-svg-as-png';
@@ -16,20 +17,56 @@ import { useReactToPrint } from "react-to-print";
 
 const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})=>{
 
-    
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenTable, setIsOpenTable] = useState(false);
+    const [isOpenShare,setIsOpenShare]=useState(false);
+    const [isFullscreen,setIsFullscreen]=useState(true);
+    const [icon,setIcon] = useState(<FullscreenIcon/>)
+    const [text,setText]=useState('Full View')
+
+    let imageNameJpeg;
+    let imageNamePng;
+    let imageNameSvg;
+    let imageNamePdf;
+    let imageNameCsv;
+
+    // downloaded image name 
+    if(id==="svgMap"){
+        imageNameJpeg = 'map.jpeg';
+        imageNamePng = 'map.png';
+        imageNameSvg = 'map.svg';
+        imageNamePdf = 'map.pdf'
+        imageNameCsv = 'map.csv'
+    }
+    else{
+        imageNameJpeg = 'trend.jpeg';
+        imageNamePng = 'trend.png';
+        imageNameSvg = 'trend.svg';
+        imageNamePdf = 'trend.pdf'
+        imageNameCsv = 'trend.csv'
+    }
+    
     const togglePopup = () => {
         setIsOpen(!isOpen);
     }
-
-    const [isOpenTable, setIsOpenTable] = useState(false);
     const toggleTablePopup = ()=>{
         setIsOpenTable(!isOpenTable); 
     }
-
-    const [isOpenShare,setIsOpenShare]=useState(false);
     const toggleShare=()=>{
         setIsOpenShare(!isOpenShare);
+    }
+
+    //toggle fullscreen
+    const OpenFullscreen = () =>{
+        setIcon(<FullscreenExitIcon/>);
+        setText("Exit");
+        setIsFullscreen(false);
+    }
+
+    const closeFullscreen = ()=>{
+        setIcon(<FullscreenIcon/>);
+        setText("Full View");
+        setIsFullscreen(true);
     }
 
     //print
@@ -37,7 +74,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         content: () => componentRef.current
     });
 
-    // map download details
+    // set white background of downloaded image
     const options = {
         scale: 10,
         encoderOptions: 1,
@@ -45,16 +82,16 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
     }
     
     const saveJpeg = () => {
-        saveSvgAsPng(document.getElementById(id), 'image.jpeg', options);
+        saveSvgAsPng(document.getElementById(id), imageNameJpeg, options);
     };
 
     const savePng = () => {
-       saveSvgAsPng(document.getElementById(id), 'image.png', options);
+       saveSvgAsPng(document.getElementById(id), imageNamePng, options);
     };
 
     const saveSvg = () => {
-        saveSvgAsPng(document.getElementById(id), 'image.svg', options);
-     };
+        saveSvgAsPng(document.getElementById(id), imageNameSvg, options);
+    };
 
     async function savePdf() {
         const graph = document.getElementById(id);
@@ -62,11 +99,9 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         const pdfCanvas = document.createElement("canvas");
         pdfCanvas.setAttribute("width", 900);
         pdfCanvas.setAttribute("height", 600);
-    
         const dataURI = await svgAsPngUri(graph);
-    
         pdf.addImage(dataURI, "PNG", 0, 0);
-        pdf.save("image.pdf");
+        pdf.save(imageNamePdf);
     }
 
     return(
@@ -97,7 +132,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
             content={<div className="container">
                 <CSVLink 
                     data={table}
-                    filename="image.csv"
+                    filename= {imageNameCsv}
                     target="_blank"
                 ><button id="btn">csv</button></CSVLink>
                 <button onClick={saveJpeg} id="btn">jpeg</button>
@@ -113,7 +148,18 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
                 </Dropdown.Toggle>
                 <Dropdown.Menu align="right" >
                     <Dropdown.Item  onClick={togglePopup} eventKey="1" style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
-                    <Dropdown.Item onClick={()=>{screen.enter()}} eventKey="2" style={{fontSize:'15px'}}><FullscreenIcon/> Full View</Dropdown.Item>
+                    <Dropdown.Item 
+                        onClick={(e)=>{
+                            if(isFullscreen){
+                                screen.enter();
+                                OpenFullscreen();
+                            }else{
+                                screen.exit();
+                                closeFullscreen();
+                            }
+                        }}
+                        eventKey="2" style={{fontSize:'15px'}}>{icon} {text}
+                    </Dropdown.Item>
                     <Dropdown.Item onClick={toggleTablePopup} eventKey="3" style={{fontSize:'15px'}}><TableChartIcon  style={{fontSize:'20px'}}/> Table</Dropdown.Item>
                     <Dropdown.Item onClick={toggleShare} eventKey="4"  style={{fontSize:'15px'}}><ShareIcon  style={{fontSize:'20px'}}/> Share </Dropdown.Item>
                     <Dropdown.Item onClick={handlePrint} eventKey="5"  style={{fontSize:'15px'}}><PrintIcon  style={{fontSize:'20px'}}/> Print</Dropdown.Item>

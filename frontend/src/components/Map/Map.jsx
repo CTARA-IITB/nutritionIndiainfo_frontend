@@ -75,7 +75,7 @@ export const Map = ({
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
-    // console.log("legend", i, genLength, generatedLabels,labelDelimiter);
+    console.log("legend", i, genLength, generatedLabels,labelDelimiter);
     if (i === 0) {
       const values = generatedLabels[i].split(` ${labelDelimiter} `)
       return `Less than ${values[1]}`
@@ -304,7 +304,16 @@ export const Map = ({
       highest = 80.0;
     }
     
-    
+    let colors = ["#A9A9B0"]
+
+    sampleCategoricalData = [ "Data not available"]
+    var colorScale = scaleOrdinal().domain(sampleCategoricalData)
+      .range(colors);
+
+    verticalLegend = d3.svg.legend().labelFormat("none").scale(colorScale);
+
+    d3.select("svg").append("g").attr("transform", "translate(50,140)").attr("class", "legend").call(verticalLegend);
+
     
     let colorScale;
   

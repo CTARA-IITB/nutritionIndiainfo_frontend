@@ -4,6 +4,7 @@ import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 // import { commaSeparated } from "../../utils.js"
 import Chart from 'chart.js';
+import { commaSeparated } from '../../utils';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
@@ -41,33 +42,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       colorScale = '#eda143'; 
 
    
-    Chart.plugins.register({
-        // id: 'p1',
-        afterDraw: function(chartInstance) {
-            if (chartInstance.config.options.showDatapoints) {
-            var helpers = Chart.helpers;
-            var ctx = chartInstance.chart.ctx;
-            var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
-            selIndiaData = selIndiaData.map( d => (!isNaN(d.data_value_num)));
-            // render the value of the chart above the bar
-            ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
-            // ctx.fillStyle = "black";
-            ctx.fontWeight = 'none';
-            chartInstance.data.datasets.forEach(function (dataset) {
-                for (var i = 0; i < dataset.data.length; i++) {
-                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                    // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                    var yPos =  model.y + 7;
-                    var xPos = model.x + 28;
-                    ctx.fillText((dataset.data[i]), xPos, yPos);
-                }
-            });
-            }
-        }
-    });   
-    
     
     if(selIndiaData && level=="1" ){
         
@@ -133,6 +107,19 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     if(toggleStateBurden === false)
         barGUnit = 'Number';  
 
+    //For One Decimel Precision    
+    function decimelPrecision(d){
+        let oneDecimel;
+        if(toggleStateBurden === false){
+            return oneDecimel = d;
+        }
+        else{
+            oneDecimel = d.toFixed(1);  
+            return oneDecimel;
+        }
+        
+    }    
+
     // table details    
     for(var i=0;i<barLabel.length;i++){
         table.push({
@@ -167,7 +154,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         table[i].data += " ("+graphTimeperiod +")";
     }   
     
-    console.log(barData,'bardata')
     datasets=[
         {
             // label: [graphTitle, barGUnit, graphTimeperiod],
@@ -188,7 +174,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         labels:sortedBarLabel,
         datasets: datasets,
     }  
-    
+
     //Condition for Varying Bar Width
     if (datasets[0].data.length <= 6 ){
         maxWidth = 20;
@@ -200,11 +186,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         maintainAspectRatio:false,
         tooltips:{
             displayColors:false,
+            xAlign:"right",
             bodyAlign:"center",
             callbacks: {
                 label: function(context) {
                     var label = context.xLabel; 
-                    return (label);
+                    label = decimelPrecision(label); 
+                    return commaSeparated(label);
                 },
                 // labelTextColor: function(context) {
                 //     return 'white';
@@ -221,15 +209,11 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         },
         layout: {
             padding: {
+              top:40,  
               bottom: 20,  
               right: 70,
             },
           },
-        title:{
-            display: true,
-            text: [`${graphTitle}, ${titleAreaName}, ${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
-            fontColor: "black",
-        },
         scales: {
             yAxes:[{
                 stacked: true,
@@ -255,7 +239,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {
-                        return value.toLocaleString("en-IN");
+                        return commaSeparated(value);
                     }
                 },
                 scaleLabel: {
@@ -283,7 +267,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
-            // ctx.fillStyle = "black";
+            ctx.fillStyle = "black";
             ctx.fontWeight = 'none';
             chartInstance.data.datasets.forEach(function (dataset) {
                 for (var i = 0; i < dataset.data.length; i++) {
@@ -291,7 +275,10 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
                     var yPos =  model.y + 7;
                     var xPos = model.x + 28;
-                    ctx.fillText((dataset.data[i]), xPos, yPos);
+                    // console.log(dataValue, "DV");
+
+                    var dataValue = (dataset.data[i]);
+                    ctx.fillText(dataValue, xPos, yPos);
                 }
             });
           }
@@ -300,7 +287,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
 
     // title of table
-    title=graphTitle +', '+barGUnit; 
+    title=graphTitle + ', '+ titleAreaName + ', '+ chartTitle + ' ' + graphTimeperiod.split(" ")[1]; 
     // graph height
     let calculatedHeight=data.labels.length*15;
     calculatedHeight = (calculatedHeight < 450)?450:calculatedHeight;
@@ -309,6 +296,9 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="BarArea" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
+                <div className="barAreaTitle">
+                    <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{title}</small>
+                </div>
                 <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options} calculatedHeight={calculatedHeight}/>
             </FullScreen>    
         </div>

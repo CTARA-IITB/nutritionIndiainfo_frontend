@@ -233,7 +233,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("fill", colorScale)
       	.on('mouseover', (i,d) => {
         			tooltip2.transition().duration(500).style("opacity", 1);
-              tooltip2.html(`<b>${d.timeperiod}</b> : ${commaSeparated(yValue(d))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
+              tooltip2.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
           		.style("left", xScale(d.middle_date) + 50 + "px")
           		.style("top", yScale(yValue(d)) + 100+"px");
               })
@@ -285,6 +285,19 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     .style("font-weight","bold")
     .style("text-anchor", "middle")
     .text(graphUnit);    
+
+    //For One Decimel Precision    
+    function decimelPrecision(d){
+      let oneDecimel;
+      if(toggleStateBurden === false){
+          return oneDecimel = d;
+      }
+      else{
+          oneDecimel = d.toFixed(1);  
+          return oneDecimel;
+      }
+      
+  }  
    
       
   },[data,toggleStateBurden])

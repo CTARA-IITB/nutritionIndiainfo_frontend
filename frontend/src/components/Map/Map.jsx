@@ -95,7 +95,6 @@ export const Map = ({
   //merge geometry and data
 
   function addProperties(geojson, data) {
-    console.log('DDAATTAA',data)
     let newArr = _.map(data, function (item) {
       return {
         areacode: item.area_code,

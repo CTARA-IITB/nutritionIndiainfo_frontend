@@ -220,7 +220,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     },
                     gridLines: {
                         drawOnChartArea: false,
-                        color:"black"
+                        color:"black",
                     }
                 }]
             }

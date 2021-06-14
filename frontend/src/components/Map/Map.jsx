@@ -455,7 +455,7 @@ export const Map = ({
   
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(100,50)`);
+      .attr('transform',`translate(110,50)`);
 
    
 
@@ -536,7 +536,7 @@ export const Map = ({
       })
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(100,50)`);
+      .attr('transform',`translate(110,50)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -593,7 +593,7 @@ export const Map = ({
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
           .style('fill-opacity',1)
-          .attr('transform',`translate(100,50)`)
+          .attr('transform',`translate(110,50)`)
       
         
    

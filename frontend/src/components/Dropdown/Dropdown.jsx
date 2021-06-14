@@ -17,8 +17,23 @@ import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
 import {EARLY_CHILDHOOD} from "../../constants"
 const {Search} = Input;
+
+
+
+
 export const Dropdown = ({}) =>{
-  // let { id } = useParams();
+
+  let { lifecycle } = useParams();
+  if(typeof lifecycle === 'undefined')
+    lifecycle = EARLY_CHILDHOOD;
+  const [selLifeycle, setSelLifecycle] = useState(parseInt(lifecycle));
+  
+  let { category } = useParams();
+  if(typeof category === 'undefined')
+    category = 1;
+  const [selCategory, setSelCategory] = useState(parseInt(category));
+  
+ 
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
   const iniSelIndicator = '12';
@@ -34,8 +49,6 @@ export const Dropdown = ({}) =>{
 
 const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [categorydDropdownOpt, setCategoryDropdownOpt] = useState([]);
-  const [selLifeycle, setSelLifecycle] = useState(EARLY_CHILDHOOD);
-  const [selCategory, setSelCategory] = useState(1);
   // const [subgroupDropdownOpt, setSubgroupDropdownOpt] = useState([]);
   const [stateID,setStateID] = useState(null);
   const [indicatorSense, setIndicatorSense] = useState('Negative');

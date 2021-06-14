@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { commaSeparated } from '../../utils';
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
 
@@ -12,12 +13,14 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let table=[];
     let options =[];
     let barUnit = graphUnit;
-    let title=graphTitle +', '+barUnit;
+    let title;
     let colorScale ='#eda143';
     let lightColor = '#F7D9B3';
     let groupedData = [];
     let groupedLabel =[];
     let groupedColor = [];
+
+    let chartTitle = graphTimeperiod.split(" ")[0];
 
     let arrObese = [91,95,104,92,96,105,21];
     if(selIndicator == 12 || selIndicator == 13){
@@ -149,9 +152,22 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 })
             }
         })
+
+    //For One Decimel Precision    
+    function decimelPrecision(d){
+        let oneDecimel;
+        if(toggleStateBurden === false){
+            return oneDecimel = d;
+        }
+        else{
+            oneDecimel = d.toFixed(1);  
+            return oneDecimel;
+        }
+        
+    } 
        
         // graph time period 
-        let chartTitle = graphTimeperiod.split(" ")[0];
+
         data = {
             labels:groupedLabel,
             datasets: [{
@@ -169,7 +185,15 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             showDatapoints:true,
             tooltips:{
                 displayColors:false,
-                bodyAlign:"center"
+                xAlign:"right",
+                bodyAlign:"center",
+                callbacks: {
+                    label: function(context) {
+                        var label = context.xLabel; 
+                        label = decimelPrecision(label); 
+                        return commaSeparated(label);
+                    },
+                },
             },
             legend:
             {
@@ -177,26 +201,27 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             },
             layout: {
                 padding: {
+                  top:40,  
                   bottom: 20,   
                   right: 50,
                 },
               },
-            title: {
-              display: true,
-              text: [`${graphTitle},${titleAreaName},${chartTitle} ${graphTimeperiod.split(" ")[1]}`],
-              fontColor: "black",
-            },
             scales: {
                 yAxes:[
                     {
                         id:'yAxis1',
                         type:"category",
                         ticks:{
+                            padding:5,
                             fontSize: 11,
                             fontColor: "black",
                         },
                         gridLines: {
+                        //   display: false,
+                          drawTicks:false,
                           drawOnChartArea: false,
+                          color:"black",
+                          zeroLineColor:'transparent'
                         },
                     },
                    
@@ -218,16 +243,22 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     },
                     gridLines: {
                         drawOnChartArea: false,
+                        color:"black",
                     }
                 }]
             }
         }
     }
+
+    title=graphTitle + ', '+ titleAreaName + ', '+ chartTitle + ' ' + graphTimeperiod.split(" ")[1]; 
  
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="Bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
+                <div className="barTitle" id="barT" >
+                    <small style={{textAlign:'end',fontWeight:"bold",fontSize:"13px"}}>{title}</small>
+                </div>
                 <BarComponent ref={componentRef} id="Bar" data={data} options={options}/>
             </FullScreen>    
         </div>

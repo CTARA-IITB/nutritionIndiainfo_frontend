@@ -34,7 +34,7 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
   let imageNameCsv;
 
   // downloaded image name 
-  if(id==="bar"){
+  if(id==="Bar"){
     imageNameJpeg = 'bar.jpeg';
     imageNamePng = 'bar.png';
     imageNameSvg = 'bar.svg';

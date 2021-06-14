@@ -17,25 +17,43 @@ import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
 import {EARLY_CHILDHOOD} from "../../constants"
 const {Search} = Input;
+
+
+
+
 export const Dropdown = ({}) =>{
-  // let { id } = useParams();
+
+  let { lifecycle } = useParams();
+  if(typeof lifecycle === 'undefined')
+    lifecycle = EARLY_CHILDHOOD;
+  const [selLifeycle, setSelLifecycle] = useState(parseInt(lifecycle));
+  
+  let { category } = useParams();
+  if(typeof category === 'undefined')
+    category = 1;
+  const [selCategory, setSelCategory] = useState(parseInt(category));
+  
+  let { indicator } = useParams();
+  if(typeof indicator === 'undefined'){
+    indicator = null;
+  }
+  const [selIndicator, setSelIndicator] = useState(parseInt(indicator));
+ 
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
   const iniSelIndicator = '12';
-  const [selIndicator, setSelIndicator] = useState();
   // const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
   // const iniSelSubgroup = '6';  //All
   // const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
+  const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
+  console.log(indicatorDropdownOpt);
   const [selTimeperiod, setSelTimeperiod] = useState();
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
-  const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
 
 const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [categorydDropdownOpt, setCategoryDropdownOpt] = useState([]);
-  const [selLifeycle, setSelLifecycle] = useState(EARLY_CHILDHOOD);
-  const [selCategory, setSelCategory] = useState(1);
   // const [subgroupDropdownOpt, setSubgroupDropdownOpt] = useState([]);
   const [stateID,setStateID] = useState(null);
   const [indicatorSense, setIndicatorSense] = useState('Negative');
@@ -100,8 +118,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       setCategoryDropdownOpt([
         { value: 1, title: "Manifestation" },
         { value: 2, title: "Interventions" },
-        { value: 3, title: "Immediate Determinants" },
-        { value: 4, title: "Underlying Determinants" }
+        { value: 3, title: "Immediate and Underlying Determinants" }
       ])
       // setCategoryDropdownOpt(categoryData);
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
@@ -192,25 +209,23 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setSelBurden("1");
           let selCat = 1;
           if(val === 1 || val === 6){
-            setCategoryDropdownOpt([{value:1,title:"Manifestation"},{ value: 4, title: "Underlying Determinants" }])
+            setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Immediate and Underlying Determinants" } ])
           }else if(val === 2){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
-              { value: 4, title: "Underlying Determinants" }                 
+              { value: 3, title: "Immediate and Underlying Determinants" }                 
             ]);
           }else if(val === 3 || val ===4){
             setCategoryDropdownOpt([
               { value: 2, title: "Interventions" },
-              { value: 3, title: "Immediate Determinants" },
-              { value: 4, title: "Underlying Determinants" }           
+              { value: 3, title: "Immediate and Underlying Determinants" }   
             ]);
             selCat = 2;
           }else if(val ===5){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
               { value: 2, title: "Interventions" },
-              { value: 3, title: "Immediate Determinants" },
-              { value: 4, title: "Underlying Determinants" }
+              { value: 3, title: "Immediate and Underlying Determinants" }
             ])
           }
           // else if(val ===7){

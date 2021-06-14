@@ -227,7 +227,7 @@ export const Map = ({
     if(width <= 480){
       title = title.style("font-size", (width * 0.0025) + "em")
     }
-    const projection = geoMercator().fitSize([width/2, height], geometry);
+    const projection = geoMercator().fitSize([width/1.8, height], geometry);
 
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
@@ -455,7 +455,7 @@ export const Map = ({
   
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(250,50)`);
+      .attr('transform',`translate(100,50)`);
 
    
 
@@ -536,7 +536,7 @@ export const Map = ({
       })
       // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(250,50)`);
+      .attr('transform',`translate(100,50)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -593,7 +593,7 @@ export const Map = ({
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
           .style('fill-opacity',1)
-          .attr('transform',`translate(250,50)`)
+          .attr('transform',`translate(100,50)`)
       
         
    

@@ -212,10 +212,13 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         id:'yAxis1',
                         type:"category",
                         ticks:{
+                            padding:5,
                             fontSize: 11,
                             fontColor: "black",
                         },
                         gridLines: {
+                        //   display: false,
+                          drawTicks:false,
                           drawOnChartArea: false,
                           color:"black",
                           zeroLineColor:'transparent'

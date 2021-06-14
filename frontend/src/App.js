@@ -20,6 +20,9 @@ const App = ()=> {
         <Route exact path="/:lifecycle/:category">
             <Dropdown/>
         </Route>
+        <Route exact path="/:lifecycle/:category/:indicator">
+            <Dropdown/>
+        </Route>
     </Router>         
     </>);
   }

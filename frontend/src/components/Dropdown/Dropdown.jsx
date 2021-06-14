@@ -33,18 +33,23 @@ export const Dropdown = ({}) =>{
     category = 1;
   const [selCategory, setSelCategory] = useState(parseInt(category));
   
+  let { indicator } = useParams();
+  if(typeof indicator === 'undefined'){
+    indicator = null;
+  }
+  const [selIndicator, setSelIndicator] = useState(parseInt(indicator));
  
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
   const iniSelIndicator = '12';
-  const [selIndicator, setSelIndicator] = useState();
   // const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
   // const iniSelSubgroup = '6';  //All
   // const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
+  const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
+  console.log(indicatorDropdownOpt);
   const [selTimeperiod, setSelTimeperiod] = useState();
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
-  const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
 
 const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);

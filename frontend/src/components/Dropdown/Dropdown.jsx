@@ -23,19 +23,19 @@ const {Search} = Input;
 
 export const Dropdown = ({}) =>{
 
-  let { lifecycle } = useParams();
-  if(typeof lifecycle === 'undefined')
-    lifecycle = EARLY_CHILDHOOD;
-  const [selLifeycle, setSelLifecycle] = useState(parseInt(lifecycle));
+  let { queryLifecycle } = useParams();
+  if(typeof queryLifecycle === 'undefined')
+    queryLifecycle = EARLY_CHILDHOOD;
+  const [selLifeycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
   
-  let { category } = useParams();
-  if(typeof category === 'undefined')
-    category = 1;
-  const [selCategory, setSelCategory] = useState(parseInt(category));
+  let { queryCategory } = useParams();
+  if(typeof queryCategory === 'undefined')
+    queryCategory = 1;
+  const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
   
-  let { indicator } = useParams();
-  if(typeof indicator === 'undefined'){
-    indicator = null;
+  let { queryIndicator } = useParams();
+  if(typeof queryIndicator === 'undefined'){
+    queryIndicator = null;
   }
   const [selIndicator, setSelIndicator] = useState(null);
  
@@ -46,7 +46,6 @@ export const Dropdown = ({}) =>{
   // const iniSelSubgroup = '6';  //All
   // const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
-  console.log(indicatorDropdownOpt);
   const [selTimeperiod, setSelTimeperiod] = useState();
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
@@ -123,7 +122,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       // setCategoryDropdownOpt(categoryData);
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
-      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,indicator)
+      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
       // console.log("selIndicator", selIndicator);
       // let timeVal = selTimeperiod;
       // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);

@@ -107,21 +107,29 @@ export const createHierarchy = (options) =>{
   }
 
   export async function populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt,
-    setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,indicator)
+    setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
   {
     // const url_6 = await fetch(`http://13.234.11.176/api/indicator/${tab}`);
     const solr_url_6 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=value:indicator_id%2Ctitle:indicator_name%2Cindi_sense&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`);
     // const body_6 = await url_6.json();
     const solr_body_6 = await solr_url_6.json();
     setIndicatorDropdownOpt(solr_body_6.response.docs);
+    let indiVal;
+    if(queryIndicator){
+      let passedIndicator = solr_body_6.response.docs.filter(i => i.value === parseInt(queryIndicator));
+      setSelIndicator(passedIndicator[0].value);
+      setIndicatorSense(passedIndicator[0].indi_sense);
+      setGraphTitle(passedIndicator[0].title)
+      indiVal = passedIndicator[0].value;
 
-    if(indicator)
-      setSelIndicator(parseInt(indicator));
-    else
+    }
+    else{
       setSelIndicator(solr_body_6.response.docs[0].value);
-    setIndicatorSense(solr_body_6.response.docs[0].indi_sense);
-    setGraphTitle(solr_body_6.response.docs[0].title);
-    let indiVal = solr_body_6.response.docs[0].value;
+      setIndicatorSense(solr_body_6.response.docs[0].indi_sense);
+      setGraphTitle(solr_body_6.response.docs[0].title);
+      indiVal = solr_body_6.response.docs[0].value;
+    }
+
 
     // const url_7 = await fetch(`http://13.234.11.176/api/subgroup/${indiVal}`);
     // const body_7 = await url_7.json();
@@ -150,7 +158,6 @@ export const createHierarchy = (options) =>{
     //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     // }
     const solr_body_2 = await solr_url.json();
-    console.log("time", solr_body_2);
     setTimeperiodDropdownOpt(solr_body_2.response.docs);
     let timeVal ="";
     if(typeof solr_body_2.response.docs[0] !== 'undefined'){
@@ -162,7 +169,6 @@ export const createHierarchy = (options) =>{
       setSelTimeperiod("");
       setGraphTimeperiod("");
     }
-    console.log("timeval", timeVal);
     if(timeVal != "")
     await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
   }

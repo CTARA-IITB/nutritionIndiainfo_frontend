@@ -14,13 +14,13 @@ const App = ()=> {
         <Route exact path="/">
             <Dropdown/>
         </Route>
-        <Route exact path="/:lifecycle">
+        <Route exact path="/:queryLifecycle">
             <Dropdown/>
         </Route>
-        <Route exact path="/:lifecycle/:category">
+        <Route exact path="/:queryLifecycle/:queryCategory">
             <Dropdown/>
         </Route>
-        <Route exact path="/:lifecycle/:category/:indicator">
+        <Route exact path="/:queryLifecycle/:queryCategory/:queryIndicator">
             <Dropdown/>
         </Route>
     </Router>         

@@ -301,10 +301,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="BarArea" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <div className="barAreaTitle">
-                    <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{title}</small>
-                </div>
-                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options} calculatedHeight={calculatedHeight}/>
+                <BarAreaComponent ref={componentRef} id="BarArea" data={data} options={options} calculatedHeight={calculatedHeight} title={title}/>
             </FullScreen>    
         </div>
     );

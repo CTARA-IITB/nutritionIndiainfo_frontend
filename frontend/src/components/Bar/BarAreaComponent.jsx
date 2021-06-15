@@ -10,6 +10,9 @@ class BarAreaComponent extends React.PureComponent {
     {
       return (
           <div>
+              <div className="barAreaTitle" id="barT">
+                  <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{this.props.title}</small>
+              </div>
               <HorizontalBar ref={this.componentRef} height={this.props.calculatedHeight} id="BarArea"  data={this.props.data} options={this.props.options}/>
           </div>
       );

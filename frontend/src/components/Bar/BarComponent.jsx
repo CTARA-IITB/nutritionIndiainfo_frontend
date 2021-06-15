@@ -17,6 +17,9 @@ class BarComponent extends React.PureComponent {
     else{
       return (
         <div>
+           <div className="barTitle" id="barT" >
+              <small style={{textAlign:'end',fontWeight:"bold",fontSize:"13px"}}>{this.props.title}</small>
+            </div>
           <HorizontalBar ref={this.componentRef} id="Bar" data={this.props.data} options={this.props.options}/>
         </div>
       );

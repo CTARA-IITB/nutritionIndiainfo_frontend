@@ -172,6 +172,11 @@ button.ant-switch {
   background-color: #AF5907 !important;
   border-color: #AF5907 !important;
 }
+
+.req_button_light{
+  background-color: #AF590780 !important;
+  border-color: #AF590780 !important;
+}
 .map_req_legend {
   /* background-color:red; */
   height: 40%;
@@ -253,6 +258,10 @@ button.ant-switch {
     margin: 5px;
     background-color: #AF5907 !important;
     border-color: #AF5907 !important;
+  }
+  .req_button_light{
+    background-color: #AF590780 !important;
+    border-color: #AF590780 !important;
   }
   
   .map_req {

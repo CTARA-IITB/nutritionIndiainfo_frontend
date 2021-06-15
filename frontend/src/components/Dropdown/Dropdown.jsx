@@ -37,7 +37,7 @@ export const Dropdown = ({}) =>{
   if(typeof indicator === 'undefined'){
     indicator = null;
   }
-  const [selIndicator, setSelIndicator] = useState(parseInt(indicator));
+  const [selIndicator, setSelIndicator] = useState(null);
  
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
@@ -123,7 +123,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       // setCategoryDropdownOpt(categoryData);
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
       //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
-      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
+      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,indicator)
       // console.log("selIndicator", selIndicator);
       // let timeVal = selTimeperiod;
       // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);

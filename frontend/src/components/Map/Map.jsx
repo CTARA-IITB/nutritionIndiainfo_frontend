@@ -95,6 +95,7 @@ export const Map = ({
   //merge geometry and data
 
   function addProperties(geojson, data) {
+    console.log('DDAATTAA',data)
     let newArr = _.map(data, function (item) {
       return {
         areacode: item.area_code,
@@ -260,61 +261,67 @@ export const Map = ({
     let medium;
     let high;
     let highest;
+    let sampleCategoricalData;
+
     let arr20to80 = [31,11,28,6,7,37,51,42,84]
     if (selIndicator == 19 || selIndicator == 21) {
       low = 5.0;
       medium = 10.0;
       high = 15.0;
       highest = 20.0
+    sampleCategoricalData = ["<5%", "5-10%", "10-15%", "15-20%", ">20%", "No Data"]
+
     } else if (selIndicator == 17 || selIndicator == 18 || selIndicator == 12 || selIndicator == 13) {
        low = 10.0;
        medium = 20.0;
        high = 30.0;
        highest = 40.0;
+    sampleCategoricalData = ["<10%", "10-20%", "20-30%", "30-40%", ">40%", "No Data"]
+
     } else if(selIndicator == 71 || selIndicator == 26 )
     {
       low = 5.0;
       medium = 20.0;
       high = 40.0;
       highest = 60.0;
+    sampleCategoricalData = ["<5%", "5-20%", "20-40%", "40-60%", ">60%", "No Data"]
+
     } else if(selIndicator == 20 || selIndicator == 108)
     {
       low = 1.0;
       medium = 2.0;
       high = 5.0;
       highest = 10.0;
+    sampleCategoricalData = ["<1%", "1-2%", "2-5%", "5-10%", ">10%", "No Data"]
+
      }else if(selIndicator == 107)
     {
       low = 0.1;
       medium = 0.5;
       high = 1;
       highest = 2.5;
+    sampleCategoricalData = ["<0.1%", "0.1-0.5%", "0.5-1%", "1-2.5%", ">2.5%", "No Data"]
+
     }else if(selIndicator == 89)
     {
       low = 5.0;
       medium = 10.0;
       high = 20.0;
       highest = 30.0;
+    sampleCategoricalData = ["<5%", "5-10%", "10-20%", "20-30%", ">30%", "No Data"]
+
     }else if(arr20to80.includes(selIndicator))
     {
       low = 20.0;
       medium = 40.0;
       high = 60.0;
       highest = 80.0;
+    sampleCategoricalData = ["<20%", "20-40%", "40-60%", "60-80%", ">80%", "No Data"]
+
     }
     
-    let colors = ["#A9A9B0"]
-
-    sampleCategoricalData = [ "Data not available"]
-    var colorScale = scaleOrdinal().domain(sampleCategoricalData)
-      .range(colors);
-
-    verticalLegend = d3.svg.legend().labelFormat("none").scale(colorScale);
-
-    d3.select("svg").append("g").attr("transform", "translate(50,140)").attr("class", "legend").call(verticalLegend);
-
-    
-    let colorScale;
+  
+    let colorScale,colorScale_new;
   
     let colorScale2;
     let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
@@ -324,10 +331,14 @@ export const Map = ({
     {
     colorScale2 = scaleThreshold().domain([low, medium, high, highest])
     .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"]); 
+   colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
+      .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50","#A9A9B0"]);
     }
     else{
       colorScale2 = scaleThreshold().domain([low, medium, high, highest])
     .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"]); 
+    colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
+      .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000","#A9A9B0"]);
     }
 
     let colorScale4 = scaleQuantize()
@@ -369,26 +380,12 @@ export const Map = ({
         colorScale = '#eda143'; 
 
   }
-
-    //For One Decimel Precision    
-    function decimelPrecision(d){
-      let oneDecimel;
-      if(toggleStateBurden === false){
-          return oneDecimel = d;
-      }
-      else{
-          oneDecimel = d.toFixed(1);  
-          return oneDecimel;
-      }
-      
-  }  
-
     const onMouseMove = (event, d) => {
       if (typeof c2Value(d) != 'undefined') {
         // tooltip.style("opacity", .9);
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(decimelPrecision(c2Value(d))))
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
           .style("left", event.clientX + "px")
           .style("top", event.clientY - 30 + "px");
       }
@@ -643,7 +640,7 @@ export const Map = ({
       myLegend = legendColor()
       .labelFormat(formatter)
      // .title('Legend')
-      .title(`Legend (in ${unitName})`)
+      .title(` ${unitName}`)
       .titleWidth(180)
       .scale(colorScale);
     } 
@@ -651,10 +648,10 @@ export const Map = ({
       myLegend = legendColor()
       .labelFormat(formatter)
       //.title('Legend')
-      .title(`Legend (in ${unitName})`)
+      .title(`${unitName}`)
       .titleWidth(180)
-      .labels(thresholdLabels)
-      .scale(colorScale);
+      // .labels(thresholdLabels)
+      .scale(colorScale_new);
     }
 
       legend.select(".legendQuant")
@@ -690,10 +687,12 @@ export const Map = ({
     if(map){
       if(state === true){
         map[0].style.height = "100vh";
+        // map[0].style.transform =translate('100','0')
       }
       else if(state === false){
         if(map[0] != undefined){}
         map[0].style.height = "50vh";
+
       }
     }
   }

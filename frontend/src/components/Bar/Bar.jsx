@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
+import datalabels from 'chartjs-plugin-datalabels';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { commaSeparated } from '../../utils';
 
@@ -182,7 +183,22 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         }
 
         options={
-            showDatapoints:true,
+            plugins: {
+                datalabels: {
+                  color: 'black',
+                  anchor: 'end',
+                  align: 'end',
+                  formatter: function(value) {
+                    console.log(value, "value")
+                    if(value == "undefined" || isNaN(value)){
+                        return value;
+                    }
+                    else{
+                        return commaSeparated(decimelPrecision(value));
+                    }
+                  }
+                }
+            },
             tooltips:{
                 displayColors:false,
                 xAlign:"right",

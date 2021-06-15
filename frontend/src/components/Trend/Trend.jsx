@@ -210,13 +210,17 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       	.attr("class","axis")
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
         .style('font-size',12)
+        .attr("dy",()=>{
+        //  if(width <= 780)
+           return "-.5em"
+        })
         .attr("dx", () => {
-          if(width <= 780)
-           return "1.9em"
+          // if(width <= 780)
+           return "-2.5em"
         })
         .attr("transform", () => {
-          if(width <= 780)
-          return "rotate(45)"
+          // if(width <= 780)
+          return "rotate(-90)"
         });
         
         

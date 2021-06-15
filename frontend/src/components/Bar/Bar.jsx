@@ -189,7 +189,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                   anchor: 'end',
                   align: 'end',
                   formatter: function(value) {
-                    console.log(value, "value")
                     if(value == "undefined" || isNaN(value)){
                         return value;
                     }

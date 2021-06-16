@@ -1,93 +1,9 @@
-.ant-switch-checked {
-  background-color: #181d18;
-}
-
-/* .con{
-    margin-top: 20px;
-  }
-  */
-.col {
-  font-size: 12px;
-  color: dimgrey;
-}
-
 .dropdown-title {
   font-size: calc(50% + 0.5vw + 0.5vh);
   font-weight: bold;
   color: black;
 }
 
-.row {
-  margin-left: 10px;
-}
-
-.arrow {
-  /* border: solid black; */
-  border-width: 0 7px 7px 0;
-  display: inline-block;
-  padding: 3px;
-}
-
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
-
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-}
-.containerf {
-  background-color: red;
-  width: 100%;
-  margin: 0 auto;
-}
-
-/*  */
-/* .chart-container-line {
-    width: 60%;
-    height: 300px;
-    margin-top: 10px;
-    padding-top: 30px;
-  } */
-/* 
-.layout__body__right__r1 {
-  width: 100%;
-  height: 35%;
-  display: flex;
-  gap: 10px;
-}
-
-.layout__body__right__r1__map {
-  background-color: #ebf1fa;
-  width: 50%;
-  height: 100%;
-}
-
-.layout__body__right__r1__trend {
-  background-color: #ebf1fa;
-  width: 50%;
-  height: 100%;
-}
-
-.layout__body__right__r2 {
-  width: 100%;
-  height: 35%;
-  display: flex;
-  gap: 10px;
-}
-
-.layout__body__right__r2__bar1 {
-  width: 50%;
-  height: 100%;
-  background-color: #ebf1fa;
-}
-
-.layout__body__right__r2__bar2 {
-  width: 50%;
-  height: 100%;
-  background-color: #ebf1fa;
-} */
 .button_fullscreen_trend {
   background-color: white;
   border: white;
@@ -121,8 +37,6 @@
   /* background-color:yellow; */
   width: 100%;
   height: 50%;
-  /* position: relative; */
-  /* display: flex; */
 }
 
 .layout_left_bar1 {
@@ -130,21 +44,14 @@
   width: 100%;
   min-height: 50%;
   height: 100%;
-  /* position: relative; */
 
   text-align: center;
   
 }
-/* canvas#BarArea{
-  position: absolute;
-  right: 0;
-  top: 0;
-} */
 
 #msg{
   text-align: center;
   font-weight: bold;
-  color:red;
   width: auto;
   height: auto;
   margin: 80px auto;
@@ -164,10 +71,7 @@
   width: 100%;
   height: 50%;
 }
-.btn_toggle {
-  height: 10%;
-  width: 100%;
-}
+
 
 @media (max-width: 790px) {
   .layout {
@@ -204,8 +108,7 @@
   .layout_left_bar1 {
    margin-top: -100px;
   }
-  canvas#BarArea{
-  }
+  
 
   .layout_right_map{
     /* margin: 100px; */
@@ -216,13 +119,4 @@
 
   }
     
-  .layout_right_bar2 {
-    
-  }
-  .layout_right {
-  }
-  /* .butcs {
-    margin-left: 10px; 
-    background-color: blue;
-  } */
 }

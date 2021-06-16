@@ -86,7 +86,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const screen2 = useFullScreenHandle();
   const screen3 = useFullScreenHandle();
   const screen4 = useFullScreenHandle();
-
+  const area = document.getElementsByClassName("ant-select-selection-item");
   const map = document.getElementsByClassName("map");
   const trend = document.getElementsByClassName("trend");
   const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
@@ -151,6 +151,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         setAreaDropdownOpt(country);
         setAreaList(options.response.docs);  
         })
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 
@@ -200,7 +201,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           }
         };
         generateList(areaDropdownOpt)
-
+        // for(let i = 0;i<area.length ; i++){
+        //   area[i].scrollIntoView();}
         const lifecycleChange = async(e) =>{
           let val = e;
           setIsSelected(false);
@@ -629,16 +631,21 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 showSearch
                 // filterTreeNode={filterTree}
                 className='dropdown'
-                virtual={false}
+                virtual={true}
+                scrollIntoView = {true}
                 style={{ width: '100%' }}
                 value={selArea}
                 onFocus={()=>setOpenDropdown(true)}
                 onBlur={() => setOpenDropdown(false)}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+               
+                showSearch	= {true}
                 treeData={(filterDropdownValue.length !==0)?filterDropdownValue:areaDropdownOpt}
-                treeDefaultExpandAll={false}
+                treeDefaultExpandAll={true}
                 ref = {treeRef}
                 open={openDropdown}
+            filterTreeNode
+
                 treeNodeFilterProp ='title'
                 onChange={areaChange}
               />

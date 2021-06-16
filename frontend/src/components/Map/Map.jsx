@@ -649,7 +649,7 @@ export const Map = ({
       myLegend = legendColor()
       .labelFormat(formatter)
      // .title('Legend')
-      .title(` ${unitName}`)
+      .title(`${unitName}`)
       .titleWidth(180)
       .scale(colorScale);
     } 

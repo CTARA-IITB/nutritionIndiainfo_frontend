@@ -59,7 +59,6 @@ export const useNewBoundaries = () => {
     let [data, setData] = useState(null);
     useEffect(() => {
     json(jsonNewIndianstate).then(stateTopology => {
-      console.log(stateTopology)
       const state = stateTopology.objects["india_state_nfhs5"]
       json(jsonNewIndiaDistrict).then(districtTopology =>{
         const dist = districtTopology.objects.india_district_new_v3;

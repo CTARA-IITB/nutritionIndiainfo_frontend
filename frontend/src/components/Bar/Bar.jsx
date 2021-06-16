@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import BarComponent from './BarComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
-import datalabels from 'chartjs-plugin-datalabels';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { commaSeparated } from '../../utils';
 

@@ -207,22 +207,6 @@ const BarGraph = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAre
           }           
           if(level==="3")
           {
-            console.log(selStateData[0].area_name,"state,distrrr")
-            // for(let j=0;j<selIndiaData.length;j++){
-            //   if(+selArea===selIndiaData[j].area.area_id)
-            //   { 
-            //     stateDataValue=selIndiaData[j].data_value
-            //     stateAreaName=selIndiaData[j].area.area_name
-            //     barLabel.push(stateAreaName)
-            //     barData.push(stateDataValue)
-            //     color='rbg(114, 54, 117)'
-            //   }           
-            // }
-            // selStateData.map(i=>{
-            //   barLabel.push(i.area.area_name)
-            //   barData.push(+i.data_value)
- 
-            // })
           }              
           
           let barGUnit = graphUnit;

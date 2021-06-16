@@ -81,14 +81,12 @@ export const createHierarchy = (options) =>{
       }
         // const body_4 = await url_4.json();
         const solr_body_4 = await solr_url_4.json();
-        // console.log(body_4,solr_body_4)
         setSelStateData(solr_body_4.response.docs);
     }
     // const switchurl= await fetch(`http://localhost:8000/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
     const solr_switchurl= await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=indicator_id%2Cindicator_name%2Ctimeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Carea_id%2Carea_code%2Carea_name%2Carea_level&fq=area_level%3A3&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&q=*%3A*&rows=10000&omitHeader=true`);
     // const body_5 = await switchurl.json();
     const solr_body_5 = await solr_switchurl.json();
-    // console.log(solr_body_5.response.docs,body_5);
     if(solr_body_5.response.docs.length)
     {
       setSwitchDisplay(true);
@@ -131,32 +129,16 @@ export const createHierarchy = (options) =>{
     }
 
 
-    // const url_7 = await fetch(`http://13.234.11.176/api/subgroup/${indiVal}`);
-    // const body_7 = await url_7.json();
-    // setSubgroupDropdownOpt(body_7);
-    // setSelSubgroup(body_7[0].value);
-    // setGraphSubgroup(body_7[0].title);
-   
+    
     // const url_8 = await fetch(`http://13.234.11.176/api/getUnit/${indiVal}/6`);
     const solr_url_8 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
-    // const body_8 = await url_8.json();
     const solr_body_8 = await solr_url_8.json();
-    // console.log(body_8,solr_body_8.response.docs);
     setUnit(solr_body_8.response.docs[0].unit_id);
     setGraphUnit(solr_body_8.response.docs[0].unit_name);
 
    // const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
-        // const body_2 = await url_2.json();
     let solr_url;
-    // if(isLevelThree){
-      // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-
-    // }
-    // else{
-    //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-    //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-    // }
     const solr_body_2 = await solr_url.json();
     setTimeperiodDropdownOpt(solr_body_2.response.docs);
     let timeVal ="";

@@ -13,7 +13,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let table=[];
     let options =[];
     let barUnit = graphUnit;
-    let title;
+    let title, rotate;
     let colorScale ='#eda143';
     let lightColor = '#F7D9B3';
     let groupedData = [];
@@ -53,6 +53,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
     if(toggleStateBurden === false){
         barUnit = 'Number';
+        rotate = 90;
     }
     var j=0;
     groupedLabel[j]="Overall";
@@ -182,7 +183,23 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         }
 
         options={
-            showDatapoints:true,
+            plugins: {
+                datalabels: {
+                  color: 'black',
+                  anchor: 'end',
+                  align: 'end',
+                  clip: 'false',
+                  formatter: function(value) {
+                    console.log(value, "value")
+                    if(value == "undefined" || isNaN(value)){
+                        return value;
+                    }
+                    else{
+                        return commaSeparated(decimelPrecision(value));
+                    }
+                  }
+                }
+            },
             tooltips:{
                 displayColors:false,
                 xAlign:"right",
@@ -228,7 +245,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 ],
                 xAxes: [{
                     ticks: {
-                        // fontSize: 8,
+                        autoSkip: false,
+                        minRotation: rotate,
                         fontColor:"black",
                         beginAtZero: true,
                         callback: function(value) {

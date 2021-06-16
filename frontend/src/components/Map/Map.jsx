@@ -269,14 +269,14 @@ export const Map = ({
       medium = 10.0;
       high = 15.0;
       highest = 20.0
-      sampleCategoricalData = ["<5%", "5-10%", "10-15%", "15-20%", ">20%", "No Data"]
+      sampleCategoricalData = ["<5", "5-10", "10-15", "15-20", ">20", "No Data"]
 
     } else if (selIndicator == 17 || selIndicator == 18 || selIndicator == 12 || selIndicator == 13) {
        low = 10.0;
        medium = 20.0;
        high = 30.0;
        highest = 40.0;
-      sampleCategoricalData = ["<10%", "10-20%", "20-30%", "30-40%", ">40%", "No Data"]
+      sampleCategoricalData = ["<10", "10-20", "20-30", "30-40", ">40", "No Data"]
 
     } else if(selIndicator == 71 || selIndicator == 26 )
     {
@@ -284,7 +284,7 @@ export const Map = ({
       medium = 20.0;
       high = 40.0;
       highest = 60.0;
-      sampleCategoricalData = ["<5%", "5-20%", "20-40%", "40-60%", ">60%", "No Data"]
+      sampleCategoricalData = ["<5", "5-20", "20-40", "40-60", ">60", "No Data"]
 
     } else if(selIndicator == 20 || selIndicator == 108)
     {
@@ -292,7 +292,7 @@ export const Map = ({
       medium = 2.0;
       high = 5.0;
       highest = 10.0;
-      sampleCategoricalData = ["<1%", "1-2%", "2-5%", "5-10%", ">10%", "No Data"]
+      sampleCategoricalData = ["<1", "1-2", "2-5", "5-10", ">10", "No Data"]
 
      }else if(selIndicator == 107)
     {
@@ -300,7 +300,7 @@ export const Map = ({
       medium = 0.5;
       high = 1;
       highest = 2.5;
-      sampleCategoricalData = ["<0.1%", "0.1-0.5%", "0.5-1%", "1-2.5%", ">2.5%", "No Data"]
+      sampleCategoricalData = ["<0.1", "0.1-0.5", "0.5-1", "1-2.5", ">2.5", "No Data"]
 
     }else if(selIndicator == 89)
     {
@@ -308,7 +308,7 @@ export const Map = ({
       medium = 10.0;
       high = 20.0;
       highest = 30.0;
-      sampleCategoricalData = ["<5%", "5-10%", "10-20%", "20-30%", ">30%", "No Data"]
+      sampleCategoricalData = ["<5", "5-10", "10-20", "20-30", ">30", "No Data"]
 
     }else if(arr20to80.includes(selIndicator))
     {
@@ -316,7 +316,7 @@ export const Map = ({
       medium = 40.0;
       high = 60.0;
       highest = 80.0;
-      sampleCategoricalData = ["<20%", "20-40%", "40-60%", "60-80%", ">80%", "No Data"]
+      sampleCategoricalData = ["<20", "20-40", "40-60", "60-80", ">80", "No Data"]
 
     }
     

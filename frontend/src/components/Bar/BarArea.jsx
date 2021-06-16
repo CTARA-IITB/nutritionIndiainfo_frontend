@@ -187,11 +187,15 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         plugins: {
             datalabels: {
               color: 'black',
+              
               anchor: 'end',
               align: 'end',
               formatter: function(value) {
                 return commaSeparated(decimelPrecision(value));
-              }
+              },
+              font: {
+                size: 11,
+              },
             }
         },
         tooltips:{
@@ -250,8 +254,9 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             xAxes: [{
                 stacked: true,
                 ticks: {
-                    autoSkip: false,
-                    minRotation: rotate,
+                    autoSkip:false,
+                    fontSize: 11,
+                    maxTicksLimit:4,
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {

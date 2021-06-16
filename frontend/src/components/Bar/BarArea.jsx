@@ -2,7 +2,7 @@ import React, { useRef,useEffect} from 'react';
 import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-// import { commaSeparated } from "../../utils.js"
+import datalabels from 'chartjs-plugin-datalabels';
 import Chart from 'chart.js';
 import { commaSeparated } from '../../utils';
 
@@ -19,7 +19,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let stateAreaName;
     let datasets = [];
     let table=[];
-    let title;
+    let title, rotate;
     let sortedBarLabel =[];
     let sortedBarData = [];
     let maxWidth;
@@ -103,8 +103,10 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     }           
     let barGUnit = graphUnit;
     
-    if(toggleStateBurden === false)
+    if(toggleStateBurden === false){
         barGUnit = 'Number';  
+        rotate = 90;
+    }
 
     //For One Decimel Precision    
     function decimelPrecision(d){
@@ -180,9 +182,18 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     };
 
     options = {
-        showDatapoints:true,
         responsive:true,
         maintainAspectRatio:false,
+        plugins: {
+            datalabels: {
+              color: 'black',
+              anchor: 'end',
+              align: 'end',
+              formatter: function(value) {
+                return commaSeparated(decimelPrecision(value));
+              }
+            }
+        },
         tooltips:{
             displayColors:false,
             xAlign:"right",
@@ -239,7 +250,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             xAxes: [{
                 stacked: true,
                 ticks: {
-                    // fontSize: 11,
+                    autoSkip: false,
+                    minRotation: rotate,
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {
@@ -260,35 +272,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         } 
     }
 
-    Chart.plugins.register({
-        // id: 'p1',
-        afterDraw: function(chartInstance) {
-          if (chartInstance.config.options.showDatapoints) {
-            var helpers = Chart.helpers;
-            var ctx = chartInstance.chart.ctx;
-            var fontColor = helpers.getValueOrDefault(chartInstance.config.options.showDatapoints.fontColor, chartInstance.config.options.defaultFontColor);
-      
-            // render the value of the chart above the bar
-            ctx.font = Chart.helpers.fontString(11, 'normal', 'Helvetica Neue');
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
-            ctx.fillStyle = "black";
-            ctx.fontWeight = 'none';
-            chartInstance.data.datasets.forEach(function (dataset) {
-                for (var i = 0; i < dataset.data.length; i++) {
-                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                    // var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                    var yPos =  model.y + 7;
-                    var xPos = model.x + 28;
-                    // console.log(dataValue, "DV");
-
-                    var dataValue = (dataset.data[i]);
-                    ctx.fillText(dataValue, xPos, yPos);
-                }
-            });
-          }
-        }
-    });
+    Chart.plugins.register(datalabels);
 
 
     // title of table

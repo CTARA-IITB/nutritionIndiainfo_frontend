@@ -542,7 +542,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
         
               <Col>
-            <span className="dropdown-title"> Select timeperiod</span>
+            <span className="dropdown-title"> Select Time Period</span>
 
                 <TreeSelect
                 showSearch

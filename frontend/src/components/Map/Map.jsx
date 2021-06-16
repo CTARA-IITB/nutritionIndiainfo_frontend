@@ -72,7 +72,6 @@ export const Map = ({
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
-    console.log("legend", i, genLength, generatedLabels,labelDelimiter);
     if (i === 0) {
       const values = generatedLabels[i].split(` ${labelDelimiter} `)
       return `Less than ${values[1]}`
@@ -326,7 +325,6 @@ export const Map = ({
     else{
       colorScale2 = scaleThreshold().domain([low, medium, high, highest])
     .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"]); 
-    console.log(sampleCategoricalData)
       if(typeof sampleCategoricalData != 'undefined'){
       colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
       .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000","#A9A9B0"]);

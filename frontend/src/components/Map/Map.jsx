@@ -595,13 +595,13 @@ export const Map = ({
     }
   }
   else{
-    // svg.selectAll('*').remove();
-    // const svg_2 = select(svgRef.current);
-    // svg_2.append("text").text("No data: please select another survey")
-    // .style("text-anchor", "middle")
-    // .style("font-weight","bold")
-    // .style("fill", "red")
-    // .attr('transform',`translate(${width/2}, ${height/2})`);
+    svg.selectAll('*').remove();
+    const svg_2 = select(svgRef.current);
+    svg_2.append("text").text("No data: please select another survey")
+    .style("text-anchor", "middle")
+    .style("font-weight","bold")
+    .style("fill", "red")
+    .attr('transform',`translate(${width/2}, ${height/2})`);
   }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit,geometry, dimensions, data, toggleStateBurden])

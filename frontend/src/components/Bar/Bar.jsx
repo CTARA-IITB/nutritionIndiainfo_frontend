@@ -182,21 +182,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         }
 
         options={
-            plugins: {
-                datalabels: {
-                  color: 'black',
-                  anchor: 'end',
-                  align: 'end',
-                  formatter: function(value) {
-                    if(value == "undefined" || isNaN(value)){
-                        return value;
-                    }
-                    else{
-                        return commaSeparated(decimelPrecision(value));
-                    }
-                  }
-                }
-            },
+            showDatapoints:true,
             tooltips:{
                 displayColors:false,
                 xAlign:"right",
@@ -263,17 +249,14 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
             }
         }
     }
-
+   
     title=graphTitle + ', '+ titleAreaName + ', '+ chartTitle + ' ' + graphTimeperiod.split(" ")[1]; 
  
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="Bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <div className="barTitle" id="barT" >
-                    <small style={{textAlign:'end',fontWeight:"bold",fontSize:"13px"}}>{title}</small>
-                </div>
-                <BarComponent ref={componentRef} id="Bar" data={data} options={options}/>
+                <BarComponent ref={componentRef} data={data} options={options} title={title}/>
             </FullScreen>    
         </div>
     );

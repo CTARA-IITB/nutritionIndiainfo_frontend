@@ -8,16 +8,19 @@ class BarComponent extends React.PureComponent {
   render() {
     if(this.props.message){
       return(
-        <div>
+        <div id="Bar">
           <div id="statMsg">No data: please select another survey</div>
-          <HorizontalBar ref={this.componentRef} id="Bar"    data={this.props.data} options={this.props.options}/>
+          <HorizontalBar ref={this.componentRef}  data={this.props.data} options={this.props.options}/>
         </div>
       );
     }
     else{
       return (
-        <div>
-          <HorizontalBar ref={this.componentRef} id="Bar" data={this.props.data} options={this.props.options}/>
+        <div id="Bar">
+           <div className="barTitle" id="barT" >
+              <small style={{textAlign:'end',fontWeight:"bold",fontSize:"13px"}}>{this.props.title}</small>
+            </div>
+          <HorizontalBar ref={this.componentRef}  data={this.props.data} options={this.props.options}/>
         </div>
       );
     }

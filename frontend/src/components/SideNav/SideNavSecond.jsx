@@ -1,7 +1,6 @@
-import React, {useState,useEffect} from "react";
+import React, {useState} from "react";
 import Dropdown from 'react-bootstrap/Dropdown'
 import Popup from "../Popup/Popup";
-import { saveAs } from 'file-saver'; 
 import GetAppIcon from '@material-ui/icons/GetApp';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import ShareIcon from '@material-ui/icons/Share';
@@ -12,11 +11,11 @@ import "./SideNav.css";
 import Share  from "../Share/Share";
 import { CSVLink } from "react-csv";
 import MenuIcon from '@material-ui/icons/Menu';
-import html2canvas from "html2canvas";
 import jsPDF from 'jspdf';
 import PrintIcon from '@material-ui/icons/Print';
 import { useReactToPrint } from "react-to-print";
-import Chart from 'chart.js';
+import * as htmlToImage from 'html-to-image';
+import download from 'downloadjs';
 
 const SideNavSecond = ({table,id,screen,title,componentRef}) => {
 
@@ -77,50 +76,41 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
     content: () => componentRef.current
   });
 
-  useEffect(()=>{
-    // set white background of downloaded image
-    var backgroundColor = 'white';
-    Chart.plugins.register({
-        beforeDraw: function(c) {
-            var ctx = c.chart.ctx;
-            ctx.fillStyle = backgroundColor;
-            ctx.fillRect(0, 0, c.chart.width, c.chart.height);
-        }
-    }); 
-  },[])
-
-  const savePng=()=>{
-    const canvasSave = document.getElementById(id);
-    canvasSave.toBlob(function (blob) {
-          saveAs(blob, imageNamePng)
-    }) 
-  } 
- 
   const saveJpeg=()=>{
-    const canvasSave = document.getElementById(id);
-    canvasSave.toBlob(function (blob) {
-          saveAs(blob, imageNameJpeg)
-    })
+    htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
+    .then(function (dataUrl) {
+      download(dataUrl, imageNameJpeg);
+    });
   } 
 
-  const saveSvg=()=>{
-    const canvasSave = document.getElementById(id);
-    canvasSave.toBlob(function (blob) {
-          saveAs(blob, imageNameSvg)
-    })
-  } 
- 
-  const savePdf=()=>{
-    const input = document.getElementById(id);
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, 'JPEG', 0, 0);
-        pdf.save(imageNamePdf);
+  const savePng = ()=>{
+    htmlToImage.toPng(document.getElementById(id),{backgroundColor:'white'})
+    .then(function (dataUrl) {
+      download(dataUrl, imageNamePng);
+    });
+  }
+
+  const saveSvg =()=>{
+    htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
+      .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = imageNameSvg;
+        link.href = dataUrl;
+        link.click();
       });
-  } 
+  }
 
+  const savePdf = ()=>{
+    htmlToImage.toPng(document.getElementById(id), { quality: 0.95 })
+      .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = imageNameJpeg;
+        const pdf = new jsPDF();          
+        pdf.addImage(dataUrl, 'PNG', 0, 0);
+        pdf.save(imageNamePdf); 
+      });
+  }
+ 
     return(
       <div>
         {isOpenTable && <Popup

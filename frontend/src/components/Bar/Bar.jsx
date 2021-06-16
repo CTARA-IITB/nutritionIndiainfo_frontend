@@ -201,6 +201,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                   font: {
                     size: 11,
                   },
+                  }
                 }
             },
             tooltips:{

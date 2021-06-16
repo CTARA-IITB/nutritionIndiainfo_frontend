@@ -187,7 +187,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         plugins: {
             datalabels: {
               color: 'black',
-              
               anchor: 'end',
               align: 'end',
               formatter: function(value) {
@@ -196,6 +195,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
               font: {
                 size: 11,
               },
+              }
             }
         },
         tooltips:{

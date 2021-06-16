@@ -4,9 +4,7 @@ import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
 import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns } from '../../utils';
 import { useParams } from "react-router-dom";
-import Cards  from "../../components/Cards/Cards";
 import {Trend}  from "../../components/Trend/Trend";
-//import {BarGraph,BarGraphArea}  from "../../components/BarGraph/BarGraph";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
@@ -23,30 +21,26 @@ const {Search} = Input;
 
 export const Dropdown = ({}) =>{
 
-  let { lifecycle } = useParams();
-  if(typeof lifecycle === 'undefined')
-    lifecycle = EARLY_CHILDHOOD;
-  const [selLifeycle, setSelLifecycle] = useState(parseInt(lifecycle));
+  let { queryLifecycle } = useParams();
+  if(typeof queryLifecycle === 'undefined')
+    queryLifecycle = EARLY_CHILDHOOD;
+  const [selLifeycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
   
-  let { category } = useParams();
-  if(typeof category === 'undefined')
-    category = 1;
-  const [selCategory, setSelCategory] = useState(parseInt(category));
+  let { queryCategory } = useParams();
+  if(typeof queryCategory === 'undefined')
+    queryCategory = 1;
+  const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
   
-  let { indicator } = useParams();
-  if(typeof indicator === 'undefined'){
-    indicator = null;
+  let { queryIndicator } = useParams();
+  if(typeof queryIndicator === 'undefined'){
+    queryIndicator = null;
   }
-  const [selIndicator, setSelIndicator] = useState(parseInt(indicator));
+  const [selIndicator, setSelIndicator] = useState(null);
  
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
   const iniSelIndicator = '12';
-  // const [selIndicator, setSelIndicator] = useState(iniSelIndicator);
-  // const iniSelSubgroup = '6';  //All
-  // const [selSubgroup, setSelSubgroup] = useState(iniSelSubgroup);
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
-  console.log(indicatorDropdownOpt);
   const [selTimeperiod, setSelTimeperiod] = useState();
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
@@ -54,7 +48,6 @@ export const Dropdown = ({}) =>{
 
 const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [categorydDropdownOpt, setCategoryDropdownOpt] = useState([]);
-  // const [subgroupDropdownOpt, setSubgroupDropdownOpt] = useState([]);
   const [stateID,setStateID] = useState(null);
   const [indicatorSense, setIndicatorSense] = useState('Negative');
   const [isSelected , setIsSelected] = useState(false);
@@ -87,7 +80,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const screen2 = useFullScreenHandle();
   const screen3 = useFullScreenHandle();
   const screen4 = useFullScreenHandle();
-
+  const area = document.getElementsByClassName("ant-select-selection-item");
   const map = document.getElementsByClassName("map");
   const trend = document.getElementsByClassName("trend");
   const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
@@ -114,28 +107,12 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       setToggleStateBurden(true);
       let subVal = '6';
       setLifecycleDropdownOpt(lifecycleData);
-      // setCategoryDropdownOpt([{value:1,title:"Manifestation"}])
       setCategoryDropdownOpt([
         { value: 1, title: "Manifestation" },
         { value: 2, title: "Interventions" },
         { value: 3, title: "Immediate and Underlying Determinants" }
       ])
-      // setCategoryDropdownOpt(categoryData);
-      //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSubgroupDropdownOpt, setSelIndicator, setSelSubgroup, setUnit, setGraphTitle, setGraphSubgroup, setGraphUnit)
-      //await populateDropdowns(tab, indiVal, subVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
-      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
-      // console.log("selIndicator", selIndicator);
-      // let timeVal = selTimeperiod;
-      // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
-      // // const body_2 = await url_2.json();
-      // const solr_body_2 = await solr_url.json();
-      // // console.log(body_2);
-      // setTimeperiodDropdownOpt(solr_body_2.response.docs);
-      // setSelTimeperiod(solr_body_2.response.docs[0].value);
-      // timeVal = solr_body_2.response.docs[0].value;
-      // setGraphTimeperiod(solr_body_2.response.docs[0].title);
-      // await setVisulaizationData(selIndicator, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
-      //await setCardData(tab, selArea, setIndicatorDetail)
+      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
       setIsSelected(true);
     }
     populateTabData();
@@ -152,6 +129,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         setAreaDropdownOpt(country);
         setAreaList(options.response.docs);  
         })
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 
@@ -201,7 +179,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           }
         };
         generateList(areaDropdownOpt)
-
         const lifecycleChange = async(e) =>{
           let val = e;
           setIsSelected(false);
@@ -228,27 +205,9 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
               { value: 3, title: "Immediate and Underlying Determinants" }
             ])
           }
-          // else if(val ===7){
-          //   setCategoryDropdownOpt([
-          //     { value: 4, title: "Underlying Determinants" }            
-          //   ])
-          //   selCat = 4;
-          // }
           setSelCategory(selCat);
           setToggleStateBurden(true);
           await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
-          //await populateDropdowns(val, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
-          // let timeVal = selTimeperiod;
-          // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
-          // // const body_2 = await url_2.json();
-          // const solr_body_2 = await solr_url.json();
-          // // console.log(body_2);
-          // setTimeperiodDropdownOpt(solr_body_2.response.docs);
-          // setSelTimeperiod(solr_body_2.response.docs[0].value);
-          // timeVal = solr_body_2.response.docs[0].value;
-          // setGraphTimeperiod(solr_body_2.response.docs[0].title);
-          // await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
-          // //await setCardData(tab, selArea, setIndicatorDetail)
           setIsSelected(true);
 
         }
@@ -272,18 +231,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setSelBurden("1");
           setToggleStateBurden(true);
           await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
-          //await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit)
-          // let timeVal = selTimeperiod;
-          // const solr_url = await fetch(`http://localhost:8983/solr/nutrition/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
-          // // const body_2 = await url_2.json();
-          // const solr_body_2 = await solr_url.json();
-          // // console.log(body_2);
-          // setTimeperiodDropdownOpt(solr_body_2.response.docs);
-          // setSelTimeperiod(solr_body_2.response.docs[0].value);
-          // timeVal = solr_body_2.response.docs[0].value;
-          // setGraphTimeperiod(solr_body_2.response.docs[0].title);
-          // await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
-          // //await setCardData(tab, selArea, setIndicatorDetail)
           setIsSelected(true);
 
         }
@@ -302,29 +249,10 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTitle(indiName);
           setIndicatorSense(indiSense);
-          // const url_1 = await fetch(`http://localhost:8000/api/subgroup/${val}`);
-          // const body = await url_1.json()
-          // setSubgroupDropdownOpt(body);
-          // setSelSubgroup(body[0].value);
-          // setGraphSubgroup(body[0].title);
           let url;
           let solr_url;
-            // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            // if(isLevelThree){
-              // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              //solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
               solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
-
-            // }
-            // else{
-            //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-            //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${val}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-            // }
-
-
-
-            // const body_1 = await url.json()
             const solr_body_1 = await solr_url.json()
 
               setTimeperiodDropdownOpt(solr_body_1.response.docs);
@@ -351,49 +279,12 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
             const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
 
-            // const body_3 = await url_3.json()
             const solr_body_3 = await solr_url_3.json()
             setUnit(solr_body_3.response.docs[0].unit_id);
             setGraphUnit(solr_body_3.response.docs[0].unit_name);
             await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             setIsSelected(true);
         }
-
-       
- 
-        // const subgroupChange = async(e) =>{
-        //   let val = e;
-        //   setIsSelected(false);
-        //   setToggleState(true);
-        //   setToggleStateBurden(true);
-        //   setSelSubgroup(e);
-        //   let subName = subgroupDropdownOpt.filter(f => f.value === val)[0].title;
-        //   setGraphSubgroup(subName);
-        //   let url;
-        //     // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-        //     if(isLevelThree)
-        //     url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${val}/${parentArea}`);
-        //     else
-        //     url = await fetch(`http://localhost:8000/api/timeperiod/${selIndicator}/${val}/${selArea}`);
-        //     const body_1 = await url.json()
-        //       setTimeperiodDropdownOpt(body_1);
-        //       let flag = false;
-        //       let timeValue = selTimeperiod;
-        //       if(body_1){
-        //         body_1.forEach(timeperiod => {
-        //           if(timeperiod.value === selTimeperiod){
-        //             flag = true;
-        //           }
-        //         });
-        //         if(!flag) {
-        //           timeValue = body_1[0].value;
-        //           setSelTimeperiod(body_1[0].value);
-        //           setGraphTimeperiod(body_1[0].title);
-        //         }
-        //     } 
-        //   await setVisulaizationData(selIndicator, val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
-        //   setIsSelected(true);
-        // }
 
         const timeperiodChange = async(e) =>{
           let val = e;
@@ -453,18 +344,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           }
           let url;
           let solr_url;
-            // data is getting fetched when subdistrict is selected and timeperiod get changing so added this if logic
-            // if(levelThree){
-              // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
-              //solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
               solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-            // }
-            // else{
-            //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-            //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${selIndicator}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${value}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-            // }
-           
-            // const body_1 = await url.json()
             let solr_body_1 = await solr_url.json()
             solr_body_1 = solr_body_1.response.docs;
               setTimeperiodDropdownOpt(solr_body_1);
@@ -490,7 +370,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 }
             } 
             await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
-            //await setCardData(tab, value, setIndicatorDetail)
             setIsSelected(true);
         
         }
@@ -520,13 +399,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
           return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
         }
-      
-      //  const makeitFull = ()=> {
-      //   // map.style.height="100vh";
-      //   ();
-
-      // }
-
       const checkchange = (state,handle)=>{
         if(map){
           if(state === true){
@@ -624,22 +496,25 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         <Col>
 
             <span className="dropdown-title">Select Area</span>
-            {/* <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange}  ref={searchRef}/> */}
 
             <TreeSelect
                 showSearch
-                // filterTreeNode={filterTree}
                 className='dropdown'
-                virtual={false}
+                virtual={true}
+                scrollIntoView = {true}
                 style={{ width: '100%' }}
                 value={selArea}
                 onFocus={()=>setOpenDropdown(true)}
                 onBlur={() => setOpenDropdown(false)}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+               
+                showSearch	= {true}
                 treeData={(filterDropdownValue.length !==0)?filterDropdownValue:areaDropdownOpt}
-                treeDefaultExpandAll={false}
+                treeDefaultExpandAll={true}
                 ref = {treeRef}
                 open={openDropdown}
+            filterTreeNode
+
                 treeNodeFilterProp ='title'
                 onChange={areaChange}
               />
@@ -650,7 +525,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
             <TreeSelect
                 showSearch
-                // onSearch={onSearch}
                 optionFilterProp="children"
                 className='dropdown'
                 virtual={false}
@@ -668,7 +542,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
         
               <Col>
-            <span className="dropdown-title"> Select timeperiod</span>
+            <span className="dropdown-title"> Select Time Period</span>
 
                 <TreeSelect
                 showSearch
@@ -678,25 +552,13 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 value={selTimeperiod}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={timeperiodDropdownOpt}
-               // onChange={value => setSelTimeperiod(value) }
                treeNodeFilterProp ='title'
                onChange={timeperiodChange}
                 />
               </Col>
 
     </Row>
-    {/* {isSelected?
-    <div className="btn_toggle text-center">
-      {burdenButton}
-      </div>: null} */}
-  
- 
-    
-    {/* <div className="layout__body__left">
-            <div className="layout__body__left__cards">
-            {isSelected? <Cards indicatorDetail = {indicatorDetail} indicatorChange = {indicatorChange}/> : null}
-            </div>
-    </div> */}
+   
 <div className="layout" id="layoutid">
   <div className="layout_left">
   <div className="layout_left_trend" >

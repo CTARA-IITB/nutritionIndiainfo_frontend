@@ -1,6 +1,5 @@
 
 import React, { useRef, useEffect } from 'react';
-// import { geoMercator, format, geoPath, scaleQuantize, scaleSequential,extent,select,interpolateOrRd } from 'd3';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
@@ -8,7 +7,6 @@ import { Button } from 'react-bootstrap';
 import * as turf from 'turf';
 import {NFHS5} from "../../constants";
 
-// import { geoMercator, precisionFixed, format, geoPath, scaleQuantize, scaleThreshold,extent,select,interpolateRdYlGn, interpolateReds, scaleLinear, schemeReds, schemeRdYlGn, formatPrefix } from 'd3';
 import { geoMercator, format,geoCircle ,geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
 import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
@@ -51,7 +49,6 @@ export const Map = ({
   const svgLegRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
-  // const [colorScale,setColorScale] = useState();
   function removeShake() {
     let element = document.getElementById("info-msg");
     element.classList.remove("shake");
@@ -75,7 +72,6 @@ export const Map = ({
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
-    // console.log("legend", i, genLength, generatedLabels,labelDelimiter);
     if (i === 0) {
       const values = generatedLabels[i].split(` ${labelDelimiter} `)
       return `Less than ${values[1]}`
@@ -95,6 +91,7 @@ export const Map = ({
   //merge geometry and data
 
   function addProperties(geojson, data) {
+   
     let newArr = _.map(data, function (item) {
       return {
         areacode: item.area_code,
@@ -106,11 +103,6 @@ export const Map = ({
       }
     });
 
-    // let mergedGeoJson = _(newArr)
-    //   .keyBy('areacode')
-    //   .merge(_.keyBy(geojson, 'properties.ID_'))
-    //   .values()
-    //   .value();
       let mergedGeoJson = _.map(geojson, function(item) {
         return _.assign(item, _.find(newArr, ['areacode', item.properties.ID_]));
     });
@@ -184,15 +176,10 @@ export const Map = ({
     }
   }
   else{
-    // console.log("testst", document.getElementById("info-msg"));
-    //   document.getElementById("info-msg").className += " shake";
-        //   setTimeout(removeShake,3000);
       if (selTimeperiod === NFHS5) // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
       else
         geometry = boundaries.state;
-      //statusMsg ="No data: please select another survey";
-
   }
   }
   select(".tooltip").remove();
@@ -260,53 +247,68 @@ export const Map = ({
     let medium;
     let high;
     let highest;
+    let sampleCategoricalData;
+
     let arr20to80 = [31,11,28,6,7,37,51,42,84]
     if (selIndicator == 19 || selIndicator == 21) {
       low = 5.0;
       medium = 10.0;
       high = 15.0;
       highest = 20.0
+      sampleCategoricalData = ["<5", "5-10", "10-15", "15-20", ">20", "No Data"]
+
     } else if (selIndicator == 17 || selIndicator == 18 || selIndicator == 12 || selIndicator == 13) {
        low = 10.0;
        medium = 20.0;
        high = 30.0;
        highest = 40.0;
+      sampleCategoricalData = ["<10", "10-20", "20-30", "30-40", ">40", "No Data"]
+
     } else if(selIndicator == 71 || selIndicator == 26 )
     {
       low = 5.0;
       medium = 20.0;
       high = 40.0;
       highest = 60.0;
+      sampleCategoricalData = ["<5", "5-20", "20-40", "40-60", ">60", "No Data"]
+
     } else if(selIndicator == 20 || selIndicator == 108)
     {
       low = 1.0;
       medium = 2.0;
       high = 5.0;
       highest = 10.0;
+      sampleCategoricalData = ["<1", "1-2", "2-5", "5-10", ">10", "No Data"]
+
      }else if(selIndicator == 107)
     {
       low = 0.1;
       medium = 0.5;
       high = 1;
       highest = 2.5;
+      sampleCategoricalData = ["<0.1", "0.1-0.5", "0.5-1", "1-2.5", ">2.5", "No Data"]
+
     }else if(selIndicator == 89)
     {
       low = 5.0;
       medium = 10.0;
       high = 20.0;
       highest = 30.0;
+      sampleCategoricalData = ["<5", "5-10", "10-20", "20-30", ">30", "No Data"]
+
     }else if(arr20to80.includes(selIndicator))
     {
       low = 20.0;
       medium = 40.0;
       high = 60.0;
       highest = 80.0;
+      sampleCategoricalData = ["<20", "20-40", "40-60", "60-80", ">80", "No Data"]
+
     }
     
-    
-    
-    let colorScale;
   
+    let colorScale;
+  let colorScale_new;
     let colorScale2;
     let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
     if (unit == 1  && toggleStateBurden == true)
@@ -315,10 +317,20 @@ export const Map = ({
     {
     colorScale2 = scaleThreshold().domain([low, medium, high, highest])
     .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"]); 
+    if(typeof sampleCategoricalData != 'undefined'){
+      colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
+      .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50","#A9A9B0"]);
+    }
     }
     else{
       colorScale2 = scaleThreshold().domain([low, medium, high, highest])
     .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"]); 
+      if(typeof sampleCategoricalData != 'undefined'){
+      colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
+      .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000","#A9A9B0"]);
+      }
+
+  
     }
 
     let colorScale4 = scaleQuantize()
@@ -329,15 +341,16 @@ export const Map = ({
       .domain([min, max])
       .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"])
 
-      // let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84];
       if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }
     else if (indicatorSense === 'Negative') {
       colorScale = colorScale4;
+      colorScale_new = colorScale4;
 
     } else if (indicatorSense === 'Positive') {
       colorScale = colorScale4_p;
+      colorScale_new = colorScale4_p;
 
     }
     
@@ -360,32 +373,15 @@ export const Map = ({
         colorScale = '#eda143'; 
 
   }
-
-    //For One Decimel Precision    
-    function decimelPrecision(d){
-      let oneDecimel;
-      if(toggleStateBurden === false){
-          return oneDecimel = d;
-      }
-      else{
-          oneDecimel = d.toFixed(1);  
-          return oneDecimel;
-      }
-      
-  }  
-
     const onMouseMove = (event, d) => {
       if (typeof c2Value(d) != 'undefined') {
-        // tooltip.style("opacity", .9);
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(decimelPrecision(c2Value(d))))
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
           .style("left", event.clientX + "px")
           .style("top", event.clientY - 30 + "px");
       }
     };
-    // if(unit !== 2)
-
     if (unit == 1  && toggleStateBurden == true)
     {  
     svg
@@ -400,12 +396,6 @@ export const Map = ({
         else
           return "#A9A9B0";
       })
-      // .style("fill", d =>{
-      //   if (typeof c2Value(d) != "undefined")
-      //     return colorScale(c2Value(d))
-      //   elsevalue
-      //     return "#A9A9B0";
-      // })
       .style("opacity", d => {
         if (d.area_id !== parseInt(selArea) && isLevelThree) {
           return ".2"
@@ -414,59 +404,36 @@ export const Map = ({
       .on("mousemove", (i, d) => onMouseMove(i, d))
       .on("mouseout", function (d) {
         tooltip
-          // .transition()    
-          // .duration(500)    
           .style("opacity", 0);
       })
       .on('click', (i, d) => {
         if(toggleState){
-          // setIsLevelThree(false);
-          // let id = d.area_id
           tooltip.style('opacity', 0);
-          // if (level === 1) {
 
             if (typeof c2Value(d) != "undefined") {
-              // console.log("MYLEVEL",level);
-              // console.log("drillDirection",drillDirection);
               if(level === 1){
-                // console.log("LEVEL 2");
                 areaChange(d.area_id.toString());
                 setLevel(2);
                 setDrillDirection(true);
               }else if(level === 2 && drillDirection){
-                // console.log("LEVEL 3"); 
                 setIsLevelThree(true);
                 areaChange(d.area_id.toString());
                 setLevel(3);
               }else if(level === 3){
                 areaChange(""+parentArea);
-                // console.log("Going back");
                 setLevel(2);
                 setDrillDirection(false);
 
               }else if(level === 2 && !drillDirection){
-              // console.log("Going back to level 1");
                 areaChange("1");
                 setLevel(1);
                 setDrillDirection(true);
               }
-              // setSelArea('' + d.area_id);
-              // setLevel(2);
-              // onMapClick(d.areaname);
             }
-          // } 
-          // else if (level === 2) {
-            // areaChange("1");
-            // setSelArea("1");  //india
-            // setLevel(1);
-            // searchRef.current.state.value = "";  //reset search to
-            // setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
-          // }
         }
     
       })
   
-      // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
       .attr('transform',`translate(130,50)`);
 
@@ -476,9 +443,6 @@ export const Map = ({
 
     }
 
-    // bubbles for numeric unit values
-    // console.log(unit)
-    // if (unit === 2) {
     else{
 
       for(let i =0;i<mergedGeometry.length;i++){
@@ -504,50 +468,31 @@ export const Map = ({
   
       .on('click', (i, d) => {
         if(toggleState){
-          // setIsLevelThree(false);
-          // let id = d.area_id
           tooltip.style('opacity', 0);
-          // if (level === 1) {
 
             if (typeof c2Value(d) != "undefined") {
               if(level === 1){
-                // console.log("LEVEL 2");
                 areaChange(d.area_id.toString());
                 setLevel(2);
                 setDrillDirection(true);
               }else if(level === 2 && drillDirection){
-                // console.log("LEVEL 3"); 
                 setIsLevelThree(true);
                 areaChange(d.area_id.toString());
                 setLevel(3);
               }else if(level === 3){
                 areaChange(""+parentArea);
-                // console.log("Going back");
                 setLevel(2);
                 setDrillDirection(false);
 
               }else if(level === 2 && !drillDirection){
-              // console.log("Going back to level 1");
                 areaChange("1");
                 setLevel(1);
                 setDrillDirection(true);
               }
-              // setSelArea('' + d.area_id);
-              // setLevel(2);
-              // onMapClick(d.areaname);
             }
-          // } 
-          // else if (level === 2) {
-            // areaChange("1");
-            // setSelArea("1");  //india
-            // setLevel(1);
-            // searchRef.current.state.value = "";  //reset search to
-            // setFilterDropdownValue(areaDropdownOpt); //reset dorpdown values
-          // }
         }
     
       })
-      // .transition().duration(1000)
       .attr("d", feature => pathGenerator(feature))
       .attr('transform',`translate(130,50)`);
 
@@ -556,7 +501,6 @@ export const Map = ({
         let width_d = bounds[1][0] - bounds[0][0];
         let height_d = (bounds[1][1] - bounds[0][1])/2;
         
-        // let n = d.dataValue / (dotVal);
         let n;
         let data_value_num;
         if(unit == 2)
@@ -616,7 +560,6 @@ export const Map = ({
 
     }
 
-    // legend.selectAll("*").remove();
     legend.append("g")
       .attr("class", "legendQuant")
         .attr("transform", `translate(${width-150},${height-100})`)
@@ -633,19 +576,16 @@ export const Map = ({
        if (!arrsuw.includes(selIndicator)) {
       myLegend = legendColor()
       .labelFormat(formatter)
-     // .title('Legend')
-      .title(`Legend (in ${unitName})`)
+      .title(`${unitName}`)
       .titleWidth(180)
       .scale(colorScale);
     } 
     else{
       myLegend = legendColor()
       .labelFormat(formatter)
-      //.title('Legend')
-      .title(`Legend (in ${unitName})`)
+      .title(`${unitName}`)
       .titleWidth(180)
-      .labels(thresholdLabels)
-      .scale(colorScale);
+      .scale(colorScale_new);
     }
 
       legend.select(".legendQuant")
@@ -685,6 +625,7 @@ export const Map = ({
       else if(state === false){
         if(map[0] != undefined){}
         map[0].style.height = "50vh";
+
       }
     }
   }
@@ -703,16 +644,11 @@ export const Map = ({
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
       <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
       <div className="map">
-        {/* <div className="map_area"> */}
-          {/* <div className="map_title">
-            <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{mapTitle}</small>
-          </div> */}
+          
           <div  className="map_svg" ref={wrapperRef}>
             <svg  id="svgMap" width="100%" height="130%"  ref={svgRef} ></svg>
 
-            {/* <svg  width="100%" height="30%"  ref={svgLegRef}></svg> */}
           </div>
-        {/* </div> */}
     
     <div className="map_req">
       <div className="map_req_button">

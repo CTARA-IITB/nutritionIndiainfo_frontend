@@ -81,14 +81,12 @@ export const createHierarchy = (options) =>{
       }
         // const body_4 = await url_4.json();
         const solr_body_4 = await solr_url_4.json();
-        // console.log(body_4,solr_body_4)
         setSelStateData(solr_body_4.response.docs);
     }
     // const switchurl= await fetch(`http://localhost:8000/api/getDistrictDetails/${indicator}/6/${timeperiod}`);
     const solr_switchurl= await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=indicator_id%2Cindicator_name%2Ctimeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Carea_id%2Carea_code%2Carea_name%2Carea_level&fq=area_level%3A3&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&q=*%3A*&rows=10000&omitHeader=true`);
     // const body_5 = await switchurl.json();
     const solr_body_5 = await solr_switchurl.json();
-    // console.log(solr_body_5.response.docs,body_5);
     if(solr_body_5.response.docs.length)
     {
       setSwitchDisplay(true);
@@ -107,46 +105,41 @@ export const createHierarchy = (options) =>{
   }
 
   export async function populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt,
-    setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
+    setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
   {
     // const url_6 = await fetch(`http://13.234.11.176/api/indicator/${tab}`);
     const solr_url_6 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=value:indicator_id%2Ctitle:indicator_name%2Cindi_sense&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`);
     // const body_6 = await url_6.json();
     const solr_body_6 = await solr_url_6.json();
     setIndicatorDropdownOpt(solr_body_6.response.docs);
-    setSelIndicator(solr_body_6.response.docs[0].value);
-    setIndicatorSense(solr_body_6.response.docs[0].indi_sense);
-    setGraphTitle(solr_body_6.response.docs[0].title);
-    let indiVal = solr_body_6.response.docs[0].value;
+    let indiVal;
+    if(queryIndicator){
+      let passedIndicator = solr_body_6.response.docs.filter(i => i.value === parseInt(queryIndicator));
+      setSelIndicator(passedIndicator[0].value);
+      setIndicatorSense(passedIndicator[0].indi_sense);
+      setGraphTitle(passedIndicator[0].title)
+      indiVal = passedIndicator[0].value;
 
-    // const url_7 = await fetch(`http://13.234.11.176/api/subgroup/${indiVal}`);
-    // const body_7 = await url_7.json();
-    // setSubgroupDropdownOpt(body_7);
-    // setSelSubgroup(body_7[0].value);
-    // setGraphSubgroup(body_7[0].title);
-   
+    }
+    else{
+      setSelIndicator(solr_body_6.response.docs[0].value);
+      setIndicatorSense(solr_body_6.response.docs[0].indi_sense);
+      setGraphTitle(solr_body_6.response.docs[0].title);
+      indiVal = solr_body_6.response.docs[0].value;
+    }
+
+
+    
     // const url_8 = await fetch(`http://13.234.11.176/api/getUnit/${indiVal}/6`);
     const solr_url_8 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
-    // const body_8 = await url_8.json();
     const solr_body_8 = await solr_url_8.json();
-    // console.log(body_8,solr_body_8.response.docs);
     setUnit(solr_body_8.response.docs[0].unit_id);
     setGraphUnit(solr_body_8.response.docs[0].unit_name);
 
    // const solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_id%3A${selArea}`);
-        // const body_2 = await url_2.json();
     let solr_url;
-    // if(isLevelThree){
-      // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${parentArea}`);
       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-
-    // }
-    // else{
-    //       // url = await fetch(`http://13.234.11.176/api/timeperiod/${val}/6/${selArea}`);
-    //       solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv14/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&q=lifecycle_id%3A${selLifeycle}%20AND%20category_id%3A${selCategory}%20AND%20indicator_id%3A${indiVal}%20AND%20subgroup_id%3A6%20AND%20area_parent_id%3A${selArea}&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-    // }
     const solr_body_2 = await solr_url.json();
-    console.log("time", solr_body_2);
     setTimeperiodDropdownOpt(solr_body_2.response.docs);
     let timeVal ="";
     if(typeof solr_body_2.response.docs[0] !== 'undefined'){
@@ -158,7 +151,6 @@ export const createHierarchy = (options) =>{
       setSelTimeperiod("");
       setGraphTimeperiod("");
     }
-    console.log("timeval", timeVal);
     if(timeVal != "")
     await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
   }

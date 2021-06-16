@@ -182,7 +182,21 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         }
 
         options={
-            showDatapoints:true,
+            plugins: {
+                datalabels: {
+                  color: 'black',
+                  anchor: 'end',
+                  align: 'end',
+                  formatter: function(value) {
+                    if(value == "undefined" || isNaN(value)){
+                        return value;
+                    }
+                    else{
+                        return commaSeparated(decimelPrecision(value));
+                    }
+                  }
+                }
+            },
             tooltips:{
                 displayColors:false,
                 xAlign:"right",

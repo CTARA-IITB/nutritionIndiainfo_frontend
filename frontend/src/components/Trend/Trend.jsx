@@ -27,7 +27,6 @@ const margin = {
 
 const useResizeObserver = ref => {
   const [dimensions, setDimensions] = useState(null);
-  // console.log(typeof ref.current != 'undefined')
   useEffect(() => {
   if(typeof ref.current != 'undefined'){
     const observeTarget = ref.current;
@@ -56,8 +55,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   const trendWrapper = useRef();
   const dimensions = useResizeObserver(trendWrapper);
-  // console.log(trendWrapper)
-  // console.log(dimensions)
   const screen = useFullScreenHandle();
   let colorScale;
 
@@ -125,14 +122,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       windowWidth = windowWidth + 100;
       windowHeight = windowHeight/2;
     }
-
-    
-    // let { width, height } = dimensions||{width:windowWidth,height:windowHeight}; 
     let { width, height } = {width:windowWidth,height:windowHeight}; 
-    // const width =500;
-    // const height = 500;
-    // const { width, height } = [,]; 
-    // || trendWrapper.current.getBoundingClientRect();
    
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
@@ -197,12 +187,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       	.attr("class","axis")
         .call(axisLeft(yScale)
         .tickFormat(function (d) {
-          // if ((d / 100000) >= 1) {
-          //     d = d / 100000 + " Lakh";
-          // }
           return commaSeparated(d);
       }))
-        // (formatUnit))
         .style('font-size',12);
 			
       let xaxis = bar.append("g")
@@ -210,13 +196,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       	.attr("class","axis")
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
         .style('font-size',12)
+        .attr("dy",()=>{
+           return "-.5em"
+        })
         .attr("dx", () => {
-          if(width <= 780)
-           return "1.9em"
+           return "-2.5em"
         })
         .attr("transform", () => {
-          if(width <= 780)
-          return "rotate(45)"
+          return "rotate(-90)"
         });
         
         
@@ -323,11 +310,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     }
   }
 
-  // const setScreen = ()=>{
-  //   setHeight(window.screen.height/2);
-  //   setWidth(window.screen.width/2);
-  //   setCheck(!check)
-  // }
 
   let table=[];
   if(data ){

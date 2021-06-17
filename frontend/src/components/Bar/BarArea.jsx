@@ -207,10 +207,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     label = decimelPrecision(label); 
                     return commaSeparated(label);
                 },
-                // labelTextColor: function(context) {
-                //     return 'white';
-                // }
             },
+            bodyFont: 12,
             padding:10,
             backgroundColor: 'black',
             filter: function (tooltipItem) {

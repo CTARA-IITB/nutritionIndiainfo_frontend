@@ -198,7 +198,7 @@ export const Map = ({
 
       svg.append("text").text(`${warning}`)
       .style("text-anchor","middle")
-      .style("font-size","10px")
+      .style("font-size","11px")
       .attr("dy", "-2.5em")
 
 
@@ -372,7 +372,8 @@ export const Map = ({
         tooltip.style("opacity", .9);
         tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
           .style("left", event.clientX + "px")
-          .style("top", event.clientY - 30 + "px");
+          .style("top", event.clientY - 30 + "px")
+          .style("font-size","12px");
       }
     };
     if (unit == 1  && toggleStateBurden == true)

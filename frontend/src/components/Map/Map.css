@@ -1,3 +1,11 @@
+#svgMap{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+div#info-msg{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .svg-map {
   display: block;
   width: 100%;
@@ -95,6 +103,7 @@ div.tooltip {
 
 .req_button{
   margin: 5px;
+  font-family: Arial, Helvetica, sans-serif;
   background-color: #AF5907 !important;
   border-color: #AF5907 !important;
 }

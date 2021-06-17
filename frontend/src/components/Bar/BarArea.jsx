@@ -191,10 +191,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
               align: 'end',
               formatter: function(value) {
                 return commaSeparated(decimelPrecision(value));
-              },
-              font: {
-                size: 11,
-              },
               }
             }
         },
@@ -254,9 +250,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             xAxes: [{
                 stacked: true,
                 ticks: {
-                    autoSkip:false,
-                    fontSize: 11,
-                    maxTicksLimit:4,
+                    autoSkip: false,
+                    minRotation: rotate,
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {

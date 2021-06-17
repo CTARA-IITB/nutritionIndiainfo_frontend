@@ -20,7 +20,7 @@ class BarComponent extends React.PureComponent {
            <div className="barTitle" id="barT" >
               <small style={{textAlign:'end',fontWeight:"bold",fontSize:"13px"}}>{this.props.title}</small>
             </div>
-          <HorizontalBar ref={this.componentRef} height={this.props.height} data={this.props.data} options={this.props.options}/>
+          <HorizontalBar ref={this.componentRef}  data={this.props.data} options={this.props.options}/>
         </div>
       );
     }

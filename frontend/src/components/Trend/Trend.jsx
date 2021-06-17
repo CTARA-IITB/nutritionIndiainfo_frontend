@@ -266,7 +266,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     bar.append("text")
     .attr("transform", "rotate(-0)")
     .attr("y", 70 - margin.left)
-    .attr("x",40 - (height / 8))
+    .attr("x",60 - (height / 8))
     .attr("dy", "1em")
     .style("font-size","10px")
     .style("font-weight","bold")

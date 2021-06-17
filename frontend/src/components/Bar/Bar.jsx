@@ -197,10 +197,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     else{
                         return commaSeparated(decimelPrecision(value));
                     }
-                  },
-                  font: {
-                    size: 11,
-                  },
                   }
                 }
             },
@@ -249,9 +245,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 ],
                 xAxes: [{
                     ticks: {
-                        autoSkip:false,
-                        fontSize: 11,
-                        maxTicksLimit:4,
+                        autoSkip: false,
+                        minRotation: rotate,
                         fontColor:"black",
                         beginAtZero: true,
                         callback: function(value) {
@@ -274,14 +269,12 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
    
     title=graphTitle + ', '+ titleAreaName + ', '+ chartTitle + ' ' + graphTimeperiod.split(" ")[1]; 
-
-    let height = 165;
  
     return(
         <div>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="Bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarComponent ref={componentRef} data={data} options={options} height={height} title={title}/>
+                <BarComponent ref={componentRef} data={data} options={options} title={title}/>
             </FullScreen>    
         </div>
     );

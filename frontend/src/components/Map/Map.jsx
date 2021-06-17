@@ -42,7 +42,6 @@ export const Map = ({
   drillDirection,setDrillDirection
 
 }) => {
-
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -150,10 +149,10 @@ export const Map = ({
     statusMsg ="Click on map to select state";
   }
   else{
-    
+     data = selStateData;
+     statusMsg=`No districts data: Please select another survey`
     if(null!== selStateData && selStateData.length > 0)
     {
-      data = selStateData;
       if(level === 2){
         if(drillDirection)
           statusMsg ="Click on map to select district";
@@ -162,6 +161,7 @@ export const Map = ({
       }else if(level === 3){
         statusMsg=`Click on map to go back to state`
       }
+    }
     if(selTimeperiod == NFHS5)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
@@ -175,13 +175,6 @@ export const Map = ({
       warning="Administrative Boundaries as per NFHS4(2015-16)"
     }
   }
-  else{
-      if (selTimeperiod === NFHS5) // change state boundaries when timeperiod is NFHS5
-        geometry = boundaries.new_state;
-      else
-        geometry = boundaries.state;
-  }
-  }
   select(".tooltip").remove();
 
   let tooltip = select(".map_svg").append("div")
@@ -192,8 +185,8 @@ export const Map = ({
     const svg = select(svgRef.current);
     const legend = select(svgRef.current)
     const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
-    if((level == 1 && null!= selIndiaData && selIndiaData.length > 0) || ((level == 2 || level == 3) && null  != selStateData && selStateData.length > 0))
-    {
+    // if((level == 1 && null!= selIndiaData && selIndiaData.length > 0) || ((level == 2 || level == 3) && null  != selStateData && selStateData.length > 0))
+    // {
     svg.selectAll('*').remove();
 
     let title = svg.append("text").text(`${mapTitle}`)
@@ -593,16 +586,16 @@ export const Map = ({
 
       
     }
-  }
-  else{
-    svg.selectAll('*').remove();
-    const svg_2 = select(svgRef.current);
-    svg_2.append("text").text("No data: please select another survey")
-    .style("text-anchor", "middle")
-    .style("font-weight","bold")
-    .style("fill", "red")
-    .attr('transform',`translate(${width/2}, ${height/2})`);
-  }
+  // }
+  // else{
+  //   svg.selectAll('*').remove();
+  //   const svg_2 = select(svgRef.current);
+  //   svg_2.append("text").text("No data: please select another survey")
+  //   .style("text-anchor", "middle")
+  //   .style("font-weight","bold")
+  //   .style("fill", "red")
+  //   .attr('transform',`translate(${width/2}, ${height/2})`);
+  // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit,geometry, dimensions, data, toggleStateBurden])
 

@@ -146,7 +146,7 @@ export const Map = ({
         }
       data = selDistrictsData;
     }
-    statusMsg ="Click on map to select state";
+    statusMsg = (toggleState)?'Click on map to select state':'';
   }
   else{
      data = selStateData;
@@ -154,12 +154,9 @@ export const Map = ({
     if(null!== selStateData && selStateData.length > 0)
     {
       if(level === 2){
-        if(drillDirection)
-          statusMsg ="Click on map to select district";
-       else
-          statusMsg=" Click on map to go back to India"
+        statusMsg=" Click on map to select distirct or click on back button go back to India"
       }else if(level === 3){
-        statusMsg=`Click on map to go back to state`
+        statusMsg=`Click on map to select district or click back button to go back to state`
       }
     }
     if(selTimeperiod == NFHS5)
@@ -403,26 +400,21 @@ export const Map = ({
       .on('click', (i, d) => {
         if(toggleState){
           tooltip.style('opacity', 0);
-
-            if (typeof c2Value(d) != "undefined") {
+          if (typeof c2Value(d) != "undefined") {
+              areaChange(d.area_id.toString());
               if(level === 1){
-                areaChange(d.area_id.toString());
+                // console.log("LEVEL 2");
                 setLevel(2);
-                setDrillDirection(true);
-              }else if(level === 2 && drillDirection){
-                setIsLevelThree(true);
-                areaChange(d.area_id.toString());
+              }else if(level === 2){
                 setLevel(3);
+                // console.log("LEVEL 3"); 
+                setIsLevelThree(true);
               }else if(level === 3){
-                areaChange(""+parentArea);
-                setLevel(2);
-                setDrillDirection(false);
-
-              }else if(level === 2 && !drillDirection){
-                areaChange("1");
-                setLevel(1);
-                setDrillDirection(true);
+                setLevel(3);
+                // console.log("STILL IN LEVEL 3");
               }
+  
+           
             }
         }
     
@@ -634,6 +626,23 @@ export const Map = ({
     }
   }
 
+  const handleBackButton = () =>{
+    if(level === 3){
+      // setLevel(2);
+      // console.log("LEVEL 2");
+      areaChange(""+parentArea);
+      // areaChange()
+    }
+    if(level === 2){
+      // console.log("LEVEL 1"); 
+      areaChange("1");
+    }
+  }
+
+  let backButton;
+  if(level !== 1)  
+    backButton = <Button className={`req_button` }  active onClick={handleBackButton}  size="sm">Back</Button> 
+
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
@@ -648,7 +657,7 @@ export const Map = ({
     <div className="map_req">
       <div className="map_req_button">
         {switchButton}
-        
+        {backButton}
       </div>
       
       <div className="map_req_text">

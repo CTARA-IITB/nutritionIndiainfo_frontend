@@ -196,7 +196,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                 size: 11,
               },
               }
-            }
         },
         tooltips:{
             displayColors:false,

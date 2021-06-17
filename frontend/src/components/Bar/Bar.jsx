@@ -202,7 +202,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                     size: 11,
                   },
                   }
-                }
             },
             tooltips:{
                 displayColors:false,
@@ -228,8 +227,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 },
               },
             scales: {
-                yAxes:[
-                    {
+                yAxes:[{
                         id:'yAxis1',
                         type:"category",
                         ticks:{
@@ -238,15 +236,12 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                             fontColor: "black",
                         },
                         gridLines: {
-                        //   display: false,
                           drawTicks:false,
                           drawOnChartArea: false,
                           color:"black",
                           zeroLineColor:'transparent'
                         },
-                    },
-                   
-                ],
+                }],
                 xAxes: [{
                     ticks: {
                         autoSkip:false,

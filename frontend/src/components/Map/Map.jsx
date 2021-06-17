@@ -213,7 +213,7 @@ export const Map = ({
     if(width <= 480){
       title = title.style("font-size", (width * 0.0025) + "em")
     }
-    const projection = geoMercator().fitSize([width/1.8, height], geometry);
+    const projection = geoMercator().fitSize([width/1.9, height], geometry);
 
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
@@ -528,7 +528,7 @@ export const Map = ({
         }
         let r,sw;
         if(height <= 400){
-        r = 1;
+        r = .8;
         }
         else if(height > 800){
           r =2;
@@ -562,7 +562,7 @@ export const Map = ({
 
     legend.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width-150},${height-100})`)
+        .attr("transform", `translate(${width-100},${height-80})`)
 
     let formatter = format(".1f");
     let myLegend;
@@ -625,7 +625,7 @@ export const Map = ({
       }
       else if(state === false){
         if(map[0] != undefined){}
-        map[0].style.height = "50vh";
+        map[0].style.height = "65vh";
 
       }
     }
@@ -647,7 +647,7 @@ export const Map = ({
       <div className="map">
           
           <div  className="map_svg" ref={wrapperRef}>
-            <svg  id="svgMap" width="100%" height="130%"  ref={svgRef} ></svg>
+            <svg  id="svgMap" width="120%" height="150%"  ref={svgRef} ></svg>
 
           </div>
     

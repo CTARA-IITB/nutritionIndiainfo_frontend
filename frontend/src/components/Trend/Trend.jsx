@@ -116,14 +116,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     let windowHeight = window.screen.height;
 
     if(windowWidth >= 480){
-      windowWidth = windowWidth/2;
-      windowHeight = windowHeight/2;
+      windowWidth = windowWidth/2.2;
+      windowHeight = windowHeight/1.7;
     }else{
       windowWidth = windowWidth + 100;
       windowHeight = windowHeight/2;
     }
     let { width, height } = {width:windowWidth,height:windowHeight}; 
-   
+   console.log(width,height,"trend")
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     svg.selectAll("*").remove();
@@ -305,7 +305,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
       else if(state === false){
         if(trend[0] != undefined)
-        trend[0].style.height = "50vh";
+        trend[0].style.height = "65vh";
       }
     }
   }
@@ -328,7 +328,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
-      <svg id="svgTrend" width="100%" height="130%" ref = {svgRef}></svg>
+      <svg id="svgTrend" width="80%" height="160%" ref = {svgRef}></svg>
     </div>
     </div>
     </FullScreen>

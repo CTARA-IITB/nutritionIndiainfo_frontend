@@ -207,6 +207,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 displayColors:false,
                 xAlign:"right",
                 bodyAlign:"center",
+                bodyFont: 12,
                 callbacks: {
                     label: function(context) {
                         var label = context.xLabel; 

@@ -19,7 +19,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let stateAreaName;
     let datasets = [];
     let table=[];
-    let title, rotate;
+    let title;
     let sortedBarLabel =[];
     let sortedBarData = [];
     let maxWidth;
@@ -105,7 +105,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     
     if(toggleStateBurden === false){
         barGUnit = 'Number';  
-        rotate = 90;
     }
 
     //For One Decimel Precision    

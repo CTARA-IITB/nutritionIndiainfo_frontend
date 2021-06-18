@@ -123,7 +123,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       windowHeight = windowHeight/2;
     }
     let { width, height } = {width:windowWidth,height:windowHeight}; 
-   console.log(width,height,"trend")
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     svg.selectAll("*").remove();

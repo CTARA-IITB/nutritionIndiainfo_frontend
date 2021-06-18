@@ -13,7 +13,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let table=[];
     let options =[];
     let barUnit = graphUnit;
-    let title, rotate;
+    let title, findMaxVal;
     let colorScale ='#eda143';
     let lightColor = '#F7D9B3';
     let groupedData = [];
@@ -53,7 +53,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
     if(toggleStateBurden === false){
         barUnit = 'Number';
-        rotate = 90;
     }
     var j=0;
     groupedLabel[j]="Overall";
@@ -181,27 +180,40 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                 barThickness: 10,
             }] 
         }
+    
+    //Finding maximum value of X-axis    
+        let findMax = (data.datasets[0].data);
+
+        for(let i = 0; i<findMax.length; i++ ){
+            if (isNaN(findMax[i])){
+                findMax[i] = 0;
+            }
+        };
+        findMaxVal =  Math.max.apply(Math, findMax);
+
 
         options={
             plugins: {
                 datalabels: {
-                  color: 'black',
-                  anchor: 'end',
-                  align: 'end',
-                  clip: 'false',
-                  formatter: function(value) {
-                    console.log(value, "value")
-                    if(value == "undefined" || isNaN(value)){
-                        return value;
-                    }
-                    else{
-                        return commaSeparated(decimelPrecision(value));
-                    }
-                  },
-                  font: {
+                    color: 'black',
+                    anchor: 'end',
+                    align: 'end',
+                    clip: 'false',
+                    display: function(context) {
+                        return context.dataset.data[context.dataIndex] >= 0.1; 
+                    },
+                    formatter: function(value) {
+                        if(value == "undefined" || isNaN(value)){
+                            return value;
+                        }
+                        else{
+                            return commaSeparated(decimelPrecision(value));
+                        }
+                    },
+                    font: {
                     size: 11,
-                  },
-                  }
+                    },
+                }
             },
             tooltips:{
                 displayColors:false,
@@ -250,9 +262,10 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
                         maxTicksLimit:4,
                         fontColor:"black",
                         beginAtZero: true,
+                        suggestedMax: findMaxVal * 1.15,
                         callback: function(value) {
-                            return value.toLocaleString("en-IN");
-                        }
+                            return commaSeparated(value);
+                        },
                     },
                     scaleLabel: {
                         display: true,

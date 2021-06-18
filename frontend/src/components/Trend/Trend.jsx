@@ -116,14 +116,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     let windowHeight = window.screen.height;
 
     if(windowWidth >= 480){
-      windowWidth = windowWidth/2;
-      windowHeight = windowHeight/2;
+      windowWidth = windowWidth/2.2;
+      windowHeight = windowHeight/1.7;
     }else{
       windowWidth = windowWidth + 100;
       windowHeight = windowHeight/2;
     }
     let { width, height } = {width:windowWidth,height:windowHeight}; 
-   
+   console.log(width,height,"trend")
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     svg.selectAll("*").remove();
@@ -189,13 +189,13 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .tickFormat(function (d) {
           return commaSeparated(d);
       }))
-        .style('font-size',12);
+        .style('font-size',11);
 			
       let xaxis = bar.append("g")
       .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
-        .style('font-size',12)
+        .style('font-size',11)
         .attr("dy",()=>{
            return "-.5em"
         })
@@ -222,7 +222,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         			tooltip2.transition().duration(500).style("opacity", 1);
               tooltip2.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
           		.style("left", xScale(d.middle_date) + 50 + "px")
-          		.style("top", yScale(yValue(d)) + 100+"px");
+          		.style("top", yScale(yValue(d)) + 100+"px")
+              .style("font-size","12px");
               })
      .on('mouseout', ()=>{tooltip2.transition().duration(100).style("opacity", 0)});
       
@@ -239,7 +240,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("y", d => yScale(yValue(d)))
         .attr("dy", "-1em")
       	.style("text-anchor","middle")
-      	.style("font-size","10px")
+      	.style("font-size","11px")
         .text(function(d) { return d.timeperiod; });
     }else{
 
@@ -266,9 +267,9 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     bar.append("text")
     .attr("transform", "rotate(-0)")
     .attr("y", 70 - margin.left)
-    .attr("x",60 - (height / 8))
+    .attr("x",40 - (height / 8))
     .attr("dy", "1em")
-    .style("font-size","10px")
+    .style("font-size","12px")
     .style("font-weight","bold")
     .style("text-anchor", "middle")
     .text(graphUnit);    
@@ -305,7 +306,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
       else if(state === false){
         if(trend[0] != undefined)
-        trend[0].style.height = "50vh";
+        trend[0].style.height = "65vh";
       }
     }
   }
@@ -328,7 +329,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
-      <svg id="svgTrend" width="100%" height="130%" ref = {svgRef}></svg>
+      <svg id="svgTrend" width="80%" height="160%" ref = {svgRef}></svg>
     </div>
     </div>
     </FullScreen>

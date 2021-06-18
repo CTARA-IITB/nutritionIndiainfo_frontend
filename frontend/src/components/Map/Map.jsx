@@ -146,7 +146,7 @@ export const Map = ({
         }
       data = selDistrictsData;
     }
-    statusMsg ="Click on map to select state";
+    statusMsg = (toggleState)?'Click on map to select state':'';
   }
   else{
      data = selStateData;
@@ -154,12 +154,9 @@ export const Map = ({
     if(null!== selStateData && selStateData.length > 0)
     {
       if(level === 2){
-        if(drillDirection)
-          statusMsg ="Click on map to select district";
-       else
-          statusMsg=" Click on map to go back to India"
+        statusMsg=" Click on map to select distirct or click on back button go back to India"
       }else if(level === 3){
-        statusMsg=`Click on map to go back to state`
+        statusMsg=`Click on map to select district or click back button to go back to state`
       }
     }
     if(selTimeperiod == NFHS5)
@@ -198,7 +195,7 @@ export const Map = ({
 
       svg.append("text").text(`${warning}`)
       .style("text-anchor","middle")
-      .style("font-size","10px")
+      .style("font-size","11px")
       .attr("dy", "-2.5em")
 
 
@@ -206,7 +203,7 @@ export const Map = ({
     if(width <= 480){
       title = title.style("font-size", (width * 0.0025) + "em")
     }
-    const projection = geoMercator().fitSize([width/1.8, height], geometry);
+    const projection = geoMercator().fitSize([width/1.9, height], geometry);
 
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
@@ -372,7 +369,8 @@ export const Map = ({
         tooltip.style("opacity", .9);
         tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
           .style("left", event.clientX + "px")
-          .style("top", event.clientY - 30 + "px");
+          .style("top", event.clientY - 30 + "px")
+          .style("font-size","12px");
       }
     };
     if (unit == 1  && toggleStateBurden == true)
@@ -402,26 +400,21 @@ export const Map = ({
       .on('click', (i, d) => {
         if(toggleState){
           tooltip.style('opacity', 0);
-
-            if (typeof c2Value(d) != "undefined") {
+          if (typeof c2Value(d) != "undefined") {
+              areaChange(d.area_id.toString());
               if(level === 1){
-                areaChange(d.area_id.toString());
+                // console.log("LEVEL 2");
                 setLevel(2);
-                setDrillDirection(true);
-              }else if(level === 2 && drillDirection){
-                setIsLevelThree(true);
-                areaChange(d.area_id.toString());
+              }else if(level === 2){
                 setLevel(3);
+                // console.log("LEVEL 3"); 
+                setIsLevelThree(true);
               }else if(level === 3){
-                areaChange(""+parentArea);
-                setLevel(2);
-                setDrillDirection(false);
-
-              }else if(level === 2 && !drillDirection){
-                areaChange("1");
-                setLevel(1);
-                setDrillDirection(true);
+                setLevel(3);
+                // console.log("STILL IN LEVEL 3");
               }
+  
+           
             }
         }
     
@@ -521,7 +514,7 @@ export const Map = ({
         }
         let r,sw;
         if(height <= 400){
-        r = 1;
+        r = .8;
         }
         else if(height > 800){
           r =2;
@@ -555,7 +548,7 @@ export const Map = ({
 
     legend.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width-150},${height-100})`)
+        .attr("transform", `translate(${width-100},${height-80})`)
 
     let formatter = format(".1f");
     let myLegend;
@@ -618,7 +611,7 @@ export const Map = ({
       }
       else if(state === false){
         if(map[0] != undefined){}
-        map[0].style.height = "50vh";
+        map[0].style.height = "65vh";
 
       }
     }
@@ -633,6 +626,23 @@ export const Map = ({
     }
   }
 
+  const handleBackButton = () =>{
+    if(level === 3){
+      // setLevel(2);
+      // console.log("LEVEL 2");
+      areaChange(""+parentArea);
+      // areaChange()
+    }
+    if(level === 2){
+      // console.log("LEVEL 1"); 
+      areaChange("1");
+    }
+  }
+
+  let backButton;
+  if(level !== 1)  
+    backButton = <Button className={`req_button` }  active onClick={handleBackButton}  size="sm">Back</Button> 
+
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
@@ -640,14 +650,14 @@ export const Map = ({
       <div className="map">
           
           <div  className="map_svg" ref={wrapperRef}>
-            <svg  id="svgMap" width="100%" height="130%"  ref={svgRef} ></svg>
+            <svg  id="svgMap" width="120%" height="150%"  ref={svgRef} ></svg>
 
           </div>
     
     <div className="map_req">
       <div className="map_req_button">
         {switchButton}
-        
+        {backButton}
       </div>
       
       <div className="map_req_text">

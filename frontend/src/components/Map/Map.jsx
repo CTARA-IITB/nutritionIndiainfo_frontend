@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
@@ -16,7 +15,8 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
 import "./Map.css";
- import { commaSeparated } from "../../utils.js";
+import { commaSeparated } from "../../utils.js";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 export const Map = ({ 
@@ -637,7 +637,7 @@ export const Map = ({
 
   let backButton;
   if(level !== 1)  
-    backButton = <Button className={`req_button` }  active onClick={handleBackButton}  size="sm">Back</Button> 
+    backButton = <Button className={`toggle_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'20px'}}/></Button> 
 
   return (
     <>

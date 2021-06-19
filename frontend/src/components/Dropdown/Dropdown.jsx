@@ -14,6 +14,8 @@ import { Switch } from 'antd';
 import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
 import {EARLY_CHILDHOOD} from "../../constants"
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import ToggleButton from 'react-bootstrap/ToggleButton'
 const {Search} = Input;
 
 
@@ -221,7 +223,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             setToggleStateBurden(false);
             setSelBurden(e);
           }
-
         }
 
         const categoryChange = async(e) =>{
@@ -430,6 +431,10 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       let burdenDropdown;
       if (burdenIndicators.includes(selIndicator)) {
           burdenDropdown =    
+            // <ToggleButtonGroup  type="radio" name="options" defaultValue={1}>
+            //   <ToggleButton className={`toggle_button`} value={1} onClick={burdenChange}>Prevalence</ToggleButton> 
+            //   <ToggleButton className={`toggle_button`} value={2} onClick={burdenChange}>Burden</ToggleButton>
+            // </ToggleButtonGroup>
             <Col>
 
             <span className="dropdown-title">Prevalence/Burden</span>

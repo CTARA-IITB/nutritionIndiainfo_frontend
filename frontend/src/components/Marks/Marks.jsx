@@ -2,7 +2,6 @@ import React from 'react';
 import { geoMercator, geoPath } from 'd3';
 
 
-
 export const Marks = ({data, width, height, onMapClick}) => {
 const projection = geoMercator().scale(700).translate([width/2, height/2]).center([73,19.7]);
 const path = geoPath(projection);

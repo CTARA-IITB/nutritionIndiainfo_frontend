@@ -132,7 +132,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
  
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-    console.log(width,innerWidth,innerHeight,height)
+    
    
     
     svg.selectAll("*").remove();

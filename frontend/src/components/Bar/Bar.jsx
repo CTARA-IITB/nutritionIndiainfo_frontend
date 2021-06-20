@@ -22,7 +22,7 @@ import { commaSeparated } from '../../utils';
         left:140,
         top: 50,
         right: 80,
-        bottom: 100,
+        bottom: 70,
       };
     const [data, setData] = useState(null);
 
@@ -103,18 +103,24 @@ import { commaSeparated } from '../../utils';
         let windowHeight = window.screen.height;
     
         if(windowWidth >= 480){
-          windowWidth = windowWidth/2.2;
-          windowHeight = windowHeight/1.7;
+          windowWidth = windowWidth/2;
+          windowHeight = windowHeight/2;
         }else{
-          windowWidth = windowWidth + 100;
+          windowWidth = windowWidth + 200;
           windowHeight = windowHeight/2;
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
         const innerHeight = height - margin.top - margin.bottom;
         const innerWidth = width - margin.left - margin.right;
+        
+
+  const aspect = width / height;
+  const adjustedHeight = Math.ceil(width / aspect)*1.1;
         svg.selectAll("*").remove();
+        svg.attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
         const bar = svg
-                .attr("width", width)
+                // .attr("width", width)
                 .attr("height", height)
                 .append("g")
                 .attr("transform",`translate(${margin.left},${margin.top})`);

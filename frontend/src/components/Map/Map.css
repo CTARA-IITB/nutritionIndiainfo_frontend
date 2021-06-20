@@ -1,16 +1,3 @@
-#svgMap{
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-div#info-msg{
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.svg-map {
-  display: block;
-  width: 100%;
-  height: 100vh;
-}
 
 svg .polygon {
   stroke: black;
@@ -18,13 +5,6 @@ svg .polygon {
   
   cursor: pointer;
 }
-
-svg .geoCentroid {
-  stroke: black;
-  stroke-width: 1px;
-  cursor: pointer;
-}
-
 
 div.tooltip {
   padding: 10px;
@@ -46,18 +26,12 @@ div.tooltip {
 
 .map {
   /* background-color:red; */
-  height: 750px;
+  height: 100%;
   width: 100%;
   display: flex;
 }
 
-.map_area {
-  /* background-color:green; */
-  width: 100%;
-  /* justify-content:center; */
-  /*   display:flex; */
-  /*   flex-direction:row; */
-}
+/* */
 .map_title {
   /* background-color:coral; */
   width: 60%;
@@ -73,28 +47,53 @@ div.tooltip {
   /* background-color:grey; */
   margin: 0;
   width: 100%;
-  height: 80%;
+  height: 100%;
   padding: 0;
 }
 .map_req {
   /* background-color:yellow; */
+  /* display: flex; */
   height: 100%;
   width: 0px;
   margin: 10px;
+  z-index: 2;
+  position: relative;
 }
 .map_req_button {
   /* background-color:blue; */
   margin: 20px;
-  margin-top: 30px;
+  margin-top: 50px;
   margin-left: -180px;
   height: 50px;
-  width: 250px;
+  width: 200px;
+}
+
+
+.toggle_button{
+  /* margin-left: -400px; */
+  padding: 1px 1px;
+  font-size: 1px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FFFFFF !important;
+  border-color: #AF5907 !important;
+
+}
+.req_button{
+  margin: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #AF5907 !important;
+  border-color: #AF5907 !important;
+}
+
+.req_button_light{
+  background-color: #AF590780 !important;
+  border-color: #AF590780 !important;
 }
 
 .map_req_text {
   margin: 20px;
-  margin-top: 30px;
-  margin-left: -200px;
+  margin-top: 350px;
+  margin-left: -150px;
   height: 50px;
   width: 150px;
   font-size: 10px;
@@ -102,7 +101,7 @@ div.tooltip {
 }
 
 .toggle_button{
-  margin-left: -400px;
+  /* margin-left: -400px; */
   padding: 1px 1px;
   font-size: 1px;
   font-family: Arial, Helvetica, sans-serif;
@@ -128,6 +127,7 @@ div.tooltip {
 }
 .map_req_text {
   /* background-color:coral; */
+  /* transform: translate(-100,-50); */
   height: 20%;
 }
 
@@ -165,25 +165,20 @@ div.tooltip {
     margin-left: 20px;
     display: flex;
   }
-  .map_area {
-    width: 450px;
-  }
+
 }
 
 
 
 @media (max-width: 480px) {
-  .map_area {
-    width: 200px;
-    height: 400px;
-  }
+
   .map_req_button {
     /* background-color:blue; */
     /* display: flex; */
     margin: 20px;
     margin-left: -180px;
     height: 700px;
-    width: 250px;
+    width: 150px;
   }
   
 
@@ -215,7 +210,7 @@ div.tooltip {
   
   .map {
     /* background-color:red; */
-    height: 50vh;
+    /* height: 50vh; */
     display: flex;
   }
   

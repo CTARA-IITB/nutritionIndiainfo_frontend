@@ -19,40 +19,55 @@ span.ant-select-selection-item{
 .fullscreen_css {
   background-color: white;
 }
+ 
 
 .layout {
-  height: 100vh;
+  width:  100%;
+  margin: 0;
   display: flex;
+
+  padding: 0;
+  overflow-x: hidden;
 }
 .layout_left {
   height: 100%;
   width: 50%;
-  display: flex;
   flex-direction: column;
   gap: 10px;
-}
-.layout_right {
-  height: 100%;
-  width: 50%;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.layout_right_map {
-  /* background-color:yellow; */
+  flex-flow: column nowrap;
+  flex: 0 1 60%;
+} 
+
+.row {
+  display: flex;
+  /* flex-direction: column; */
+  /* flex-wrap: wrap; */
   width: 100%;
-  height: 50%;
+}
+
+.column {
+  /* height: 50%;  / */
+  display: flex;                           
+  /* flex-direction: column; */
+  flex-basis: 100%;
+  flex: 1;
+  overflow: hidden;
+  height: 60vh;
+
+}
+
+.layout_right_map {
+   /* background-color:yellow;  */
+  width: 100%;
+  height: 100%;
 }
 
 .layout_left_bar1 {
-  /* background-color:red; */
-  width: 100%;
-  /* min-height: 50%; */
-  margin-top:100px;
-  height: 200%;
-
-  text-align: center;
-  
+   /* background-color:red;  */
+  min-height: 50%;
+ width: 100%;
+  height: 100%;
 }
 
 #msg{
@@ -67,25 +82,39 @@ span.ant-select-selection-item{
 }
 
 .layout_left_trend {
-  /* background-color:blue; */
+   /* background-color:blue;  */
   width: 100%;
-  height: 50%;
+  height: 100%;
 }
 
 .layout_right_bar2 {
-  /* background-color:green; */
-  margin-top: 100px;
-  width: 100%;
-  height: 50%;
+   /* background-color:rgb(155, 155, 155);  */
+width: 100%;
+  height: 100%;
 }
+
 
 
 @media (max-width: 790px) {
   .layout {
-    height: 100vh;
-    display: block;
+    /* height: 100vh; */
+    display: flex;
+  /* align-content: center; */
+  justify-content: flex-start;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+overflow-x: auto;
+
+    /* display: flex; */
   }
-  .layout_left_bar1 {
+ .row{
+   display: flex;
+   flex-direction: column;
+ }
+ .column{
+   height: 100%;
+ }
+  /* .layout_left_bar1 {
     width: 600px;
     height: 500px;
   }
@@ -98,17 +127,27 @@ span.ant-select-selection-item{
     width: 600px;
     height: 500px;
     margin-top: -150px;
-  }
+  } */
   .buttonmapcss {
     background-color: green;
   }
 }
 @media (max-width: 480px) {
   .layout {
-    float: left;
+    display: flex;
+    /* align-content: center; */
+    justify-content: flex-start;
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+    overflow-x: auto;
+
+
   }
- 
-  .layout_left_trend {
+.row{
+   display: flex;
+   flex-direction: column;
+ }
+  /* .layout_left_trend {
     margin-top: 100px;
   }
 
@@ -118,12 +157,12 @@ span.ant-select-selection-item{
   
 
   .layout_right_map{
-    /* margin: 100px; */
+     margin: 100px; 
     height: 700px;
     width: 600px;
     margin-top: 200px;
     margin-bottom: 200px;
 
-  }
+  } */
     
 }

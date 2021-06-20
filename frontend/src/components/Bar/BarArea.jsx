@@ -3,6 +3,7 @@ import BarAreaComponent from './BarAreaComponent';
 import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { commaSeparated } from '../../utils';
+import { Height } from '@material-ui/icons';
 import SideNavFirst from "../SideNav/SideNavFirst";
 import {
     scaleLinear,
@@ -24,7 +25,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         left:140,
         top: 50,
         right: 80,
-        bottom: 100,
+        bottom: 50,
       };
 
 
@@ -92,17 +93,21 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         let windowHeight = window.screen.height;
     
         if(windowWidth >= 480){
-          windowWidth = windowWidth/2.2;
-          windowHeight = windowHeight/1.7;
-        }else{
-          windowWidth = windowWidth + 100;
+          windowWidth = windowWidth/2;
           windowHeight = windowHeight/2;
+        }else{
+          windowWidth = windowWidth + 200;
+          windowHeight = windowHeight;
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
        
         let innerHeight = height - margin.top - margin.bottom;
         const innerWidth = width - margin.left - margin.right;
-            svg.selectAll("*").remove();
+        const aspect = width / height;
+        const adjustedHeight = Math.ceil(width / aspect)*1.1;
+              svg.selectAll("*").remove();
+              svg.attr("preserveAspectRatio", "xMinYMin meet")
+              .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
         
         
         

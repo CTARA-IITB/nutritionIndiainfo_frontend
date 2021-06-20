@@ -3,6 +3,8 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import SideNavFirst from "../SideNav/SideNavFirst";
 import { commaSeparated } from "../../utils.js";
 import "./Trend.css";
+
+
 import {
   scaleLinear,
   max,
@@ -18,10 +20,10 @@ import {
 
 const tickLength = 8;
 const margin = {
-  left: 100,
-  top: 65,
-  right: 50,
-  bottom: 150,
+  left: 70,
+  top: 70,
+  right: 0,
+  bottom: 30,
 };
 
 
@@ -50,10 +52,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   const [data, setData] = useState(null);
   const svgRef = useRef();
-  
   const [check,setCheck] = useState(true);
 
   const trendWrapper = useRef();
+ 
   const dimensions = useResizeObserver(trendWrapper);
   const screen = useFullScreenHandle();
   let colorScale;
@@ -116,23 +118,33 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     let windowHeight = window.screen.height;
 
     if(windowWidth >= 480){
-      windowWidth = windowWidth/2.2;
-      windowHeight = windowHeight/1.7;
-    }else{
-      windowWidth = windowWidth + 100;
+      windowWidth = windowWidth/2;
       windowHeight = windowHeight/2;
+    }else{
+      windowWidth = windowWidth+200 ;
+      windowHeight = windowHeight;
     }
-    let { width, height } = {width:windowWidth,height:windowHeight}; 
+    const { width, height } = {width:windowWidth,height:windowHeight}; 
+    
+
+  const aspect = width / height;
+    const adjustedHeight = Math.ceil(width / aspect)*1.1;
+ 
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
+    console.log(width,innerWidth,innerHeight,height)
+   
+    
     svg.selectAll("*").remove();
-    const bar = svg
-        .attr("width", width)
-    		.attr("height", height)
-      	.append("g")
-    		.attr("transform",`translate(${margin.left},${margin.top})`);
+    svg.attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
     
-    
+// svg.attr("width", width)
+// .attr("height", height)
+    let bar = svg.append('g')
+      .attr("transform",`translate(${margin.left},${margin.top})`);
+
+
 
     if(data && data.length >0){
 
@@ -265,8 +277,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     
     bar.append("text")
     .attr("transform", "rotate(-0)")
-    .attr("y", 70 - margin.left)
-    .attr("x",40 - (height / 8))
+    .attr("y", 40- margin.left)
+    .attr("x",60 - (height / 8))
     .attr("dy", "1em")
     .style("font-size","12px")
     .style("font-weight","bold")
@@ -287,7 +299,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   }  
    
       
-  },[data,toggleStateBurden])
+  },[dimensions,data, toggleStateBurden])
 
 
 
@@ -305,7 +317,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
       else if(state === false){
         if(trend[0] != undefined)
-        trend[0].style.height = "65vh";
+        trend[0].style.height = "60vh";
       }
     }
   }
@@ -328,7 +340,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
-      <svg id="svgTrend" width="80%" height="160%" ref = {svgRef}></svg>
+      <svg id="svgTrend" height="100%" width="100%"   ref = {svgRef}></svg>
     </div>
     </div>
     </FullScreen>

@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
@@ -16,8 +15,8 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
 import "./Map.css";
- import { commaSeparated } from "../../utils.js";
- import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { commaSeparated } from "../../utils.js";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 export const Map = ({ 
@@ -43,7 +42,6 @@ export const Map = ({
   drillDirection,setDrillDirection
 
 }) => {
-
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -148,21 +146,18 @@ export const Map = ({
         }
       data = selDistrictsData;
     }
-    statusMsg ="Click on map to select state";
+    statusMsg = (toggleState)?'Click on map to select state':'';
   }
   else{
-    
+     data = selStateData;
     if(null!== selStateData && selStateData.length > 0)
     {
-      data = selStateData;
       if(level === 2){
-        if(drillDirection)
-          statusMsg ="Click on map to select district";
-       else
-          statusMsg=" Click on map to go back to India"
+        statusMsg=" Click on map to select distirct or click on back button go back to India"
       }else if(level === 3){
-        statusMsg=`Click on map to go back to state`
+        statusMsg=`Click on map to select district or click back button to go back to state`
       }
+    }
     if(selTimeperiod == NFHS5)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
@@ -175,13 +170,6 @@ export const Map = ({
       geometry = {type: "FeatureCollection",features}
       warning="Administrative Boundaries as per NFHS4(2015-16)"
     }
-  }
-  else{
-      if (selTimeperiod === NFHS5) // change state boundaries when timeperiod is NFHS5
-        geometry = boundaries.new_state;
-      else
-        geometry = boundaries.state;
-  }
   }
   select(".tooltip").remove();
 
@@ -211,8 +199,8 @@ export const Map = ({
     const adjustedHeight = Math.ceil(width / aspect);
 
     
-    if((level == 1 && null!= selIndiaData && selIndiaData.length > 0) || ((level == 2 || level == 3) && null  != selStateData && selStateData.length > 0))
-    {
+    // if((level == 1 && null!= selIndiaData && selIndiaData.length > 0) || ((level == 2 || level == 3) && null  != selStateData && selStateData.length > 0))
+    // {
     svg.selectAll('*').remove();
     svg.attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
@@ -223,11 +211,11 @@ export const Map = ({
       .style("font-size","13px")
       .style("font-weight","bold")
       .attr("dy", "-2em")
-      .attr('transform',`translate(${width/2},40)`);
+.attr("class","map_title")      .attr('transform',`translate(${width/2},40)`);
 
       svg.append("text").text(`${warning}`)
       .style("text-anchor","middle")
-      .style("font-size","10px")
+      .style("font-size","11px")
       .attr("dy", "-2.5em")
 
 
@@ -235,8 +223,16 @@ export const Map = ({
     if(width <= 480){
       title = title.style("font-size", (width * 0.0025) + "em")
     }
-    const projection = geoMercator().fitSize([width/1.9, adjustedHeight/1.1], geometry);
+    console.log(selArea)
+    //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
+    let projection;
+    if(selArea == 28 || selArea == 8 ){
+     projection = geoMercator().fitSize([width/1.9, adjustedHeight/1.1], geometry);
 
+    }
+    else{
+     projection = geoMercator().fitSize([width/1.2, adjustedHeight/1.1], geometry);
+    }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
     let mergedGeometry = addProperties(geojson, data);
@@ -401,7 +397,8 @@ export const Map = ({
         tooltip.style("opacity", .9);
         tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
           .style("left", event.clientX + "px")
-          .style("top", event.clientY - 30 + "px");
+          .style("top", event.clientY - 30 + "px")
+          .style("font-size","12px");
       }
     };
     if (unit == 1  && toggleStateBurden == true)
@@ -433,26 +430,21 @@ export const Map = ({
       .on('click', (i, d) => {
         if(toggleState){
           tooltip.style('opacity', 0);
-
-            if (typeof c2Value(d) != "undefined") {
+          if (typeof c2Value(d) != "undefined") {
+              areaChange(d.area_id.toString());
               if(level === 1){
-                areaChange(d.area_id.toString());
+                // console.log("LEVEL 2");
                 setLevel(2);
-                setDrillDirection(true);
-              }else if(level === 2 && drillDirection){
-                setIsLevelThree(true);
-                areaChange(d.area_id.toString());
+              }else if(level === 2){
                 setLevel(3);
+                // console.log("LEVEL 3"); 
+                setIsLevelThree(true);
               }else if(level === 3){
-                areaChange(""+parentArea);
-                setLevel(2);
-                setDrillDirection(false);
-
-              }else if(level === 2 && !drillDirection){
-                areaChange("1");
-                setLevel(1);
-                setDrillDirection(true);
+                setLevel(3);
+                // console.log("STILL IN LEVEL 3");
               }
+  
+           
             }
         }
     
@@ -618,16 +610,15 @@ export const Map = ({
 
       
     }
-  }
-  else{
-    svg.selectAll('*').remove();
-    const svg_2 = select(svgRef.current);
-    svg_2.append("text").text("No data: please select another survey")
-    .style("text-anchor", "middle")
-    .style("font-weight","bold")
-    .style("fill", "red")
-    .attr('transform',`translate(${width/2}, ${height/2})`);
-  }
+    if((level == 1 && (null== selIndiaData || selIndiaData.length == 0)) || ((level == 2 || level == 3) && (null  == selStateData || selStateData.length == 0)))
+     {
+      svg.append("text").text("No districts data: please select another survey")
+         .style("text-anchor", "middle")
+         .style("font-weight","bold")
+         .style("fill", "red")
+         .attr('transform',`translate(${width/2}, ${height/2})`);
+     }
+ 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit,geometry, dimensions, data, toggleStateBurden])
 
@@ -664,6 +655,7 @@ export const Map = ({
         })
     }
   }
+
   const handleBackButton = () =>{
     if(level === 3){
       // setLevel(2);
@@ -679,9 +671,8 @@ export const Map = ({
 
   let backButton;
   if(level !== 1)  
-  backButton = <Button className={`toggle_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'20px'}}/></Button> 
+    backButton = <Button className={`toggle_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'20px'}}/></Button> 
 
-    // backButton = <Button className={`req_button` }  active onClick={handleBackButton}  size="sm">Back</Button> 
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
@@ -689,7 +680,7 @@ export const Map = ({
       <div className="map" >
           
           <div  className="map_svg" ref={wrapperRef}>
-            <svg  id="svgMap" ref={svgRef} ></svg>
+            <svg  id="svgMap"  ref={svgRef} ></svg>
 
           </div>
     

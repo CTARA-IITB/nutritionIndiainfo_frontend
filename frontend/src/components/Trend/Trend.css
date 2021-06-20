@@ -31,6 +31,10 @@ div.tooltip2 {
   height: 100%;
   padding: 0;
 }
+#svgTrend{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .fullscreen_css {
   background-color: white;
 }

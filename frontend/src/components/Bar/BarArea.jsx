@@ -20,7 +20,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let stateAreaName;
     let datasets = [];
     let table=[];
-    let title, rotate;
+    let title;
     let sortedBarLabel =[];
     let sortedBarData = [];
     let maxWidth;
@@ -106,7 +106,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     
     if(toggleStateBurden === false){
         barGUnit = 'Number';  
-        rotate = 90;
     }
 
     //For One Decimel Precision    
@@ -192,8 +191,11 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
               align: 'end',
               formatter: function(value) {
                 return commaSeparated(decimelPrecision(value));
+              },
+              font: {
+                size: 11,
+              },
               }
-            }
         },
         tooltips:{
             displayColors:false,
@@ -205,10 +207,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
                     label = decimelPrecision(label); 
                     return commaSeparated(label);
                 },
-                // labelTextColor: function(context) {
-                //     return 'white';
-                // }
             },
+            bodyFont: 12,
             padding:10,
             backgroundColor: 'black',
             filter: function (tooltipItem) {
@@ -251,8 +251,9 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             xAxes: [{
                 stacked: true,
                 ticks: {
-                    autoSkip: false,
-                    minRotation: rotate,
+                    autoSkip:false,
+                    fontSize: 11,
+                    maxTicksLimit:4,
                     fontColor:"black",
                     beginAtZero: true,
                     callback: function(value) {

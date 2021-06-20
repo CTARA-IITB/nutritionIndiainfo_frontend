@@ -20,7 +20,7 @@ class BarAreaComponent extends React.PureComponent {
     else{
       return (
         <div id="BarArea">
-          <div id="statMsg">No data: please select another survey</div>
+          <div id="statMsg">No districts data: please select another survey</div>
           <HorizontalBar ref={this.componentRef} height={this.props.calculatedHeight}   data={this.props.data} options={this.props.options}/>
         </div>
       );

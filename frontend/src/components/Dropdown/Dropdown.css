@@ -1,7 +1,12 @@
 .dropdown-title {
   font-size: calc(50% + 0.5vw + 0.5vh);
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   color: black;
+}
+
+span.ant-select-selection-item{
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .button_fullscreen_trend {

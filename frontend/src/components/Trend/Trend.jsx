@@ -200,13 +200,13 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .tickFormat(function (d) {
           return commaSeparated(d);
       }))
-        .style('font-size',12);
+        .style('font-size',11);
 			
       let xaxis = bar.append("g")
       .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
-        .style('font-size',12)
+        .style('font-size',11)
         .attr("dy",()=>{
            return "-.5em"
         })
@@ -233,7 +233,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         			tooltip2.transition().duration(500).style("opacity", 1);
               tooltip2.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
           		.style("left", xScale(d.middle_date) + 50 + "px")
-          		.style("top", yScale(yValue(d)) + 100+"px");
+          		.style("top", yScale(yValue(d)) + 100+"px")
+              .style("font-size","12px");
               })
      .on('mouseout', ()=>{tooltip2.transition().duration(100).style("opacity", 0)});
       
@@ -250,7 +251,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("y", d => yScale(yValue(d)))
         .attr("dy", "-1em")
       	.style("text-anchor","middle")
-      	.style("font-size","10px")
+      	.style("font-size","11px")
         .text(function(d) { return d.timeperiod; });
     }else{
 
@@ -277,7 +278,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     bar.append("text")
     .attr("transform", "rotate(-0)")
     .attr("y", 40- margin.left)
-    .attr("x",50 - (height / 8))
+    .attr("x",60 - (height / 8))
     .attr("dy", "1em")
     .style("font-size","12px")
     .style("font-weight","bold")

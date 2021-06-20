@@ -95,10 +95,10 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
     async function savePdf() {
         const graph = document.getElementById(id);
-        const pdf = new jsPDF("l", "pt", [500, 300]);
+        const pdf = new jsPDF("l", "pt", [900, 800]);
         const pdfCanvas = document.createElement("canvas");
         pdfCanvas.setAttribute("width", 900);
-        pdfCanvas.setAttribute("height", 600);
+        pdfCanvas.setAttribute("height", 900);
         const dataURI = await svgAsPngUri(graph);
         pdf.addImage(dataURI, "PNG", 0, 0);
         pdf.save(imageNamePdf);

@@ -558,9 +558,10 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
               </Col>
 
     </Row>
-   
+{/* <div className="some-page-wrapper"> */}
 <div className="layout" id="layoutid">
-  <div className="layout_left">
+  <div className="row">
+    <div className="column">
   <div className="layout_left_trend" >
       {(isSelected  & selTimeperiod != "")?
       <Trend indicatorTrend = {indicatorTrend}
@@ -575,25 +576,9 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>
 
-    
-     <div className="layout_left_bar1">
-     {(isSelected  & selTimeperiod != "")?<BarArea
-      indicatorTrend = {indicatorTrend}
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      selArea={selArea} 
-      titleAreaName = {titleAreaName}
-      areaName = {areaName}
-      selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
-     </div>
-   </div>
-    <div className="layout_right">
-    <div className="layout_right_map">
+      </div>
+      <div className="column">
+      <div className="layout_right_map">
         {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -637,7 +622,32 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           map={map}
           /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>
-     <div className="layout_right_bar2">
+  
+     </div>
+   </div>
+   </div>
+   <div className="layout" id="layoutid1">
+   <div className="row">
+    <div className="column">
+    <div className="layout_left_bar1">
+     {(isSelected  & selTimeperiod != "")?<BarArea
+      indicatorTrend = {indicatorTrend}
+      graphTitle = {graphTitle}
+      graphTimeperiod = {graphTimeperiod}
+      graphUnit = {graphUnit}
+      selIndiaData={selIndiaData} 
+      level={level} 
+      selArea={selArea} 
+      titleAreaName = {titleAreaName}
+      areaName = {areaName}
+      selStateData = {selStateData}
+      toggleStateBurden = {toggleStateBurden}
+      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
+     </div>
+
+      </div>
+      <div className="column">
+    <div className="layout_right_bar2">
       {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
@@ -650,8 +660,13 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       toggleStateBurden = {toggleStateBurden}
       selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
-    </div>
+  
+     </div>
+   </div>
+
+
   </div>   
+  {/* </div> */}
    </>
     )
 }

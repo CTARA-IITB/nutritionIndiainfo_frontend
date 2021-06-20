@@ -5,6 +5,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import datalabels from 'chartjs-plugin-datalabels';
 import Chart from 'chart.js';
 import { commaSeparated } from '../../utils';
+import { Height } from '@material-ui/icons';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
@@ -279,13 +280,15 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     title=graphTitle + ', '+ titleAreaName + ', '+ chartTitle + ' ' + graphTimeperiod.split(" ")[1]; 
     // graph height
     let calculatedHeight=data.labels.length*15;
+    // let calculatedHeight=1;
+    // calculatedHeight*= data.labels.length*15
     calculatedHeight = (calculatedHeight < 450)?450:calculatedHeight;
-
+console.log(calculatedHeight)
     return (
-        <div>
+        <div style={{width:"100%", height:{calculatedHeight}}}>
             <FullScreen  className="fullscreen_css" handle={screen}>
                 <SideNavSecond table={table} id="BarArea" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarAreaComponent ref={componentRef}  data={data} options={options} calculatedHeight={calculatedHeight} title={title}/>
+                <BarAreaComponent  ref={componentRef}  data={data} options={options} calculatedHeight={calculatedHeight} title={title}/>
             </FullScreen>    
         </div>
     );

@@ -24,6 +24,13 @@ div.tooltip2 {
   /* width: 100%; */
 }
 
+.trend_svg {
+  /* background-color:grey; */
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
 .fullscreen_css {
   background-color: white;
 }

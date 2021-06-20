@@ -17,6 +17,7 @@ import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
 import "./Map.css";
  import { commaSeparated } from "../../utils.js";
+ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 export const Map = ({ 
@@ -190,12 +191,33 @@ export const Map = ({
 
   useEffect(() => {
     const svg = select(svgRef.current);
-    const legend = select(svgRef.current)
-    const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
+
+    // const legend = select(svgRef.current)
+    let windowWidth = window.screen.width;
+    let windowHeight = window.screen.height;
+
+    if(windowWidth >= 480){
+      windowWidth = windowWidth/2;
+      windowHeight = windowHeight/2;
+    }else{
+      windowWidth = windowWidth+100 ;
+      windowHeight = windowHeight;
+    }
+    const { width, height } = {width:windowWidth,height:windowHeight}; 
+    
+    // const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
+
+  const aspect = width / height;
+    const adjustedHeight = Math.ceil(width / aspect);
+
+    
     if((level == 1 && null!= selIndiaData && selIndiaData.length > 0) || ((level == 2 || level == 3) && null  != selStateData && selStateData.length > 0))
     {
     svg.selectAll('*').remove();
+    svg.attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
+   
     let title = svg.append("text").text(`${mapTitle}`)
       .style("text-anchor","middle")
       .style("font-size","13px")
@@ -213,7 +235,7 @@ export const Map = ({
     if(width <= 480){
       title = title.style("font-size", (width * 0.0025) + "em")
     }
-    const projection = geoMercator().fitSize([width/1.9, height], geometry);
+    const projection = geoMercator().fitSize([width/1.9, adjustedHeight/1.1], geometry);
 
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
@@ -310,7 +332,7 @@ export const Map = ({
     let colorScale;
   let colorScale_new;
     let colorScale2;
-    let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
+    let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]; 
     if (unit == 1  && toggleStateBurden == true)
     {
     if(indicatorSense == 'Positive')
@@ -386,6 +408,8 @@ export const Map = ({
     {  
     svg
       .selectAll(".polygon")
+      .attr("width", width)
+    		.attr("height", height)
       .data(mergedGeometry)
       .join("path").attr("class", "polygon")
       .style("fill", d => {
@@ -435,7 +459,7 @@ export const Map = ({
       })
   
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(130,50)`);
+      .attr('transform',`translate(100,50)`);
 
    
 
@@ -494,7 +518,7 @@ export const Map = ({
     
       })
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(130,50)`);
+      .attr('transform',`translate(100,50)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -527,7 +551,7 @@ export const Map = ({
 
         }
         let r,sw;
-        if(height <= 400){
+        if(height <= 550){
         r = .8;
         }
         else if(height > 800){
@@ -550,7 +574,7 @@ export const Map = ({
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
           .style('fill-opacity',0.8)
-          .attr('transform',`translate(130,50)`)
+          .attr('transform',`translate(100,50)`)
       
         
    
@@ -560,9 +584,9 @@ export const Map = ({
 
     }
 
-    legend.append("g")
+    svg.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width-100},${height-80})`)
+        .attr("transform", `translate(${width-100},${adjustedHeight-220})`)
 
     let formatter = format(".1f");
     let myLegend;
@@ -570,7 +594,7 @@ export const Map = ({
     if ((unit == 1  && toggleStateBurden == false) || unit == 2) 
     {
       
-      legend.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");
+      svg.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");
     }
     else{
        if (!arrsuw.includes(selIndicator)) {
@@ -578,7 +602,7 @@ export const Map = ({
       .labelFormat(formatter)
       .title(`${unitName}`)
       .titleWidth(180)
-      .scale(colorScale);
+      .scale(colorScale_new);
     } 
     else{
       myLegend = legendColor()
@@ -588,7 +612,8 @@ export const Map = ({
       .scale(colorScale_new);
     }
 
-      legend.select(".legendQuant")
+      svg.select(".legendQuant")
+     
       .call(myLegend);
 
       
@@ -625,7 +650,7 @@ export const Map = ({
       }
       else if(state === false){
         if(map[0] != undefined){}
-        map[0].style.height = "65vh";
+        map[0].style.height = "60vh";
 
       }
     }
@@ -639,22 +664,39 @@ export const Map = ({
         })
     }
   }
+  const handleBackButton = () =>{
+    if(level === 3){
+      // setLevel(2);
+      // console.log("LEVEL 2");
+      areaChange(""+parentArea);
+      // areaChange()
+    }
+    if(level === 2){
+      // console.log("LEVEL 1"); 
+      areaChange("1");
+    }
+  }
 
+  let backButton;
+  if(level !== 1)  
+  backButton = <Button className={`toggle_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'20px'}}/></Button> 
+
+    // backButton = <Button className={`req_button` }  active onClick={handleBackButton}  size="sm">Back</Button> 
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
       <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
-      <div className="map">
+      <div className="map" >
           
           <div  className="map_svg" ref={wrapperRef}>
-            <svg  id="svgMap" width="120%" height="150%"  ref={svgRef} ></svg>
+            <svg  id="svgMap" ref={svgRef} ></svg>
 
           </div>
     
     <div className="map_req">
       <div className="map_req_button">
         {switchButton}
-        
+        {backButton}
       </div>
       
       <div className="map_req_text">

@@ -101,7 +101,7 @@ div.tooltip {
 }
 
 .toggle_button{
-  margin-left: -400px;
+  /* margin-left: -400px; */
   padding: 1px 1px;
   font-size: 1px;
   font-family: Arial, Helvetica, sans-serif;

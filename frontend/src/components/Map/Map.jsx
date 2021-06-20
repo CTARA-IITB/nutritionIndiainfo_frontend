@@ -197,7 +197,7 @@ export const Map = ({
   const aspect = width / height;
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
  
-   
+   console.log(width)
    
     
     svg.selectAll("*").remove();
@@ -574,10 +574,15 @@ export const Map = ({
       }
 
     }
-
+if(width > 680){
     svg.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width-100},${adjustedHeight-220})`)
+        .attr("transform", `translate(${width-100},${adjustedHeight-220})`)}
+        else{
+          svg.append("g")
+          .attr("class", "legendQuant")
+            .attr("transform", `translate(${width-(width-100)},${adjustedHeight- 220})`)}
+        
 
     let formatter = format(".1f");
     let myLegend;

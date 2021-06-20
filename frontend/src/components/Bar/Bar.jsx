@@ -19,10 +19,10 @@ import { commaSeparated } from '../../utils';
     const svgRef = useRef();
     const trendWrapper = useRef();
     const margin = {
-        left:140,
-        top: 50,
-        right: 80,
-        bottom: 70,
+      left:160,
+      top: 50,
+      right: 80,
+      bottom: 50,
       };
     const [data, setData] = useState(null);
 
@@ -107,21 +107,18 @@ import { commaSeparated } from '../../utils';
           windowHeight = windowHeight/2;
         }else{
           windowWidth = windowWidth + 200;
-          windowHeight = windowHeight/2;
+          windowHeight = windowHeight;
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
-        const innerHeight = height - margin.top - margin.bottom;
+       
+        let innerHeight = height - margin.top - margin.bottom;
         const innerWidth = width - margin.left - margin.right;
-        
-
-  const aspect = width / height;
-  const adjustedHeight = Math.ceil(width / aspect)*1.1;
-        svg.selectAll("*").remove();
-        svg.attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
+        const aspect = width / height;
+        const adjustedHeight = Math.ceil(width / aspect)*1.1;
+              svg.selectAll("*").remove();
+              svg.attr("preserveAspectRatio", "xMinYMin meet")
+              .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
         const bar = svg
-                // .attr("width", width)
-                .attr("height", height)
                 .append("g")
                 .attr("transform",`translate(${margin.left},${margin.top})`);
         
@@ -271,7 +268,7 @@ import { commaSeparated } from '../../utils';
         <SideNavFirst table={table} id="svgGBar" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
         <div className="gbar">
           <div className="gbar_svg" ref={trendWrapper}>
-          <svg id="svgGBar" width="80%" height="160%" ref = {svgRef}></svg>
+          <svg id="svgGBar" ref = {svgRef}></svg>
         </div>
         </div>
         </FullScreen>

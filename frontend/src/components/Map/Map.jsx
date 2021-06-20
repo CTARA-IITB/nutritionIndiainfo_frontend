@@ -226,11 +226,11 @@ export const Map = ({
     //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
     if(selArea == 28 || selArea == 8 ){
-     projection = geoMercator().fitSize([width/1.9, adjustedHeight/1.1], geometry);
+     projection = geoMercator().fitSize([width/1.9, adjustedHeight/1.2], geometry);
 
     }
     else{
-     projection = geoMercator().fitSize([width/1.2, adjustedHeight/1.1], geometry);
+     projection = geoMercator().fitSize([width/1.2, adjustedHeight/1.2], geometry);
     }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;

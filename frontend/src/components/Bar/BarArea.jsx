@@ -22,7 +22,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     const svgRef = useRef();
     const trendWrapper = useRef();
     const margin = {
-        left:140,
+        left:160,
         top: 50,
         right: 80,
         bottom: 50,

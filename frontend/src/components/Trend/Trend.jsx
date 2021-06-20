@@ -20,7 +20,7 @@ import {
 
 const tickLength = 8;
 const margin = {
-  left: 60,
+  left: 70,
   top: 70,
   right: 0,
   bottom: 30,

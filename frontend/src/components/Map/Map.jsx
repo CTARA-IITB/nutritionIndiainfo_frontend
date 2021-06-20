@@ -184,24 +184,23 @@ export const Map = ({
     let windowWidth = window.screen.width;
     let windowHeight = window.screen.height;
 
-    if(windowWidth >= 480){
+     if(windowWidth >= 480){
       windowWidth = windowWidth/2;
       windowHeight = windowHeight/2;
     }else{
-      windowWidth = windowWidth+100 ;
+      windowWidth = windowWidth+200 ;
       windowHeight = windowHeight;
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     
-    // const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
 
   const aspect = width / height;
-    const adjustedHeight = Math.ceil(width / aspect);
-
+    const adjustedHeight = Math.ceil(width / aspect)*1.1;
+ 
+   
+   
     
-    // if((level == 1 && null!= selIndiaData && selIndiaData.length > 0) || ((level == 2 || level == 3) && null  != selStateData && selStateData.length > 0))
-    // {
-    svg.selectAll('*').remove();
+    svg.selectAll("*").remove();
     svg.attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 

@@ -73,6 +73,7 @@ span.ant-select-selection-item{
 
 .layout_right_bar2 {
   /* background-color:green; */
+  margin-top: 100px;
   width: 100%;
   height: 50%;
 }

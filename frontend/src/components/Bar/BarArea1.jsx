@@ -1,7 +1,15 @@
 import React, { useRef, useEffect,useState} from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import SideNavSecond from "../SideNav/SideNavSecond";
-import * as d3 from 'd3';
+import {
+    scaleLinear,
+    scaleBand,
+    max,
+    select,
+    axisLeft,
+    axisBottom
+  } from 'd3';
+import { commaSeparated } from '../../utils';
 import './BarArea.css'
 
 const width = window.screen.width/2
@@ -9,7 +17,7 @@ const height = window.screen.height/2
 const barSize = 13
 const margin = {
     left: 160,
-    top: 120,
+    top: 100,
     right: 60,
     bottom: 15,
 };
@@ -17,14 +25,11 @@ const margin = {
 function BarArea1({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) {
 
     const svgRef = useRef();
+    const trendWrapper = useRef();
     const screen = useFullScreenHandle();
     const [data, setData] = useState(null);
     const [table,setTable] = useState(null);
 
-    const innerHeight =  height - margin.top - margin.bottom;
-    const innerWidth = width - margin.left - margin.right -165
-
-    let stateDataValue,stateAreaName;
     let colorScale ='#eda143';
 
     let arrObese = [91,95,104,92,96,105,21];
@@ -45,84 +50,39 @@ function BarArea1({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selA
 
     let barGUnit = graphUnit;
 
-    useEffect(()=>{
+    function decimelPrecision(d){
+        let oneDecimel;
+        if(typeof d !== 'undefined'){
+            if(toggleStateBurden === false){
+                return oneDecimel = d;
+            }
+            else{
+                oneDecimel = d.toFixed(1);  
+                return oneDecimel;
+            }
+        }
+    } 
 
-        let cleanData = [];
-        let barLabel=[];
+    useEffect(()=>{
         let barData=[];
-        let cleanTable = [];
         
         if(selIndiaData && level=="1" ){
-        
-            selIndiaData.map(i=>{
-                if(toggleStateBurden === true){
-                    if(!isNaN(i.data_value)){
-                        barLabel.push(i.area_name)
-                        barData.push(+i.data_value)
-                    }
-                }      
-                else{
-                    if(!isNaN(i.data_value_num)){
-                        barLabel.push(i.area_name)
-                        barData.push(+i.data_value_num)
-                    }
-                }
-                
+            selIndiaData.map(d=>{
+                barData.push(d);
             })
         }        
         if(selStateData && (level=="2" || level=="3")){
-            for(let j=0;j<selIndiaData.length;j++){
-    
-                if(+selArea===selIndiaData[j].area_id && selIndiaData[j].area_name!==areaName){ 
-    
-                    if(toggleStateBurden === true){
-                        if(!isNaN(selIndiaData[j].data_value)){
-                            stateDataValue=selIndiaData[j].data_value;
-                            stateAreaName=selIndiaData[j].area_name;
-                        }
-                        
-                    }
-                    else{
-                        if(!isNaN(selIndiaData[j].data_value_num)){
-                            stateDataValue=selIndiaData[j].data_value_num;
-                            stateAreaName=selIndiaData[j].area_name;
-                        }
-                    }
-                   
-                    barLabel.push(stateAreaName)
-                    barData.push(stateDataValue)
+            selIndiaData.map(d=>{
+                if(+selArea===d.area_id || d.area_name!==areaName){ 
+                    barData.push(d);   
                 }           
-            }
-            selStateData.map(i=>{
-                if(i.area_name!==areaName){
-                    if(toggleStateBurden === true){
-                        if(!isNaN(i.data_value)){
-                            barLabel.push(i.area_name)
-                            barData.push(+i.data_value)
-                        }
-                    }      
-                    else{
-                        if(!isNaN(i.data_value_num)){
-                            barLabel.push(i.area_name)
-                            barData.push(+i.data_value_num)
-                        }
-                    }
-                }
             })
-        }     
-            
-        if(toggleStateBurden === false)
-        barGUnit = 'Number';
-
-        // table details    
-        for(var i=0;i<barLabel.length;i++){
-            cleanTable.push({
-                area:barLabel[i],
-                data:+barData[i],
+            selStateData.map(d=>{
+               barData.push(d);
             })
-        }   
-        // sort the table
-        const compareObjects=(object1, object2, key)=>{
+        }
+        
+        const compareObjects=(object1, object2)=>{
             const obj1 = object1.data
             const obj2 = object2.data
 
@@ -134,58 +94,127 @@ function BarArea1({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selA
             }
             return 0
         }
-        cleanTable.sort((d1, d2) => {
+        barData.sort((d1, d2) => {
             return compareObjects(d1, d2,)
         })
-
-        cleanTable.map(i=>{
-            cleanData.push({
-                area:i.area,
-                data:+i.data
-            })
-        })
-        setTable(cleanTable);
-        setData(cleanData);
-
-    },[])   
+       
+        setData(barData);
+        console.log(barData,'')
+        
+    },[])
     
     useEffect(()=>{
-        if(data){
-            console.log(data)
-            const svg = d3.select(svgRef.current)
+        
+        select(".tooltip3").remove();
+    
+        let tooltip3 = select(".trend_svg").append("div")
+        .attr("class", "tooltip2")
+        .style("opacity", 0);
+    
+        const svg = select(svgRef.current);
+        let windowWidth = window.screen.width;
+        let windowHeight = window.screen.height;
+    
+        if(windowWidth >= 480){
+          windowWidth = windowWidth/2.2;
+          windowHeight = windowHeight/1.7;
+        }else{
+          windowWidth = windowWidth + 100;
+          windowHeight = windowHeight/2;
+        }
+        let { width, height } = {width:windowWidth,height:windowHeight}; 
 
-            var x = d3.scaleLinear().range([0, innerWidth]);
-            var y = d3.scaleBand();
+        const innerHeight = height - margin.top - margin.bottom;
+        const innerWidth = width - margin.left - margin.right;
 
+        svg.selectAll("*").remove();
+        const bar = svg
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform",`translate(${margin.left},${margin.top})`);
 
-            const g = svg.append('g')
-                        .attr('transform',`translate(${margin.left},${margin.top})`)
+        let barTitle;
+        
+        if(toggleStateBurden == true){
+            barTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
+        }
+        else {
+            barTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
+        }
 
-            x.domain([0, d3.max(data, function(d) { return d.data; })]);
-            y.domain(data.map(function(d) { return d.area; })).padding(0.2)
-                .range([barSize*data.length, 0]);
+        // if(data && data.length>0){
+            let xValue;
+            const yValue = d => d.area_name;
+            if(toggleStateBurden)
+                xValue = d => d.data_value;
+            else{
+                xValue = d => d.data_value_num;
+                graphUnit ='Number';
+            }
+        // }
+        const xScale = scaleLinear()
+            .domain([0, max(data,xValue)])
+            .range([0, innerWidth])
 
+        const yScale = scaleBand()
+            .domain(data.map(d=>{return d.area_name}))
+            .range([0,innerHeight])
+            .padding(0.1);;
 
-            g.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + (barSize*data.length) + ")")
-                .call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d / 1000); }).tickSizeInner([-innerHeight]));
+        bar.append("text")
+            .attr('x',width/2 -90)
+            .attr('y',0)
+            .style("text-anchor","middle")
+            .style("font-size","13px")
+            .style("font-weight","bold")
+            .attr("dy", "-2em")
+            .text(`${barTitle}`)
+          
+        bar.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "middle")
+            .attr("x", innerWidth/2)
+            .attr("y", innerHeight + 50)
+            .text(`${graphUnit}`)
+            .style('font-size',13)
 
-            g.append("g")
-                .attr("class", "y axis")
-                .call(d3.axisLeft(y));
+        let chart = bar.selectAll("rect").data(data);   
 
-            g.selectAll(".bar")
-                .data(data)
-                .enter().append("rect")
-                .attr("fill", colorScale)
-                .attr("class", "bar")
-                .attr("x", 0)
-                .attr("height", y.bandwidth())
-                .attr("y", function(d) { return y(d.area); })
-                //.attr("font-size",".5px")
-                .attr("width", function(d) { return x(d.data); })
-        }    
+        chart.enter().append("rect")
+            .attr('y', d => yScale(yValue(d)))
+            .attr('width', d => {return xScale(xValue(d))})
+            .attr('height', yScale.bandwidth())
+            .attr("fill", colorScale)
+      	    .on('mouseover', (i,d) => {
+        		tooltip3.transition().duration(500).style("opacity", 1);
+                tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
+          		.style("left", width + xScale(xValue(d)) + margin.left + 30+ "px")
+          		.style("top", height + yScale(yValue(d))+ margin.top +30+"px");
+                })
+            .on('mouseout', ()=>{tooltip3.transition().duration(500).style("opacity", 0)});
+            
+        chart
+            .enter().append("text")
+            .text(d => commaSeparated(decimelPrecision(xValue(d))))
+            .attr('x', d => xScale(xValue(d)))
+            .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
+            .attr("font-family", "sans-serif")
+            .attr("dy", ".3em")
+            .attr("dx", ".3em")
+            .attr("font-size", "11px")
+            .attr("fill", "black")
+        
+        bar.append("g")
+            .attr("class","axis")
+            .call(axisLeft(yScale).tickSize(0))
+            .style('font-size',11);	
+
+        bar.append("g")
+            .attr("transform",`translate(0, ${innerHeight})`)
+            .attr("class","axis")
+            .call(axisBottom(xScale).ticks(3))
+            .style('font-size',11)    
 
     },[data,toggleStateBurden])
 
@@ -206,7 +235,7 @@ function BarArea1({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selA
         <>
             <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
             <SideNavSecond table={table} id="BarArea" screen={screen} timePeriod={graphTimeperiod} componentRef={svgRef} />
-                <div className="bar_area">
+                <div className="bar_area" ref={trendWrapper}>
                     <svg id="BarArea" width={width} height={height+500} ref={svgRef}/>
                 </div>
             </FullScreen>

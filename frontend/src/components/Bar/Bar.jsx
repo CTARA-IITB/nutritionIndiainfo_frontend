@@ -25,7 +25,7 @@ import { commaSeparated } from '../../utils';
         bottom: 100,
       };
     const [data, setData] = useState(null);
-
+   
 
     let colorScale ='#eda143';
     let lightColor = '#F7D9B3';
@@ -92,6 +92,7 @@ import { commaSeparated } from '../../utils';
 
 
       useEffect(()=>{
+        
         select(".tooltip3").remove();
     
         let tooltip3 = select(".trend_svg").append("div")
@@ -130,7 +131,7 @@ import { commaSeparated } from '../../utils';
         
         if(data && data.length >0){
     
-    
+          
         const yValue = d => d.subgroup_name;
         let xValue;
           if(toggleStateBurden)
@@ -140,7 +141,7 @@ import { commaSeparated } from '../../utils';
           xValue = d => d.data_value_num;
           graphUnit ='Number';
           }
-    
+
           const xScale = scaleLinear()
           .domain([0, max(data, xValue)])
           .range([0, innerWidth])
@@ -235,13 +236,13 @@ import { commaSeparated } from '../../utils';
 
 
     const checkchange = (state,handle)=>{
-        // if(trend){
+        // if(gbar){
         //   if(state === true){
-        //     trend[0].style.height = "100vh";
+        //     gbar[0].style.height = "100vh";
         //   }
         //   else if(state === false){
-        //     if(trend[0] != undefined)
-        //     trend[0].style.height = "65vh";
+        //     if(gbar[0] != undefined)
+        //     gbar[0].style.height = "65vh";
         //   }
         // }
       }
@@ -251,7 +252,7 @@ import { commaSeparated } from '../../utils';
   if(data ){
     for(var i=0;i<data.length;i++){
       table.push({
-        timeperiod:data[i].timeperiod,
+        timeperiod:data[i].subgroup_name,
         data:+data[i].data_value
       })
     }

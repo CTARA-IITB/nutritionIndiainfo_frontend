@@ -7,7 +7,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import Share  from "../Share/Share";
+import Share  from "../Share/ShareImage";
 import {saveSvgAsPng,svgAsPngUri}  from 'save-svg-as-png';
 import jsPDF from 'jspdf';
 import { CSVLink } from "react-csv";

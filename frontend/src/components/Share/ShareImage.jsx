@@ -1,10 +1,9 @@
 import React,{useState,useEffect} from "react";
 import "./Share.css";
-import {TwitterShareButton, WhatsappShareButton} from "react-share";
-import {TwitterIcon,WhatsappIcon} from "react-share";
+import Share from 'react-native-share';
 import * as htmlToImage from "html-to-image";
 
-const Share =({id})=> {
+const ShareImage =({id})=> {
 
     const [imageUrl,setImageUrl]= useState();
 
@@ -20,12 +19,22 @@ const Share =({id})=> {
             console.error('oops, something went wrong!', error);
         }); 
     })
+    const customShare = async()=>{
+        const shareOptions={
+            message:"India map",
+            url: {imageUrl}
+        }
+        try{
+                const shareResponse = await Share.open(shareOptions);
+        }catch{
+            console.log('Error =>',error);
+        }
+    }
+
     return (
     <div className="container">
-        <TwitterShareButton url={imageUrl}>
-            <TwitterIcon size={40} round />
-        </TwitterShareButton>
+        <button onClick={customShare}>Share</button> 
     </div>
   );
 }
-export default Share;
+export default ShareImage;

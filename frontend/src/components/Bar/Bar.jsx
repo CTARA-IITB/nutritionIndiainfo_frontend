@@ -22,7 +22,7 @@ import { commaSeparated } from '../../utils';
         left:140,
         top: 50,
         right: 80,
-        bottom: 50,
+        bottom: 70,
       };
     const [data, setData] = useState(null);
 
@@ -107,7 +107,7 @@ import { commaSeparated } from '../../utils';
           windowHeight = windowHeight/2;
         }else{
           windowWidth = windowWidth + 200;
-          windowHeight = windowHeight;
+          windowHeight = windowHeight/2;
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
         const innerHeight = height - margin.top - margin.bottom;
@@ -120,7 +120,7 @@ import { commaSeparated } from '../../utils';
         svg.attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
         const bar = svg
-                .attr("width", width)
+                // .attr("width", width)
                 .attr("height", height)
                 .append("g")
                 .attr("transform",`translate(${margin.left},${margin.top})`);

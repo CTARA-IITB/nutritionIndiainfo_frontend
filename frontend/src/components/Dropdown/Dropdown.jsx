@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from "react";
-import {Row, Col } from 'react-bootstrap';
+import {Row, Col,ToggleButtonGroup,ToggleButton } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
 import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns } from '../../utils';
@@ -213,13 +213,15 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         }
 
         const burdenChange = async(e) =>{
-          if(e === "1"){
-            setSelBurden(e);
+          let x = e[1];
+          console.log(x)
+          if(x === 1){
+            setSelBurden(x);
             setToggleStateBurden(true);
           }
-          else{
+          else if(x==2){
             setToggleStateBurden(false);
-            setSelBurden(e);
+            setSelBurden(x);
           }
 
         }
@@ -432,7 +434,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           burdenDropdown =    
             <Col>
 
-            <span className="dropdown-title">Prevalence/Burden</span>
+            {/* <span className="dropdown-title">Prevalence/Burden</span>
             <TreeSelect showSearch
               optionFilterProp="children"
               className='dropdown'
@@ -444,7 +446,12 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
               filterTreeNode
               treeNodeFilterProp ='title'
               onChange = {burdenChange}
-            />
+            /> */}
+
+        <ToggleButtonGroup type="checkbox" value={selBurden} onChange={burdenChange}>
+          <ToggleButton className={`tg_button ${!toggleStateBurden  && 'tg_button_light'}` } value={1}>Prevelence</ToggleButton>
+          <ToggleButton className={`tg_button ${toggleStateBurden  && 'tg_button_light'}` } value={2}>Burden</ToggleButton>
+        </ToggleButtonGroup>
             </Col>
         }
         else{

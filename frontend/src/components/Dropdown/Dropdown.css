@@ -70,6 +70,18 @@ span.ant-select-selection-item{
   height: 100%;
 }
 
+
+.tg_button{
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 20px;
+  background-color: #AF5907 !important;
+  border-color: #AF5907 !important;
+}
+
+.tg_button_light{
+  background-color: #AF590780 !important;
+  border-color: #AF590780 !important;
+}
 #msg{
   text-align: center;
   font-weight: bold;

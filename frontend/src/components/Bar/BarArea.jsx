@@ -71,15 +71,28 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
     useEffect(() => {
         let cleanData = [];
+
         if(level === 1){
-            let sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+            let sortedIndiaData;
+            if(toggleStateBurden)
+                sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+            else{
+                selIndiaData = selIndiaData.filter(d => typeof d.data_value_num != 'undefined')
+                sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
+            }
             setData(sortedIndiaData);
         }
         else if(level === 2 || level === 3){
-            let sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+            let sortedStateData;
+            if(toggleStateBurden)
+                sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+            else{
+                selStateData = selStateData.filter(d => typeof d.data_value_num != 'undefined')
+                sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
+            }
             setData(sortedStateData)
         }
-    }, []);
+    }, [toggleStateBurden]);
     console.log(data);
     useEffect(()=>{
         select(".tooltip3").remove();

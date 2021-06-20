@@ -624,8 +624,8 @@ export const Map = ({
   let switchButton;
 
   if(switchDisplay && level === 1){
-    switchButton = <div><Button className={`req_button ${toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
-    <Button className={`req_button ${!toggleState  && 'req_button_light'}` } onClick={()=>{ setToggleState(false)}} size="sm">District Map</Button> </div>
+    switchButton = <div><Button className={`req_button ${!toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
+    <Button className={`req_button ${toggleState  && 'req_button_light'}` } onClick={()=>{ setToggleState(false)}} size="sm">District Map</Button> </div>
   }else{
     switchButton= null;
   }

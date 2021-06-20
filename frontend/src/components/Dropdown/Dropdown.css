@@ -47,8 +47,9 @@ span.ant-select-selection-item{
 .layout_left_bar1 {
   /* background-color:red; */
   width: 100%;
-  min-height: 50%;
-  height: 100%;
+  /* min-height: 50%; */
+  margin-top:100px;
+  height: 200%;
 
   text-align: center;
   

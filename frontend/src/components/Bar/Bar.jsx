@@ -92,9 +92,9 @@ import { commaSeparated } from '../../utils';
 
 
       useEffect(()=>{
-        select(".tooltip3").remove();
+        select(".tooltip4").remove();
     
-        let tooltip3 = select(".trend_svg").append("div")
+        let tooltip4 = select(".trend_svg").append("div")
         .attr("class", "tooltip2")
         .style("opacity", 0);
     
@@ -166,8 +166,7 @@ import { commaSeparated } from '../../utils';
             .attr("x", innerWidth/2)
             .attr("y", innerHeight + 50)
             .text(`${graphUnit}`)
-            .style('font-size',13)
-            ;
+            .style('font-size',13);
    
             
       let chart = bar.selectAll("rect").data(data);
@@ -185,12 +184,12 @@ import { commaSeparated } from '../../utils';
       	.attr('height', yScale.bandwidth())
         .attr("fill", fillRect)
       	.on('mouseover', (i,d) => {
-        			tooltip3.transition().duration(500).style("opacity", 1);
-              tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
+        			tooltip4.transition().duration(500).style("opacity", 1);
+              tooltip4.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
           		.style("left", width + xScale(xValue(d)) + margin.left + 30+ "px")
           		.style("top", height + yScale(yValue(d))+ margin.top +30+"px");
               })
-     .on('mouseout', ()=>{tooltip3.transition().duration(500).style("opacity", 0)});
+     .on('mouseout', ()=>{tooltip4.transition().duration(500).style("opacity", 0)});
 
      chart
           .enter().append("text")
@@ -251,7 +250,7 @@ import { commaSeparated } from '../../utils';
   if(data ){
     for(var i=0;i<data.length;i++){
       table.push({
-        timeperiod:data[i].timeperiod,
+        timeperiod:data[i].subgroup_name,
         data:+data[i].data_value
       })
     }

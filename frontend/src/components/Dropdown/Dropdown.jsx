@@ -11,7 +11,7 @@ import { Map } from "../../components/Map/Map";
 import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Switch } from 'antd';
-import {BarArea} from "../../components/Bar/BarArea";
+import BarArea1 from "../../components/Bar/BarArea1";
 import {Bar} from "../../components/Bar/Bar";
 import {EARLY_CHILDHOOD} from "../../constants"
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
@@ -582,7 +582,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
     
      <div className="layout_left_bar1">
-     {(isSelected  & selTimeperiod != "")?<BarArea
+     {(isSelected  & selTimeperiod != "")?<BarArea1
       indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}

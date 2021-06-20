@@ -28,3 +28,17 @@
   margin-top: 12%;
 
 }
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #D4D8DA;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+/* .x path {
+display: none;
+
+} */

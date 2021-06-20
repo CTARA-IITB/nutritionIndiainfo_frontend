@@ -511,15 +511,14 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 value={selArea}
                 onFocus={()=>setOpenDropdown(true)}
                 onBlur={() => setOpenDropdown(false)}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-               
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}    
                 showSearch	= {true}
-                treeData={(filterDropdownValue.length !==0)?filterDropdownValue:areaDropdownOpt}
+                treeData={areaDropdownOpt}
                 treeDefaultExpandAll={true}
+                keepChildrenOnSearch = {true}
                 ref = {treeRef}
                 open={openDropdown}
-            filterTreeNode
-
+                filterTreeNode
                 treeNodeFilterProp ='title'
                 onChange={areaChange}
               />

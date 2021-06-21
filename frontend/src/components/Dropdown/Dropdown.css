@@ -52,7 +52,7 @@ span.ant-select-selection-item{
   flex-basis: 100%;
   flex: 1;
   overflow: hidden;
-  height: 60vh;
+
 
 }
 
@@ -104,7 +104,12 @@ width: 100%;
   height: 100%;
 }
 
-
+#row1{
+ height: 60%;
+}
+#row2{
+ height: 40%;
+}
 
 @media (max-width: 790px) {
   .layout {
@@ -154,10 +159,14 @@ overflow-x: auto;
 
 
   }
-.row{
+#row1{
    display: flex;
-   flex-direction: column;
+   flex-direction: column-reverse;
  }
+ #row2{
+  display: flex;
+  flex-direction: column;
+}
   /* .layout_left_trend {
     margin-top: 100px;
   }

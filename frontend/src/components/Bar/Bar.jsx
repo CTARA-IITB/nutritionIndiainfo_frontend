@@ -22,7 +22,7 @@ import { commaSeparated } from '../../utils';
       left:160,
       top: 50,
       right: 80,
-      bottom: 50,
+      bottom: 30,
       };
     const [data, setData] = useState(null);
 
@@ -268,7 +268,7 @@ import { commaSeparated } from '../../utils';
         <SideNavFirst table={table} id="svgGBar" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
         <div className="gbar">
           <div className="gbar_svg" ref={trendWrapper}>
-          <svg id="svgGBar" ref = {svgRef}></svg>
+          <svg id="svgGBar" height="50%"  ref = {svgRef}></svg>
         </div>
         </div>
         </FullScreen>

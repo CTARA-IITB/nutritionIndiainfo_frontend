@@ -574,14 +574,14 @@ export const Map = ({
       }
 
     }
-if(width > 680){
+if(width < 680 && selArea == 1){
     svg.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width-100},${adjustedHeight-220})`)}
+        .attr("transform", `translate(${width-100},${adjustedHeight-450})`)}
         else{
           svg.append("g")
           .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-(width-100)},${adjustedHeight- 220})`)}
+            .attr("transform", `translate(${width-100},${adjustedHeight- 220})`)}
         
 
     let formatter = format(".1f");

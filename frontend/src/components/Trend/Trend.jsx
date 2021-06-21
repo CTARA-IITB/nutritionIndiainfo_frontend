@@ -122,7 +122,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       windowHeight = windowHeight/2;
     }else{
       windowWidth = windowWidth+200 ;
-      windowHeight = windowHeight;
+      windowHeight = windowHeight/1.5;
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     
@@ -311,6 +311,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
  
   
   const checkchange = (state,handle)=>{
+  
     if(trend){
       if(state === true){
         trend[0].style.height = "100vh";
@@ -340,7 +341,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
-      <svg id="svgTrend" height="100%" width="100%"   ref = {svgRef}></svg>
+      <svg id="svgTrend"  ref = {svgRef}></svg>
     </div>
     </div>
     </FullScreen>

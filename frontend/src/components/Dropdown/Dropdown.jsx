@@ -466,7 +466,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
     return (
       <>
-      <Row className=' mt-3 mb-3'>
+      <Row className=' mt-3 mb-3 m-1'>
       <Col>
 
       <span className="dropdown-title">Lifecycle</span>
@@ -571,7 +571,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     </Row>
 {/* <div className="some-page-wrapper"> */}
 <div className="layout" id="layoutid">
-  <div className="row">
+  <div className="row" id="row1">
     <div className="column">
   <div className="layout_left_trend" >
       {(isSelected  & selTimeperiod != "")?
@@ -638,7 +638,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
    </div>
    </div>
    <div className="layout" id="layoutid1">
-   <div className="row">
+   <div className="row" id="row2">
     <div className="column">
     <div className="layout_left_bar1">
      {(isSelected  & selTimeperiod != "")?<BarArea

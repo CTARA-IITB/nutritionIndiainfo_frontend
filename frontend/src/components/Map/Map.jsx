@@ -117,60 +117,7 @@ export const Map = ({
 
   let data = selIndiaData;
   let warning;
-  if (level === 1)
-  {
-    if (toggleState === true) {
 
-      if (selTimeperiod === NFHS5){    // change state boundaries when timeperiod is NFHS5
-        geometry = boundaries.new_state;
-        warning="Administrative Boundaries as per NFHS5(2019-20)"
-      }   
-      else{
-        geometry = boundaries.state;
-        warning="Administrative Boundaries as per NFHS4(2015-16)"
-      }
-      
-      data = selIndiaData;
-    }
-    else {
-
-        if(selTimeperiod === NFHS5){
-          geometry = boundaries.new_dist;
-          warning="Administrative Boundaries as per NFHS5(2019-20)"
-
-        }
-        else{
-          geometry = boundaries.dist;
-          warning="Administrative Boundaries as per NFHS4(2015-16)"
-
-        }
-      data = selDistrictsData;
-    }
-    statusMsg = (toggleState)?'Click on map to select state':'';
-  }
-  else{
-     data = selStateData;
-    if(null!== selStateData && selStateData.length > 0)
-    {
-      if(level === 2){
-        statusMsg=" Click on map to select distirct or click on back button go back to India"
-      }else if(level === 3){
-        statusMsg=`Click on map to select district or click back button to go back to state`
-      }
-    }
-    if(selTimeperiod == NFHS5)
-    {
-      let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
-      geometry = {type: "FeatureCollection",features}
-      warning=""
-
-    }
-    else{
-      let features = boundaries.dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
-      geometry = {type: "FeatureCollection",features}
-      warning="Administrative Boundaries as per NFHS4(2015-16)"
-    }
-  }
   select(".tooltip").remove();
 
   let tooltip = select(".map_svg").append("div")
@@ -180,7 +127,7 @@ export const Map = ({
   useEffect(() => {
     const svg = select(svgRef.current);
 
-    // const legend = select(svgRef.current)
+    const legend = select(svgRef.current)
     let windowWidth = window.screen.width;
     let windowHeight = window.screen.height;
 
@@ -198,7 +145,61 @@ export const Map = ({
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
  
    console.log(width)
-   
+   if (level === 1)
+   {
+     if (toggleState === true) {
+ 
+       if (selTimeperiod === NFHS5){    // change state boundaries when timeperiod is NFHS5
+         geometry = boundaries.new_state;
+         warning="Administrative Boundaries as per NFHS5(2019-20)"
+       }   
+       else{
+         geometry = boundaries.state;
+         warning="Administrative Boundaries as per NFHS4(2015-16)"
+       }
+       
+       data = selIndiaData;
+     }
+     else {
+ 
+         if(selTimeperiod === NFHS5){
+           geometry = boundaries.new_dist;
+           warning="Administrative Boundaries as per NFHS5(2019-20)"
+ 
+         }
+         else{
+           geometry = boundaries.dist;
+           warning="Administrative Boundaries as per NFHS4(2015-16)"
+ 
+         }
+       data = selDistrictsData;
+     }
+     
+     statusMsg = (toggleState)?'Click on map to select state':'';
+   }
+   else{
+      data = selStateData;
+     if(null!== selStateData && selStateData.length > 0)
+     {
+       if(level === 2){
+         statusMsg= "Click on map to select distirct or\nclick on back button go back to India";
+       }else if(level === 3){
+         statusMsg=`Click on map to select district or \n click back button to go back to state`
+       }
+     }
+     if(selTimeperiod == NFHS5)
+     {
+       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
+       geometry = {type: "FeatureCollection",features}
+       warning=""
+ 
+     }
+     else{
+       let features = boundaries.dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
+       geometry = {type: "FeatureCollection",features}
+       warning="Administrative Boundaries as per NFHS4(2015-16)"
+     }
+   }
     
     svg.selectAll("*").remove();
     svg.attr("preserveAspectRatio", "xMinYMin meet")
@@ -574,16 +575,29 @@ export const Map = ({
       }
 
     }
+   let msg = legend.append("text")
+    .text(statusMsg)
+    .style("font-size","12px")
+    .attr("class", "statusmsg")
 if(width < 680 && selArea == 1){
     svg.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width-100},${adjustedHeight-450})`)}
+        .attr("transform", `translate(${width-100},${adjustedHeight-450})`)
+        msg.attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
+       }else if(width < 680){
+        console.log(level)
+if(level === 2 || level === 3){
+  msg.attr("transform", `translate(${width-380},${adjustedHeight- 120})`)
+}
+      }
+      
         else{
           svg.append("g")
           .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-100},${adjustedHeight- 220})`)}
+            .attr("transform", `translate(${width-100},${adjustedHeight- 350})`)
         
-
+           
+              msg.attr("transform", `translate(${width-150},${adjustedHeight- 120})`)}
     let formatter = format(".1f");
     let myLegend;
    
@@ -694,9 +708,9 @@ if(width < 680 && selArea == 1){
         {backButton}
       </div>
       
-      <div className="map_req_text">
-          <div id="info-msg" className="msg">{statusMsg}</div>
-      </div>
+      {/* <div className="map_req_text">
+          <div id="info-msg" className="msg"></div>
+      </div> */}
     </div>
   </div>
 

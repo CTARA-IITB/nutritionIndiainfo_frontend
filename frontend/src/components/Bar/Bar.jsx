@@ -106,8 +106,8 @@ import { commaSeparated } from '../../utils';
           windowWidth = windowWidth/2;
           windowHeight = windowHeight/2;
         }else{
-          windowWidth = windowWidth + 200;
-          windowHeight = windowHeight;
+          windowWidth = windowWidth + 100;
+          windowHeight = windowHeight/2;
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
        
@@ -219,14 +219,6 @@ import { commaSeparated } from '../../utils';
       	.attr("class","axis")
   			.call(axisBottom(xScale).ticks(3))
               .style('font-size',11)
-
-            
-              
-          
-         
-         
-           
-         
         }
         
        
@@ -268,7 +260,7 @@ import { commaSeparated } from '../../utils';
         <SideNavFirst table={table} id="svgGBar" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
         <div className="gbar">
           <div className="gbar_svg" ref={trendWrapper}>
-          <svg id="svgGBar" height="50%"  ref = {svgRef}></svg>
+          <svg id="svgGBar"   ref = {svgRef}></svg>
         </div>
         </div>
         </FullScreen>

@@ -167,7 +167,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             .attr('x',width/2 -90)
             .attr('y',0)
             .style("text-anchor","middle")
-            .style("font-size","13px")
+            .style("font-size","15px")
             .style("font-weight","bold")
             .attr("dy", "-2em")
             .text(`${gBarTitle}`)
@@ -195,10 +195,10 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       	.on('mouseover', (i,d) => {
         			tooltip3.transition().duration(500).style("opacity", 1);
               tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
-          		.style("left", xScale(xValue(d)) + margin.left + 30+ "px")
-          		.style("top", height+ yScale(yValue(d))+ margin.top +30+"px");
+          		.style("left", xScale(xValue(d)) + margin.left - 100 + "px")
+          		.style("top", height+ yScale(yValue(d))+ margin.top +150+"px");
               })
-     .on('mouseout', ()=>{tooltip3.transition().duration(500).style("opacity", 0)});
+     .on('mouseout', ()=>{tooltip3.transition().duration(100).style("opacity", 0)});
 
      chart
           .enter().append("text")

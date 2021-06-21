@@ -232,7 +232,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       	.on('mouseover', (i,d) => {
         			tooltip2.transition().duration(500).style("opacity", 1);
               tooltip2.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
-          		.style("left", xScale(d.middle_date) + 50 + "px")
+          		.style("left", xScale(d.middle_date) -70 + "px")
           		.style("top", yScale(yValue(d)) + 100+"px")
               .style("font-size","12px");
               })

@@ -189,8 +189,8 @@ import { commaSeparated } from '../../utils';
       	.on('mouseover', (i,d) => {
         			tooltip4.transition().duration(500).style("opacity", 1);
               tooltip4.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
-          		.style("left", width + xScale(xValue(d)) + margin.left + 30+ "px")
-          		.style("top", height + yScale(yValue(d))+ margin.top +30+"px");
+          		.style("left", width + xScale(xValue(d)) + margin.left -60+ "px")
+          		.style("top", height + yScale(yValue(d))+ margin.top +140+"px");
               })
      .on('mouseout', ()=>{tooltip4.transition().duration(500).style("opacity", 0)});
 

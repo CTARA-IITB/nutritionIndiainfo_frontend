@@ -121,7 +121,7 @@ const SideNavSecond = ({table,id,screen,title,componentRef}) => {
                 search
                 headerStyle={ { background:'#ECECEC' } }
               >
-                <TableHeaderColumn dataField='area' isKey dataSort >Time Period</TableHeaderColumn>
+                <TableHeaderColumn dataField='area' isKey dataSort >Subgroup</TableHeaderColumn>
                 <TableHeaderColumn dataField='data' >Data</TableHeaderColumn>
               </BootstrapTable> 
           </>}

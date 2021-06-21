@@ -1,83 +1,76 @@
 import React, { useRef,useState,useEffect } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import SideNavFirst from "../SideNav/SideNavFirst";
+import SideNav from "../SideNav/SideNav";
 import {
-    scaleLinear,
-    scaleBand,
-    max,
-    select,
-    axisLeft,
-    axisBottom
-  } from 'd3';
+  scaleLinear,
+  scaleBand,
+  max,
+  select,
+  axisLeft,
+  axisBottom
+} from 'd3';
 import { commaSeparated } from '../../utils';
 
+export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
 
-  
-  export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
-    const screen = useFullScreenHandle();
-    const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
-    const svgRef = useRef();
-    const trendWrapper = useRef();
-    const margin = {
-        left:140,
-        top: 50,
-        right: 80,
-        bottom: 100,
-      };
-    const [data, setData] = useState(null);
+  const screen = useFullScreenHandle();
+  const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
+  const svgRef = useRef();
+  const trendWrapper = useRef();
+  const margin = {
+    left:160,
+    top: 50,
+    right: 80,
+    bottom: 50,
+  };
+  const [data, setData] = useState(null);
    
+  let colorScale ='#eda143';
+  let lightColor = '#F7D9B3';
+  let arrObese = [91,95,104,92,96,105,21];
 
-    let colorScale ='#eda143';
-    let lightColor = '#F7D9B3';
-   
-    let chartTitle = graphTimeperiod.split(" ")[0];
-
-    let arrObese = [91,95,104,92,96,105,21];
-    if(selIndicator == 12 || selIndicator == 13){
-        colorScale = '#a3c00f'; 
-        lightColor = '#DAE59F';
-        }
-    else if(selIndicator == 19 || selIndicator == 20){
-        colorScale = '#e53935'; 
-        lightColor = '#F4AFAE';
-    }
-    else if(selIndicator == 17 || selIndicator == 18){
-        colorScale = '#039be5'; 
-        lightColor = '#9AD7F4';
-    }
-    else if(selIndicator == 107 || selIndicator == 108){
-        colorScale = '#e53935'; 
-        lightColor = '#F4AFAE';
-    }
-    else  if(arrObese.includes(selIndicator)){
-        colorScale = '#7b1fa2'; 
-        lightColor = '#CAA5D9';
-    }
-    else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125){
-        colorScale = '#b71c1c'; 
-        lightColor = '#E2A4A4';
-    }
-    else{
-        colorScale = '#eda143'; 
-        lightColor = '#F7D9B3';
-    }
+  if(selIndicator == 12 || selIndicator == 13){
+      colorScale = '#a3c00f'; 
+      lightColor = '#DAE59F';
+      }
+  else if(selIndicator == 19 || selIndicator == 20){
+      colorScale = '#e53935'; 
+      lightColor = '#F4AFAE';
+  }
+  else if(selIndicator == 17 || selIndicator == 18){
+      colorScale = '#039be5'; 
+      lightColor = '#9AD7F4';
+  }
+  else if(selIndicator == 107 || selIndicator == 108){
+      colorScale = '#e53935'; 
+      lightColor = '#F4AFAE';
+  }
+  else  if(arrObese.includes(selIndicator)){
+      colorScale = '#7b1fa2'; 
+      lightColor = '#CAA5D9';
+  }
+  else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125){
+      colorScale = '#b71c1c'; 
+      lightColor = '#E2A4A4';
+  }
+  else{
+      colorScale = '#eda143'; 
+      lightColor = '#F7D9B3';
+  }
     
-   
-    //For One Decimel Precision    
-    function decimelPrecision(d){
-        let oneDecimel;
-        if(typeof d !== 'undefined'){
-            if(toggleStateBurden === false){
-                return oneDecimel = d;
-            }
-            else{
-                oneDecimel = d.toFixed(1);  
-                return oneDecimel;
-            }
-        }
-        
-        
-    } 
+  //For One Decimel Precision    
+  function decimelPrecision(d){
+    let oneDecimel;
+    if(typeof d !== 'undefined'){
+      if(toggleStateBurden === false){
+          return oneDecimel = d;
+      }
+      else{
+          oneDecimel = d.toFixed(1);  
+          return oneDecimel;
+      }
+    }
+  } 
 
     useEffect(() => {
           let cleanData = [];
@@ -92,10 +85,9 @@ import { commaSeparated } from '../../utils';
 
 
       useEffect(()=>{
-        
-        select(".tooltip3").remove();
+        select(".tooltip4").remove();
     
-        let tooltip3 = select(".trend_svg").append("div")
+        let tooltip4 = select(".trend_svg").append("div")
         .attr("class", "tooltip2")
         .style("opacity", 0);
     
@@ -104,19 +96,22 @@ import { commaSeparated } from '../../utils';
         let windowHeight = window.screen.height;
     
         if(windowWidth >= 480){
-          windowWidth = windowWidth/2.2;
-          windowHeight = windowHeight/1.7;
-        }else{
-          windowWidth = windowWidth + 100;
+          windowWidth = windowWidth/2;
           windowHeight = windowHeight/2;
+        }else{
+          windowWidth = windowWidth + 200;
+          windowHeight = windowHeight;
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
-        const innerHeight = height - margin.top - margin.bottom;
+       
+        let innerHeight = height - margin.top - margin.bottom;
         const innerWidth = width - margin.left - margin.right;
-        svg.selectAll("*").remove();
+        const aspect = width / height;
+        const adjustedHeight = Math.ceil(width / aspect)*1.1;
+              svg.selectAll("*").remove();
+              svg.attr("preserveAspectRatio", "xMinYMin meet")
+              .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
         const bar = svg
-                .attr("width", width)
-                .attr("height", height)
                 .append("g")
                 .attr("transform",`translate(${margin.left},${margin.top})`);
         
@@ -167,8 +162,7 @@ import { commaSeparated } from '../../utils';
             .attr("x", innerWidth/2)
             .attr("y", innerHeight + 50)
             .text(`${graphUnit}`)
-            .style('font-size',13)
-            ;
+            .style('font-size',13);
    
             
       let chart = bar.selectAll("rect").data(data);
@@ -186,12 +180,12 @@ import { commaSeparated } from '../../utils';
       	.attr('height', yScale.bandwidth())
         .attr("fill", fillRect)
       	.on('mouseover', (i,d) => {
-        			tooltip3.transition().duration(500).style("opacity", 1);
-              tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
-          		.style("left", width + xScale(xValue(d)) + margin.left + 30+ "px")
-          		.style("top", height + yScale(yValue(d))+ margin.top +30+"px");
+        			tooltip4.transition().duration(500).style("opacity", 1);
+              tooltip4.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
+          		.style("left", width + xScale(xValue(d)) + margin.left -60+ "px")
+          		.style("top", height + yScale(yValue(d))+ margin.top +140+"px");
               })
-     .on('mouseout', ()=>{tooltip3.transition().duration(500).style("opacity", 0)});
+     .on('mouseout', ()=>{tooltip4.transition().duration(500).style("opacity", 0)});
 
      chart
           .enter().append("text")
@@ -252,7 +246,7 @@ import { commaSeparated } from '../../utils';
   if(data ){
     for(var i=0;i<data.length;i++){
       table.push({
-        timeperiod:data[i].subgroup_name,
+        subgroup:data[i].subgroup_name,
         data:+data[i].data_value
       })
     }
@@ -264,10 +258,10 @@ import { commaSeparated } from '../../utils';
     return(
         <>
         <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
-        <SideNavFirst table={table} id="svgGBar" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
+        <SideNav table={table} id="svgGBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
         <div className="gbar">
           <div className="gbar_svg" ref={trendWrapper}>
-          <svg id="svgGBar" width="80%" height="160%" ref = {svgRef}></svg>
+          <svg id="svgGBar" ref = {svgRef}></svg>
         </div>
         </div>
         </FullScreen>

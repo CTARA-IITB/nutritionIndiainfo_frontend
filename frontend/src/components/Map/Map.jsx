@@ -10,7 +10,7 @@ import { geoMercator, format,geoCircle ,geoPath, scaleQuantize, scaleThreshold,e
 import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
-import SideNavFirst from "../SideNav/SideNavFirst";
+import SideNav from "../SideNav/SideNav";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
@@ -64,10 +64,10 @@ export const Map = ({
   }
  
   if ((unit == 1 && toggleStateBurden == true)) {
-    mapTitle = `${graphTitle},${graphUnit},${titleAreaName},${graphTimeperiod}`;
+    mapTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
   }
   else{
-    mapTitle =  `${graphTitle},Number,${titleAreaName},${graphTimeperiod}`;
+    mapTitle =  `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
@@ -179,16 +179,38 @@ export const Map = ({
 
   useEffect(() => {
     const svg = select(svgRef.current);
-    const legend = select(svgRef.current)
-    const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect();
-    svg.selectAll('*').remove();
 
+    // const legend = select(svgRef.current)
+    let windowWidth = window.screen.width;
+    let windowHeight = window.screen.height;
+
+     if(windowWidth >= 480){
+      windowWidth = windowWidth/2;
+      windowHeight = windowHeight/2;
+    }else{
+      windowWidth = windowWidth+200 ;
+      windowHeight = windowHeight;
+    }
+    const { width, height } = {width:windowWidth,height:windowHeight}; 
+    
+
+  const aspect = width / height;
+    const adjustedHeight = Math.ceil(width / aspect)*1.1;
+ 
+   console.log(width)
+   
+    
+    svg.selectAll("*").remove();
+    svg.attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
+
+   
     let title = svg.append("text").text(`${mapTitle}`)
       .style("text-anchor","middle")
       .style("font-size","13px")
       .style("font-weight","bold")
       .attr("dy", "-2em")
-      .attr('transform',`translate(${width/2},40)`);
+.attr("class","map_title")      .attr('transform',`translate(${width/2},40)`);
 
       svg.append("text").text(`${warning}`)
       .style("text-anchor","middle")
@@ -200,8 +222,16 @@ export const Map = ({
     if(width <= 480){
       title = title.style("font-size", (width * 0.0025) + "em")
     }
-    const projection = geoMercator().fitSize([width/1.9, height], geometry);
+    console.log(selArea)
+    //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
+    let projection;
+    if(selArea == 28 || selArea == 8 ){
+     projection = geoMercator().fitSize([width/1.9, adjustedHeight/1.2], geometry);
 
+    }
+    else{
+     projection = geoMercator().fitSize([width/1.2, adjustedHeight/1.2], geometry);
+    }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
     let mergedGeometry = addProperties(geojson, data);
@@ -297,7 +327,7 @@ export const Map = ({
     let colorScale;
   let colorScale_new;
     let colorScale2;
-    let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84]; 
+    let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]; 
     if (unit == 1  && toggleStateBurden == true)
     {
     if(indicatorSense == 'Positive')
@@ -374,6 +404,8 @@ export const Map = ({
     {  
     svg
       .selectAll(".polygon")
+      .attr("width", width)
+    		.attr("height", height)
       .data(mergedGeometry)
       .join("path").attr("class", "polygon")
       .style("fill", d => {
@@ -418,7 +450,7 @@ export const Map = ({
       })
   
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(130,50)`);
+      .attr('transform',`translate(100,50)`);
 
    
 
@@ -477,7 +509,7 @@ export const Map = ({
     
       })
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(130,50)`);
+      .attr('transform',`translate(100,50)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -510,7 +542,7 @@ export const Map = ({
 
         }
         let r,sw;
-        if(height <= 400){
+        if(height <= 550){
         r = .8;
         }
         else if(height > 800){
@@ -533,7 +565,7 @@ export const Map = ({
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
           .style('fill-opacity',0.8)
-          .attr('transform',`translate(130,50)`)
+          .attr('transform',`translate(100,50)`)
       
         
    
@@ -542,10 +574,15 @@ export const Map = ({
       }
 
     }
-
-    legend.append("g")
+if(width > 680){
+    svg.append("g")
       .attr("class", "legendQuant")
-        .attr("transform", `translate(${width-100},${height-80})`)
+        .attr("transform", `translate(${width-100},${adjustedHeight-220})`)}
+        else{
+          svg.append("g")
+          .attr("class", "legendQuant")
+            .attr("transform", `translate(${width-(width-100)},${adjustedHeight- 220})`)}
+        
 
     let formatter = format(".1f");
     let myLegend;
@@ -553,7 +590,7 @@ export const Map = ({
     if ((unit == 1  && toggleStateBurden == false) || unit == 2) 
     {
       
-      legend.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");
+      svg.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");
     }
     else{
        if (!arrsuw.includes(selIndicator)) {
@@ -561,7 +598,7 @@ export const Map = ({
       .labelFormat(formatter)
       .title(`${unitName}`)
       .titleWidth(180)
-      .scale(colorScale);
+      .scale(colorScale_new);
     } 
     else{
       myLegend = legendColor()
@@ -571,7 +608,8 @@ export const Map = ({
       .scale(colorScale_new);
     }
 
-      legend.select(".legendQuant")
+      svg.select(".legendQuant")
+     
       .call(myLegend);
 
       
@@ -591,8 +629,8 @@ export const Map = ({
   let switchButton;
 
   if(switchDisplay && level === 1){
-    switchButton = <div><Button className={`req_button ${toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
-    <Button className={`req_button ${!toggleState  && 'req_button_light'}` } onClick={()=>{ setToggleState(false)}} size="sm">District Map</Button> </div>
+    switchButton = <div><Button className={`req_button ${!toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
+    <Button className={`req_button ${toggleState  && 'req_button_light'}` } onClick={()=>{ setToggleState(false)}} size="sm">District Map</Button> </div>
   }else{
     switchButton= null;
   }
@@ -607,7 +645,7 @@ export const Map = ({
       }
       else if(state === false){
         if(map[0] != undefined){}
-        map[0].style.height = "65vh";
+        map[0].style.height = "60vh";
 
       }
     }
@@ -642,11 +680,11 @@ export const Map = ({
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
-      <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
-      <div className="map">
+      <SideNav table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
+      <div className="map" >
           
           <div  className="map_svg" ref={wrapperRef}>
-            <svg  id="svgMap" width="120%" height="150%"  ref={svgRef} ></svg>
+            <svg  id="svgMap"  ref={svgRef} ></svg>
 
           </div>
     

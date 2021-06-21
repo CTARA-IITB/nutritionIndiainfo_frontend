@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from "react";
 import "./Share.css";
-import Share from 'react-native-share';
 import * as htmlToImage from "html-to-image";
 
 const ShareImage =({id})=> {
@@ -19,22 +18,8 @@ const ShareImage =({id})=> {
             console.error('oops, something went wrong!', error);
         }); 
     })
-    const customShare = async()=>{
-        const shareOptions={
-            message:"India map",
-            url: {imageUrl}
-        }
-        try{
-                const shareResponse = await Share.open(shareOptions);
-        }catch{
-            console.log('Error =>',error);
-        }
-    }
-
     return (
-    <div className="container">
-        <button onClick={customShare}>Share</button> 
-    </div>
+        <div></div>
   );
 }
 export default ShareImage;

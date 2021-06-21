@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from "react";
-import {Row, Col } from 'react-bootstrap';
+import {Row, Col,ToggleButtonGroup,ToggleButton } from 'react-bootstrap';
 import { TreeSelect,Input } from 'antd';
 import { json } from 'd3';
 import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns } from '../../utils';
@@ -14,8 +14,8 @@ import { Switch } from 'antd';
 import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
 import {EARLY_CHILDHOOD} from "../../constants"
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import ToggleButton from 'react-bootstrap/ToggleButton'
+// import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+// import ToggleButton from 'react-bootstrap/ToggleButton'
 const {Search} = Input;
 
 
@@ -215,13 +215,15 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         }
 
         const burdenChange = async(e) =>{
-          if(e === "1"){
-            setSelBurden(e);
+          let x = e[1];
+          console.log(x)
+          if(x === 1){
+            setSelBurden(x);
             setToggleStateBurden(true);
           }
-          else{
+          else if(x==2){
             setToggleStateBurden(false);
-            setSelBurden(e);
+            setSelBurden(x);
           }
         }
 
@@ -437,7 +439,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             // </ToggleButtonGroup>
             <Col>
 
-            <span className="dropdown-title">Prevalence/Burden</span>
+            {/* <span className="dropdown-title">Prevalence/Burden</span>
             <TreeSelect showSearch
               optionFilterProp="children"
               className='dropdown'
@@ -449,11 +451,21 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
               filterTreeNode
               treeNodeFilterProp ='title'
               onChange = {burdenChange}
-            />
+            /> */}
+
+        <ToggleButtonGroup type="checkbox" value={selBurden} onChange={burdenChange}>
+          <ToggleButton className={`tg_button ${!toggleStateBurden  && 'tg_button_light'}` } value={1}>Prevelence</ToggleButton>
+          <ToggleButton className={`tg_button ${toggleStateBurden  && 'tg_button_light'}` } value={2}>Burden</ToggleButton>
+        </ToggleButtonGroup>
             </Col>
         }
         else{
-          burdenDropdown= null;
+          burdenDropdown= 
+          <ToggleButtonGroup type="checkbox" >
+          <ToggleButton className='tg_button tg_button_light' value={1}>Prevelence</ToggleButton>
+          <ToggleButton className='tg_button tg_button_light' value={2}>Burden</ToggleButton>
+        </ToggleButtonGroup>
+          
         }
     
 
@@ -562,9 +574,10 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
               </Col>
 
     </Row>
-   
+{/* <div className="some-page-wrapper"> */}
 <div className="layout" id="layoutid">
-  <div className="layout_left">
+  <div className="row">
+    <div className="column">
   <div className="layout_left_trend" >
       {(isSelected  & selTimeperiod != "")?
       <Trend indicatorTrend = {indicatorTrend}
@@ -579,25 +592,9 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>
 
-    
-     <div className="layout_left_bar1">
-     {(isSelected  & selTimeperiod != "")?<BarArea
-      indicatorTrend = {indicatorTrend}
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      selArea={selArea} 
-      titleAreaName = {titleAreaName}
-      areaName = {areaName}
-      selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
-     </div>
-   </div>
-    <div className="layout_right">
-    <div className="layout_right_map">
+      </div>
+      <div className="column">
+      <div className="layout_right_map">
         {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -641,7 +638,32 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           map={map}
           /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
       </div>
-     <div className="layout_right_bar2">
+  
+     </div>
+   </div>
+   </div>
+   <div className="layout" id="layoutid1">
+   <div className="row">
+    <div className="column">
+    <div className="layout_left_bar1">
+     {(isSelected  & selTimeperiod != "")?<BarArea
+      indicatorTrend = {indicatorTrend}
+      graphTitle = {graphTitle}
+      graphTimeperiod = {graphTimeperiod}
+      graphUnit = {graphUnit}
+      selIndiaData={selIndiaData} 
+      level={level} 
+      selArea={selArea} 
+      titleAreaName = {titleAreaName}
+      areaName = {areaName}
+      selStateData = {selStateData}
+      toggleStateBurden = {toggleStateBurden}
+      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
+     </div>
+
+      </div>
+      <div className="column">
+    <div className="layout_right_bar2">
       {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
@@ -654,8 +676,13 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       toggleStateBurden = {toggleStateBurden}
       selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
-    </div>
+  
+     </div>
+   </div>
+
+
   </div>   
+  {/* </div> */}
    </>
     )
 }

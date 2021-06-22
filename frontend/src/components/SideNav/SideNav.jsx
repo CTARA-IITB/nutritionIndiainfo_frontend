@@ -7,7 +7,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import Share  from "../Share/ShareImage";
+import ShareImage from "../Share/ShareImage";
 import {saveSvgAsPng,svgAsPngUri}  from 'save-svg-as-png';
 import jsPDF from 'jspdf';
 import { CSVLink } from "react-csv";
@@ -123,7 +123,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
             {isOpenShare && <Popup
             content={<>
-                <Share id={id}/>
+                <ShareImage id={id}/>
             </>}
                 handleClose={toggleShare}
             />}

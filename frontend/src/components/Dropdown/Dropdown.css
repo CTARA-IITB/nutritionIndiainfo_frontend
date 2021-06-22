@@ -25,7 +25,7 @@ span.ant-select-selection-item{
   width:  100%;
   margin: 0;
   display: flex;
-  padding: 3px;
+  padding: 5px;
   overflow-x: hidden;
 }
 .layout_left {
@@ -40,11 +40,15 @@ span.ant-select-selection-item{
 
 .row {
   display: flex;
+  /* flex-direction: column; */
+  /* flex-wrap: wrap; */
   width: 100%;
 }
 
 .column {
+  /* height: 50%;  / */
   display: flex;                           
+  /* flex-direction: column; */
   flex-basis: 100%;
   flex: 1;
   overflow: hidden;
@@ -53,11 +57,13 @@ span.ant-select-selection-item{
 }
 
 .layout_right_map {
+   /* background-color:yellow;  */
   width: 100%;
   height: 100%;
 }
 
 .layout_left_bar1 {
+   /* background-color:red;  */
   min-height: 50%;
  width: 100%;
   height: 100%;
@@ -87,24 +93,35 @@ span.ant-select-selection-item{
 }
 
 .layout_left_trend {
+   /* background-color:blue;  */
   width: 100%;
   height: 100%;
 }
 
 .layout_right_bar2 {
-   min-height: 500px;
-  width: 100%;
+   /* background-color:rgb(155, 155, 155);  */
+width: 100%;
   height: 100%;
 }
 
-
+#row1{
+ height: 60%;
+}
+#row2{
+ height: 40%;
+}
 
 @media (max-width: 790px) {
   .layout {
-  display: flex;
+    /* height: 100vh; */
+    display: flex;
+  /* align-content: center; */
   justify-content: flex-start;
+  /* flex-wrap: wrap; */
   flex-direction: column;
-  overflow-x: auto;
+overflow-x: auto;
+
+    /* display: flex; */
   }
  .row{
    display: flex;
@@ -113,7 +130,20 @@ span.ant-select-selection-item{
  .column{
    height: 100%;
  }
-
+  /* .layout_left_bar1 {
+    width: 600px;
+    height: 500px;
+  }
+  .layout_left_trend {
+    width: 600px;
+    height: 500px;
+    margin-top: -200px;
+  }
+  .layout_right_bar2 {
+    width: 600px;
+    height: 500px;
+    margin-top: -150px;
+  } */
   .buttonmapcss {
     background-color: green;
   }
@@ -121,13 +151,14 @@ span.ant-select-selection-item{
 @media (max-width: 480px) {
   .layout {
     display: flex;
+    /* align-content: center; */
+    justify-content: flex-start;
+    /* flex-wrap: wrap; */
     flex-direction: column;
     overflow-x: auto;
+
+
   }
-  .layout_left_trend {
-    width: 100%;
-   height: 50%;
- }
 #row1{
    display: flex;
    flex-direction: column-reverse;
@@ -136,6 +167,22 @@ span.ant-select-selection-item{
   display: flex;
   flex-direction: column;
 }
+  /* .layout_left_trend {
+    margin-top: 100px;
+  }
 
+  .layout_left_bar1 {
+   margin-top: -100px;
+  }
+  
+
+  .layout_right_map{
+     margin: 100px; 
+    height: 700px;
+    width: 600px;
+    margin-top: 200px;
+    margin-bottom: 200px;
+
+  } */
     
 }

@@ -121,8 +121,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       windowWidth = windowWidth/2;
       windowHeight = windowHeight/2;
     }else{
-      windowWidth = windowWidth+100 ;
-      windowHeight = windowHeight/2;
+      windowWidth = windowWidth+200 ;
+      windowHeight = windowHeight/1.5;
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     
@@ -265,6 +265,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       .attr("dy", "-2em")
       .text(`${graphTitle},${titleAreaName}`)
 
+      // bar.append("text")
+      // .attr("x",innerWidth/2)
+      // .attr("y",innerHeight/2)
+      // .attr("dx","-.4em")
+      // .text("No data: please select another survey")
+      // .style("text-anchor","middle")
+      // .style("font-size","10px")
+      // .style("font-weight","bold")
     }
     
     bar.append("text")
@@ -310,7 +318,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
       else if(state === false){
         if(trend[0] != undefined)
-        trend[0].style.height = "40vh";
+        trend[0].style.height = "60vh";
       }
     }
   }

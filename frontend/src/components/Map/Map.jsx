@@ -596,14 +596,12 @@ export const Map = ({
       else{
          
           if(level === 2 || level === 3){
-            let newText = statusMsg.split('\n').map(i => {
-              console.log(i)
-              return <p>{i}</p> });
-              msg.text(newText).attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
-                console.log(newText)}
+           
+              msg.text(statusMsg).attr("transform", `translate(${width-380},${adjustedHeight- 80})`)
+               }
           else{
               msg.text(statusMsg)
-                .attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
+                .attr("transform", `translate(${width-150},${adjustedHeight- 80})`)
             }
           }
     if(width > 680){

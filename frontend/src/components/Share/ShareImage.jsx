@@ -18,8 +18,38 @@ const ShareImage =({id})=> {
             console.error('oops, something went wrong!', error);
         }); 
     })
+
+    useEffect(()=> {
+        if (navigator.share === undefined) {
+          if (window.location.protocol === 'http:') {
+            window.location.replace(window.location.href.replace(/^http:/, 'https:'));
+          } 
+        }
+    }, []);
+
+    const handleOnSubmit= async()=> {
+        const response = await fetch(imageUrl);
+        // here image is url/location of image
+        const blob = await response.blob();
+        const file = new File([blob], 'share.jpg', {type: blob.type});
+        console.log(file);
+        if(navigator.share) {
+          await navigator.share({
+            title: "title",
+            text: "your text",
+            url: "url to share",
+            files: [file]     
+          })
+            .then(() => console.log('Successful share'))
+            .catch((error) => console.log('Error in sharing', error));
+        }else {
+          console.log(`system does not support sharing files.`);
+        }
+    }
     return (
-        <div></div>
-  );
+        <div>
+            <button onClick={handleOnSubmit} />
+        </div>
+    );
 }
 export default ShareImage;

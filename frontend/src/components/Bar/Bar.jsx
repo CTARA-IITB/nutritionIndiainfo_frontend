@@ -32,7 +32,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   if(selIndicator == 12 || selIndicator == 13){
       colorScale = '#a3c00f'; 
       lightColor = '#DAE59F';
-      }
+  }
   else if(selIndicator == 19 || selIndicator == 20){
       colorScale = '#e53935'; 
       lightColor = '#F4AFAE';

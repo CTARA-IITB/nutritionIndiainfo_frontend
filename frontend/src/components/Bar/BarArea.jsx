@@ -109,8 +109,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
           windowWidth = windowWidth/2;
           windowHeight = windowHeight/2;
         }else{
-          windowWidth = windowWidth + 200;
-          windowHeight = windowHeight;
+          windowWidth = windowWidth + 100;
+          windowHeight = windowHeight/2;
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
        
@@ -262,7 +262,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         <SideNavFirst table={table} id="svgGBar" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
         <div className="hbar">
           <div className="hbar_svg" ref={trendWrapper}>
-          <svg id="svgGBar" height="50%" ref = {svgRef}></svg>
+          <svg id="svgGBar"  ref = {svgRef}></svg>
         </div>
         </div>
         </FullScreen>

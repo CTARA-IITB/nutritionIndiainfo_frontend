@@ -121,8 +121,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       windowWidth = windowWidth/2;
       windowHeight = windowHeight/2;
     }else{
-      windowWidth = windowWidth+200 ;
-      windowHeight = windowHeight/1.5;
+      windowWidth = windowWidth+100 ;
+      windowHeight = windowHeight/2;
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     
@@ -318,7 +318,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
       else if(state === false){
         if(trend[0] != undefined)
-        trend[0].style.height = "60vh";
+        trend[0].style.height = "40vh";
       }
     }
   }

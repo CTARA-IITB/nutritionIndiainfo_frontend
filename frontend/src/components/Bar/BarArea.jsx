@@ -4,7 +4,7 @@ import SideNavSecond from "../SideNav/SideNavSecond";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { commaSeparated } from '../../utils';
 import { Height } from '@material-ui/icons';
-import SideNavFirst from "../SideNav/SideNavFirst";
+import SideNav from "../SideNav/SideNav";
 import {
     scaleLinear,
     scaleBand,
@@ -247,19 +247,19 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       if(data ){
         for(var i=0;i<data.length;i++){
           table.push({
-            timeperiod:data[i].timeperiod,
+            area:data[i].area_name,
             data:+data[i].data_value
           })
         }
       }
-  
+      console.log(table,'');
 
       let title=graphTitle+ ',  '+ graphUnit+'()'
 
     return (
         <>
         <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
-        <SideNavFirst table={table} id="svgGBar" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
+        <SideNav table={table} id="svgGBar" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
         <div className="hbar">
           <div className="hbar_svg" ref={trendWrapper}>
           <svg id="svgGBar"  ref = {svgRef}></svg>

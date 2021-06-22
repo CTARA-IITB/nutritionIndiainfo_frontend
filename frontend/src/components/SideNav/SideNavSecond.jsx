@@ -8,7 +8,7 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import "./SideNav.css";
-import Share  from "../Share/Share";
+import Share  from "../Share/ShareImage";
 import { CSVLink } from "react-csv";
 import MenuIcon from '@material-ui/icons/Menu';
 import jsPDF from 'jspdf';

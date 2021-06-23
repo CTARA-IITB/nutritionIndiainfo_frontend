@@ -1,9 +1,8 @@
 import React, { useState, useEffect,useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import SideNav from "../SideNav/SideNav";
+import SideNavFirst from "../SideNav/SideNavFirst";
 import { commaSeparated } from "../../utils.js";
 import "./Trend.css";
-
 
 import {
   scaleLinear,
@@ -347,7 +346,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   return (
     <>
     <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
-    <SideNav table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
+    <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
     <div className="trend">
       <div className="trend_svg" ref={trendWrapper}>
       <svg id="svgTrend"  ref = {svgRef}></svg>

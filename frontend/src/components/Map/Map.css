@@ -1,4 +1,3 @@
-
 svg .polygon {
   stroke: black;
   stroke-width: .3px;
@@ -17,7 +16,6 @@ div.tooltip {
   color: white;
   font-size: 11px;
 }
-
 
 .legendTitle {
   font-weight: bold;
@@ -101,7 +99,7 @@ div.tooltip {
   font-weight:bold;
 }
 
-.toggle_button{
+.back_button{
   /* margin-left: -400px; */
   padding: 1px 1px;
   font-size: 1px;

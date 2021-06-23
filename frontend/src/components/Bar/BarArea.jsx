@@ -194,10 +194,24 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       const fillRect = (d) =>{
           return colorScale;
       }
+
+      let rectHeight = d =>{
+        if(data.length <= 6)
+          return 20;
+        else
+          return yScale.bandwidth()
+      }
+
+      let rectY = d =>{
+        if(data.length <= 6)
+        return yScale(yValue(d)) + yScale.bandwidth()/2 - 10;
+      else
+        return yScale(yValue(d));
+      }
       chart.enter().append("rect")
-      	.attr('y', d => yScale(yValue(d)))
+      	.attr('y', d => rectY(d))
       	.attr('width', d => {return xScale(xValue(d))})
-      	.attr('height', yScale.bandwidth())
+      	.attr('height', rectHeight )
         .attr("fill", fillRect)
       	.on('mouseover', (i,d) => {
         			tooltip3.transition().duration(500).style("opacity", 1);
@@ -224,15 +238,15 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       bar.append("g")
       	.attr("class","axis")
         .call(axisLeft(yScale).tickSize(0))
-		.style('font-size',11);	
+		    .style('font-size',11);	
      
      
-        bar.append("g")
-      .attr("transform",`translate(0, ${dynamicRange})`)
+      bar.append("g")
+        .attr("transform",`translate(0, ${dynamicRange})`)
         // .attr("transform", "translate(0," + (barSize*data.length) + ")")
       	.attr("class","axis")
   			.call(axisBottom(xScale).ticks(3))
-              .style('font-size',11)
+        .style('font-size',11)
         }
           
       },[data,toggleStateBurden])

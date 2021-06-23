@@ -153,9 +153,9 @@ export const Map = ({
     if(null!== selStateData && selStateData.length > 0)
     {
       if(level === 2){
-        statusMsg=" Click on map to select distirct \n or click on back button \n to go back to India"
+        statusMsg=" Click on map to select distirct \n or back to return"
       }else if(level === 3){
-        statusMsg=`Click on map to select district \n or click back button \n to go back to state`
+        statusMsg=`Click on map to select district \n or back to return`
       }
     }
     if(selTimeperiod == NFHS5)
@@ -597,7 +597,7 @@ export const Map = ({
          
           if(level === 2 || level === 3){
            
-              msg.text(statusMsg).attr("transform", `translate(${width-380},${adjustedHeight- 80})`)
+              msg.text(statusMsg).attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
                }
           else{
               msg.text(statusMsg)

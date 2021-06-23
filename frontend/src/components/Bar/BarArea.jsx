@@ -174,7 +174,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             .attr('x',width/2 -90)
             .attr('y',0)
             .style("text-anchor","middle")
-            .style("font-size","15px")
+            .style("font-size","13px")
             .style("font-weight","bold")
             .attr("dy", "-2em")
             .text(`${gBarTitle}`)

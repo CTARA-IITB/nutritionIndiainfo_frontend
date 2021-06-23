@@ -4,7 +4,6 @@ import SideNavFirst from "../SideNav/SideNavFirst";
 import { commaSeparated } from "../../utils.js";
 import "./Trend.css";
 
-
 import {
   scaleLinear,
   max,

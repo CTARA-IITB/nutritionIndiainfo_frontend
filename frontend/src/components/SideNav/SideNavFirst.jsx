@@ -14,6 +14,7 @@ import { CSVLink } from "react-csv";
 import MenuIcon from '@material-ui/icons/Menu';
 import PrintIcon from '@material-ui/icons/Print';
 import { useReactToPrint } from "react-to-print";
+import "./SideNav.css";
 
 const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})=>{
 
@@ -37,6 +38,20 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         imageNameSvg = 'map.svg';
         imageNamePdf = 'map.pdf'
         imageNameCsv = 'map.csv'
+    }
+    else if(id==="svgBarArea"){
+        imageNameJpeg = 'barArea.jpeg';
+        imageNamePng = 'barArea.png';
+        imageNameSvg = 'barArea.svg';
+        imageNamePdf = 'barArea.pdf'
+        imageNameCsv = 'barArea.csv'
+    }
+    else if(id==="svgBar"){
+        imageNameJpeg = 'bar.jpeg';
+        imageNamePng = 'bar.png';
+        imageNameSvg = 'bar.svg';
+        imageNamePdf = 'bar.pdf'
+        imageNameCsv = 'bar.csv'
     }
     else{
         imageNameJpeg = 'trend.jpeg';

@@ -10,7 +10,7 @@ import { geoMercator, format,geoCircle ,geoPath, scaleQuantize, scaleThreshold,e
 import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { Switch } from 'antd';
-import SideNav from "../SideNav/SideNav";
+import SideNavFirst from "../SideNav/SideNavFirst";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
@@ -712,7 +712,7 @@ export const Map = ({
   return (
     <>
       <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
-      <SideNav table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
+      <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
       <div className="map" >
           
           <div  className="map_svg" ref={wrapperRef}>

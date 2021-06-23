@@ -25,7 +25,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         left:160,
         top: 50,
         right: 80,
-        bottom: 50,
+        bottom: 30,
       };
 
 
@@ -96,7 +96,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     console.log(data);
     useEffect(()=>{
         select(".tooltip3").remove();
-    
+        let TOOLTIP_LEFT_OFFSET,TOOLTIP_TOP_OFFSET,TOOLTIP_FONTSIZE;
+
         let tooltip3 = select(".trend_svg").append("div")
         .attr("class", "tooltip2")
         .style("opacity", 0);
@@ -108,9 +109,15 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         if(windowWidth >= 480){
           windowWidth = windowWidth/2;
           windowHeight = windowHeight/2;
+          TOOLTIP_LEFT_OFFSET=-100;
+          TOOLTIP_TOP_OFFSET=140;
+          TOOLTIP_FONTSIZE="12px";
         }else{
-          windowWidth = windowWidth + 200;
-          windowHeight = windowHeight;
+          windowWidth = windowWidth + 100;
+          windowHeight = windowHeight/2;
+          TOOLTIP_LEFT_OFFSET=-100;
+          TOOLTIP_TOP_OFFSET=800;
+          TOOLTIP_FONTSIZE="8px";
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
        
@@ -167,7 +174,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
             .attr('x',width/2 -90)
             .attr('y',0)
             .style("text-anchor","middle")
-            .style("font-size","15px")
+            .style("font-size","13px")
             .style("font-weight","bold")
             .attr("dy", "-2em")
             .text(`${gBarTitle}`)
@@ -187,16 +194,30 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       const fillRect = (d) =>{
           return colorScale;
       }
+
+      let rectHeight = d =>{
+        if(data.length <= 6)
+          return 20;
+        else
+          return yScale.bandwidth()
+      }
+
+      let rectY = d =>{
+        if(data.length <= 6)
+        return yScale(yValue(d)) + yScale.bandwidth()/2 - 10;
+      else
+        return yScale(yValue(d));
+      }
       chart.enter().append("rect")
-      	.attr('y', d => yScale(yValue(d)))
+      	.attr('y', d => rectY(d))
       	.attr('width', d => {return xScale(xValue(d))})
-      	.attr('height', yScale.bandwidth())
+      	.attr('height', rectHeight )
         .attr("fill", fillRect)
       	.on('mouseover', (i,d) => {
         			tooltip3.transition().duration(500).style("opacity", 1);
               tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
-          		.style("left", xScale(xValue(d)) + margin.left - 100 + "px")
-          		.style("top", height+ yScale(yValue(d))+ margin.top +150+"px");
+          		.style("left", xScale(xValue(d)) + margin.left + TOOLTIP_LEFT_OFFSET + "px")
+          		.style("top", height+ yScale(yValue(d))+ margin.top +TOOLTIP_TOP_OFFSET+"px");
               })
      .on('mouseout', ()=>{tooltip3.transition().duration(100).style("opacity", 0)});
 
@@ -217,15 +238,15 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       bar.append("g")
       	.attr("class","axis")
         .call(axisLeft(yScale).tickSize(0))
-		.style('font-size',11);	
+		    .style('font-size',11);	
      
      
-        bar.append("g")
-      .attr("transform",`translate(0, ${dynamicRange})`)
+      bar.append("g")
+        .attr("transform",`translate(0, ${dynamicRange})`)
         // .attr("transform", "translate(0," + (barSize*data.length) + ")")
       	.attr("class","axis")
   			.call(axisBottom(xScale).ticks(3))
-              .style('font-size',11)
+        .style('font-size',11)
         }
           
       },[data,toggleStateBurden])
@@ -262,7 +283,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         <SideNav table={table} id="svgGBar" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
         <div className="hbar">
           <div className="hbar_svg" ref={trendWrapper}>
-          <svg id="svgGBar" width="80%" height="160%" ref = {svgRef}></svg>
+          <svg id="svgGBar"  ref = {svgRef}></svg>
         </div>
         </div>
         </FullScreen>

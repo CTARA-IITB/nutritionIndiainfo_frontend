@@ -86,7 +86,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 
       useEffect(()=>{
         select(".tooltip4").remove();
-    
+        let TOOLTIP_LEFT_OFFSET,TOOLTIP_TOP_OFFSET,TOOLTIP_FONTSIZE;
+
         let tooltip4 = select(".trend_svg").append("div")
         .attr("class", "tooltip2")
         .style("opacity", 0);
@@ -98,9 +99,15 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         if(windowWidth >= 480){
           windowWidth = windowWidth/2;
           windowHeight = windowHeight/2;
+          TOOLTIP_LEFT_OFFSET=-70;
+          TOOLTIP_TOP_OFFSET=140;
+          TOOLTIP_FONTSIZE="12px";
         }else{
-          windowWidth = windowWidth + 200;
-          windowHeight = windowHeight;
+          TOOLTIP_LEFT_OFFSET=-100;
+          TOOLTIP_TOP_OFFSET=0;
+          TOOLTIP_FONTSIZE="12px";
+          windowWidth = windowWidth + 100;
+          windowHeight = windowHeight/2;
         }
         let { width, height } = {width:windowWidth,height:windowHeight}; 
        
@@ -182,8 +189,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       	.on('mouseover', (i,d) => {
         			tooltip4.transition().duration(500).style("opacity", 1);
               tooltip4.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
-          		.style("left", width + xScale(xValue(d)) + margin.left -60+ "px")
-          		.style("top", height + yScale(yValue(d))+ margin.top +140+"px");
+          		.style("left", width + xScale(xValue(d)) + margin.left +TOOLTIP_LEFT_OFFSET+ "px")
+          		.style("top", height + yScale(yValue(d))+ margin.top +TOOLTIP_TOP_OFFSET+"px");
               })
      .on('mouseout', ()=>{tooltip4.transition().duration(500).style("opacity", 0)});
 
@@ -212,14 +219,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       	.attr("class","axis")
   			.call(axisBottom(xScale).ticks(3))
               .style('font-size',11)
-
-            
-              
-          
-         
-         
-           
-         
         }
         
        
@@ -261,7 +260,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         <SideNav table={table} id="svgGBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
         <div className="gbar">
           <div className="gbar_svg" ref={trendWrapper}>
-          <svg id="svgGBar" ref = {svgRef}></svg>
+          <svg id="svgGBar"   ref = {svgRef}></svg>
         </div>
         </div>
         </FullScreen>

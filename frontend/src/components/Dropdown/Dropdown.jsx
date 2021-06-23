@@ -471,7 +471,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
     return (
       <>
-      <Row className=' mt-3 mb-3'>
+      <Row className=' mt-2 mb-2 m-1'>
       <Col>
 
       <span className="dropdown-title">Lifecycle</span>
@@ -576,8 +576,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     </Row>
 {/* <div className="some-page-wrapper"> */}
 <div className="layout" id="layoutid">
-  <div className="row">
-    <div className="column">
+  <div className="row" id="row1">
+    <div className="column" id="column1">
   <div className="layout_left_trend" >
       {(isSelected  & selTimeperiod != "")?
       <Trend indicatorTrend = {indicatorTrend}
@@ -593,7 +593,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       </div>
 
       </div>
-      <div className="column">
+      <div className="column" id="column2">
       <div className="layout_right_map">
         {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
@@ -643,8 +643,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
    </div>
    </div>
    <div className="layout" id="layoutid1">
-   <div className="row">
-    <div className="column">
+   <div className="row" id="row2">
+    <div className="column" id="column3">
     <div className="layout_left_bar1">
      {(isSelected  & selTimeperiod != "")?<BarArea
       indicatorTrend = {indicatorTrend}
@@ -662,7 +662,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
      </div>
 
       </div>
-      <div className="column">
+      <div className="column" id="column4">
     <div className="layout_right_bar2">
       {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}

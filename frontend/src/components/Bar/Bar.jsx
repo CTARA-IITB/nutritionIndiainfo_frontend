@@ -14,6 +14,7 @@ import { commaSeparated } from '../../utils';
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
 
   const screen = useFullScreenHandle();
+  const [status,setStatus] = useState(null);
   const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
   const svgRef = useRef();
   const trendWrapper = useRef();
@@ -73,6 +74,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   } 
 
   useEffect(() => {
+    setStatus("by Background Characteristics")
     let cleanData = [];
     cleanData = indicatorBar.map(d =>{
       if(d.subgroup_name === "All"){
@@ -160,6 +162,14 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .style("font-weight","bold")
         .attr("dy", "-2em")
         .text(`${gBarTitle}`)
+
+      bar.append("text")
+        .attr('x',width/2 -90)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","11px")
+        .attr("dy", "-.5em")  
+        .text(`${status}`)  
           
       bar.append("text")
         .attr("class", "x label")

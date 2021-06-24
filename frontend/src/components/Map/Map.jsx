@@ -64,7 +64,7 @@ export const Map = ({
   }
  
   if ((unit == 1 && toggleStateBurden == true)) {
-    mapTitle = `${graphTitle},${graphUnit},${titleAreaName},${graphTimeperiod}`;
+    mapTitle = `${graphTitle},${titleAreaName},${graphTimeperiod}`;
   }
   else{
     mapTitle =  `${graphTitle},Number,${titleAreaName},${graphTimeperiod}`;

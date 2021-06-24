@@ -26,6 +26,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
   const [data, setData] = useState(null);
   let colorScale ='#eda143';
+  let s="";
 
   let arrObese = [91,95,104,92,96,105,21];
   if(selIndicator == 12 || selIndicator == 13)
@@ -57,6 +58,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     
   useEffect(() => {
     if(level === 1){
+      s="By State";
       let sortedIndiaData;
       if(toggleStateBurden)
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
@@ -160,6 +162,14 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .style("font-weight","bold")
         .attr("dy", "-2em")
         .text(`${gBarTitle}`)
+
+      bar.append("text")
+        .attr('x',width/2 -90)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","11px")
+        .attr("dy", "-2.5em")  
+        .text(`${s}`)
           
       bar.append("text")
         .attr("class", "x label")

@@ -571,7 +571,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 showSearch
                 className='select-border w-10'
                 virtual={true}
-                scrollIntoView = {true}
                 // style={{ width: '100%' }}
                 value={selArea}
                 onFocus={()=>setOpenDropdown(true)}

@@ -50,7 +50,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     if(toggleStateBurden === false){
       return oneDecimel = d;
     }
-    else{
+    else {
       oneDecimel = d.toFixed(1);  
       return oneDecimel;
     }
@@ -255,7 +255,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     for(var i=0;i<data.length;i++){
       table.push({
         area:data[i].area_name,
-        data:+data[i].data_value
+        data:data[i].data_value
       })
     }
   }

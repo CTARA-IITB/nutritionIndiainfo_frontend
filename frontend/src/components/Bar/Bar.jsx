@@ -66,7 +66,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       if(toggleStateBurden === false){
         return oneDecimel = d;
       }
-      else{
+      else {
         oneDecimel = d.toFixed(1);  
         return oneDecimel;
       }

@@ -5,7 +5,6 @@ import { legendColor } from 'd3-svg-legend'
 import { Button } from 'react-bootstrap';
 import * as turf from 'turf';
 import {NFHS5} from "../../constants";
-
 import { geoMercator, format,geoCircle ,geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
 import {poissonDiscSampler} from '../../utils'
 import { InfoCircleFill } from 'react-bootstrap-icons';
@@ -17,7 +16,6 @@ import { json } from 'd3';
 import "./Map.css";
 import { commaSeparated } from "../../utils.js";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
 
 export const Map = ({ 
   boundaries, 
@@ -42,12 +40,14 @@ export const Map = ({
   drillDirection,setDrillDirection
 
 }) => {
+
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
   const svgLegRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
+
   function removeShake() {
     let element = document.getElementById("info-msg");
     element.classList.remove("shake");
@@ -85,27 +85,22 @@ export const Map = ({
     }
     return generatedLabels[i]
   };
-
-
+  
   //merge geometry and data
 
   function addProperties(geojson, data) {
-   
-    let newArr = _.map(data, function (item) {
+    let newArr = _.map(data, function (item){
       return {
         areacode: item.area_code,
         areaname: item.area_name,
         area_id: item.area_id,
         dataValue: item.data_value,
         dataValueNum: item.data_value_num,
-
       }
     });
-
-      let mergedGeoJson = _.map(geojson, function(item) {
-        return _.assign(item, _.find(newArr, ['areacode', item.properties.ID_]));
+    let mergedGeoJson = _.map(geojson, function(item) {
+      return _.assign(item, _.find(newArr, ['areacode', item.properties.ID_]));
     });
-
     return mergedGeoJson;
   }
 
@@ -114,9 +109,9 @@ export const Map = ({
     element.classList.remove("shake");
   }
   let statusMsg = "";
-
   let data = selIndiaData;
   let warning;
+
   if (level === 1)
   {
     if (toggleState === true) {

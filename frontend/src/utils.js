@@ -140,6 +140,7 @@ export const createHierarchy = (options) =>{
   }
   
   export function commaSeparated(x) {
-    if(typeof x !== 'undefined')
-    return x.toLocaleString("en-IN");
+    if(typeof x !== 'undefined'){
+     return x.toLocaleString("en-IN");
+    }
   }

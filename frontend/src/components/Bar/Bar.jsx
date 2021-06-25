@@ -60,18 +60,19 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   }
     
   //For One Decimel Precision    
-  function decimelPrecision(d){
+  function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(toggleStateBurden === false){
-        return oneDecimel = d;
+      if(d>100){
+        oneDecimel = d;
       }
       else {
         oneDecimel = d.toFixed(1);  
-        return oneDecimel;
       }
+      return oneDecimel;
     }
-  } 
+  }  
+  
 
   useEffect(() => {
     setStatus("by Background Characteristics")
@@ -196,14 +197,14 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .attr("fill", fillRect)
       	.on('mouseover', (i,d) => {
             tooltip4.transition().duration(500).style("opacity", 1);
-            tooltip4.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
+            tooltip4.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`)
             .style("left", width + xScale(xValue(d)) + margin.left +TOOLTIP_LEFT_OFFSET+ "px")
             .style("top", height + yScale(yValue(d))+ margin.top +TOOLTIP_TOP_OFFSET+"px");
           })
         .on('mouseout', ()=>{tooltip4.transition().duration(500).style("opacity", 0)});
 
       chart.enter().append("text")
-        .text(d => commaSeparated(decimelPrecision(xValue(d))))
+        .text(d => commaSeparated(decimalPrecision(xValue(d))))
         .attr('x', d => xScale(xValue(d)))
         .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
         .attr("font-family", "sans-serif")

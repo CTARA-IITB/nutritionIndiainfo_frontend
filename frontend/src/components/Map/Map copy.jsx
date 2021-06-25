@@ -64,10 +64,10 @@ export const Map = ({
   }
  
   if ((unit == 1 && toggleStateBurden == true)) {
-    mapTitle = `${graphTitle},${titleAreaName},${graphTimeperiod}`;
+    mapTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
   }
   else{
-    mapTitle =  `${graphTitle},Number,${titleAreaName},${graphTimeperiod}`;
+    mapTitle =  `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
   }
 
   function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
@@ -86,7 +86,62 @@ export const Map = ({
     return generatedLabels[i]
   };
 
-
+ if (level === 1)
+   {
+     if (toggleState === true) {
+ 
+       if (selTimeperiod === NFHS5){    // change state boundaries when timeperiod is NFHS5
+         geometry = boundaries.new_state;
+         warning="Administrative Boundaries as per NFHS5(2019-20)"
+       }   
+       else{
+         geometry = boundaries.state;
+         warning="Administrative Boundaries as per NFHS4(2015-16)"
+       }
+       
+       data = selIndiaData;
+     }
+     else {
+ 
+         if(selTimeperiod === NFHS5){
+           geometry = boundaries.new_dist;
+           warning="Administrative Boundaries as per NFHS5(2019-20)"
+ 
+         }
+         else{
+           geometry = boundaries.dist;
+           warning="Administrative Boundaries as per NFHS4(2015-16)"
+ 
+         }
+       data = selDistrictsData;
+     }
+     
+     statusMsg = (toggleState)?'Click on map to select state':'';
+   }
+   else{
+      data = selStateData;
+     if(null!== selStateData && selStateData.length > 0)
+     {
+       if(level === 2){
+         statusMsg= "Click on map to select distirct or\nclick on back button go back to India";
+       }else if(level === 3){
+         statusMsg=`Click on map to select district or \n click back button to go back to state`
+       }
+     }
+     if(selTimeperiod == NFHS5)
+     {
+       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
+       geometry = {type: "FeatureCollection",features}
+       warning=""
+ 
+     }
+     else{
+       let features = boundaries.dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
+       geometry = {type: "FeatureCollection",features}
+       warning="Administrative Boundaries as per NFHS4(2015-16)"
+     }
+   }
+    
   //merge geometry and data
 
   function addProperties(geojson, data) {
@@ -146,6 +201,7 @@ export const Map = ({
         }
       data = selDistrictsData;
     }
+    
     statusMsg = (toggleState)?'Click on map to select state':'';
   }
   else{
@@ -153,9 +209,9 @@ export const Map = ({
     if(null!== selStateData && selStateData.length > 0)
     {
       if(level === 2){
-        statusMsg=" Click on map to select distirct \n or back to return"
+        statusMsg= "Click on map to select distirct or\nclick on back button go back to India";
       }else if(level === 3){
-        statusMsg=`Click on map to select district \n or back to return`
+        statusMsg=`Click on map to select district or \n click back button to go back to state`
       }
     }
     if(selTimeperiod == NFHS5)
@@ -171,6 +227,7 @@ export const Map = ({
       warning="Administrative Boundaries as per NFHS4(2015-16)"
     }
   }
+   
   select(".tooltip").remove();
 
   let tooltip = select(".map_svg").append("div")
@@ -198,8 +255,7 @@ export const Map = ({
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
  
    console.log(width)
-   
-    
+  
     svg.selectAll("*").remove();
     svg.attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
@@ -574,48 +630,30 @@ export const Map = ({
       }
 
     }
-    let msg = legend.append("text")
-      .style("font-size","12px")
-      .attr("class", "statusmsg")
-      if(width < 680 && selArea == 1){
-          svg.append("g")
-             .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-100},${adjustedHeight-450})`)
-          msg
-            .text(statusMsg)
-            .attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
-      }else if(width < 680){
+  //  let msg = legend.append("text")
+  //   .text(statusMsg)
+  //   .style("font-size","12px")
+  //   .attr("class", "statusmsg")
+if(width < 680 && selArea == 1){
+    svg.append("g")
+      .attr("class", "legendQuant")
+        .attr("transform", `translate(${width-100},${adjustedHeight-450})`)
+        // msg.attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
+       }else if(width < 680){
         console.log(level)
-        if(level === 2 || level === 3){
-            msg.text(statusMsg)
-
-            .attr("transform", `translate(${width-380},${adjustedHeight- 120})`)
-          }
-        }
-    
-      else{
-         
-          if(level === 2 || level === 3){
-           
-              msg.text(statusMsg).attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
-               }
-          else{
-              msg.text(statusMsg)
-                .attr("transform", `translate(${width-150},${adjustedHeight- 80})`)
-            }
-          }
-    if(width > 680){
-        svg.append("g")
+if(level === 2 || level === 3){
+  // msg.attr("transform", `translate(${width-380},${adjustedHeight- 120})`)
+}
+      }
+      
+        else{
+          svg.append("g")
           .attr("class", "legendQuant")
-          .attr("transform", `translate(${width-150},${adjustedHeight-220})`)
-        }
-    else{
-        svg.append("g")
-            .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-100},${adjustedHeight- 320})`)
-        }
-            
-
+            .attr("transform", `translate(${width-100},${adjustedHeight- 350})`)
+        
+           
+              // msg.attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
+            }
     let formatter = format(".1f");
     let myLegend;
    
@@ -707,7 +745,7 @@ export const Map = ({
 
   let backButton;
   if(level !== 1)  
-    backButton = <Button className={`back_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'20px'}}/></Button> 
+    backButton = <Button className={`toggle_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'20px'}}/></Button> 
 
   return (
     <>
@@ -726,7 +764,9 @@ export const Map = ({
         {backButton}
       </div>
       
-      
+      <div className="map_req_text">
+          <div id="info-msg" className="msg"></div>
+      </div>
     </div>
   </div>
 

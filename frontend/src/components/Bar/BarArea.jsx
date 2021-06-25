@@ -1,293 +1,277 @@
-import React, { useRef,useEffect} from 'react';
-import BarAreaComponent from './BarAreaComponent';
-import SideNavSecond from "../SideNav/SideNavSecond";
+import React, { useRef,useState,useEffect } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import datalabels from 'chartjs-plugin-datalabels';
-import Chart from 'chart.js';
 import { commaSeparated } from '../../utils';
+import SideNavFirst from "../SideNav/SideNavFirst";
+import {
+  scaleLinear,
+  scaleBand,
+  max,
+  select,
+  axisLeft,
+  axisBottom,
+  descending,
+} from 'd3';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
-    const componentRef = useRef();
-    const screen=useFullScreenHandle();
+  const screen=useFullScreenHandle();
+  const svgRef = useRef();
+  const trendWrapper = useRef();
+  const margin = {
+    left:160,
+    top: 50,
+    right: 80,
+    bottom: 30,
+  };
 
-    let barLabel=[];
-    let barData=[];
-    let data = [];
-    let options = [];
-    let stateDataValue;
-    let stateAreaName;
-    let datasets = [];
-    let table=[];
-    let title;
-    let sortedBarLabel =[];
-    let sortedBarData = [];
-    let maxWidth;
-    let colorScale ='#eda143';
+  const [data, setData] = useState(null);
+  const [status,setStatus]=useState(null);
+  let colorScale ='#eda143';
 
-    let arrObese = [91,95,104,92,96,105,21];
-    if(selIndicator == 12 || selIndicator == 13)
-      colorScale = '#a3c00f'; 
-    else if(selIndicator == 19 || selIndicator == 20)
-      colorScale = '#e53935'; 
-    else if(selIndicator == 17 || selIndicator == 18)
-      colorScale = '#039be5'; 
-    else if(selIndicator == 107 || selIndicator == 108)
-      colorScale = '#e53935'; 
-    else  if(arrObese.includes(selIndicator))
-      colorScale = '#7b1fa2'; 
-    else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
-      colorScale = '#b71c1c'; 
-    else
-      colorScale = '#eda143'; 
-
-   
-    
-    if(selIndiaData && level=="1" ){
-        
-        selIndiaData.map(i=>{
-            if(toggleStateBurden === true){
-                if(!isNaN(i.data_value)){
-                    barLabel.push(i.area_name)
-                    barData.push(+i.data_value)
-                }
-            }      
-            else{
-                if(!isNaN(i.data_value_num)){
-                    barLabel.push(i.area_name)
-                    barData.push(+i.data_value_num)
-                }
-            }
-            
-        })
-    }        
-    if(selStateData && (level=="2" || level=="3")){
-        for(let j=0;j<selIndiaData.length;j++){
-
-            if(+selArea===selIndiaData[j].area_id && selIndiaData[j].area_name!==areaName){ 
-
-                if(toggleStateBurden === true){
-                    if(!isNaN(selIndiaData[j].data_value)){
-                        stateDataValue=selIndiaData[j].data_value;
-                        stateAreaName=selIndiaData[j].area_name;
-                    }
-                    
-                }
-                else{
-                    if(!isNaN(selIndiaData[j].data_value_num)){
-                        stateDataValue=selIndiaData[j].data_value_num;
-                        stateAreaName=selIndiaData[j].area_name;
-                    }
-                }
-               
-                barLabel.push(stateAreaName)
-                barData.push(stateDataValue)
-            }           
-        }
-        selStateData.map(i=>{
-            if(i.area_name!==areaName){
-                if(toggleStateBurden === true){
-                    if(!isNaN(i.data_value)){
-                        barLabel.push(i.area_name)
-                        barData.push(+i.data_value)
-                    }
-                }      
-                else{
-                    if(!isNaN(i.data_value_num)){
-                        barLabel.push(i.area_name)
-                        barData.push(+i.data_value_num)
-                    }
-                }
-            }
-        })
-    }           
-    let barGUnit = graphUnit;
-    
-    if(toggleStateBurden === false){
-        barGUnit = 'Number';  
-    }
-
-    //For One Decimel Precision    
-    function decimelPrecision(d){
-        let oneDecimel;
-        if(toggleStateBurden === false){
-            return oneDecimel = d;
-        }
-        else{
-            oneDecimel = d.toFixed(1);  
-            return oneDecimel;
-        }
-        
-    }    
-
-    // table details    
-    for(var i=0;i<barLabel.length;i++){
-        table.push({
-            area:barLabel[i],
-            data:+barData[i],
-        })
-    }   
-    // sort the table
-    const compareObjects=(object1, object2, key)=>{
-        const obj1 = object1.data
-        const obj2 = object2.data
-
-        if (obj1 < obj2) {
-          return -1
-        }
-        if (obj1 > obj2) {
-          return 1
-        }
-        return 0
-    }
-    table.sort((d1, d2) => {
-        return compareObjects(d1, d2,)
-    })
+  let arrObese = [91,95,104,92,96,105,21];
+  if(selIndicator == 12 || selIndicator == 13)
+    colorScale = '#a3c00f'; 
+  else if(selIndicator == 19 || selIndicator == 20)
+    colorScale = '#e53935'; 
+  else if(selIndicator == 17 || selIndicator == 18)
+    colorScale = '#039be5'; 
+  else if(selIndicator == 107 || selIndicator == 108)
+    colorScale = '#e53935'; 
+  else  if(arrObese.includes(selIndicator))
+    colorScale = '#7b1fa2'; 
+  else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
+    colorScale = '#b71c1c'; 
+  else
+    colorScale = '#eda143'; 
   
-    // reverse the table
-    table.reverse();
-
-    //sort label and data
-    for(var i=0;i<table.length;i++){
-        sortedBarLabel[i]=table[i].area;
-        sortedBarData[i]=table[i].data;
-        table[i].data += " ("+graphTimeperiod +")";
-    }   
+  //For One Decimel Precision    
+  function decimelPrecision(d){
+    let oneDecimel;
+    if(toggleStateBurden === false){
+      return oneDecimel = d;
+    }
+    else{
+      oneDecimel = d.toFixed(1);  
+      return oneDecimel;
+    }
+  } 
     
-    datasets=[
-        {
-            // label: [graphTitle, barGUnit, graphTimeperiod],
-            label :'',
-            data:sortedBarData,
-            yAxisID:'yAxis1',
-            backgroundColor:colorScale,
-            borderColor: colorScale,
-            borderWidth: 1,
-            // barThickness: 6,
-        },
-    ]
+  useEffect(() => {
+    if(level === 1){
+      setStatus("By State");
+      let sortedIndiaData;
+      if(toggleStateBurden)
+          sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+      else{
+          selIndiaData = selIndiaData.filter(d => typeof d.data_value_num != 'undefined')
+          sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
+      }
+      setData(sortedIndiaData);
+    }
+    else if(level === 2 || level === 3){
+      setStatus("By District")
+      let sortedStateData;
+      if(toggleStateBurden)
+          sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+      else{
+          selStateData = selStateData.filter(d => typeof d.data_value_num != 'undefined')
+          sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
+      }
+      setData(sortedStateData)
+    }
+  }, [toggleStateBurden]);
+  
+  useEffect(()=>{
+    select(".tooltip3").remove();
+    let TOOLTIP_LEFT_OFFSET,TOOLTIP_TOP_OFFSET,TOOLTIP_FONTSIZE;
 
-    // graph time period 
-    let chartTitle = graphTimeperiod.split(" ")[0];
+    let tooltip3 = select(".trend_svg").append("div")
+    .attr("class", "tooltip2")
+    .style("opacity", 0);
     
-    data = {
-        labels:sortedBarLabel,
-        datasets: datasets,
-    }  
-
-    //Condition for Varying Bar Width
-    if (datasets[0].data.length <= 6 ){
-        maxWidth = 20;
-    };
-
-    options = {
-        responsive:true,
-        maintainAspectRatio:false,
-        plugins: {
-            datalabels: {
-              color: 'black',
-              anchor: 'end',
-              align: 'end',
-              formatter: function(value) {
-                return commaSeparated(decimelPrecision(value));
-              },
-              font: {
-                size: 11,
-              },
-              }
-        },
-        tooltips:{
-            displayColors:false,
-            xAlign:"right",
-            bodyAlign:"center",
-            callbacks: {
-                label: function(context) {
-                    var label = context.xLabel; 
-                    label = decimelPrecision(label); 
-                    return commaSeparated(label);
-                },
-            },
-            bodyFont: 12,
-            padding:10,
-            backgroundColor: 'black',
-            filter: function (tooltipItem) {
-                return tooltipItem.datasetIndex === 0;
-            }
-        },
-        legend:{  
-            display: false,
-        },
-        layout: {
-            padding: {
-              top:40,  
-              bottom: 20,  
-              right: 70,
-            },
-          },
-        scales: {
-            yAxes:[{
-                offset: true,
-                stacked: true,
-                barThickness: maxWidth,
-                id:'yAxis1',
-                type:"category",
-                ticks:{
-                    padding:5,
-                    fontSize: 11,
-                    fontColor: "black",
-                    callback:function(label){
-                        var subgroup = label.split(";")[0];
-                        return subgroup;
-                    }
-                },
-                gridLines: {
-                    drawTicks:false,
-                    drawOnChartArea: false, 
-                    color:"black",
-                    zeroLineColor:'transparent'
-                },
-            }],
-            xAxes: [{
-                stacked: true,
-                ticks: {
-                    autoSkip:false,
-                    fontSize: 11,
-                    maxTicksLimit:4,
-                    fontColor:"black",
-                    beginAtZero: true,
-                    callback: function(value) {
-                        return commaSeparated(value);
-                    }
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: barGUnit,
-                    fontSize: 12,
-                    fontColor: "black",
-                },
-                gridLines: {
-                    drawOnChartArea:false,
-                    color:"black",
-                }
-            }],
-        } 
+    const svg = select(svgRef.current);
+    let windowWidth = window.screen.width;
+    let windowHeight = window.screen.height;
+    
+    if(windowWidth >= 480){
+      windowWidth = windowWidth/2;
+      windowHeight = windowHeight/2;
+      TOOLTIP_LEFT_OFFSET=-100;
+      TOOLTIP_TOP_OFFSET=140;
+      TOOLTIP_FONTSIZE="12px";
+    }else{
+      windowWidth = windowWidth + 100;
+      windowHeight = windowHeight/2;
+      TOOLTIP_LEFT_OFFSET=-100;
+      TOOLTIP_TOP_OFFSET=800;
+      TOOLTIP_FONTSIZE="8px";
     }
 
-    Chart.plugins.register(datalabels);
+    let { width, height } = {width:windowWidth,height:windowHeight}; 
+    let innerHeight = height - margin.top - margin.bottom;
+    const innerWidth = width - margin.left - margin.right;
+    const aspect = width / height;
+    let gBarTitle;
 
+    const adjustedHeight = Math.ceil(width / aspect)*1.1;
+      svg.selectAll("*").remove();
+      svg.attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
-    // title of table
-    title=graphTitle + ', '+ titleAreaName + ', '+ chartTitle + ' ' + graphTimeperiod.split(" ")[1]; 
-    // graph height
-    let calculatedHeight=data.labels.length*15;
-    calculatedHeight = (calculatedHeight < 450)?450:calculatedHeight;
+    if (( toggleStateBurden == true)) {
+      gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
+    }
+    else{
+      gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
+    }
+        
+    if(data && data.length >0){
+      const barSize = 13;
+      const dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length;
 
-    return (
-        <div>
-            <FullScreen  className="fullscreen_css" handle={screen}>
-                <SideNavSecond table={table} id="BarArea" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarAreaComponent ref={componentRef}  data={data} options={options} calculatedHeight={calculatedHeight} title={title}/>
-            </FullScreen>    
-        </div>
-    );
+      const yValue = d => d.area_name;
+      let xValue;
+
+      if(toggleStateBurden){
+        xValue = d => d.data_value;
+      }  
+      else{
+        xValue = d => d.data_value_num;
+        graphUnit ='Number';
+      }
+      const bar = svg
+        .attr("width", width)
+        .attr("height", dynamicRange+100)
+        .append("g")
+        .attr("transform",`translate(${margin.left},${margin.top})`);
+
+      const xScale = scaleLinear()
+        .domain([0, max(data, xValue)])
+        .range([0, innerWidth])
+
+      const yScale = scaleBand()
+        .domain(data.map(yValue))
+        // .range([0,innerHeight])
+        .padding(0.1)
+        .range([0,dynamicRange])
+          
+      bar.append("text")
+        .attr('x',width/2 -90)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","13px")
+        .style("font-weight","bold")
+        .attr("dy", "-2em")
+        .text(`${gBarTitle}`)
+
+      bar.append("text")
+        .attr('x',width/2 -90)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","11px")
+        .attr("dy", "-.5em")  
+        .text(`${status}`)
+          
+      bar.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "middle")
+        .attr("x", innerWidth/2)
+        .attr("y", dynamicRange+50)
+        .text(`${graphUnit}`)
+        .style('font-size',13);
+    
+      let chart = bar.selectAll("rect").data(data);
+      const fillRect = (d) =>{
+        return colorScale;
+      }
+
+      let rectHeight = d =>{
+        if(data.length <= 6)
+          return 20;
+        else
+          return yScale.bandwidth()
+      }
+
+      let rectY = d =>{
+        if(data.length <= 6)
+          return yScale(yValue(d)) + yScale.bandwidth()/2 - 10;
+        else
+          return yScale(yValue(d));
+      }
+
+      chart.enter().append("rect")
+        .attr('y', d => rectY(d))
+        .attr('width', d => {return xScale(xValue(d))})
+        .attr('height', rectHeight )
+        .attr("fill", fillRect)
+        .on('mouseover', (i,d) => {
+            tooltip3.transition().duration(500).style("opacity", 1);
+            tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
+            .style("left", xScale(xValue(d)) + margin.left + TOOLTIP_LEFT_OFFSET + "px")
+            .style("top", height+ yScale(yValue(d))+ margin.top +TOOLTIP_TOP_OFFSET+"px");
+          })
+        .on('mouseout', ()=>{tooltip3.transition().duration(100).style("opacity", 0)});
+
+      chart.enter().append("text")
+        .text(d => commaSeparated(decimelPrecision(xValue(d))))
+        .attr('x', d => xScale(xValue(d)))
+        .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
+        .attr("font-family", "sans-serif")
+        .attr("dy", ".3em")
+        .attr("dx", ".3em")
+        .attr("font-size", "11px")
+        .attr("fill", "black")
+      
+      bar.append("g")
+      	.attr("class","axis")
+        .call(axisLeft(yScale).tickSize(0))
+		    .style('font-size',11);	
+     
+      bar.append("g")
+        .attr("transform",`translate(0, ${dynamicRange})`)
+        // .attr("transform", "translate(0," + (barSize*data.length) + ")")
+      	.attr("class","axis")
+  			.call(axisBottom(xScale).ticks(3))
+        .style('font-size',11)
+        
+          
+    }
+  },[data,toggleStateBurden])
+    
+  const checkchange = (state,handle)=>{
+    // if(trend){
+    //   if(state === true){
+    //     trend[0].style.height = "100vh";
+    //   }
+    //   else if(state === false){
+    //     if(trend[0] != undefined)
+    //     trend[0].style.height = "65vh";
+    //   }
+    // }
+  }
+
+  let table=[];
+  if(data ){
+    for(var i=0;i<data.length;i++){
+      table.push({
+        area:data[i].area_name,
+        data:+data[i].data_value
+      })
+    }
+  }
+     
+  let title=graphTitle+ ',  '+ graphUnit+'()'
+
+  return (
+      <>
+        <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
+          <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
+          <div className="hbar">
+            <div className="hbar_svg" ref={trendWrapper}>
+              <svg id="svgBarArea"  ref = {svgRef}></svg>
+            </div>
+          </div>
+        </FullScreen>
+      </>
+  );
 };

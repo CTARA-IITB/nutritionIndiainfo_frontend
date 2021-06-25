@@ -1,297 +1,267 @@
-import React, { useRef } from 'react';
-import BarComponent from './BarComponent';
-import SideNavSecond from "../SideNav/SideNavSecond";
+import React, { useRef,useState,useEffect } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import SideNavFirst from "../SideNav/SideNavFirst";
+import {
+  scaleLinear,
+  scaleBand,
+  max,
+  select,
+  axisLeft,
+  axisBottom
+} from 'd3';
 import { commaSeparated } from '../../utils';
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
 
-    const componentRef = useRef();
-    const screen=useFullScreenHandle();
+  const screen = useFullScreenHandle();
+  const [status,setStatus] = useState(null);
+  const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
+  const svgRef = useRef();
+  const trendWrapper = useRef();
+  const margin = {
+    left:160,
+    top: 50,
+    right: 80,
+    bottom: 50,
+  };
+  const [data, setData] = useState(null);
+   
+  let colorScale ='#eda143';
+  let lightColor = '#F7D9B3';
+  let arrObese = [91,95,104,92,96,105,21];
 
-    let data = [];
-    let table=[];
-    let options =[];
-    let barUnit = graphUnit;
-    let title, findMaxVal;
-    let colorScale ='#eda143';
-    let lightColor = '#F7D9B3';
-    let groupedData = [];
-    let groupedLabel =[];
-    let groupedColor = [];
+  if(selIndicator == 12 || selIndicator == 13){
+    colorScale = '#a3c00f'; 
+    lightColor = '#DAE59F';
+  }
+  else if(selIndicator == 19 || selIndicator == 20){
+    colorScale = '#e53935'; 
+    lightColor = '#F4AFAE';
+  }
+  else if(selIndicator == 17 || selIndicator == 18){
+    colorScale = '#039be5'; 
+    lightColor = '#9AD7F4';
+  }
+  else if(selIndicator == 107 || selIndicator == 108){
+    colorScale = '#e53935'; 
+    lightColor = '#F4AFAE';
+  }
+  else  if(arrObese.includes(selIndicator)){
+    colorScale = '#7b1fa2'; 
+    lightColor = '#CAA5D9';
+  }
+  else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125){
+    colorScale = '#b71c1c'; 
+    lightColor = '#E2A4A4';
+  }
+  else{
+    colorScale = '#eda143'; 
+    lightColor = '#F7D9B3';
+  }
+    
+  //For One Decimel Precision    
+  function decimelPrecision(d){
+    let oneDecimel;
+    if(typeof d !== 'undefined'){
+      if(toggleStateBurden === false){
+        return oneDecimel = d;
+      }
+      else{
+        oneDecimel = d.toFixed(1);  
+        return oneDecimel;
+      }
+    }
+  } 
 
-    let chartTitle = graphTimeperiod.split(" ")[0];
+  useEffect(() => {
+    setStatus("by Background Characteristics")
+    let cleanData = [];
+    cleanData = indicatorBar.map(d =>{
+      if(d.subgroup_name === "All"){
+        d.subgroup_name = "Overall";
+      }
+      return d;
+    }).filter(d => listofSubgroup.includes(d.subgroup_name))
+    setData(cleanData);
+  }, []);
 
-    let arrObese = [91,95,104,92,96,105,21];
-    if(selIndicator == 12 || selIndicator == 13){
-        colorScale = '#a3c00f'; 
-        lightColor = '#DAE59F';
-        }
-    else if(selIndicator == 19 || selIndicator == 20){
-        colorScale = '#e53935'; 
-        lightColor = '#F4AFAE';
+  useEffect(()=>{
+    select(".tooltip4").remove();
+    let TOOLTIP_LEFT_OFFSET,TOOLTIP_TOP_OFFSET,TOOLTIP_FONTSIZE;
+
+    let tooltip4 = select(".trend_svg").append("div")
+    .attr("class", "tooltip2")
+    .style("opacity", 0);
+    
+    const svg = select(svgRef.current);
+    let windowWidth = window.screen.width;
+    let windowHeight = window.screen.height;
+
+    if(windowWidth >= 480){
+      windowWidth = windowWidth/2;
+      windowHeight = windowHeight/2;
+      TOOLTIP_LEFT_OFFSET=-70;
+      TOOLTIP_TOP_OFFSET=140;
+      TOOLTIP_FONTSIZE="12px";
+    }else{
+      TOOLTIP_LEFT_OFFSET=-100;
+      TOOLTIP_TOP_OFFSET=0;
+      TOOLTIP_FONTSIZE="12px";
+      windowWidth = windowWidth + 100;
+      windowHeight = windowHeight/2;
     }
-    else if(selIndicator == 17 || selIndicator == 18){
-        colorScale = '#039be5'; 
-        lightColor = '#9AD7F4';
-    }
-    else if(selIndicator == 107 || selIndicator == 108){
-        colorScale = '#e53935'; 
-        lightColor = '#F4AFAE';
-    }
-    else  if(arrObese.includes(selIndicator)){
-        colorScale = '#7b1fa2'; 
-        lightColor = '#CAA5D9';
-    }
-    else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125){
-        colorScale = '#b71c1c'; 
-        lightColor = '#E2A4A4';
+    let { width, height } = {width:windowWidth,height:windowHeight}; 
+       
+    let innerHeight = height - margin.top - margin.bottom;
+    const innerWidth = width - margin.left - margin.right;
+    const aspect = width / height;
+    let gBarTitle;
+
+    const adjustedHeight = Math.ceil(width / aspect)*1.1;
+      svg.selectAll("*").remove();
+      svg.attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
+
+    const bar = svg.append("g")
+                  .attr("transform",`translate(${margin.left},${margin.top})`);
+    
+    if (( toggleStateBurden == true)) {
+      gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
     else{
-        colorScale = '#eda143'; 
-        lightColor = '#F7D9B3';
+      gBarTitle =  `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
-    if(toggleStateBurden === false){
-        barUnit = 'Number';
-    }
-    var j=0;
-    groupedLabel[j]="Overall";
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-    groupedLabel[j]=" ";
-    groupedColor[j]="white";
-    groupedData[j++]=NaN;
-    
-    groupedLabel[j]="Male"
-    groupedColor[j]=lightColor;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="Female"
-    groupedColor[j]=lightColor;
-    groupedData[j++]=NaN;
-    groupedLabel[j]=" ";
-    groupedColor[j]="white";
-    groupedData[j++]=NaN;
-
-    groupedLabel[j]="Low Coverage";
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="Mid Coverage";
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="High Coverage";
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-    groupedLabel[j]=" ";
-    groupedColor[j]="white";
-    groupedData[j++]=NaN;
-
-    groupedLabel[j]="No Education";
-    groupedColor[j]=lightColor;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="< 5 years completed";
-    groupedColor[j]=lightColor;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="5-9 years completed";
-    groupedColor[j]=lightColor;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="10-11 years completed";
-    groupedColor[j]=lightColor;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="12+ years completed";
-    groupedColor[j]=lightColor;
-    groupedData[j++]=NaN;
-    groupedLabel[j]=" ";
-    groupedColor[j]="white";
-    groupedData[j++]=NaN;
-
-    groupedLabel[j]="Poorest"
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="Second"
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="Middle"
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="Fourth"
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-    groupedLabel[j]="Richest"
-    groupedColor[j]=colorScale;
-    groupedData[j++]=NaN;
-
-    var hashTable = {};
-    for(var i=0;i<groupedLabel.length;i++)
-        hashTable[groupedLabel[i]]=i;
-   
-    if(indicatorBar){
-        indicatorBar.map(i=>{
-            
-            if(i.subgroup_name==="All"){
-                if(toggleStateBurden == true){
-                    groupedData[hashTable["Overall"]]=i.data_value;
-                }
-                else{
-                    groupedData[hashTable["Overall"]]=i.data_value_num;
-                }
-                table.push({
-                    area:i.subgroup_name,
-                    data:+ groupedData[hashTable["Overall"]],
-                })
-            }
-            else if(typeof hashTable[i.subgroup_name]!=='undefined'){
-                if(toggleStateBurden == true){
-                    groupedData[hashTable[i.subgroup_name]]=i.data_value;
-                }
-                else{
-                    groupedData[hashTable[i.subgroup_name]]=i.data_value_num;
-                }
-                table.push({
-                    area:i.subgroup_name,
-                    data:+ groupedData[hashTable[i.subgroup_name]],
-                })
-            }
-        })
-
-    //For One Decimel Precision    
-    function decimelPrecision(d){
-        let oneDecimel;
-        if(toggleStateBurden === false){
-            return oneDecimel = d;
-        }
-        else{
-            oneDecimel = d.toFixed(1);  
-            return oneDecimel;
-        }
         
-    } 
-       
-        // graph time period 
+    if(data && data.length >0){
 
-        data = {
-            labels:groupedLabel,
-            datasets: [{
-                // label: [graphTitle, barUnit,graphTimeperiod],
-                data:groupedData,
-                yAxisID:'yAxis1',
-                backgroundColor: groupedColor,
-                borderColor: colorScale,
-                borderWidth:0.5,
-                barThickness: 10,
-            }] 
-        }
+      const yValue = d => d.subgroup_name;
+      let xValue;
+
+      if(toggleStateBurden){
+        xValue = d => d.data_value;
+      }  
+      else{
+        xValue = d => d.data_value_num;
+        graphUnit ='Number';
+      }
+
+      const xScale = scaleLinear()
+        .domain([0, max(data, xValue)])
+        .range([0, innerWidth])
     
-    //Finding maximum value of X-axis    
-        let findMax = (data.datasets[0].data);
+      const yScale = scaleBand()
+        .domain(listofSubgroup)
+        .range([0,innerHeight])
+        .padding(0.1);
+          
+      bar.append("text")
+        .attr('x',width/2 -90)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","13px")
+        .style("font-weight","bold")
+        .attr("dy", "-2em")
+        .text(`${gBarTitle}`)
 
-        for(let i = 0; i<findMax.length; i++ ){
-            if (isNaN(findMax[i])){
-                findMax[i] = 0;
-            }
-        };
-        findMaxVal =  Math.max.apply(Math, findMax);
+      bar.append("text")
+        .attr('x',width/2 -90)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","11px")
+        .attr("dy", "-.5em")  
+        .text(`${status}`)  
+          
+      bar.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "middle")
+        .attr("x", innerWidth/2)
+        .attr("y", innerHeight + 50)
+        .text(`${graphUnit}`)
+        .style('font-size',13);
+      
+      let chart = bar.selectAll("rect").data(data);
+      
+      const fillRect = (d) =>{
+        let darkSubgroup = ["Overall","Low Coverage","Mild Coverage","High Coverage","Poorest","Second","Middle","Fourth","Richest"]
+        if(darkSubgroup.includes(d.subgroup_name))
+          return colorScale;
+        else
+          return lightColor;
+      }
 
+      chart.enter().append("rect")
+      	.attr('y', d => yScale(yValue(d)))
+      	.attr('width', d => {return xScale(xValue(d))})
+      	.attr('height', yScale.bandwidth())
+        .attr("fill", fillRect)
+      	.on('mouseover', (i,d) => {
+            tooltip4.transition().duration(500).style("opacity", 1);
+            tooltip4.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
+            .style("left", width + xScale(xValue(d)) + margin.left +TOOLTIP_LEFT_OFFSET+ "px")
+            .style("top", height + yScale(yValue(d))+ margin.top +TOOLTIP_TOP_OFFSET+"px");
+          })
+        .on('mouseout', ()=>{tooltip4.transition().duration(500).style("opacity", 0)});
 
-        options={
-            plugins: {
-                datalabels: {
-                    color: 'black',
-                    anchor: 'end',
-                    align: 'end',
-                    clip: 'false',
-                    display: function(context) {
-                        return context.dataset.data[context.dataIndex] >= 0.1; 
-                    },
-                    formatter: function(value) {
-                        if(value == "undefined" || isNaN(value)){
-                            return value;
-                        }
-                        else{
-                            return commaSeparated(decimelPrecision(value));
-                        }
-                    },
-                    font: {
-                    size: 11,
-                    },
-                }
-            },
-            tooltips:{
-                displayColors:false,
-                xAlign:"right",
-                bodyAlign:"center",
-                bodyFont: 12,
-                callbacks: {
-                    label: function(context) {
-                        var label = context.xLabel; 
-                        label = decimelPrecision(label); 
-                        return commaSeparated(label);
-                    },
-                },
-            },
-            legend:
-            {
-              display: false,
-            },
-            layout: {
-                padding: {
-                  top:40,  
-                  bottom: 20,   
-                  right: 50,
-                },
-              },
-            scales: {
-                yAxes:[{
-                        id:'yAxis1',
-                        type:"category",
-                        ticks:{
-                            padding:5,
-                            fontSize: 11,
-                            fontColor: "black",
-                        },
-                        gridLines: {
-                          drawTicks:false,
-                          drawOnChartArea: false,
-                          color:"black",
-                          zeroLineColor:'transparent'
-                        },
-                }],
-                xAxes: [{
-                    ticks: {
-                        autoSkip:false,
-                        fontSize: 11,
-                        maxTicksLimit:4,
-                        fontColor:"black",
-                        beginAtZero: true,
-                        suggestedMax: findMaxVal * 1.15,
-                        callback: function(value) {
-                            return commaSeparated(value);
-                        },
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: barUnit,
-                        fontSize: 12,
-                        fontColor: "black",
-                    },
-                    gridLines: {
-                        drawOnChartArea: false,
-                        color:"black",
-                    }
-                }]
-            }
-        }
+      chart.enter().append("text")
+        .text(d => commaSeparated(decimelPrecision(xValue(d))))
+        .attr('x', d => xScale(xValue(d)))
+        .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
+        .attr("font-family", "sans-serif")
+        .attr("dy", ".3em")
+        .attr("dx", ".3em")
+        .attr("font-size", "11px")
+        .attr("fill", "black")
+      
+      bar.append("g")
+      	.attr("class","axis")
+        .call(axisLeft(yScale).tickSize(0))
+		    .style('font-size',11);	
+     
+     
+      bar.append("g")
+        .attr("transform",`translate(0, ${innerHeight})`)
+      	.attr("class","axis")
+  			.call(axisBottom(xScale).ticks(3))
+        .style('font-size',11)
+        
     }
-   
-    title=graphTitle + ', '+ titleAreaName + ', '+ chartTitle + ' ' + graphTimeperiod.split(" ")[1]; 
+  },[data,toggleStateBurden])
 
-    let height = 165;
- 
-    return(
-        <div>
-            <FullScreen  className="fullscreen_css" handle={screen}>
-                <SideNavSecond table={table} id="Bar" screen={screen} title={title} timePeriod={graphTimeperiod} componentRef={componentRef} />
-                <BarComponent ref={componentRef} data={data} options={options} height={height} title={title}/>
-            </FullScreen>    
+
+  const checkchange = (state,handle)=>{
+    // if(gbar){
+    //   if(state === true){
+    //     gbar[0].style.height = "100vh";
+    //   }
+    //   else if(state === false){
+    //     if(gbar[0] != undefined)
+    //     gbar[0].style.height = "65vh";
+    //   }
+    // }
+  }
+
+  let table=[];
+  if(data ){
+    for(var i=0;i<data.length;i++){
+      table.push({
+        subgroup:data[i].subgroup_name,
+        data:+data[i].data_value
+      })
+    }
+  }
+
+  let title=graphTitle+ ',  '+ graphUnit+'()'
+
+  return(
+    <>
+      <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
+        <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
+        <div className="gbar">
+          <div className="gbar_svg" ref={trendWrapper}>
+            <svg id="svgBar"   ref = {svgRef}></svg>
+          </div>
         </div>
-    );
+      </FullScreen>
+    </>
+  );
 };

@@ -19,13 +19,21 @@ div.tooltip2 {
 }
 
 .trend{
-  height:750px;
+  /* height:750px; */
   display:flex;
   /* width: 100%; */
 }
 
+.trend_svg {
+  /* background-color:grey; */
+  margin: 0;
+  width: 100%;
+  height: 50%;
+  padding: 0;
+}
 #svgTrend{
   font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
 }
 
 .fullscreen_css {

@@ -8,7 +8,7 @@ import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
-import "./Dropdown.css";
+// import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Switch } from 'antd';
 import {BarArea} from "../../components/Bar/BarArea";
@@ -611,29 +611,11 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 				</div>
 			</div>
 		</div>
-		{/* <div className="row w-100 p-4" style={{margin: 0}}>
+		<div className="row w-100 p-4" style={{margin: 0}}>
 			<div className="col-12 col-lg-6 col-md-12 p-3">
-				<img src="images/img1.png" className="img-map"/>
-			</div>
-			<div className="col-12 col-lg-6 col-md-12 p-3">
-				<img src="images/img2.png" className="img-map"/>
-			</div>
-			<div className="col-12 col-lg-6 col-md-12 p-3">
-				<img src="images/img3.png" className="img-map"/>
-			</div>
-			<div className="col-12 col-lg-6 col-md-12 p-3">
-				<img src="images/img4.png" className="img-map"/>
-			</div>
-		</div> */}
-		<div>
-		
-		</div>
-		
-<div className="layout" id="layoutid">
-  <div className="row" id="row1">
-    <div className="column" id="column1">
-  <div className="layout_left_trend" >
-      {(isSelected  & selTimeperiod != "")?
+				{/* <img src="images/img1.png" className="img-map"/> */}
+
+        {(isSelected  & selTimeperiod != "")?
       <Trend indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphSubgroup = {graphSubgroup}
@@ -644,11 +626,11 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       trend = {trend}
       selIndicator={selIndicator}
       />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
-      </div>
 
-      </div>
-      <div className="column" id="column2">
-      <div className="layout_right_map">
+
+			</div>
+			<div className="col-12 col-lg-6 col-md-12 p-3">
+				{/* <img src="images/img2.png" className="img-map"/> */}
         {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -691,16 +673,11 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setDrillDirection ={setDrillDirection}
           map={map}
           /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
-      </div>
-  
-     </div>
-   </div>
-   </div>
-   <div className="layout" id="layoutid1">
-   <div className="row" id="row2">
-    <div className="column" id="column3">
-    <div className="layout_left_bar1">
-     {(isSelected  & selTimeperiod != "")?<BarArea
+        
+			</div>
+			<div className="col-12 col-lg-6 col-md-12 p-3">
+				{/* <img src="images/img3.png" className="img-map"/> */}
+        {(isSelected  & selTimeperiod != "")?<BarArea
       indicatorTrend = {indicatorTrend}
       graphTitle = {graphTitle}
       graphTimeperiod = {graphTimeperiod}
@@ -713,12 +690,11 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       selStateData = {selStateData}
       toggleStateBurden = {toggleStateBurden}
       selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
-     </div>
 
-      </div>
-      <div className="column" id="column4">
-    <div className="layout_right_bar2">
-      {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
+			</div>
+			<div className="col-12 col-lg-6 col-md-12 p-3">
+				{/* <img src="images/img4.png" className="img-map"/> */}
+        {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
@@ -729,13 +705,46 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
       selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
+			</div>
+		</div>
+		<div>
+		
+		</div>
+		
+{/* <div className="layout" id="layoutid">
+  <div className="row" id="row1">
+    <div className="column" id="column1">
+  <div className="layout_left_trend" >
+      
+      </div>
+
+      </div>
+      <div className="column" id="column2">
+      <div className="layout_right_map">
+       
+      </div>
+  
+     </div>
+   </div>
+   </div> */}
+   {/* <div className="layout" id="layoutid1">
+   <div className="row" id="row2">
+    <div className="column" id="column3">
+    <div className="layout_left_bar1">
+     
+     </div>
+
+      </div>
+      <div className="column" id="column4">
+    <div className="layout_right_bar2">
+     
      </div>
   
      </div>
    </div>
 
 
-  </div>  
+  </div>   */}
 
   <footer className="footer p-0 mt-4">
 			<div className="row  p-0 m-0 align-items-center">

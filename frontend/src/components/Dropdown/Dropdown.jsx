@@ -16,6 +16,31 @@ import {Bar} from "../../components/Bar/Bar";
 import {EARLY_CHILDHOOD} from "../../constants"
 // import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 // import ToggleButton from 'react-bootstrap/ToggleButton'
+
+
+import "./Dropdown.css";
+import "./bootstrap.min.css";
+import "./dashboard.css";
+import "./responsive.css";
+//header images
+import mhf from './images/mhf.png'
+import nil from './images/nutrition-logo.svg'
+import pa from './images/pa.png'
+// dropdown images
+import adolescene from './images/lifecycle/Adolescene.png'
+import wora from './images/lifecycle/Women-of-Reproductive-Age.png'
+import pregnancy from './images/lifecycle/Pregnancy.png'
+import delivery from './images/lifecycle/DeliveryPNC.png'
+import early_childhood from './images/lifecycle/Early-Childhood.png'
+import school_age from './images/lifecycle/School-Age-.png'
+import iicon from "./images/i-icon.png";
+// footer images
+import nilf from "./images/nutrition-logo-footer.svg";
+import clf from "./images/ctara-logo.png";
+import pl from "./images/proditech-logo.png";
+import unil from "./images/unicefLogo.png";
+
+
 const {Search} = Input;
 
 
@@ -28,6 +53,17 @@ export const Dropdown = ({}) =>{
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifeycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
   
+  let selLifeycleImg ;
+  switch(selLifeycle){
+    case 1: selLifeycleImg = adolescene;break;
+    case 2: selLifeycleImg = wora;break;
+    case 3: selLifeycleImg = pregnancy;break;
+    case 4: selLifeycleImg = delivery;break;
+    case 5: selLifeycleImg = early_childhood;break;
+    case 6: selLifeycleImg = school_age;break;
+    default: break;
+  }
+
   let { queryCategory } = useParams();
   if(typeof queryCategory === 'undefined')
     queryCategory = 1;
@@ -182,9 +218,10 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         };
         generateList(areaDropdownOpt)
         const lifecycleChange = async(e) =>{
-          let val = e;
+          let val = parseInt(e.target.value);
+          console.log(e);
           setIsSelected(false);
-          setSelLifecycle(e);
+          setSelLifecycle(val);
           setSelBurden("1");
           let selCat = 1;
           if(val === 1 || val === 6){
@@ -228,9 +265,9 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         }
 
         const categoryChange = async(e) =>{
-          let val = e;
+          let val = parseInt(e.target.value);
           setIsSelected(false);
-          setSelCategory(e);
+          setSelCategory(val);
           setSelBurden("1");
           setToggleStateBurden(true);
           await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
@@ -239,7 +276,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         }
      
         const indicatorChange = async(e) =>{
-          let val = e;
+          let val = parseInt(e.target.value);
           setIsSelected(false);
           setToggleState(true);
           if(!burdenIndicators.includes(val))
@@ -247,7 +284,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setSelBurden("1");
           setToggleStateBurden(true);
           }
-          setSelIndicator(e);
+          setSelIndicator(val);
           let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
           let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTitle(indiName);
@@ -290,13 +327,13 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         }
 
         const timeperiodChange = async(e) =>{
-          let val = e;
+          let val = parseInt(e.target.value);
           setIsSelected(false);
           setToggleState(true);
           setSelBurden("1");
           setToggleStateBurden(true);
-          setSelTimeperiod(e);
-          let timePeriodName = timeperiodDropdownOpt.filter(f => f.value === e)[0].title;
+          setSelTimeperiod(val);
+          let timePeriodName = timeperiodDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTimeperiod(timePeriodName);
           await setVisulaizationData(selIndicator, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
           setIsSelected(true);
@@ -432,98 +469,114 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
      
       let burdenDropdown;
       if (burdenIndicators.includes(selIndicator)) {
-          burdenDropdown =    
-            // <ToggleButtonGroup  type="radio" name="options" defaultValue={1}>
-            //   <ToggleButton className={`toggle_button`} value={1} onClick={burdenChange}>Prevalence</ToggleButton> 
-            //   <ToggleButton className={`toggle_button`} value={2} onClick={burdenChange}>Burden</ToggleButton>
-            // </ToggleButtonGroup>
-            <Col>
+          
+        burdenDropdown= 
+        
 
-            {/* <span className="dropdown-title">Prevalence/Burden</span>
-            <TreeSelect showSearch
-              optionFilterProp="children"
-              className='dropdown'
-              virtual={false}
-              style={{ width: '100%' }}
-              value={selBurden}
-              dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-              treeData={[{"value":"1","title":"Prevalence"},{"value":"2","title":"Burden"}]}
-              filterTreeNode
-              treeNodeFilterProp ='title'
-              onChange = {burdenChange}
-            /> */}
+        <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
+          <li className="nav-item">
+              <a  className={`nav-link ${toggleStateBurden  && 'active radius2'}` }   id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true" onClick={()=>{setSelBurden("1"); setToggleStateBurden(true);}}>Prevalence</a>
+          </li>
+          <li className="nav-item">
+              <a className={`nav-link ${!toggleStateBurden  && 'active radius'}` }  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" onClick={()=>{setSelBurden("2"); setToggleStateBurden(false);}}>Burden</a>
+          </li>
+      </ul>
 
-        <ToggleButtonGroup type="checkbox" value={selBurden} onChange={burdenChange}>
-          <ToggleButton className={`tg_button ${!toggleStateBurden  && 'tg_button_light'}` } value={1}>Prevelence</ToggleButton>
-          <ToggleButton className={`tg_button ${toggleStateBurden  && 'tg_button_light'}` } value={2}>Burden</ToggleButton>
-        </ToggleButtonGroup>
-            </Col>
+
+        // burdenDropdown =    
+        //     <Col>
+
+        // <ToggleButtonGroup type="checkbox" value={selBurden} onChange={burdenChange}>
+        //   <ToggleButton className={`tg_button ${!toggleStateBurden  && 'tg_button_light'}` } value={1}>Prevalence</ToggleButton>
+        //   <ToggleButton className={`tg_button ${toggleStateBurden  && 'tg_button_light'}` } value={2}>Burden</ToggleButton>
+        // </ToggleButtonGroup>
+        //     </Col>
         }
         else{
           burdenDropdown= 
-          <ToggleButtonGroup type="checkbox" >
-          <ToggleButton className='tg_button tg_button_light' value={1}>Prevelence</ToggleButton>
-          <ToggleButton className='tg_button tg_button_light' value={2}>Burden</ToggleButton>
-        </ToggleButtonGroup>
+
+          <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
+          <li className="nav-item">
+              <a className="nav-link radius2"  id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true">Prevalence</a>
+          </li>
+          <li className="nav-item">
+              <a className="nav-link radius"  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" >Burden</a>
+          </li>
+      </ul>
+
+        //   <ToggleButtonGroup type="checkbox" >
+        //   <ToggleButton className='tg_button tg_button_light' value={1}>Prevalence</ToggleButton>
+        //   <ToggleButton className='tg_button tg_button_light' value={2}>Burden</ToggleButton>
+        // </ToggleButtonGroup>
           
         }
     
-
     return (
       <>
-      <Row className=' mt-2 mb-2 m-1'>
-      <Col>
 
-      <span className="dropdown-title">Lifecycle</span>
+<div className="container-fluid px-0">
+		<div className="header" id="myHeader">
+			<div className="row w-100 p-0 m-0">
+				<div className="d-flex col-12 align-items-center p-4 main-head">
+					<div className='col-4 text-left'><img src={mhf} className="health-ministry"/></div>
+					<div className='col-4 text-center'><img src={nil} className="nutrition-india"/></div>
+					<div className='col-4 text-right'><img src={pa} className="poshan-abhiyan"/></div>
+				</div>
+			</div>
+			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
+				<div className="col-6 col-lg-4 col-md-6 p-3 for-mobile-1">
+					<div className="d-flex top-15" style={{position: 'relative'}}>
+						<img src={selLifeycleImg} className="lifecycle-img"/>
+						<div className="select-lifecycle-parent">
+							<div className="select-lifecycle-child">
+								<select className="select-lifecycle" value={selLifeycle} onChange={lifecycleChange}>
+                  {lifecycleData.map( ld => <option value={ld.value}>{ld.title}</option>)}
+								</select>
+							</div>
+							<div className="select-lifecycle-cat-child">
+								<select className="select-category" value={selCategory} onChange={categoryChange}>
+									{categorydDropdownOpt.map(opt => <option value={opt.value}>{opt.title}</option>)}
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="col-12 col-lg-7 col-md-12 p-3 for-mobile-3">
+					<div className="row">
+						<div className="col-6 col-lg-3 p-2">
+							<div>
+								<select className="select-border w-100" value={selIndicator} onChange={indicatorChange}>
+                {indicatorDropdownOpt.map(opt => <option value={opt.value}>{opt.title}</option>)}
+							
+								</select>
+							</div>
+						</div>
+						<div className="col-6 col-lg-3 p-2">
+							<div className="toogle-button">
+                {burdenDropdown}
+								{/* <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
+			                        <li className="nav-item">
+			                            <a className="nav-link active" id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true">Prevalence</a>
+			                        </li>
+			                        <li className="nav-item">
+			                            <a className="nav-link radius" id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false">Burden</a>
+			                        </li>
+		                    	</ul> */}
+							</div>
+						</div>
+						<div className="col-6 col-lg-3 p-2">
+							<div>
 
-        <TreeSelect
-            showSearch
-            // onSearch={onSearch}
-            optionFilterProp="children"
-            className='dropdown'
-            virtual={false}
-            style={{ width: '100%' }}
-            // defaultValue ={{ value:2 }}
-            value={selLifeycle}
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            treeData={lifecycledDropdownOpt}
-            filterTreeNode
-            treeNodeFilterProp ='title'
-            onChange={ lifecycleChange }
-            />
-        </Col>
-        <Col>
-        <span className="dropdown-title">Category</span>
-
-        <TreeSelect
-            showSearch
-            // onSearch={onSearch}
-            optionFilterProp="children"
-            className='dropdown'
-            virtual={false}
-            style={{ width: '100%' }}
-            value={selCategory}
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            treeData={categorydDropdownOpt}
-            filterTreeNode
-            treeNodeFilterProp ='title'
-            onChange={ categoryChange }
-            />
-        </Col>
-        <Col>
-
-            <span className="dropdown-title">Select Area</span>
-
-            <TreeSelect
+              <TreeSelect
                 showSearch
-                className='dropdown'
+                className='select-border w-10'
                 virtual={true}
                 scrollIntoView = {true}
-                style={{ width: '100%' }}
+                // style={{ width: '100%' }}
                 value={selArea}
                 onFocus={()=>setOpenDropdown(true)}
                 onBlur={() => setOpenDropdown(false)}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}    
+                // dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}    
                 showSearch	= {true}
                 treeData={areaDropdownOpt}
                 treeDefaultExpandAll={true}
@@ -534,47 +587,48 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 treeNodeFilterProp ='title'
                 onChange={areaChange}
               />
-            </Col>
 
-            <Col xs={4}>
-            <span className="dropdown-title">Select Indicator</span>
 
-            <TreeSelect
-                showSearch
-                optionFilterProp="children"
-                className='dropdown'
-                virtual={false}
-                style={{ width: '100%' }}
-                value={selIndicator}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={indicatorDropdownOpt}
-                filterTreeNode
-                treeNodeFilterProp ='title'
-                onChange={ indicatorChange }
-                />
-            </Col>
-            
-            {burdenDropdown}
-
-        
-              <Col>
-            <span className="dropdown-title"> Select Time Period</span>
-
-                <TreeSelect
-                showSearch
-                className='dropdown'
-                virtual={false}
-                style={{ width: '100%' }}
-                value={selTimeperiod}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={timeperiodDropdownOpt}
-               treeNodeFilterProp ='title'
-               onChange={timeperiodChange}
-                />
-              </Col>
-
-    </Row>
-{/* <div className="some-page-wrapper"> */}
+								{/* <select className="select-border w-100">
+									<option>Select a region</option>
+									<option>Adolescence</option>
+								</select> */}
+							</div>
+						</div>
+						<div className="col-6 col-lg-3 p-2">
+							<div>
+								<select className="select-border w-100" value={selTimeperiod} onChange={timeperiodChange}> 
+                {timeperiodDropdownOpt.map(opt => <option value={opt.value}>{opt.title}</option>)}
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3">
+					<div className="i-className">
+						<img src={iicon} className="i-icon"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		{/* <div className="row w-100 p-4" style={{margin: 0}}>
+			<div className="col-12 col-lg-6 col-md-12 p-3">
+				<img src="images/img1.png" className="img-map"/>
+			</div>
+			<div className="col-12 col-lg-6 col-md-12 p-3">
+				<img src="images/img2.png" className="img-map"/>
+			</div>
+			<div className="col-12 col-lg-6 col-md-12 p-3">
+				<img src="images/img3.png" className="img-map"/>
+			</div>
+			<div className="col-12 col-lg-6 col-md-12 p-3">
+				<img src="images/img4.png" className="img-map"/>
+			</div>
+		</div> */}
+		<div>
+		
+		</div>
+		
 <div className="layout" id="layoutid">
   <div className="row" id="row1">
     <div className="column" id="column1">
@@ -681,8 +735,26 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
    </div>
 
 
-  </div>   
-  {/* </div> */}
+  </div>  
+
+  <footer className="footer p-0 mt-4">
+			<div className="row  p-0 m-0 align-items-center">
+				<div className="col-3">
+					<a href="https://nutritionindia.info/" target="_blank"><img src={nilf} className="nutrition-image"/></a>
+				</div>
+				<div className="col-3">
+					<a href="https://www.ctara.iitb.ac.in/" target="_blank"><img src={clf} title="CTARA" className="iitb-image"/></a>
+				</div>
+				<div className="col-3">
+					<a href="https://proditech.in" target="_blank"><img src={pl} title="Nutrition India, Website developed by PRODITECH Solutions, Mumbai." className="proditech-image"/></a>
+				</div>
+				<div className="col-3">
+					<a href="http://unicef.in/" target="_blank"><img src={unil}  className="unichef-image"/></a>
+				</div>
+			</div> 
+		</footer>
+		
+	</div> 
    </>
     )
 }

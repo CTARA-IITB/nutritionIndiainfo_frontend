@@ -159,11 +159,9 @@ span.ant-select-selection-item{
   position: relative;
   display: inline-block;
   cursor: pointer;
-
   border: 1px solid #D66D07;
   border-radius: 5px;
   font-size: 14px;
- 
 }
 
 .ant-select-selection {

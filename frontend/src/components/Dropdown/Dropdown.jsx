@@ -600,7 +600,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 					</div>
 				</div>
 				<div className="col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3">
-					<div className="i-className">
+					<div className="i-class">
 						<img src={iicon} className="i-icon"/>
 					</div>
 				</div>

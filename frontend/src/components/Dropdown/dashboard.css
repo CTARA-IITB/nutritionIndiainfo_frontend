@@ -192,3 +192,25 @@
 	text-align: center;
 	margin-top: 6%;
 }
+
+/* new changes */
+
+.lifecycle-img {
+	background: #fff;
+}
+.select-border {
+    height: 1.7rem;
+}
+.nav-tabs .nav-link {
+    padding: 0px 0px;
+}
+.for-mobile-3 {
+    margin-top: 8px;
+}
+
+.select-lifecycle {
+	width: 100%;
+}
+.select-category {
+    width: 70%;
+}

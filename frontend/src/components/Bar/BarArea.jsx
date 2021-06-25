@@ -25,6 +25,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   };
 
   const [data, setData] = useState(null);
+  const [status,setStatus]=useState(null);
   let colorScale ='#eda143';
 
   let arrObese = [91,95,104,92,96,105,21];
@@ -57,6 +58,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     
   useEffect(() => {
     if(level === 1){
+      setStatus("By State");
       let sortedIndiaData;
       if(toggleStateBurden)
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
@@ -67,6 +69,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       setData(sortedIndiaData);
     }
     else if(level === 2 || level === 3){
+      setStatus("By District")
       let sortedStateData;
       if(toggleStateBurden)
           sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value, b.data_value))
@@ -119,7 +122,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
     else{
-      gBarTitle =  `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
+      gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
         
     if(data && data.length >0){
@@ -160,12 +163,20 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .style("font-weight","bold")
         .attr("dy", "-2em")
         .text(`${gBarTitle}`)
+
+      bar.append("text")
+        .attr('x',width/2 -90)
+        .attr('y',0)
+        .style("text-anchor","middle")
+        .style("font-size","11px")
+        .attr("dy", "-.5em")  
+        .text(`${status}`)
           
       bar.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "middle")
         .attr("x", innerWidth/2)
-        .attr("y", innerHeight + 50)
+        .attr("y", dynamicRange+50)
         .text(`${graphUnit}`)
         .style('font-size',13);
     

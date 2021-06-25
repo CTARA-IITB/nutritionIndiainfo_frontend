@@ -454,7 +454,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             /> */}
 
         <ToggleButtonGroup type="checkbox" value={selBurden} onChange={burdenChange}>
-          <ToggleButton className={`tg_button ${!toggleStateBurden  && 'tg_button_light'}` } value={1}>Prevelence</ToggleButton>
+          <ToggleButton className={`tg_button ${!toggleStateBurden  && 'tg_button_light'}` } value={1}>Prevalence</ToggleButton>
           <ToggleButton className={`tg_button ${toggleStateBurden  && 'tg_button_light'}` } value={2}>Burden</ToggleButton>
         </ToggleButtonGroup>
             </Col>
@@ -462,7 +462,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         else{
           burdenDropdown= 
           <ToggleButtonGroup type="checkbox" >
-          <ToggleButton className='tg_button tg_button_light' value={1}>Prevelence</ToggleButton>
+          <ToggleButton className='tg_button tg_button_light' value={1}>Prevalence</ToggleButton>
           <ToggleButton className='tg_button tg_button_light' value={2}>Burden</ToggleButton>
         </ToggleButtonGroup>
           

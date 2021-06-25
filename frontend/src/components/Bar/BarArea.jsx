@@ -45,16 +45,18 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     colorScale = '#eda143'; 
   
   //For One Decimel Precision    
-  function decimelPrecision(d){
+  function decimalPrecision(d){
     let oneDecimel;
-    if(toggleStateBurden === false){
-      return oneDecimel = d;
-    }
-    else{
-      oneDecimel = d.toFixed(1);  
+    if(typeof d !== 'undefined'){
+      if(d>100){
+        oneDecimel = d;
+      }
+      else {
+        oneDecimel = d.toFixed(1);  
+      }
       return oneDecimel;
     }
-  } 
+  }  
     
   useEffect(() => {
     if(level === 1){
@@ -206,14 +208,14 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => {
             tooltip3.transition().duration(500).style("opacity", 1);
-            tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimelPrecision(xValue(d)))}`)
+            tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`)
             .style("left", xScale(xValue(d)) + margin.left + TOOLTIP_LEFT_OFFSET + "px")
             .style("top", height+ yScale(yValue(d))+ margin.top +TOOLTIP_TOP_OFFSET+"px");
           })
         .on('mouseout', ()=>{tooltip3.transition().duration(100).style("opacity", 0)});
 
       chart.enter().append("text")
-        .text(d => commaSeparated(decimelPrecision(xValue(d))))
+        .text(d => commaSeparated(decimalPrecision(xValue(d))))
         .attr('x', d => xScale(xValue(d)))
         .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
         .attr("font-family", "sans-serif")
@@ -255,7 +257,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     for(var i=0;i<data.length;i++){
       table.push({
         area:data[i].area_name,
-        data:+data[i].data_value
+        data:data[i].data_value
       })
     }
   }

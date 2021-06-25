@@ -469,8 +469,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         else{
           burdenDropdown= 
           <ToggleButtonGroup type="checkbox" >
-          <ToggleButton className='tg_button tg_button_light' value={1}>Prevelence</ToggleButton>
-          <ToggleButton className='tg_button tg_button_light' value={2}>Burden</ToggleButton>
+          <ToggleButton className='tg_button tg_button_light' value={1} >Prevelence</ToggleButton>
+          <ToggleButton className='tg_button tg_button_light' value={2} >Burden</ToggleButton>
         </ToggleButtonGroup>
           
         }

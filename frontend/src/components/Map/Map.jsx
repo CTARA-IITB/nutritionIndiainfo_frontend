@@ -63,7 +63,7 @@ export const Map = ({
     changeText(text);
   }
  
-  if ((unit == 1 && toggleStateBurden == true)) {
+  if (((unit == 1 || unit == 4 || unit == 3 || unit == 5) && toggleStateBurden == true)) {
     mapTitle = `${graphTitle},${titleAreaName},${graphTimeperiod}`;
   }
   else{
@@ -237,7 +237,7 @@ export const Map = ({
     let mergedGeometry = addProperties(geojson, data);
     let c2Value;
     let color_range
-    if ((unit == 1 && toggleStateBurden == true) || (unit == 2))
+    if (((unit == 1 || unit == 4 || unit == 3 || unit == 5) && toggleStateBurden == true) || (unit == 2))
     {
       c2Value = d => d.dataValue;
       color_range = _.map(data, d => {
@@ -328,7 +328,7 @@ export const Map = ({
   let colorScale_new;
     let colorScale2;
     let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]; 
-    if (unit == 1  && toggleStateBurden == true)
+    if ((unit == 1 || unit == 4 || unit == 3 || unit == 5)  && toggleStateBurden == true)
     {
     if(indicatorSense == 'Positive')
     {
@@ -400,7 +400,7 @@ export const Map = ({
           .style("font-size","12px");
       }
     };
-    if (unit == 1  && toggleStateBurden == true)
+    if ((unit == 1 || unit == 4 || unit == 3 || unit == 5)  && toggleStateBurden == true)
     {  
     svg
       .selectAll(".polygon")
@@ -619,7 +619,7 @@ export const Map = ({
     let formatter = format(".1f");
     let myLegend;
    
-    if ((unit == 1  && toggleStateBurden == false) || unit == 2) 
+    if (((unit == 1 || unit == 4 || unit == 3 || unit == 5)  && toggleStateBurden == false) || unit == 2) 
     {
       
       svg.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");

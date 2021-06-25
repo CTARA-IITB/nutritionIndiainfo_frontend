@@ -144,3 +144,26 @@ span.ant-select-selection-item{
 
     
 }
+
+
+.ant-select {
+  /* box-sizing: border-box; */
+  margin: 0;
+  padding: 0;
+  /* color: rgba(0, 0, 0, 0.85); */
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum', "tnum";
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid #D66D07;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.ant-select-selection {
+  background-color: green;
+}

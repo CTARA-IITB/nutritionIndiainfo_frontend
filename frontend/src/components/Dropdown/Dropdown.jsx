@@ -130,7 +130,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     { value: 6, title: "School age" },          
 ];
   const [drillDirection,setDrillDirection] = useState(true);
-  let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
+  //let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
+  let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63];
 
 
     useEffect(() => {
@@ -218,7 +219,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           console.log(e);
           setIsSelected(false);
           setSelLifecycle(val);
-          setSelBurden("1");
           let selCat = 1;
           if(val === 1 || val === 6){
             setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Immediate and Underlying Determinants" } ])
@@ -241,8 +241,9 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             ])
           }
           setSelCategory(selCat);
-          setToggleStateBurden(true);
           await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
+          setSelBurden("1");
+          setToggleStateBurden(true);
           setIsSelected(true);
 
         }
@@ -263,10 +264,11 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         const categoryChange = async(e) =>{
           let val = parseInt(e.target.value);
           setIsSelected(false);
-          setSelCategory(val);
+          setSelCategory(val);       
+          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
+          console.log("selIndicator", selIndicator);     
           setSelBurden("1");
           setToggleStateBurden(true);
-          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
           setIsSelected(true);
 
         }
@@ -275,7 +277,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           let val = parseInt(e.target.value);
           setIsSelected(false);
           setToggleState(true);
-          if(!burdenIndicators.includes(val))
+          if(burdenIndicators.includes(val))
           {
           setSelBurden("1");
           setToggleStateBurden(true);
@@ -326,8 +328,11 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           let val = parseInt(e.target.value);
           setIsSelected(false);
           setToggleState(true);
+          if(burdenIndicators.includes(selIndicator))
+          {
           setSelBurden("1");
           setToggleStateBurden(true);
+          }
           setSelTimeperiod(val);
           let timePeriodName = timeperiodDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTimeperiod(timePeriodName);
@@ -341,8 +346,11 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           let levelThree = false;
           setIsSelected(false);
           setToggleState(true);
+          if(burdenIndicators.includes(selIndicator))
+          {
           setSelBurden("1");
           setToggleStateBurden(true);
+          }
             if(value === "1"){
                 setLevel(1)
                 setIsLevelThree(false);
@@ -464,7 +472,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
      
       let burdenDropdown;
-      if (burdenIndicators.includes(selIndicator)) {
+      if (!burdenIndicators.includes(selIndicator)) {
           
         burdenDropdown= 
         

@@ -176,12 +176,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       let yValue,maxVal;
       if(toggleStateBurden){
         yValue = d => d.data_value;
-        maxVal = max(data, (d) => yValue(d))+5;
+        maxVal = max(data, (d) => yValue(d));
+        maxVal = maxVal + maxVal/7;
       }
       else
       {
       yValue = d => d.data_value_num;
-      maxVal = max(data, (d) => yValue(d))+2000000;
+      maxVal = max(data, (d) => yValue(d));
+      maxVal = maxVal + maxVal/7;
 
       graphUnit ='Number';
       }

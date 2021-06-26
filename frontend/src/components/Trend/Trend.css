@@ -5,10 +5,9 @@
 }
 
     
-div.tooltip2 {
+div.tooltipX{
   padding: 10px;
   position: absolute;
-  display: inline-block;
   text-align: center;
   background-color: rgba(0,0,0,.9);
   border-radius: 10px;

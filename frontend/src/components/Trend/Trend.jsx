@@ -107,13 +107,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   }, []);
 
   useEffect(()=>{
-    select(".tooltip2").remove();
-    let TOOLTIP_LEFT_OFFSET,TOOLTIP_TOP_OFFSET,TOOLTIP_FONTSIZE;
-
-    let tooltip2 = select(".trend_svg").append("div")
-    .attr("class", "tooltip2")
-    .style("opacity", 0);
-
+    select(".tooltipX").remove();
+    let TOOLTIP_FONTSIZE;
     const svg = select(svgRef.current);
     let windowWidth = window.screen.width;
     let windowHeight = window.screen.height;
@@ -121,17 +116,20 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     if(windowWidth >= 480){
       windowWidth = windowWidth/2;
       windowHeight = windowHeight/2;
-      TOOLTIP_LEFT_OFFSET=-30;
-      TOOLTIP_TOP_OFFSET=100;
       TOOLTIP_FONTSIZE="12px";
     }else{
-      TOOLTIP_LEFT_OFFSET=-30;
-      TOOLTIP_TOP_OFFSET=900;
       windowWidth = windowWidth+100 ;
       windowHeight = windowHeight/2;
       TOOLTIP_FONTSIZE="8px";
 
     }
+
+    var tooltipX = select(".trend_svg")
+    .append("div")
+    .attr("class", "tooltipX")
+    .style("visibility", "hidden")
+    .style("font-size",TOOLTIP_FONTSIZE)
+ 
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     
 
@@ -237,14 +235,11 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("width", d => xScale(d.end_date) - xScale(d.start_date))
         .attr("height", d => yScale(0) - yScale(yValue(d)))
         .attr("fill", colorScale)
-      	.on('mouseover', (i,d) => {
-        			tooltip2.transition().duration(500).style("opacity", 1);
-              tooltip2.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`)
-          		.style("left", xScale(d.middle_date) + TOOLTIP_LEFT_OFFSET + "px")
-          		.style("top", yScale(yValue(d)) + TOOLTIP_TOP_OFFSET +"px")
-              .style("font-size",TOOLTIP_FONTSIZE);
-              })
-     .on('mouseout', ()=>{tooltip2.transition().duration(100).style("opacity", 0)});
+      	.on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
+        .on('mousemove',(e,d)=>{
+          return tooltipX.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+        })
+        .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       
       const lineGenerator = line()
     		.x(d => xScale(xValue(d)))

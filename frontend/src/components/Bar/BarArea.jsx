@@ -84,12 +84,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   }, [toggleStateBurden]);
   
   useEffect(()=>{
-    select(".tooltip3").remove();
-    let TOOLTIP_LEFT_OFFSET,TOOLTIP_TOP_OFFSET,TOOLTIP_FONTSIZE;
-
-    let tooltip3 = select(".trend_svg").append("div")
-    .attr("class", "tooltip2")
-    .style("opacity", 0);
+    // select(".tooltipX").remove();
+    let TOOLTIP_FONTSIZE;
     
     const svg = select(svgRef.current);
     let windowWidth = window.screen.width;
@@ -98,16 +94,18 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     if(windowWidth >= 480){
       windowWidth = windowWidth/2;
       windowHeight = windowHeight/2;
-      TOOLTIP_LEFT_OFFSET=-100;
-      TOOLTIP_TOP_OFFSET=140;
       TOOLTIP_FONTSIZE="12px";
     }else{
       windowWidth = windowWidth + 100;
       windowHeight = windowHeight/2;
-      TOOLTIP_LEFT_OFFSET=-100;
-      TOOLTIP_TOP_OFFSET=800;
       TOOLTIP_FONTSIZE="8px";
     }
+
+    var tooltipX = select(".hbar_svg")
+    .append("div")
+    .attr("class", "tooltipX")
+    .style("visibility", "hidden")
+    .style("font-size",TOOLTIP_FONTSIZE)
 
     let { width, height } = {width:windowWidth,height:windowHeight}; 
     let innerHeight = height - margin.top - margin.bottom;
@@ -206,13 +204,12 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr('width', d => {return xScale(xValue(d))})
         .attr('height', rectHeight )
         .attr("fill", fillRect)
-        .on('mouseover', (i,d) => {
-            tooltip3.transition().duration(500).style("opacity", 1);
-            tooltip3.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`)
-            .style("left", xScale(xValue(d)) + margin.left + TOOLTIP_LEFT_OFFSET + "px")
-            .style("top", height+ yScale(yValue(d))+ margin.top +TOOLTIP_TOP_OFFSET+"px");
-          })
-        .on('mouseout', ()=>{tooltip3.transition().duration(100).style("opacity", 0)});
+        .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
+        .on('mousemove',(e,d)=>{
+          return tooltipX.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+        })
+        .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
+
 
       chart.enter().append("text")
         .text(d => commaSeparated(decimalPrecision(xValue(d))))

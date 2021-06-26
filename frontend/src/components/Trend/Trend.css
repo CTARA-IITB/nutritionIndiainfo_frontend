@@ -13,8 +13,6 @@ div.tooltipX{
   border-radius: 10px;
   pointer-events: none;
   color: white;
-  font-size: 11px;
-  /* float:left; */
 }
 
 .trend{

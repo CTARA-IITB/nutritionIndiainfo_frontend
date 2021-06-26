@@ -10,6 +10,7 @@ import {
   axisBottom
 } from 'd3';
 import { commaSeparated } from '../../utils';
+import './Bar.css'
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
 
@@ -87,12 +88,9 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   }, []);
 
   useEffect(()=>{
-    select(".tooltip4").remove();
-    let TOOLTIP_LEFT_OFFSET,TOOLTIP_TOP_OFFSET,TOOLTIP_FONTSIZE;
+    select(".tooltipGBar").remove();
+    let TOOLTIP_FONTSIZE;
 
-    let tooltip4 = select(".trend_svg").append("div")
-    .attr("class", "tooltip2")
-    .style("opacity", 0);
     
     const svg = select(svgRef.current);
     let windowWidth = window.screen.width;
@@ -101,16 +99,18 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     if(windowWidth >= 480){
       windowWidth = windowWidth/2;
       windowHeight = windowHeight/2;
-      TOOLTIP_LEFT_OFFSET=-70;
-      TOOLTIP_TOP_OFFSET=140;
       TOOLTIP_FONTSIZE="12px";
     }else{
-      TOOLTIP_LEFT_OFFSET=-100;
-      TOOLTIP_TOP_OFFSET=0;
-      TOOLTIP_FONTSIZE="12px";
+      TOOLTIP_FONTSIZE="8px";
       windowWidth = windowWidth + 100;
       windowHeight = windowHeight/2;
     }
+
+    var tooltipGBar = select(".gbar_svg")
+    .append("div")
+    .attr("class", "tooltipGBar")
+    .style("visibility", "hidden")
+    .style("font-size",TOOLTIP_FONTSIZE)
     let { width, height } = {width:windowWidth,height:windowHeight}; 
        
     let innerHeight = height - margin.top - margin.bottom;
@@ -195,13 +195,12 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       	.attr('width', d => {return xScale(xValue(d))})
       	.attr('height', yScale.bandwidth())
         .attr("fill", fillRect)
-      	.on('mouseover', (i,d) => {
-            tooltip4.transition().duration(500).style("opacity", 1);
-            tooltip4.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`)
-            .style("left", width + xScale(xValue(d)) + margin.left +TOOLTIP_LEFT_OFFSET+ "px")
-            .style("top", height + yScale(yValue(d))+ margin.top +TOOLTIP_TOP_OFFSET+"px");
-          })
-        .on('mouseout', ()=>{tooltip4.transition().duration(500).style("opacity", 0)});
+        .on('mouseover', (i,d) => tooltipGBar.style("visibility", "visible"))
+        .on('mousemove',(e,d)=>{
+          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+        })
+        .on('mouseout', ()=>tooltipGBar.style("visibility", "hidden"));
+        
 
       chart.enter().append("text")
         .text(d => commaSeparated(decimalPrecision(xValue(d))))

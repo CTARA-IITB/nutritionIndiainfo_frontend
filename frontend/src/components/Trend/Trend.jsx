@@ -19,7 +19,7 @@ import {
 
 const tickLength = 8;
 const margin = {
-  left: 70,
+  left: 100,
   top: 70,
   right: 0,
   bottom: 30,
@@ -173,12 +173,16 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       let max_date = new Date(max_year, max_month+6, max_day);
 
       const xValue = d => d.middle_date;
-      let yValue;
-      if(toggleStateBurden)
+      let yValue,maxVal;
+      if(toggleStateBurden){
         yValue = d => d.data_value;
+        maxVal = max(data, (d) => yValue(d))+5;
+      }
       else
       {
       yValue = d => d.data_value_num;
+      maxVal = max(data, (d) => yValue(d))+2000000;
+
       graphUnit ='Number';
       }
 
@@ -187,7 +191,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     		.range([0, innerWidth])
       
     	const yScale = scaleLinear()
-   	 		.domain([0, max(data, (d) => yValue(d))])
+   	 		.domain([0, maxVal])
     		.range([innerHeight, 0]);
       
       //  bar.append("text")
@@ -309,7 +313,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   if (!data) {
     return <pre>Loading...</pre>;
   }
-  let title=graphTitle+ ',  '+ graphUnit+'('+graphSubgroup+')'
+  let title='Trend of ' + graphTitle+ ', '+titleAreaName
 
  
   

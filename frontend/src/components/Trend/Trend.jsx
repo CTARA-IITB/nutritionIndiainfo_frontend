@@ -346,14 +346,23 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   return (
     <>
-    <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
+    <FullScreen  className="w-full h-full" handle={screen} onChange={checkchange}>
+    <div class='relative w-full h-full'>
+    <div class="block absolute z-10 w-full max-h-max">
+
+
     <SideNavFirst table={table} id="trend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
-    <div className="trend" id="trend">
-      <div className="trend_svg" ref={trendWrapper} >
-        <div id="svgTrend" >
-          <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{title}</small>
+
+    </div>
+
+
+			<div class='trend relative bg-purple-400 w-full py-3 pr-3'>
+							<div class="text-center absolute w-full top-6 text-xs md:base">{`${graphTitle} ${titleAreaName}`}</div>
+							<div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
+
+        <svg id="svgTrend"  ref = {svgRef}
+								class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>
         </div>
-        <svg id="svgTrend"  ref = {svgRef}></svg>
       </div>
     </div>
     </FullScreen>

@@ -229,6 +229,9 @@ export const Map = ({
     }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
+    geojson = _.map(geojson, object => {
+      return _.omit(object, ['dataValue', 'dataValueNum'])
+   })
     let mergedGeometry = addProperties(geojson, data);
     let c2Value;
     let color_range

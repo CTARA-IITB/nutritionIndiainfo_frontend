@@ -706,14 +706,21 @@ export const Map = ({
 
   return (
     <>
-      <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
-      <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
-      <div className="map" >
-          
-          <div  className="map_svg" ref={wrapperRef}>
-            <svg  id="svgMap"  ref={svgRef} ></svg>
+      <FullScreen className="w-full h-full" handle={screen}>
+      
+			<div class='relative w-full h-full'>
+			  <div class="block absolute z-10 w-full max-h-max">
+          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
+        </div>
+        <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
+        {/* add title here */}
+							<div class='trend_svg block align-middle w-full h-full' ref={wrapperRef}>
 
-          </div>
+            <svg  id="svgMap"  ref={svgRef} 
+            class="w-full bg-white border-4 border-black border-dashed object-scale-down"
+            ></svg>
+            </div>
+            </div>
     
     <div className="map_req">
       <div className="map_req_button">
@@ -724,7 +731,6 @@ export const Map = ({
       
     </div>
   </div>
-
     </FullScreen>  
     </>
   )

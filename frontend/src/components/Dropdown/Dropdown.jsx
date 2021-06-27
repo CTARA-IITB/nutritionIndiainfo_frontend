@@ -700,7 +700,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
      </section>
 
      <section id='bottom_dashboard_row' class='flex flex-wrap'>
-     <div class='bg-green-200 flex-1 w-full md:w-1/2'>
+     <div class='bg-green-200 flex w-full md:w-1/2'>
         {(isSelected  & selTimeperiod != "")?<BarArea
           indicatorTrend = {indicatorTrend}
           graphTitle = {graphTitle}
@@ -716,7 +716,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
      </div>
 
-     <div class='bg-purple-400 flex-1 w-full md:w-1/2'>
+     <div class='bg-purple-400 flex w-full md:w-1/2'>
       {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}

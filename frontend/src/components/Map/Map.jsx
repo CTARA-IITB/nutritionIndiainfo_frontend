@@ -722,14 +722,14 @@ export const Map = ({
             </div>
             </div>
     
-    <div className="map_req">
+    {/* <div className="map_req">
       <div className="map_req_button">
         {switchButton}
         {backButton}
       </div>
       
       
-    </div>
+    </div> */}
   </div>
     </FullScreen>  
     </>

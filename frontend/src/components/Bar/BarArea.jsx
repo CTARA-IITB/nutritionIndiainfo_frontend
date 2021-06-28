@@ -141,7 +141,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       }
       const bar = svg
         .attr("width", width)
-        .attr("height", dynamicRange+100)
+        // .attr("height", dynamicRange+100)
         .append("g")
         .attr("transform",`translate(${margin.left},${margin.top})`);
 
@@ -269,14 +269,14 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
           <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
           </div>
 
-          <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
+          <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
             {/* add title here */}
-							<div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
-            <div className="hbar_svg" ref={trendWrapper}>
-              <svg id="svgBarArea"  ref = {svgRef}
-								class="w-full bg-white border-4 border-black border-dashed object-scale-down">
-              </svg>
-            </div>
+						<div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
+              <div className="hbar_svg" ref={trendWrapper}>
+                <svg id="svgBarArea"  ref = {svgRef}
+                  class="w-full bg-white border-4 border-black border-dashed object-scale-down">
+                </svg>
+              </div>
             </div>
           </div>
           </div>

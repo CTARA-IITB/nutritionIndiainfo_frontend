@@ -259,7 +259,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 					<div class="block absolute z-10 w-full max-h-max">
         <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
         </div>
-        <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
+        <div class='relative bg-purple-400 w-full py-3 pr-3'>
          {/* add title here */}
 				<div class='trend_svg block align-middle w-full h-full' >
 

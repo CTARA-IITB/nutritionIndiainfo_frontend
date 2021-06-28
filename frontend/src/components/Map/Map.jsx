@@ -712,24 +712,20 @@ export const Map = ({
 			  <div class="block absolute z-10 w-full max-h-max">
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
-        <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
+        <div class='relative bg-purple-400 w-full py-3 pr-3'>
         {/* add title here */}
 							<div class='trend_svg block align-middle w-full h-full' ref={wrapperRef}>
-
+              <div className="bg-green-200 flex flex-wrap absolute left-10 bottom-14 md:left-auto md:bottom-auto md:right-10 md:top-16">
+                  {switchButton}       
+              </div>
+              <div className="bg-green-400 absolute left-10 top-10">
+                  {backButton}        
+              </div>
             <svg  id="svgMap"  ref={svgRef} 
             class="w-full bg-white border-4 border-black border-dashed object-scale-down"
             ></svg>
             </div>
             </div>
-    
-    {/* <div className="map_req">
-      <div className="map_req_button">
-        {switchButton}
-        {backButton}
-      </div>
-      
-      
-    </div> */}
   </div>
     </FullScreen>  
     </>

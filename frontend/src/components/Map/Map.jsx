@@ -580,12 +580,13 @@ export const Map = ({
              .attr("class", "legendQuant")
             .attr("transform", `translate(${width-100},${adjustedHeight-450})`)
           msg
-            .text(statusMsg)
+            // .text(statusMsg)
             .attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
       }else if(width < 680){
         console.log(level)
         if(level === 2 || level === 3){
-            msg.text(statusMsg)
+            msg
+            // .text(statusMsg)
 
             .attr("transform", `translate(${width-380},${adjustedHeight- 120})`)
           }
@@ -595,10 +596,13 @@ export const Map = ({
          
           if(level === 2 || level === 3){
            
-              msg.text(statusMsg).attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
+              msg
+              // .text(statusMsg)
+              .attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
                }
           else{
-              msg.text(statusMsg)
+              msg
+              // .text(statusMsg)
                 .attr("transform", `translate(${width-150},${adjustedHeight- 80})`)
             }
           }
@@ -735,6 +739,10 @@ export const Map = ({
             <svg  id="svgMap"  ref={svgRef} 
             class="w-full bg-white border-4 border-black border-dashed object-scale-down"
             ></svg>
+
+                <div className="absolute right-10 bottom-10 text-xs font-bold">
+                  {statusMsg}        
+              </div>
             </div>
             </div>
   </div>

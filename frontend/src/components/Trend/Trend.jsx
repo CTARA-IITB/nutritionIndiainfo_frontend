@@ -284,10 +284,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       // .style("font-weight","bold")
     }
     
-    bar.append("text")
+    svg.append("text")
     .attr("transform", "rotate(-0)")
-    .attr("y", 40- margin.left)
-    .attr("x",60 - (height / 8))
+    .attr("x",margin.left)
+    .attr("y", margin.top-30)
     .attr("dy", "1em")
     .style("font-size","12px")
     .style("font-weight","bold")

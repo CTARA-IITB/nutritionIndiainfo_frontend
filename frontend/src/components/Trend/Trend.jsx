@@ -25,13 +25,38 @@ let margin = {
   bottom: 30,
 };
 
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden, selIndicator}) => { 
+
+
+const useResizeObserver = ref => {
+  const [dimensions, setDimensions] = useState(null);
+  useEffect(() => {
+  if(typeof ref.current != 'undefined'){
+    const observeTarget = ref.current;
+
+    const resizeObserver = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        setDimensions(entry.contentRect);
+      });
+    });
+    resizeObserver.observe(observeTarget);
+    return () => {
+      resizeObserver.unobserve(observeTarget);
+    };
+  }
+
+  
+  }, [ref.current]);
+  return dimensions;
+};
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend, selIndicator}) => { 
 
   const [data, setData] = useState(null);
   const svgRef = useRef();
   const [check,setCheck] = useState(true);
 
+  const trendWrapper = useRef();
  
+  const dimensions = useResizeObserver(trendWrapper);
   const screen = useFullScreenHandle();
   let colorScale;
 
@@ -99,7 +124,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
     }
 
-    var tooltipX = select("#trend_svg")
+    var tooltipX = select(".trend_svg")
     .append("div")
     .attr("class", "tooltipX")
     .style("visibility", "hidden")
@@ -222,7 +247,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("fill", colorScale)
       	.on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2 +"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       
@@ -287,7 +312,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   }  
    
       
-  },[data, toggleStateBurden])
+  },[dimensions,data, toggleStateBurden])
 
 
 
@@ -298,7 +323,18 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
  
   
-
+  const checkchange = (state,handle)=>{
+  
+    if(trend){
+      if(state === true){
+        trend[0].style.height = "100vh";
+      }
+      else if(state === false){
+        if(trend[0] != undefined)
+        trend[0].style.height = "40vh";
+      }
+    }
+  }
 
 
   let table=[];
@@ -321,7 +357,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       </div>
       <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
         <div class="text-center absolute w-full top-6 text-xs md:text-base">{`${graphTitle} ${titleAreaName}`}</div>
-        <div id='trend_svg' class='align-middle w-full h-full'>
+        <div class='trend_svg align-middle w-full h-full' ref={trendWrapper}>
           <svg id="svgTrend"  ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down">
           </svg>
         </div>

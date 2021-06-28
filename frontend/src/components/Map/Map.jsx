@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import _ from 'lodash';
+import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Button } from 'react-bootstrap';
 import * as turf from 'turf';
@@ -44,6 +45,8 @@ export const Map = ({
   let mapTitle;
   const svgRef = useRef();
   const svgLegRef = useRef();
+  const wrapperRef = useRef();
+  const dimensions = useResizeObserver(wrapperRef);
 
   function removeShake() {
     let element = document.getElementById("info-msg");
@@ -165,7 +168,7 @@ export const Map = ({
   }
   select(".tooltip").remove();
 
-  let tooltip = select("#map_svg").append("div")
+  let tooltip = select(".map_svg").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
@@ -651,7 +654,7 @@ export const Map = ({
      }
  
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unit,geometry, data, toggleStateBurden])
+  }, [unit,geometry, dimensions, data, toggleStateBurden])
 
   let switchButton;
 
@@ -714,7 +717,7 @@ export const Map = ({
 
   return (
     <>
-       <FullScreen className="w-full h-full" handle={screen}>
+      <FullScreen className="w-full h-full" handle={screen}>
       
 			<div class='relative w-full h-full'>
 			  <div class="block absolute z-10 w-full max-h-max">
@@ -722,7 +725,7 @@ export const Map = ({
         </div>
         <div class='relative bg-purple-400 w-full py-3 pr-3'>
         {/* add title here */}
-							<div id="map_svg" class='block align-middle w-full h-full'>
+							<div class='trend_svg block align-middle w-full h-full' ref={wrapperRef}>
               <div className="bg-green-200 flex flex-wrap absolute left-10 bottom-14 md:left-auto md:bottom-auto md:right-10 md:top-16">
                   {switchButton}       
               </div>

@@ -106,7 +106,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       windowHeight = windowHeight/2;
     }
 
-    var tooltipGBar = select(".gbar_svg")
+    var tooltipGBar = select("#gbar_svg")
     .append("div")
     .attr("class", "tooltipGBar")
     .style("visibility", "hidden")
@@ -261,7 +261,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         </div>
         <div class='relative bg-purple-400 w-full py-3 pr-3'>
          {/* add title here */}
-				<div class='trend_svg block align-middle w-full h-full' >
+				<div id="gbar_svg" class='block align-middle w-full h-full' >
 
             <svg id="svgBar"   ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>
           </div>

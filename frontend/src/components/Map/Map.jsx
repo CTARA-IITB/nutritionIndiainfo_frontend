@@ -168,7 +168,7 @@ export const Map = ({
   }
   select(".tooltip").remove();
 
-  let tooltip = select(".map_svg").append("div")
+  let tooltip = select("#map_svg").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
@@ -393,7 +393,7 @@ export const Map = ({
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
         tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
-          .style("left", event.clientX + "px")
+          .style("left", event.clientX - width+ "px")
           .style("top", event.clientY - 30 + "px")
           .style("font-size","12px");
       }
@@ -725,7 +725,7 @@ export const Map = ({
         </div>
         <div class='relative bg-purple-400 w-full py-3 pr-3'>
         {/* add title here */}
-							<div class='trend_svg block align-middle w-full h-full' ref={wrapperRef}>
+							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>
               <div className="bg-green-200 flex flex-wrap absolute left-10 bottom-14 md:left-auto md:bottom-auto md:right-10 md:top-16">
                   {switchButton}       
               </div>

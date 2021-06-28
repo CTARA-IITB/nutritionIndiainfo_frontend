@@ -124,7 +124,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
     }
 
-    var tooltipX = select(".trend_svg")
+    var tooltipX = select("#trend_svg")
     .append("div")
     .attr("class", "tooltipX")
     .style("visibility", "hidden")
@@ -343,7 +343,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       </div>
       <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
         <div class="text-center absolute w-full top-6 text-xs md:text-base">{`${graphTitle} ${titleAreaName}`}</div>
-        <div class='trend_svg align-middle w-full h-full' ref={trendWrapper}>
+        <div id="trend_svg" class='align-middle w-full h-full' ref={trendWrapper}>
           <svg id="svgTrend"  ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down">
           </svg>
         </div>

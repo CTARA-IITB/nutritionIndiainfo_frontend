@@ -101,7 +101,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       TOOLTIP_FONTSIZE="8px";
     }
 
-    var tooltipX = select(".hbar_svg")
+    var tooltipX = select("#hbar_svg")
     .append("div")
     .attr("class", "tooltipX")
     .style("visibility", "hidden")
@@ -271,12 +271,10 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
           <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
             {/* add title here */}
-						<div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
-              <div className="hbar_svg" ref={trendWrapper}>
+						<div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg id="svgBarArea"  ref = {svgRef}
                   class="w-full bg-white border-4 border-black border-dashed object-scale-down">
                 </svg>
-              </div>
             </div>
           </div>
           </div>

@@ -77,7 +77,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   
 
   useEffect(() => {
-    setStatus("by Background Characteristics")
+    setStatus("By Background Characteristics")
     let cleanData = [];
     cleanData = indicatorBar.map(d =>{
       if(d.subgroup_name === "All"){

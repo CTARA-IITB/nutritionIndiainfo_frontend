@@ -145,7 +145,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       setCategoryDropdownOpt([
         { value: 1, title: "Manifestation" },
         { value: 2, title: "Interventions" },
-        { value: 3, title: "Immediate and Underlying Determinants" }
+        { value: 3, title: "Determinants" }
       ])
       await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
       setIsSelected(true);
@@ -221,23 +221,23 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setSelLifecycle(val);
           let selCat = 1;
           if(val === 1 || val === 6){
-            setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Immediate and Underlying Determinants" } ])
+            setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Determinants" } ])
           }else if(val === 2){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
-              { value: 3, title: "Immediate and Underlying Determinants" }                 
+              { value: 3, title: "Determinants" }                 
             ]);
           }else if(val === 3 || val ===4){
             setCategoryDropdownOpt([
               { value: 2, title: "Interventions" },
-              { value: 3, title: "Immediate and Underlying Determinants" }   
+              { value: 3, title: "Determinants" }   
             ]);
             selCat = 2;
           }else if(val ===5){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
               { value: 2, title: "Interventions" },
-              { value: 3, title: "Immediate and Underlying Determinants" }
+              { value: 3, title: "Determinants" }
             ])
           }
           setSelCategory(selCat);

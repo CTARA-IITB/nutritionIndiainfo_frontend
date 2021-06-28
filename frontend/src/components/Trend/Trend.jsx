@@ -18,9 +18,9 @@ import {
 } from 'd3';
 
 const tickLength = 8;
-const margin = {
-  left: 100,
-  top: 70,
+let margin = {
+  left: 50,
+  top: 30,
   right: 0,
   bottom: 30,
 };
@@ -135,7 +135,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   const aspect = width / height;
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
- 
+    if(!toggleStateBurden)
+      margin = {...margin, 'left':100}  // change left margin for burden
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     
@@ -184,7 +185,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       yValue = d => d.data_value_num;
       maxVal = max(data, (d) => yValue(d));
       maxVal = maxVal + maxVal/7;
-
+      margin = {...margin, 'left':100}
+      console.log(margin)
       graphUnit ='Number';
       }
 

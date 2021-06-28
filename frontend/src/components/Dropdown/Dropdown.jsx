@@ -8,7 +8,7 @@ import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
-import "./Dropdown.css";
+// import "./Dropdown.css";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Switch } from 'antd';
 import {BarArea} from "../../components/Bar/BarArea";
@@ -517,16 +517,19 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     
     return (
       <>
-
-<div className="container-fluid px-0">
-		<div className="header" id="myHeader">
-			<div className="row w-100 p-0 m-0">
+      		<div className="row w-100 p-0 m-0">
 				<div className="d-flex col-12 align-items-center p-4 main-head">
 					<div className='col-4 text-left'><img src={mhf} className="health-ministry"/></div>
 					<div className='col-4 text-center'><img src={nil} className="nutrition-india"/></div>
 					<div className='col-4 text-right'><img src={pa} className="poshan-abhiyan"/></div>
 				</div>
 			</div>
+			<main id='main_app_container' class='flex flex-col max-h-screen'>
+      
+      <header
+					id='main_menu'
+					className='p-2 flex flex-wrap
+                  justify-between lg:sticky lg:top-0 shadow-2xl z-40 bg-white'>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-10 col-lg-4 col-md-10 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
@@ -613,7 +616,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 					</div>
 				</div>
 			</div>
-		</div>
 		{/* <div className="row w-100 p-4" style={{margin: 0}}>
 			<div className="col-12 col-lg-6 col-md-12 p-3">
 				<img src="images/img1.png" className="img-map"/>
@@ -628,30 +630,41 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 				<img src="images/img4.png" className="img-map"/>
 			</div>
 		</div> */}
+		</header>
 		<div>
-		
-		</div>
-		
-<div className="layout" id="layoutid">
-  <div className="row" id="row1">
-    <div className="column" id="column1">
-  <div className="layout_left_trend" >
-      {(isSelected  & selTimeperiod != "")?
-      <Trend indicatorTrend = {indicatorTrend}
-      graphTitle = {graphTitle}
-      graphSubgroup = {graphSubgroup}
-      graphUnit = {graphUnit}
-      titleAreaName = {titleAreaName}
-      graphTimeperiod = {graphTimeperiod}
-      toggleStateBurden = {toggleStateBurden}
-      trend = {trend}
-      selIndicator={selIndicator}
-      />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
-      </div>
 
-      </div>
-      <div className="column" id="column2">
-      <div className="layout_right_map">
+
+		
+		
+ 
+
+
+  
+ 
+
+
+
+
+
+     {/* Nakul sir style  */}
+
+     <section id='main_dashboard_container' class='flex flex-col'>
+     <section id='top_dashboard_row' class='flex flex-wrap'>
+     <div class='bg-red-200 flex w-full md:w-1/2'>
+        {(isSelected  & selTimeperiod != "")?
+          <Trend indicatorTrend = {indicatorTrend}
+          graphTitle = {graphTitle}
+          graphSubgroup = {graphSubgroup}
+          graphUnit = {graphUnit}
+          titleAreaName = {titleAreaName}
+          graphTimeperiod = {graphTimeperiod}
+          toggleStateBurden = {toggleStateBurden}
+          trend = {trend}
+          selIndicator={selIndicator}
+          />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
+     </div>
+
+     <div class="bg-yellow-300 flex w-full md:w-1/2">
         {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -694,33 +707,27 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setDrillDirection ={setDrillDirection}
           map={map}
           /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
-      </div>
-  
      </div>
-   </div>
-   </div>
-   <div className="layout" id="layoutid1">
-   <div className="row" id="row2">
-    <div className="column" id="column3">
-    <div className="layout_left_bar1">
-     {(isSelected  & selTimeperiod != "")?<BarArea
-      indicatorTrend = {indicatorTrend}
-      graphTitle = {graphTitle}
-      graphTimeperiod = {graphTimeperiod}
-      graphUnit = {graphUnit}
-      selIndiaData={selIndiaData} 
-      level={level} 
-      selArea={selArea} 
-      titleAreaName = {titleAreaName}
-      areaName = {areaName}
-      selStateData = {selStateData}
-      toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
+     </section>
+
+     <section id='bottom_dashboard_row' class='flex flex-wrap'>
+     <div class='bg-green-200 flex w-full md:w-1/2'>
+        {(isSelected  & selTimeperiod != "")?<BarArea
+          indicatorTrend = {indicatorTrend}
+          graphTitle = {graphTitle}
+          graphTimeperiod = {graphTimeperiod}
+          graphUnit = {graphUnit}
+          selIndiaData={selIndiaData} 
+          level={level} 
+          selArea={selArea} 
+          titleAreaName = {titleAreaName}
+          areaName = {areaName}
+          selStateData = {selStateData}
+          toggleStateBurden = {toggleStateBurden}
+          selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
      </div>
 
-      </div>
-      <div className="column" id="column4">
-    <div className="layout_right_bar2">
+     <div class='bg-purple-400 flex w-full md:w-1/2'>
       {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
@@ -733,12 +740,12 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       toggleStateBurden = {toggleStateBurden}
       selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
-  
-     </div>
-   </div>
+
+     </section>
+     
+     </section>
 
 
-  </div>  
 
   <footer className="footer p-0 mt-4">
 			<div className="row  p-0 m-0 align-items-center">
@@ -758,6 +765,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 		</footer>
 		
 	</div> 
+  </main>
    </>
     )
 }

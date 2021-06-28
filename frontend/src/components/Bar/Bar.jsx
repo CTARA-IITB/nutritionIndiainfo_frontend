@@ -254,12 +254,18 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 
   return(
     <>
-      <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
+      <FullScreen  className="w-full h-full" handle={screen}  onChange={checkchange}>
+				<div class='relative w-full h-full'>
+					<div class="block absolute z-10 w-full max-h-max">
         <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
-        <div className="gbar">
-          <div className="gbar_svg" ref={trendWrapper}>
-            <svg id="svgBar"   ref = {svgRef}></svg>
+        </div>
+        <div class='relative bg-purple-400 w-full py-3 pr-3'>
+         {/* add title here */}
+				<div class='trend_svg block align-middle w-full h-full' >
+
+            <svg id="svgBar"   ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>
           </div>
+        </div>
         </div>
       </FullScreen>
     </>

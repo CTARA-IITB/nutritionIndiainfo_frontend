@@ -104,7 +104,7 @@ span.ant-select-selection-item{
 }
 
 
-@media (max-width: 790px) {
+/* @media (max-width: 790px) {
   .layout {
   display: flex;
   justify-content: flex-start;
@@ -143,4 +143,4 @@ span.ant-select-selection-item{
 }
 
     
-}
+} */

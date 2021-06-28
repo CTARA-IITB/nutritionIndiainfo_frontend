@@ -17,6 +17,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   const screen=useFullScreenHandle();
   const svgRef = useRef();
   const trendWrapper = useRef();
+  let gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
+
   const margin = {
     left:160,
     top: 50,
@@ -111,7 +113,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     const aspect = width / height;
-    let gBarTitle;
 
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
       svg.selectAll("*").remove();
@@ -155,22 +156,22 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .padding(0.1)
         .range([0,dynamicRange])
           
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","13px")
-        .style("font-weight","bold")
-        .attr("dy", "-2em")
-        .text(`${gBarTitle}`)
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","13px")
+      //   .style("font-weight","bold")
+      //   .attr("dy", "-2em")
+      //   .text(`${gBarTitle}`)
 
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","11px")
-        .attr("dy", "-.5em")  
-        .text(`${status}`)
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","11px")
+      //   .attr("dy", "-.5em")  
+      //   .text(`${status}`)
           
       bar.append("text")
         .attr("class", "x label")
@@ -270,7 +271,8 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
           </div>
 
           <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
-            {/* add title here */}
+            <div class="text-center absolute w-full md:text-base font-bold text-xs">{`${gBarTitle}`}</div>
+              <div class="text-center absolute w-full md:text-base top-8" style={{ fontSize:".70rem"}}>{`${status}`}</div>
 						<div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg id="svgBarArea"  ref = {svgRef}
                   class="w-full bg-white border-4 border-black border-dashed object-scale-down">

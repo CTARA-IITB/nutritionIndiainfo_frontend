@@ -200,24 +200,24 @@ export const Map = ({
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
    
-    let title = svg.append("text").text(`${mapTitle}`)
-      .style("text-anchor","middle")
-      .style("font-size","13px")
-      .style("font-weight","bold")
-      .attr("dy", "-2em")
-.attr("class","map_title")      .attr('transform',`translate(${width/2},40)`);
+//     let title = svg.append("text").text(`${mapTitle}`)
+//       .style("text-anchor","middle")
+//       .style("font-size","13px")
+//       .style("font-weight","bold")
+//       .attr("dy", "-2em")
+// .attr("class","map_title")      
+// .attr('transform',`translate(${width/2},40)`);
 
-      svg.append("text").text(`${warning}`)
-      .style("text-anchor","middle")
-      .style("font-size","11px")
-      .attr("dy", "-2.5em")
+      // svg.append("text").text(`${warning}`)
+      // .style("text-anchor","middle")
+      // .style("font-size","11px")
+      // .attr("dy", "-2.5em")
 
 
-      .attr('transform',`translate(${width/2},60)`);
-    if(width <= 480){
-      title = title.style("font-size", (width * 0.0025) + "em")
-    }
-    console.log(selArea)
+      // .attr('transform',`translate(${width/2},60)`);
+    // if(width <= 480){
+    //   title = title.style("font-size", (width * 0.0025) + "em")
+    // }
     //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
     if(selArea == 28 || selArea == 8 ){
@@ -728,7 +728,9 @@ export const Map = ({
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
         <div class='relative bg-purple-400 w-full py-3 pr-3'>
-        {/* add title here */}
+              <div class="text-center absolute w-full md:text-base font-bold text-xs">{`${mapTitle}`}</div>
+              <div class="text-center absolute w-full md:text-base top-8" style={{ fontSize:".70rem"}}>{`${warning}`}</div>
+
 							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>
               <div className="bg-green-200 flex flex-wrap absolute left-10 bottom-14 md:left-auto md:bottom-auto md:right-10 md:top-16">
                   {switchButton}       

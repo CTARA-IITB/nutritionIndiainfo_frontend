@@ -247,7 +247,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("fill", colorScale)
       	.on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       

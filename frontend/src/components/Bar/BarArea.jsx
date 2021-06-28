@@ -206,7 +206,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)-1.5*height+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
 

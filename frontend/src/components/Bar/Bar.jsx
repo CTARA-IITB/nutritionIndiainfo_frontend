@@ -197,7 +197,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipGBar.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY) - 1.5 * height+"px").style("left",(e.pageX) - width +"px");
         })
         .on('mouseout', ()=>tooltipGBar.style("visibility", "hidden"));
         

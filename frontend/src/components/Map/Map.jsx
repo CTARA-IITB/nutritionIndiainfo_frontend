@@ -394,7 +394,7 @@ export const Map = ({
         tooltip.style("opacity", .9);
         tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
           .style("left", event.clientX - width+ "px")
-          .style("top", event.clientY - 30 + "px")
+          .style("top", event.clientY - height/2 + "px")
           .style("font-size","12px");
       }
     };

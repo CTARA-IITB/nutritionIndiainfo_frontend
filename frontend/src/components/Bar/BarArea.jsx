@@ -16,7 +16,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
   const screen=useFullScreenHandle();
   const svgRef = useRef();
-  const trendWrapper = useRef();
   const margin = {
     left:160,
     top: 50,
@@ -101,7 +100,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       TOOLTIP_FONTSIZE="8px";
     }
 
-    var tooltipX = select(".hbar_svg")
+    var tooltipX = select("#hbar_svg")
     .append("div")
     .attr("class", "tooltipX")
     .style("visibility", "hidden")
@@ -206,7 +205,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)-height - 250+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
 
@@ -237,17 +236,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     }
   },[data,toggleStateBurden])
     
-  const checkchange = (state,handle)=>{
-    // if(trend){
-    //   if(state === true){
-    //     trend[0].style.height = "100vh";
-    //   }
-    //   else if(state === false){
-    //     if(trend[0] != undefined)
-    //     trend[0].style.height = "65vh";
-    //   }
-    // }
-  }
 
   let table=[];
   if(data ){
@@ -263,7 +251,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
   return (
       <>
-        <FullScreen  className="w-full h-full" handle={screen}  onChange={checkchange}>
+        <FullScreen  className="w-full h-full" handle={screen} >
 				<div class='relative w-full h-full'>
 					<div class="block absolute z-10 w-full max-h-max">
           <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
@@ -271,12 +259,10 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
           <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
             {/* add title here */}
-						<div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
-              <div className="hbar_svg" ref={trendWrapper}>
+						<div id = "hbar_svg" class='block align-middle w-full h-full' >
                 <svg id="svgBarArea"  ref = {svgRef}
                   class="w-full bg-white border-4 border-black border-dashed object-scale-down">
                 </svg>
-              </div>
             </div>
           </div>
           </div>

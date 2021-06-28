@@ -18,7 +18,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   const [status,setStatus] = useState(null);
   const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
   const svgRef = useRef();
-  const trendWrapper = useRef();
   const margin = {
     left:160,
     top: 50,
@@ -106,7 +105,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       windowHeight = windowHeight/2;
     }
 
-    var tooltipGBar = select(".gbar_svg")
+    var tooltipGBar = select("#gbar_svg")
     .append("div")
     .attr("class", "tooltipGBar")
     .style("visibility", "hidden")
@@ -197,7 +196,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipGBar.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY) - height - 300+"px").style("left",(e.pageX) -width+"px");
         })
         .on('mouseout', ()=>tooltipGBar.style("visibility", "hidden"));
         
@@ -261,7 +260,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         </div>
         <div class='relative bg-purple-400 w-full py-3 pr-3'>
          {/* add title here */}
-				<div class='trend_svg block align-middle w-full h-full' >
+				<div id = "gbar_svg"class='block align-middle w-full h-full' >
 
             <svg id="svgBar"   ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>
           </div>

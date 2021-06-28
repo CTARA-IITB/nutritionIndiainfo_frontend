@@ -137,6 +137,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
     if(!toggleStateBurden)
       margin = {...margin, 'left':100}  // change left margin for burden
+    else
+      margin = {...margin,'left':50}
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     

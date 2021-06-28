@@ -200,23 +200,23 @@ export const Map = ({
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
    
-    let title = svg.append("text").text(`${mapTitle}`)
-      .style("text-anchor","middle")
-      .style("font-size","13px")
-      .style("font-weight","bold")
-      .attr("dy", "-2em")
-.attr("class","map_title")      .attr('transform',`translate(${width/2},40)`);
+    // let title = svg.append("text").text(`${mapTitle}`)
+    //   .style("text-anchor","middle")
+    //   .style("font-size","13px")
+    //   .style("font-weight","bold")
+    //   .attr("dy", "-2em")
+    //   .attr("class","map_title")      
+    //   .attr('transform',`translate(${width/2},40)`);
 
-      svg.append("text").text(`${warning}`)
-      .style("text-anchor","middle")
-      .style("font-size","11px")
-      .attr("dy", "-2.5em")
+    // svg.append("text").text(`${warning}`)
+    //   .style("text-anchor","middle")
+    //   .style("font-size","11px")
+    //   .attr("dy", "-2.5em")
+    //   .attr('transform',`translate(${width/2},60)`);
 
-
-      .attr('transform',`translate(${width/2},60)`);
-    if(width <= 480){
-      title = title.style("font-size", (width * 0.0025) + "em")
-    }
+    // if(width <= 480){
+    //   title = title.style("font-size", (width * 0.0025) + "em")
+    // }
     console.log(selArea)
     //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
@@ -709,16 +709,17 @@ export const Map = ({
       <FullScreen className="w-full h-full" handle={screen}>
       
 			<div class='relative w-full h-full'>
-			  <div class="block absolute z-10 w-full max-h-max">
-          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
-        </div>
         <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
-        {/* add title here */}
-							<div class='trend_svg block align-middle w-full h-full' ref={wrapperRef}>
+          <div class="block absolute z-10 w-full max-h-max">
+            <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
+          </div>
+          <div class="text-center absolute w-full top-6 text-xs font-semibold md:base">{`${mapTitle}`}</div>
+          <div class="text-center absolute w-full top-10 text-xs md:base">{`${warning}`}</div>
+						<div class='trend_svg block align-middle w-full h-full' ref={wrapperRef}>
 
             <svg  id="svgMap"  ref={svgRef} 
-            class="w-full bg-white border-4 border-black border-dashed object-scale-down"
-            ></svg>
+              class="w-full bg-white border-4 border-black border-dashed object-scale-down">
+            </svg>
             </div>
             </div>
     

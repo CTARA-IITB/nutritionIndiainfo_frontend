@@ -26,6 +26,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
   const [data, setData] = useState(null);
   const [status,setStatus]=useState(null);
+  const  [title,setTitle]=useState(null);
   let colorScale ='#eda143';
 
   let arrObese = [91,95,104,92,96,105,21];
@@ -124,7 +125,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     else{
       gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
-        
+    setTitle(gBarTitle);   
     if(data && data.length >0){
       const barSize = 13;
       const dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length;
@@ -155,22 +156,22 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .padding(0.1)
         .range([0,dynamicRange])
           
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","13px")
-        .style("font-weight","bold")
-        .attr("dy", "-2em")
-        .text(`${gBarTitle}`)
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","13px")
+      //   .style("font-weight","bold")
+      //   .attr("dy", "-2em")
+      //   .text(`${gBarTitle}`)
 
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","11px")
-        .attr("dy", "-.5em")  
-        .text(`${status}`)
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","11px")
+      //   .attr("dy", "-.5em")  
+      //   .text(`${status}`)
           
       bar.append("text")
         .attr("class", "x label")
@@ -258,27 +259,25 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       })
     }
   }
-     
-  let title=graphTitle+ ',  '+ graphUnit+'()'
-
+  
   return (
       <>
         <FullScreen  className="w-full h-full" handle={screen}  onChange={checkchange}>
-				<div class='relative w-full h-full'>
-					<div class="block absolute z-10 w-full max-h-max">
-          <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
-          </div>
-
-          <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
-            {/* add title here */}
-							<div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
-            <div className="hbar_svg" ref={trendWrapper}>
-              <svg id="svgBarArea"  ref = {svgRef}
-								class="w-full bg-white border-4 border-black border-dashed object-scale-down">
-              </svg>
+          <div class='relative w-full h-full'>
+            <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
+              <div class="block absolute z-10 w-full max-h-max">
+                <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
+              </div>
+              <div class="text-center absolute w-full top-6 text-xs font-semibold md:base">{`${title}`}</div>
+              <div class="text-center absolute w-full top-10 text-xs md:base">{`${status}`}</div>
+              <div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
+                <div className="hbar_svg" ref={trendWrapper}>
+                  <svg  id="svgBarArea" ref = {svgRef}
+                    class="w-full bg-white border-4 border-black border-dashed object-scale-down">
+                  </svg>
+                </div>
+              </div>
             </div>
-            </div>
-          </div>
           </div>
         </FullScreen>
       </>

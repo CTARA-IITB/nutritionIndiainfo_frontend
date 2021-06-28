@@ -16,6 +16,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 
   const screen = useFullScreenHandle();
   const [status,setStatus] = useState(null);
+  const [title,setTitle] = useState(null);
   const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
   const svgRef = useRef();
   const trendWrapper = useRef();
@@ -74,7 +75,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
   }  
   
-
   useEffect(() => {
     setStatus("by Background Characteristics")
     let cleanData = [];
@@ -91,7 +91,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     select(".tooltipGBar").remove();
     let TOOLTIP_FONTSIZE;
 
-    
     const svg = select(svgRef.current);
     let windowWidth = window.screen.width;
     let windowHeight = window.screen.height;
@@ -132,7 +131,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     else{
       gBarTitle =  `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
-        
+    setTitle(gBarTitle);    
     if(data && data.length >0){
 
       const yValue = d => d.subgroup_name;
@@ -155,22 +154,22 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .range([0,innerHeight])
         .padding(0.1);
           
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","13px")
-        .style("font-weight","bold")
-        .attr("dy", "-2em")
-        .text(`${gBarTitle}`)
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","13px")
+      //   .style("font-weight","bold")
+      //   .attr("dy", "-2em")
+      //   .text(`${gBarTitle}`)
 
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","11px")
-        .attr("dy", "-.5em")  
-        .text(`${status}`)  
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","11px")
+      //   .attr("dy", "-.5em")  
+      //   .text(`${status}`)  
           
       bar.append("text")
         .attr("class", "x label")
@@ -227,7 +226,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
   },[data,toggleStateBurden])
 
-
   const checkchange = (state,handle)=>{
     // if(gbar){
     //   if(state === true){
@@ -250,22 +248,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
   }
 
-  let title=graphTitle+ ',  '+ graphUnit+'()'
-
   return(
     <>
       <FullScreen  className="w-full h-full" handle={screen}  onChange={checkchange}>
 				<div class='relative w-full h-full'>
-					<div class="block absolute z-10 w-full max-h-max">
-        <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
-        </div>
-        <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
-         {/* add title here */}
-				<div class='trend_svg block align-middle w-full h-full' >
-
-            <svg id="svgBar"   ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>
+          <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
+            <div class="block absolute z-10 w-full max-h-max">
+              <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
+            </div>
+            <div class="text-center absolute w-full top-6 text-xs font-semibold md:base">{`${title}`}</div>
+            <div class="text-center absolute w-full top-10 text-xs md:base">{`${status}`}</div>
+            <div class='trend_svg block align-middle w-full h-full' >
+              <svg id="svgBar"   ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>
+            </div>
           </div>
-        </div>
         </div>
       </FullScreen>
     </>

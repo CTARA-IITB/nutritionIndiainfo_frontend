@@ -5,7 +5,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import ShareIcon from '@material-ui/icons/Share';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
-import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
+import CloseIcon from '@material-ui/icons/Close';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import ShareImage from "../Share/ShareImage";
 import {saveSvgAsPng,svgAsPngUri}  from 'save-svg-as-png';
@@ -75,7 +75,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
     //toggle fullscreen
     const OpenFullscreen = () =>{
-        setIcon(<FullscreenExitIcon/>);
+        setIcon(<CloseIcon/>);
         setText("Exit");
         setIsFullscreen(false);
     }
@@ -123,20 +123,20 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
     const saveJpeg=()=>{
         htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
-        .then(function (dataUrl) {
+        .then(function (dataUrl) { id="svgBarArea"
           download(dataUrl, imageNameJpeg);
         });
     } 
     
     const savePng = ()=>{
-    htmlToImage.toPng(document.getElementById(id),{backgroundColor:'white'})
-    .then(function (dataUrl) {
-        download(dataUrl, imageNamePng);
-    });
+        htmlToImage.toPng(document.getElementById(id),{backgroundColor:'white'})
+        .then(function (dataUrl) {
+            download(dataUrl, imageNamePng);
+        });
     }
 
     const saveSvg =()=>{
-    htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
+        htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
         .then(function (dataUrl) {
         var link = document.createElement('a');
         link.download = imageNameSvg;
@@ -146,7 +146,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
     }
 
     const savePdf = ()=>{
-    htmlToImage.toPng(document.getElementById(id), { quality: 0.95 })
+        htmlToImage.toPng(document.getElementById(id), { quality: 0.95 })
         .then(function (dataUrl) {
         var link = document.createElement('a');
         link.download = imageNameJpeg;

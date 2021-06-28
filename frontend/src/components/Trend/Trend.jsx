@@ -25,29 +25,28 @@ const margin = {
   bottom: 30,
 };
 
-
-
 const useResizeObserver = ref => {
+
   const [dimensions, setDimensions] = useState(null);
   useEffect(() => {
-  if(typeof ref.current != 'undefined'){
-    const observeTarget = ref.current;
-
-    const resizeObserver = new ResizeObserver(entries => {
-      entries.forEach(entry => {
-        setDimensions(entry.contentRect);
+    if(typeof ref.current != 'undefined'){
+      const observeTarget = ref.current;
+      const resizeObserver = new ResizeObserver(entries => {
+        entries.forEach(entry => {
+          setDimensions(entry.contentRect);
+        });
       });
-    });
-    resizeObserver.observe(observeTarget);
-    return () => {
-      resizeObserver.unobserve(observeTarget);
-    };
-  }
+      resizeObserver.observe(observeTarget);
+      return () => {
+        resizeObserver.unobserve(observeTarget);
+      };
+    }
 
-  
-  }, [ref.current]);
+    
+  },[ref.current]);
   return dimensions;
 };
+
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend, selIndicator}) => { 
 
   const [data, setData] = useState(null);
@@ -77,14 +76,9 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     colorScale = '#eda14380'; 
 
   const parseTime = timeParse('%d-%b-%y');
-
-	 
-    const formatTime = timeFormat('%b-%y');
-    const formatTooltipTime = timeFormat('%B-%Y');
-    const formatTitleTime = timeFormat('%Y');
-
-
-    
+  const formatTime = timeFormat('%b-%y');
+  const formatTooltipTime = timeFormat('%B-%Y');
+  const formatTitleTime = timeFormat('%Y');
 
   useEffect(() => {
       let cleanData = [];
@@ -343,29 +337,23 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     }
   }
 
-
   return (
     <>
-    <FullScreen  className="w-full h-full" handle={screen} onChange={checkchange}>
-    <div class='relative w-full h-full'>
-    <div class="block absolute z-10 w-full max-h-max">
-
-
-    <SideNavFirst table={table} id="trend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
-
-    </div>
-
-
-			<div class='trend relative bg-purple-400 w-full py-3 pr-3'>
-							<div class="text-center absolute w-full top-6 text-xs md:base">{`${graphTitle} ${titleAreaName}`}</div>
-							<div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
-
-        <svg id="svgTrend"  ref = {svgRef}
-								class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>
+      <FullScreen  className="w-full h-full" handle={screen} onChange={checkchange}>
+        <div class='relative w-full h-full'>
+          <div class='trend relative bg-purple-400 w-full py-3 pr-3'>
+            <div class="block absolute z-10 w-full max-h-max">
+              <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
+            </div>
+            <div class="text-center absolute w-full top-6 text-xs font-semibold md:base">{`${graphTitle} ${titleAreaName}`}</div>
+            <div class='trend_svg block align-middle w-full h-full' ref={trendWrapper}>
+              <svg id="svgTrend"  ref = {svgRef}
+                class="w-full bg-white border-4 border-black border-dashed object-scale-down">
+              </svg>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    </FullScreen>
+      </FullScreen>
     </>
   );
 }

@@ -528,7 +528,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 				</div>
 			</div>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
-				<div className="col-6 col-lg-4 col-md-6 p-3 for-mobile-1">
+				<div className="col-10 col-lg-4 col-md-10 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
 						<img src={selLifeycleImg} className="lifecycle-img"/>
 						<div className="select-lifecycle-parent">
@@ -607,7 +607,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 						</div>
 					</div>
 				</div>
-				<div className="col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3">
+				<div className="col-2 col-lg-1 col-md-2 p-3 for-mobile-2 i-for-mobile-div3">
 					<div className="i-class">
 						<img src={iicon} className="i-icon"/>
 					</div>

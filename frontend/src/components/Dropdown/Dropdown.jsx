@@ -518,7 +518,10 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 			</div>
 			<main id='main_app_container' class='flex flex-col max-h-screen'>
       
-	 <header>
+      <header
+					id='main_menu'
+					className='p-2 flex flex-wrap
+                  justify-between lg:sticky lg:top-0 shadow-2xl z-40 bg-white'>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-6 col-lg-4 col-md-6 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>

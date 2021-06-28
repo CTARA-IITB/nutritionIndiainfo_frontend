@@ -148,7 +148,7 @@ export const Map = ({
     if(null!== selStateData && selStateData.length > 0)
     {
       if(level === 2){
-        statusMsg=" Click on map to select distirct \n or back to return"
+        statusMsg=" Click on map to select district \n or back to return"
       }else if(level === 3){
         statusMsg=`Click on map to select district \n or back to return`
       }

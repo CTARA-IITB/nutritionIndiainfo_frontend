@@ -65,11 +65,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(d>100){
-        oneDecimel = d;
+      if(graphUnit==="Percent"){
+        oneDecimel = d.toFixed(1);
       }
-      else {
-        oneDecimel = d.toFixed(1);  
+      else{
+        oneDecimel = d;
       }
       return oneDecimel;
     }

@@ -45,20 +45,21 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   else
     colorScale = '#eda143'; 
   
+ 
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(d>100){
-        oneDecimel = d;
+      if(graphUnit==="Percent"){
+        oneDecimel = d.toFixed(1);
       }
-      else {
-        oneDecimel = d.toFixed(1);  
+      else{
+        oneDecimel = d;
       }
       return oneDecimel;
     }
   }  
-    
+
   useEffect(() => {
     if(level === 1){
       setStatus("By State");

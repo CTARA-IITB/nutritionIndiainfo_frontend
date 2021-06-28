@@ -321,20 +321,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   }
   let title='Trend of ' + graphTitle+ ', '+titleAreaName
 
- 
-  
-  const checkchange = (state,handle)=>{
-  
-    if(trend){
-      if(state === true){
-        trend[0].style.height = "100vh";
-      }
-      else if(state === false){
-        if(trend[0] != undefined)
-        trend[0].style.height = "40vh";
-      }
-    }
-  }
 
 
   let table=[];

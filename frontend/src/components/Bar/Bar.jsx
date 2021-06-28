@@ -254,7 +254,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 
   return(
     <>
-      <FullScreen  className="w-full h-full" handle={screen}  onChange={checkchange}>
+      <FullScreen  className="w-full h-full" handle={screen}>
 				<div class='relative w-full h-full'>
 					<div class="block absolute z-10 w-full max-h-max">
         <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>

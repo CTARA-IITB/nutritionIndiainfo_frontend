@@ -675,19 +675,19 @@ export const Map = ({
  
   const screen = useFullScreenHandle();
 
-  const checkchange = (state,handle)=>{
-    if(map){
-      if(state === true){
-        map[0].style.height = "100vh";
-        // map[0].style.transform =translate('100','0')
-      }
-      else if(state === false){
-        if(map[0] != undefined){}
-        map[0].style.height = "60vh";
+  // const checkchange = (state,handle)=>{
+  //   if(map){
+  //     if(state === true){
+  //       map[0].style.height = "100vh";
+  //       // map[0].style.transform =translate('100','0')
+  //     }
+  //     else if(state === false){
+  //       if(map[0] != undefined){}
+  //       map[0].style.height = "60vh";
 
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
   let table=[];
   if(data){
     for(let i=0;i<data.length;i++){

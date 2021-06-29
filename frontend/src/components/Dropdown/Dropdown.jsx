@@ -20,6 +20,7 @@ import {EARLY_CHILDHOOD} from "../../constants"
 
 import "./Dropdown.css";
 import "./bootstrap.min.css";
+import "./tailwind.min.css";
 import "./dashboard.css";
 import "./responsive.css";
 //header images

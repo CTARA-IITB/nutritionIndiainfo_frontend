@@ -119,6 +119,15 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
     //     const dataURI = await svgAsPngUri(graph);
     //     pdf.addImage(dataURI, "PNG", 0, 0);
     //     pdf.save(imageNamePdf);
+    // } // async function savePdf() {
+    //     const graph = document.getElementById(id);
+    //     const pdf = new jsPDF("l", "pt", [900, 800]);
+    //     const pdfCanvas = document.createElement("canvas");
+    //     pdfCanvas.setAttribute("width", 900);
+    //     pdfCanvas.setAttribute("height", 900);
+    //     const dataURI = await svgAsPngUri(graph);
+    //     pdf.addImage(dataURI, "PNG", 0, 0);
+    //     pdf.save(imageNamePdf);
     // }
 
     const saveJpeg=()=>{
@@ -220,5 +229,4 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         </>    
     )    
 }
-
 export default SideNavFirst;

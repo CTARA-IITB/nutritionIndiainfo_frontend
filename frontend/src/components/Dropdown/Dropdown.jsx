@@ -532,7 +532,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       <header
 					id='main_menu'
 					className='p-2 flex flex-wrap
-                  justify-between lg:sticky lg:top-0 shadow-2xl z-40 bg-white'>
+                  justify-between lg:sticky lg:top-0  z-40 bg-white'>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-10 col-lg-4 col-md-10 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
@@ -652,8 +652,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
      {/* Nakul sir style  */}
 
      <section id='main_dashboard_container' class='flex flex-col'>
-     <section id='top_dashboard_row' class='flex flex-wrap'>
-     <div class='bg-red-200 flex w-full md:w-1/2'>
+     <section id='top_dashboard_row' class='flex flex-wrap-reverse'>
+     <div class='flex w-full md:w-1/2'>
         {(isSelected  & selTimeperiod != "")?
           <Trend indicatorTrend = {indicatorTrend}
           graphTitle = {graphTitle}
@@ -667,7 +667,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
 
-     <div class="bg-yellow-300 flex w-full md:w-1/2">
+     <div class=" flex w-full md:w-1/2">
         {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -714,7 +714,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
      </section>
 
      <section id='bottom_dashboard_row' class='flex flex-wrap'>
-     <div class='bg-green-200 flex w-full md:w-1/2'>
+     <div class=' flex w-full md:w-1/2'>
         {(isSelected  & selTimeperiod != "")?<BarArea
           indicatorTrend = {indicatorTrend}
           graphTitle = {graphTitle}
@@ -730,7 +730,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
      </div>
 
-     <div class='bg-purple-400 flex w-full md:w-1/2'>
+     <div class='flex w-full md:w-1/2'>
       {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}

@@ -22,7 +22,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   const margin = {
     left:120,
     top: 50,
-    right: 50,
+    right: 70,
     bottom: 50,
   };
   const [data, setData] = useState(null);

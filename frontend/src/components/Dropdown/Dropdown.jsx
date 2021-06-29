@@ -650,8 +650,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
      {/* Nakul sir style  */}
 
      <section id='main_dashboard_container' class='flex flex-col'>
-     <section id='top_dashboard_row' class='flex flex-wrap'>
-     <div class='bg-red-200 flex w-full md:w-1/2'>
+     <section id='top_dashboard_row' class='flex flex-wrap-reverse'>
+     <div class='flex w-full md:w-1/2'>
         {(isSelected  & selTimeperiod != "")?
           <Trend indicatorTrend = {indicatorTrend}
           graphTitle = {graphTitle}

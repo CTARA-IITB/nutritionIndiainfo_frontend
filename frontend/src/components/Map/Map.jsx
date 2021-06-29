@@ -192,7 +192,6 @@ export const Map = ({
   const aspect = width / height;
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
  
-   console.log(width)
    
     
     svg.selectAll("*").remove();
@@ -225,7 +224,7 @@ export const Map = ({
 
     }
     else{
-     projection = geoMercator().fitSize([width/1.2, adjustedHeight/1.2], geometry);
+     projection = geoMercator().fitSize([width/1.4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               , adjustedHeight/1.2], geometry);
     }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
@@ -250,7 +249,7 @@ export const Map = ({
     }
     
     let sum = color_range.reduce(function(a, b){
-      if (isNaN(b)){
+      if (isNaN(b)){                                                                                                                                                                                                                                                                                                                                                                                                
         b=0;
       }
       return a + b;
@@ -679,20 +678,7 @@ export const Map = ({
  
   const screen = useFullScreenHandle();
 
-  // const checkchange = (state,handle)=>{
-  //   if(map){
-  //     if(state === true){
-  //       map[0].style.height = "100vh";
-  //       // map[0].style.transform =translate('100','0')
-  //     }
-  //     else if(state === false){
-  //       if(map[0] != undefined){}
-  //       map[0].style.height = "60vh";
-
-  //     }
-  //   }
-  // }
-  let table=[];
+    let table=[];
   if(data){
     for(let i=0;i<data.length;i++){
         table.push({
@@ -727,8 +713,8 @@ export const Map = ({
 			  <div class="block absolute z-10 w-full max-h-max">
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
-        <div class='relative bg-purple-400 w-full py-3 pr-3'>
-              <div class="text-center absolute w-full md:text-base font-bold text-xs">{`${mapTitle}`}</div>
+        <div class='relative bg-purple-200 w-full py-3 pr-3'>
+              <div class="text-center absolute w-full md:text-base font-bold top-5 text-xs">{`${mapTitle}`}</div>
               <div class="text-center absolute w-full md:text-base top-8" style={{ fontSize:".70rem"}}>{`${warning}`}</div>
 
 							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>
@@ -739,7 +725,7 @@ export const Map = ({
                   {backButton}        
               </div>
             <svg  id="svgMap"  ref={svgRef} 
-            class="w-full bg-white border-4 border-black border-dashed object-scale-down"
+            class="w-full bg-white border-2 border-black border-dashed object-scale-down"
             ></svg>
 
                 <div className="absolute right-10 bottom-10 text-xs font-bold">

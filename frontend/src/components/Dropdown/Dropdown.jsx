@@ -524,7 +524,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       <div  id="brand_container" className="flex justify-between w-full h-20">
 				{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
 					<img src={mhf} className="w-30 h-auto"/>
-					<img src={nil} className="w-40 h-auto"/>
+					<img src={nil} className="w-25 h-auto"/>
 					<img src={pa} className="w-20 h-auto"/>
 				{/* </div> */}
 			</div>

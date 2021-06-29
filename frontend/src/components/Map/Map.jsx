@@ -168,7 +168,7 @@ export const Map = ({
   }
   select(".tooltip").remove();
 
-  let tooltip = select(".map_svg").append("div")
+  let tooltip = select("#map_svg").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
@@ -200,24 +200,24 @@ export const Map = ({
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
    
-    let title = svg.append("text").text(`${mapTitle}`)
-      .style("text-anchor","middle")
-      .style("font-size","13px")
-      .style("font-weight","bold")
-      .attr("dy", "-2em")
-.attr("class","map_title")      .attr('transform',`translate(${width/2},40)`);
+//     let title = svg.append("text").text(`${mapTitle}`)
+//       .style("text-anchor","middle")
+//       .style("font-size","13px")
+//       .style("font-weight","bold")
+//       .attr("dy", "-2em")
+// .attr("class","map_title")      
+// .attr('transform',`translate(${width/2},40)`);
 
-      svg.append("text").text(`${warning}`)
-      .style("text-anchor","middle")
-      .style("font-size","11px")
-      .attr("dy", "-2.5em")
+      // svg.append("text").text(`${warning}`)
+      // .style("text-anchor","middle")
+      // .style("font-size","11px")
+      // .attr("dy", "-2.5em")
 
 
-      .attr('transform',`translate(${width/2},60)`);
-    if(width <= 480){
-      title = title.style("font-size", (width * 0.0025) + "em")
-    }
-    console.log(selArea)
+      // .attr('transform',`translate(${width/2},60)`);
+    // if(width <= 480){
+    //   title = title.style("font-size", (width * 0.0025) + "em")
+    // }
     //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
     if(selArea == 28 || selArea == 8 ){
@@ -393,8 +393,8 @@ export const Map = ({
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
         tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
-          .style("left", event.clientX + "px")
-          .style("top", event.clientY - 30 + "px")
+          .style("left", event.clientX - width+ "px")
+          .style("top", event.clientY - height/2 + "px")
           .style("font-size","12px");
       }
     };
@@ -580,12 +580,13 @@ export const Map = ({
              .attr("class", "legendQuant")
             .attr("transform", `translate(${width-100},${adjustedHeight-450})`)
           msg
-            .text(statusMsg)
+            // .text(statusMsg)
             .attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
       }else if(width < 680){
         console.log(level)
         if(level === 2 || level === 3){
-            msg.text(statusMsg)
+            msg
+            // .text(statusMsg)
 
             .attr("transform", `translate(${width-380},${adjustedHeight- 120})`)
           }
@@ -595,10 +596,13 @@ export const Map = ({
          
           if(level === 2 || level === 3){
            
-              msg.text(statusMsg).attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
+              msg
+              // .text(statusMsg)
+              .attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
                }
           else{
-              msg.text(statusMsg)
+              msg
+              // .text(statusMsg)
                 .attr("transform", `translate(${width-150},${adjustedHeight- 80})`)
             }
           }
@@ -659,27 +663,35 @@ export const Map = ({
   let switchButton;
 
   if(switchDisplay && level === 1){
-    switchButton = <div><Button className={`req_button ${!toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
-    <Button className={`req_button ${toggleState  && 'req_button_light'}` } onClick={()=>{ setToggleState(false)}} size="sm">District Map</Button> </div>
+    switchButton =        <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
+    <li className="nav-item">
+        <a  className={`nav-link ${toggleState  && 'active radius2'}` }   id="state" data-toggle="tab"  role="tab" aria-controls="state" aria-selected="true" onClick={()=>{ setToggleState(true)}}>State</a>
+    </li>
+    <li className="nav-item">
+        <a className={`nav-link ${!toggleState  && 'active radius'}` }  id="district" data-toggle="tab" role="tab" aria-controls="district" aria-selected="false" onClick={()=>{ setToggleState(false)}} style={{"width":"70px"}}>District</a>
+    </li>
+</ul>
+    // <div><Button className={`req_button ${!toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
+    // <Button className={`req_button ${toggleState  && 'req_button_light'}` } onClick={()=>{ setToggleState(false)}} size="sm">District Map</Button> </div>
   }else{
     switchButton= null;
   }
  
   const screen = useFullScreenHandle();
 
-  const checkchange = (state,handle)=>{
-    if(map){
-      if(state === true){
-        map[0].style.height = "100vh";
-        // map[0].style.transform =translate('100','0')
-      }
-      else if(state === false){
-        if(map[0] != undefined){}
-        map[0].style.height = "60vh";
+  // const checkchange = (state,handle)=>{
+  //   if(map){
+  //     if(state === true){
+  //       map[0].style.height = "100vh";
+  //       // map[0].style.transform =translate('100','0')
+  //     }
+  //     else if(state === false){
+  //       if(map[0] != undefined){}
+  //       map[0].style.height = "60vh";
 
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
   let table=[];
   if(data){
     for(let i=0;i<data.length;i++){
@@ -709,25 +721,33 @@ export const Map = ({
 
   return (
     <>
-      <FullScreen className="fullscreen_css" handle={screen} onChange={checkchange}>
-      <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
-      <div className="map" >
-          
-          <div  className="map_svg" ref={wrapperRef}>
-            <svg  id="svgMap"  ref={svgRef} ></svg>
+      <FullScreen className="w-full h-full" handle={screen}>
+      
+			<div class='relative w-full h-full'>
+			  <div class="block absolute z-10 w-full max-h-max">
+          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
+        </div>
+        <div class='relative bg-purple-400 w-full py-3 pr-3'>
+              <div class="text-center absolute w-full md:text-base font-bold text-xs">{`${mapTitle}`}</div>
+              <div class="text-center absolute w-full md:text-base top-8" style={{ fontSize:".70rem"}}>{`${warning}`}</div>
 
-          </div>
-    
-    <div className="map_req">
-      <div className="map_req_button">
-        {switchButton}
-        {backButton}
-      </div>
-      
-      
-    </div>
+							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>
+              <div className="bg-green-200 flex flex-wrap absolute left-10 bottom-14 md:left-auto md:bottom-auto md:right-10 md:top-16">
+                  {switchButton}       
+              </div>
+              <div className="bg-green-400 absolute left-10 top-10">
+                  {backButton}        
+              </div>
+            <svg  id="svgMap"  ref={svgRef} 
+            class="w-full bg-white border-4 border-black border-dashed object-scale-down"
+            ></svg>
+
+                <div className="absolute right-10 bottom-10 text-xs font-bold">
+                  {statusMsg}        
+              </div>
+            </div>
+            </div>
   </div>
-
     </FullScreen>  
     </>
   )

@@ -20,9 +20,9 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   const svgRef = useRef();
   const trendWrapper = useRef();
   const margin = {
-    left:160,
+    left:120,
     top: 50,
-    right: 80,
+    right: 50,
     bottom: 50,
   };
   const [data, setData] = useState(null);
@@ -30,6 +30,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   let colorScale ='#eda143';
   let lightColor = '#F7D9B3';
   let arrObese = [91,95,104,92,96,105,21];
+  let gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
 
   if(selIndicator == 12 || selIndicator == 13){
     colorScale = '#a3c00f'; 
@@ -76,7 +77,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   
 
   useEffect(() => {
-    setStatus("by Background Characteristics")
+    setStatus("By Background Characteristics")
     let cleanData = [];
     cleanData = indicatorBar.map(d =>{
       if(d.subgroup_name === "All"){
@@ -106,7 +107,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       windowHeight = windowHeight/2;
     }
 
-    var tooltipGBar = select(".gbar_svg")
+    var tooltipGBar = select("#gbar_svg")
     .append("div")
     .attr("class", "tooltipGBar")
     .style("visibility", "hidden")
@@ -116,7 +117,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     let innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     const aspect = width / height;
-    let gBarTitle;
 
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
       svg.selectAll("*").remove();
@@ -155,22 +155,22 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .range([0,innerHeight])
         .padding(0.1);
           
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","13px")
-        .style("font-weight","bold")
-        .attr("dy", "-2em")
-        .text(`${gBarTitle}`)
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","13px")
+      //   .style("font-weight","bold")
+      //   .attr("dy", "-2em")
+      //   .text(`${gBarTitle}`)
 
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","11px")
-        .attr("dy", "-.5em")  
-        .text(`${status}`)  
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","11px")
+      //   .attr("dy", "-.5em")  
+      //   .text(`${status}`)  
           
       bar.append("text")
         .attr("class", "x label")
@@ -197,7 +197,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipGBar.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY) - 1.5 * height+"px").style("left",(e.pageX) - width +"px");
         })
         .on('mouseout', ()=>tooltipGBar.style("visibility", "hidden"));
         
@@ -254,12 +254,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 
   return(
     <>
-      <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
+      <FullScreen  className="w-full h-full" handle={screen}>
+				<div class='relative w-full h-full'>
+					<div class="block absolute z-10 w-full max-h-max">
         <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
-        <div className="gbar">
-          <div className="gbar_svg" ref={trendWrapper}>
-            <svg id="svgBar"   ref = {svgRef}></svg>
+        </div>
+        <div class='relative bg-purple-400 w-full py-3 pr-3'>
+
+         <div class="text-center absolute w-full md:text-base font-bold text-xs">{`${gBarTitle}`}</div>
+          <div class="text-center absolute w-full md:text-base top-8" style={{ fontSize:".70rem"}}>{`${status}`}</div>
+				<div id="gbar_svg" class='block align-middle w-full h-full' >
+
+            <svg id="svgBar"   ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>
           </div>
+        </div>
         </div>
       </FullScreen>
     </>

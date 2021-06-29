@@ -1,4 +1,4 @@
-.dropdown-title {
+/* .dropdown-title {
   font-size: calc(50% + 0.5vw + 0.5vh);
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
@@ -7,21 +7,21 @@
 
 span.ant-select-selection-item{
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
-.button_fullscreen_trend {
+/* .button_fullscreen_trend {
   background-color: white;
   border: white;
   cursor: pointer;
   overflow: hidden;
   float: right;
-}
-.fullscreen_css {
+} */
+/* .fullscreen_css {
   background-color: white;
-}
+} */
  
 
-.layout {
+/* .layout {
   width:  100%;
   margin: 0;
   display: flex;
@@ -61,7 +61,7 @@ span.ant-select-selection-item{
   min-height: 50%;
  width: 100%;
   height: 100%;
-}
+} */
 
 
 .tg_button{
@@ -86,7 +86,7 @@ span.ant-select-selection-item{
 
 }
 
-.layout_left_trend {
+/* .layout_left_trend {
   width: 100%;
   height: 100%;
 }
@@ -101,10 +101,10 @@ span.ant-select-selection-item{
   font-size: 15px;
   background-color: #AF5907;
   border-color:#AF5907 ;
-}
+} */
 
 
-@media (max-width: 790px) {
+/* @media (max-width: 790px) {
   .layout {
   display: flex;
   justify-content: flex-start;
@@ -143,27 +143,4 @@ span.ant-select-selection-item{
 }
 
     
-}
-
-
-.ant-select {
-  /* box-sizing: border-box; */
-  margin: 0;
-  padding: 0;
-  /* color: rgba(0, 0, 0, 0.85); */
-  font-size: 14px;
-  font-variant: tabular-nums;
-  line-height: 1.5715;
-  list-style: none;
-  font-feature-settings: 'tnum', "tnum";
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  border: 1px solid #D66D07;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.ant-select-selection {
-  background-color: green;
-}
+} */

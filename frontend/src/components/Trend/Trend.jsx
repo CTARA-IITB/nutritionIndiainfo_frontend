@@ -18,9 +18,9 @@ import {
 } from 'd3';
 
 const tickLength = 8;
-const margin = {
-  left: 100,
-  top: 70,
+let margin = {
+  left: 50,
+  top: 53,
   right: 0,
   bottom: 30,
 };
@@ -124,7 +124,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
     }
 
-    var tooltipX = select(".trend_svg")
+    var tooltipX = select("#trend_svg")
     .append("div")
     .attr("class", "tooltipX")
     .style("visibility", "hidden")
@@ -135,7 +135,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   const aspect = width / height;
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
- 
+    if(!toggleStateBurden)
+      margin = {...margin, 'left':100}  // change left margin for burden
+    else
+      margin = {...margin,'left':50}
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     
@@ -184,7 +187,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       yValue = d => d.data_value_num;
       maxVal = max(data, (d) => yValue(d));
       maxVal = maxVal + maxVal/7;
-
+      margin = {...margin, 'left':100}
+      console.log(margin)
       graphUnit ='Number';
       }
 
@@ -243,7 +247,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .attr("fill", colorScale)
       	.on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       
@@ -284,10 +288,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       // .style("font-weight","bold")
     }
     
-    bar.append("text")
+    svg.append("text")
     .attr("transform", "rotate(-0)")
-    .attr("y", 40- margin.left)
-    .attr("x",60 - (height / 8))
+    .attr("x",margin.left)
+    .attr("y", margin.top-30)
     .attr("dy", "1em")
     .style("font-size","12px")
     .style("font-weight","bold")
@@ -317,20 +321,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   }
   let title='Trend of ' + graphTitle+ ', '+titleAreaName
 
- 
-  
-  const checkchange = (state,handle)=>{
-  
-    if(trend){
-      if(state === true){
-        trend[0].style.height = "100vh";
-      }
-      else if(state === false){
-        if(trend[0] != undefined)
-        trend[0].style.height = "40vh";
-      }
-    }
-  }
 
 
   let table=[];
@@ -346,14 +336,17 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   return (
     <>
-    <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
-    <SideNavFirst table={table} id="trend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
-    <div className="trend" id="trend">
-      <div className="trend_svg" ref={trendWrapper} >
-        <div id="svgTrend" >
-          <small style={{textAlign:'center',fontWeight:"bold",fontSize:"13px"}}>{title}</small>
+    <FullScreen  className="w-full h-full" handle={screen}>
+    <div class='static relative w-full h-full'>
+      <div class="block absolute z-10 w-full max-h-max">
+        <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
+      </div>
+      <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
+        <div class="text-center absolute w-full text-xs md:text-base font-bold">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
+        <div id="trend_svg" class='align-middle w-full h-full' ref={trendWrapper}>
+          <svg id="svgTrend"  ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down">
+          </svg>
         </div>
-        <svg id="svgTrend"  ref = {svgRef}></svg>
       </div>
     </div>
     </FullScreen>

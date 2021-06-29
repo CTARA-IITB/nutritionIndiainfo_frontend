@@ -21,12 +21,12 @@
 
 .health-ministry {
 	height: auto;
-	width: 30%;
+	width: 40%;
 }
 
 .poshan-abhiyan {
 	height: auto;
-	width: 15%;
+	width: 20%;
 }
 
 .nutrition-india {
@@ -212,5 +212,22 @@
 	width: 100%;
 }
 .select-category {
-    width: 70%;
+    width: 100%;
+}
+
+.select-lifecycle {
+    border: 1px solid RGB(214, 109, 7);
+    background: RGB(214, 109, 7);
+    }
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background: RGB(175, 89, 6);
+}
+.select-category {
+    background: RGB(239, 197, 156);
+}
+
+.nav-tabs .nav-link {
+    border: 1px solid RGB(175, 89, 6);
+    background: RGB(239, 197, 156);
 }

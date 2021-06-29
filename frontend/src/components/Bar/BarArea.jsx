@@ -17,10 +17,12 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   const screen=useFullScreenHandle();
   const svgRef = useRef();
   const trendWrapper = useRef();
+  let gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
+
   const margin = {
     left:160,
     top: 50,
-    right: 80,
+    right: 40,
     bottom: 30,
   };
 
@@ -101,7 +103,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       TOOLTIP_FONTSIZE="8px";
     }
 
-    var tooltipX = select(".hbar_svg")
+    var tooltipX = select("#hbar_svg")
     .append("div")
     .attr("class", "tooltipX")
     .style("visibility", "hidden")
@@ -111,7 +113,6 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     let innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     const aspect = width / height;
-    let gBarTitle;
 
     const adjustedHeight = Math.ceil(width / aspect)*1.1;
       svg.selectAll("*").remove();
@@ -141,7 +142,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       }
       const bar = svg
         .attr("width", width)
-        .attr("height", dynamicRange+100)
+        // .attr("height", dynamicRange+100)
         .append("g")
         .attr("transform",`translate(${margin.left},${margin.top})`);
 
@@ -155,22 +156,22 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .padding(0.1)
         .range([0,dynamicRange])
           
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","13px")
-        .style("font-weight","bold")
-        .attr("dy", "-2em")
-        .text(`${gBarTitle}`)
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","13px")
+      //   .style("font-weight","bold")
+      //   .attr("dy", "-2em")
+      //   .text(`${gBarTitle}`)
 
-      bar.append("text")
-        .attr('x',width/2 -90)
-        .attr('y',0)
-        .style("text-anchor","middle")
-        .style("font-size","11px")
-        .attr("dy", "-.5em")  
-        .text(`${status}`)
+      // bar.append("text")
+      //   .attr('x',width/2 -90)
+      //   .attr('y',0)
+      //   .style("text-anchor","middle")
+      //   .style("font-size","11px")
+      //   .attr("dy", "-.5em")  
+      //   .text(`${status}`)
           
       bar.append("text")
         .attr("class", "x label")
@@ -206,7 +207,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)+"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)-1.5*height+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
 
@@ -263,12 +264,21 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
   return (
       <>
-        <FullScreen  className="fullscreen_css" handle={screen}  onChange={checkchange}>
+        <FullScreen  className="w-full h-full" handle={screen}>
+				<div class='relative w-full h-full'>
+					<div class="block absolute z-10 w-full max-h-max">
           <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
-          <div className="hbar">
-            <div className="hbar_svg" ref={trendWrapper}>
-              <svg id="svgBarArea"  ref = {svgRef}></svg>
+          </div>
+
+          <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
+            <div class="text-center absolute w-full md:text-base font-bold text-xs">{`${gBarTitle}`}</div>
+              <div class="text-center absolute w-full md:text-base top-8" style={{ fontSize:".70rem"}}>{`${status}`}</div>
+						<div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
+                <svg id="svgBarArea"  ref = {svgRef}
+                  class="w-full bg-white border-4 border-black border-dashed object-scale-down">
+                </svg>
             </div>
+          </div>
           </div>
         </FullScreen>
       </>

@@ -19,7 +19,7 @@ import {EARLY_CHILDHOOD} from "../../constants"
 
 
 import "./Dropdown.css";
-import "./bootstrap.min.css";
+// import "./bootstrap.min.css";
 import "./tailwind.min.css";
 import "./dashboard.css";
 import "./responsive.css";
@@ -158,7 +158,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
       useEffect(() => {
         // const url_4 = 'http://13.234.11.176/api/area';
-        const solr_url_4 = 'http://nutritionindia.communitygis.net:8983/solr/nutritionv16/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
+        const solr_url_4 = 'http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv16/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
         json(solr_url_4).then( options =>{
         const [country,statesID] = createHierarchy(options.response.docs);
         setStateID(statesID)
@@ -290,7 +290,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           setIndicatorSense(indiSense);
           let url;
           let solr_url;
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv16/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv16/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             const solr_body_1 = await solr_url.json()
 
@@ -316,7 +316,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
-            const solr_url_3 = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv16/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+            const solr_url_3 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv16/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
 
             const solr_body_3 = await solr_url_3.json()
             setUnit(solr_body_3.response.docs[0].unit_id);
@@ -389,7 +389,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           }
           let url;
           let solr_url;
-              solr_url = await fetch(`http://nutritionindia.communitygis.net:8983/solr/nutritionv16/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv16/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             let solr_body_1 = await solr_url.json()
             solr_body_1 = solr_body_1.response.docs;
               setTimeperiodDropdownOpt(solr_body_1);
@@ -518,19 +518,21 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     
     return (
       <>
-      		<div className="row w-100 p-0 m-0">
-				<div className="d-flex col-12 align-items-center p-4 main-head">
-					<div className='col-4 text-left'><img src={mhf} className="health-ministry"/></div>
-					<div className='col-4 text-center'><img src={nil} className="nutrition-india"/></div>
-					<div className='col-4 text-right'><img src={pa} className="poshan-abhiyan"/></div>
-				</div>
-			</div>
+ 
 			<main id='main_app_container' class='flex flex-col max-h-screen'>
       
+      <div  id="brand_container" className="flex justify-between w-full h-20">
+				{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
+					<img src={mhf} className="w-30 h-auto"/>
+					<img src={nil} className="w-25 h-auto"/>
+					<img src={pa} className="w-20 h-auto"/>
+				{/* </div> */}
+			</div>
+
       <header
 					id='main_menu'
 					className='p-2 flex flex-wrap
-                  justify-between lg:sticky lg:top-0 shadow-2xl z-40 bg-white'>
+                  justify-between lg:sticky lg:top-0  z-40 bg-white'>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-10 col-lg-4 col-md-10 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
@@ -665,7 +667,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
 
-     <div class="bg-yellow-300 flex w-full md:w-1/2">
+     <div class=" flex w-full md:w-1/2">
         {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
@@ -712,7 +714,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
      </section>
 
      <section id='bottom_dashboard_row' class='flex flex-wrap'>
-     <div class='bg-green-200 flex w-full md:w-1/2'>
+     <div class=' flex w-full md:w-1/2'>
         {(isSelected  & selTimeperiod != "")?<BarArea
           indicatorTrend = {indicatorTrend}
           graphTitle = {graphTitle}
@@ -728,7 +730,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
      </div>
 
-     <div class='bg-purple-400 flex w-full md:w-1/2'>
+     <div class='flex w-full md:w-1/2'>
       {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}

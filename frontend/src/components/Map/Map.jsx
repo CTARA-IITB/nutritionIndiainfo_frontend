@@ -713,9 +713,9 @@ export const Map = ({
 			  <div class="block absolute z-10 w-full max-h-max">
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
-        <div class='relative bg-purple-200 w-full py-3 pr-3'>
-              <div class="text-center absolute w-full md:text-base font-bold top-5 text-xs">{`${mapTitle}`}</div>
-              <div class="text-center absolute w-full md:text-base top-8" style={{ fontSize:".70rem"}}>{`${warning}`}</div>
+        <div class='relative  w-full pb-3 pt-1 pr-3'>
+              <div class="text-center absolute w-full text-xs md:text-sm font-bold">{`${mapTitle}`}</div>
+              <div class="text-center absolute w-full text-xs top-8">{`${warning}`}</div>
 
 							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>
               <div className="bg-green-200 flex flex-wrap absolute left-10 bottom-14 md:left-auto md:bottom-auto md:right-10 md:top-16">
@@ -725,7 +725,7 @@ export const Map = ({
                   {backButton}        
               </div>
             <svg  id="svgMap"  ref={svgRef} 
-            class="w-full bg-white border-2 border-black border-dashed object-scale-down"
+            class="w-full bg-white  border-black border-dashed object-scale-down"
             ></svg>
 
                 <div className="absolute right-10 bottom-10 text-xs font-bold">

@@ -21,7 +21,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
   const margin = {
     left:160,
-    top: 100,
+    top: 70,
     right: 60,
     bottom: 30,
   };
@@ -273,12 +273,12 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
           <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
           </div>
 
-          <div class='relative bg-purple-200 w-full h-full py-3 pr-3'>
-            <div class="text-center absolute w-full md:text-base font-bold top-5 text-xs">{`${gBarTitle}`}</div>
-              <div class="text-center absolute w-full md:text-base top-9" style={{ fontSize:".70rem"}}>{`${status}`}</div>
+          <div class='relative  w-full h-full pb-3 pt-1 pr-3'>
+            <div class="text-center absolute w-full font-bold text-xs md:text-sm">{`${gBarTitle}`}</div>
+              <div class="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
 						<div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg id="svgBarArea"  ref = {svgRef}
-                  class="w-full bg-white border-2 border-black border-dashed object-scale-down">
+                  class="w-full bg-white  border-black border-dashed object-scale-down">
                 </svg>
             </div>
           </div>

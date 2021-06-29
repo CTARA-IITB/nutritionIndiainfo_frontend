@@ -110,16 +110,16 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
     //     saveSvgAsPng(document.getElementById(id), imageNameSvg, options);
     // };
 
-    // async function savePdf() {
-    //     const graph = document.getElementById(id);
-    //     const pdf = new jsPDF("l", "pt", [900, 800]);
-    //     const pdfCanvas = document.createElement("canvas");
-    //     pdfCanvas.setAttribute("width", 900);
-    //     pdfCanvas.setAttribute("height", 900);
-    //     const dataURI = await svgAsPngUri(graph);
-    //     pdf.addImage(dataURI, "PNG", 0, 0);
-    //     pdf.save(imageNamePdf);
-    // }
+    async function savePdf() {
+        const graph = document.getElementById(id);
+        const pdf = new jsPDF("l", "pt", [900, 800]);
+        const pdfCanvas = document.createElement("canvas");
+        pdfCanvas.setAttribute("width", 900);
+        pdfCanvas.setAttribute("height", 900);
+        const dataURI = await svgAsPngUri(graph);
+        pdf.addImage(dataURI, "PNG", 0, 0);
+        pdf.save(imageNamePdf);
+    }
 
     const saveJpeg=()=>{
         htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
@@ -145,16 +145,16 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         });
     }
 
-    const savePdf = ()=>{
-    htmlToImage.toPng(document.getElementById(id), { quality: 0.95 })
-        .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = imageNameJpeg;
-        const pdf = new jsPDF();          
-        pdf.addImage(dataUrl, 'PNG', 0, 0);
-        pdf.save(imageNamePdf); 
-        });
-    }
+    // const savePdf = ()=>{
+    // htmlToImage.toPng(document.getElementById(id), { quality: 0.95 })
+    //     .then(function (dataUrl) {
+    //     var link = document.createElement('a');
+    //     link.download = imageNameJpeg;
+    //     const pdf = new jsPDF();          
+    //     pdf.addImage(dataUrl, 'PNG', 0, 0);
+    //     pdf.save(imageNamePdf); 
+    //     });
+    // }
 
     return(
         <>
@@ -220,5 +220,4 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         </>    
     )    
 }
-
 export default SideNavFirst;

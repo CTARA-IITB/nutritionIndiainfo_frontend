@@ -341,10 +341,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       <div class="block absolute z-10 w-full max-h-max">
         <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
       </div>
-      <div class='relative bg-purple-400 w-full h-full py-3 pr-3'>
+      <div class='relative bg-purple-400 w-full h-full py-3 pr-3' id="svgTrend">
         <div class="text-center absolute w-full text-xs md:text-base font-bold">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
         <div id="trend_svg" class='align-middle w-full h-full' ref={trendWrapper}>
-          <svg id="svgTrend"  ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down">
+          <svg   ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down">
           </svg>
         </div>
       </div>

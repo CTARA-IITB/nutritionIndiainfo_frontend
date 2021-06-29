@@ -18,7 +18,7 @@ const ShareImage =({id})=> {
             console.error('oops, something went wrong!', error);
         }); 
     })
-
+    
     useEffect(()=> {
         if (navigator.share === undefined) {
           if (window.location.protocol === 'http:') {

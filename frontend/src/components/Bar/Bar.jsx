@@ -20,9 +20,9 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   const svgRef = useRef();
   const trendWrapper = useRef();
   const margin = {
-    left:160,
+    left:120,
     top: 50,
-    right: 80,
+    right: 50,
     bottom: 50,
   };
   const [data, setData] = useState(null);

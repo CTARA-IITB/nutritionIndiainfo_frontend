@@ -22,7 +22,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   const margin = {
     left:160,
     top: 50,
-    right: 40,
+    right: 60,
     bottom: 30,
   };
 

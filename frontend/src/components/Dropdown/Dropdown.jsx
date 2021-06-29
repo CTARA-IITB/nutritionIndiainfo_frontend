@@ -19,7 +19,7 @@ import {EARLY_CHILDHOOD} from "../../constants"
 
 
 import "./Dropdown.css";
-import "./bootstrap.min.css";
+// import "./bootstrap.min.css";
 import "./tailwind.min.css";
 import "./dashboard.css";
 import "./responsive.css";
@@ -518,15 +518,17 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
     
     return (
       <>
-      		<div className="row w-100 p-0 m-0">
-				<div className="d-flex col-12 align-items-center p-4 main-head">
-					<div className='col-4 text-left'><img src={mhf} className="health-ministry"/></div>
-					<div className='col-4 text-center'><img src={nil} className="nutrition-india"/></div>
-					<div className='col-4 text-right'><img src={pa} className="poshan-abhiyan"/></div>
-				</div>
-			</div>
+ 
 			<main id='main_app_container' class='flex flex-col max-h-screen'>
       
+      <div  id="brand_container" className="flex justify-between w-full h-20">
+				{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
+					<img src={mhf} className="w-30 h-auto"/>
+					<img src={nil} className="w-40 h-auto"/>
+					<img src={pa} className="w-20 h-auto"/>
+				{/* </div> */}
+			</div>
+
       <header
 					id='main_menu'
 					className='p-2 flex flex-wrap

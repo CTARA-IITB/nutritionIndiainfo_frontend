@@ -261,8 +261,10 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         </div>
         <div class='relative bg-purple-400 w-full py-3 pr-3'>
 
-         <div class="text-center absolute w-full md:text-base font-bold text-xs">{`${gBarTitle}`}</div>
-          <div class="text-center absolute w-full md:text-base top-8" style={{ fontSize:".70rem"}}>{`${status}`}</div>
+         <div class="text-center absolute w-full  font-bold text-xs md:text-sm">{`${gBarTitle}`}</div>
+          <div class="text-center absolute w-full text-xs top-10">{`${status}`}</div>
+
+
 				<div id="gbar_svg" class='block align-middle w-full h-full' >
 
             <svg id="svgBar"   ref = {svgRef} class="w-full bg-white border-4 border-black border-dashed object-scale-down"></svg>

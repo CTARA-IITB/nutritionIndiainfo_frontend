@@ -619,7 +619,9 @@ export const Map = ({
 
     let formatter = format(".1f");
     let myLegend;
-   
+
+    if((level == 1 && (null != selIndiaData && selIndiaData.length > 0)) || ((level == 2 || level == 3) && (null  != selStateData && selStateData.length > 0)))
+    {
     if (((unit == 1 || unit == 4 || unit == 3 || unit == 5)  && toggleStateBurden == false) || unit == 2) 
     {
       
@@ -642,11 +644,9 @@ export const Map = ({
     }
 
       svg.select(".legendQuant")
-     
-      .call(myLegend);
-
-      
+      .call(myLegend); 
     }
+  }
     if((level == 1 && (null== selIndiaData || selIndiaData.length == 0)) || ((level == 2 || level == 3) && (null  == selStateData || selStateData.length == 0)))
      {
       svg.append("text").text("No districts data: please select another survey")

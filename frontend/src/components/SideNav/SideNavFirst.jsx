@@ -5,10 +5,9 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import ShareIcon from '@material-ui/icons/Share';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
-import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
+import CloseIcon from '@material-ui/icons/Close';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import ShareImage from "../Share/ShareImage";
-import {saveSvgAsPng,svgAsPngUri}  from 'save-svg-as-png';
 import jsPDF from 'jspdf';
 import { CSVLink } from "react-csv";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -75,7 +74,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
     //toggle fullscreen
     const OpenFullscreen = () =>{
-        setIcon(<FullscreenExitIcon/>);
+        setIcon(<CloseIcon/>);
         setText("Exit");
         setIsFullscreen(false);
     }
@@ -98,38 +97,6 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
         backgroundColor: 'white',
     }
     
-    // const saveJpeg = () => {
-    //     saveSvgAsPng(document.getElementById(id), imageNameJpeg, options);
-    // };
-
-    // const savePng = () => {
-    //    saveSvgAsPng(document.getElementById(id), imageNamePng, options);
-    // };
-
-    // const saveSvg = () => {
-    //     saveSvgAsPng(document.getElementById(id), imageNameSvg, options);
-    // };
-
-    // async function savePdf() {
-    //     const graph = document.getElementById(id);
-    //     const pdf = new jsPDF("l", "pt", [900, 800]);
-    //     const pdfCanvas = document.createElement("canvas");
-    //     pdfCanvas.setAttribute("width", 900);
-    //     pdfCanvas.setAttribute("height", 900);
-    //     const dataURI = await svgAsPngUri(graph);
-    //     pdf.addImage(dataURI, "PNG", 0, 0);
-    //     pdf.save(imageNamePdf);
-    // } // async function savePdf() {
-    //     const graph = document.getElementById(id);
-    //     const pdf = new jsPDF("l", "pt", [900, 800]);
-    //     const pdfCanvas = document.createElement("canvas");
-    //     pdfCanvas.setAttribute("width", 900);
-    //     pdfCanvas.setAttribute("height", 900);
-    //     const dataURI = await svgAsPngUri(graph);
-    //     pdf.addImage(dataURI, "PNG", 0, 0);
-    //     pdf.save(imageNamePdf);
-    // }
-
     const saveJpeg=()=>{
         htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
         .then(function (dataUrl) {
@@ -138,30 +105,30 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
     } 
     
     const savePng = ()=>{
-    htmlToImage.toPng(document.getElementById(id),{backgroundColor:'white'})
-    .then(function (dataUrl) {
-        download(dataUrl, imageNamePng);
-    });
+        htmlToImage.toPng(document.getElementById(id),{backgroundColor:'white'})
+        .then(function (dataUrl) {
+            download(dataUrl, imageNamePng);
+        });
     }
 
     const saveSvg =()=>{
-    htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
+        htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
         .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = imageNameSvg;
-        link.href = dataUrl;
-        link.click();
+            var link = document.createElement('a');
+            link.download = imageNameSvg;
+            link.href = dataUrl;
+            link.click();
         });
     }
 
     const savePdf = ()=>{
-    htmlToImage.toPng(document.getElementById(id), { quality: 0.95 })
+        htmlToImage.toPng(document.getElementById(id), { quality: 0.95 })
         .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = imageNameJpeg;
-        const pdf = new jsPDF();          
-        pdf.addImage(dataUrl, 'PNG', 0, 0);
-        pdf.save(imageNamePdf); 
+            var link = document.createElement('a');
+            link.download = imageNameJpeg;
+            const pdf = new jsPDF();          
+            pdf.addImage(dataUrl, 'PNG', 0, 0);
+            pdf.save(imageNamePdf); 
         });
     }
 

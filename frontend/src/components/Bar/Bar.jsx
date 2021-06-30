@@ -9,7 +9,7 @@ import {
   axisLeft,
   axisBottom
 } from 'd3';
-import { commaSeparated} from '../../utils';
+import fmt from 'indian-number-format'
 import './Bar.css'
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
@@ -133,18 +133,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     if(data && data.length >0){
 
       const yValue = d => d.subgroup_name;
-      let xValue;
+      let xValue,maxVal;
 
       if(toggleStateBurden){
         xValue = d => d.data_value;
+        maxVal = max(data, (d) => xValue(d));
       }  
       else{
         xValue = d => d.data_value_num;
+        maxVal = max(data, (d) => xValue(d));
         graphUnit ='Number';
       }
 
       const xScale = scaleLinear()
-        .domain([0, max(data, xValue)])
+        .domain([0, maxVal])
         .range([0, innerWidth])
     
       const yScale = scaleBand()
@@ -194,13 +196,13 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipGBar.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY) - 1.5 * height+"px").style("left",(e.pageX) - width +"px");
+          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${fmt.format(decimalPrecision(xValue(d)))}`).style("top", (e.pageY) - 1.5 * height+"px").style("left",(e.pageX) - width +"px");
         })
         .on('mouseout', ()=>tooltipGBar.style("visibility", "hidden"));
         
 
       chart.enter().append("text")
-        .text(d => commaSeparated(decimalPrecision(xValue(d))))
+        .text(d => fmt.format(decimalPrecision(xValue(d))))
         .attr('x', d => xScale(xValue(d)))
         .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
         .attr("font-family", "sans-serif")
@@ -218,9 +220,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       bar.append("g")
         .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
-  			.call(axisBottom(xScale).ticks(3))
+        .call(axisBottom(xScale).ticks(3)
+        .tickFormat(function (d) {
+          return fmt.format(d);
+        }))
         .style('font-size',11)
-        
     }
   },[data,toggleStateBurden])
 
@@ -240,33 +244,35 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   let table=[];
   if(data ){
     for(var i=0;i<data.length;i++){
-      table.push({
-        subgroup:data[i].subgroup_name,
-        data:+data[i].data_value
-      })
+      if(toggleStateBurden){
+        table.push({
+          subgroup:data[i].subgroup_name,
+          data:fmt.format(decimalPrecision(data[i].data_value))
+        })
+      }
+      else{
+        table.push({
+          subgroup:data[i].subgroup_name,
+          data:fmt.format(decimalPrecision(data[i].data_value_num))
+        })
+      }
     }
   }
-
-  let title=graphTitle+ ',  '+ graphUnit+'()'
 
   return(
     <>
       <FullScreen  className="w-full h-full" handle={screen}>
 				<div class='relative w-full h-full'>
 					<div class="block absolute z-10 w-full max-h-max">
-            <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
-        </div>
-        <div class='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
-
-         <div class="text-center absolute w-full  font-bold text-xs md:text-sm">{`${gBarTitle}`}</div>
-          <div class="text-center absolute w-full text-xs top-8">{`${status}`}</div>
-
-
-				<div id="gbar_svg" class='block align-middle w-full h-full' >
-
-            <svg ref = {svgRef} class="w-full bg-white  border-black border-dashed object-scale-down"></svg>
+            <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
           </div>
-        </div>
+          <div class='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
+            <div class="text-center absolute w-full  font-bold text-xs md:text-sm">{`${gBarTitle}`}</div>
+            <div class="text-center absolute w-full text-xs top-8">{`${status}`}</div>
+            <div id="gbar_svg" class='block align-middle w-full h-full' >
+              <svg ref = {svgRef} class="w-full bg-white  border-black border-dashed object-scale-down"></svg>
+            </div>
+          </div>
         </div>
       </FullScreen>
     </>

@@ -1,6 +1,6 @@
 import React, { useRef,useState,useEffect } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { commaSeparated} from '../../utils';
+import fmt from 'indian-number-format'
 import SideNavFirst from "../SideNav/SideNavFirst";
 import {
   scaleLinear,
@@ -133,14 +133,17 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       svg.selectAll("*").remove();
       svg.attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
+
       const yValue = d => d.area_name;
-      let xValue;
+      let xValue,maxVal;
 
       if(toggleStateBurden){
         xValue = d => d.data_value;
+        maxVal = max(data, (d) => xValue(d));
       }  
       else{
         xValue = d => d.data_value_num;
+        maxVal = max(data, (d) => xValue(d));
         graphUnit ='Number';
       }
       const bar = svg
@@ -150,7 +153,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr("transform",`translate(${margin.left},${margin.top})`);
 
       const xScale = scaleLinear()
-        .domain([0, max(data, xValue)])
+        .domain([0, maxVal])
         .range([0, innerWidth])
 
       const yScale = scaleBand()
@@ -210,13 +213,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${yValue(d)}</b><br/>${commaSeparated(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)-1.5*height+"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${yValue(d)}</b><br/>${fmt.format(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)-1.5*height+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
 
 
       chart.enter().append("text")
-        .text(d => commaSeparated(decimalPrecision(xValue(d))))
+        .text(d => fmt.format(decimalPrecision(xValue(d))))
         .attr('x', d => xScale(xValue(d)))
         .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
         .attr("font-family", "sans-serif")
@@ -234,10 +237,11 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr("transform",`translate(0, ${dynamicRange})`)
         // .attr("transform", "translate(0," + (barSize*data.length) + ")")
       	.attr("class","axis")
-  			.call(axisBottom(xScale).ticks(3))
+  			.call(axisBottom(xScale).ticks(3)
+        .tickFormat(function (d) {
+          return fmt.format(d);
+        }))
         .style('font-size',11)
-        
-          
     }
   },[data,toggleStateBurden])
     
@@ -256,32 +260,35 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   let table=[];
   if(data ){
     for(var i=0;i<data.length;i++){
-      table.push({
-        area:data[i].area_name,
-        data:data[i].data_value
-      })
+      if(toggleStateBurden){
+        table.push({
+          area:data[i].area_name,
+          data:fmt.format(decimalPrecision(data[i].data_value))
+        })
+      }
+      else{
+        table.push({
+          area:data[i].area_name,
+          data:fmt.format(decimalPrecision(data[i].data_value_num))
+        })
+      }
     }
   }
-     
-  let title=graphTitle+ ',  '+ graphUnit+'()'
-
+ 
   return (
       <>
         <FullScreen  className="w-full h-full" handle={screen}>
-				<div class='relative w-full h-full'>
-					<div class="block absolute z-10 w-full max-h-max">
-          <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
-          </div>
-
-          <div class='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-            <div class="text-center absolute w-full font-bold text-xs md:text-sm">{`${gBarTitle}`}</div>
-              <div class="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
-						<div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
-                <svg   ref = {svgRef}
-                  class="w-full bg-white  border-black border-dashed object-scale-down">
-                </svg>
+          <div class='relative w-full h-full'>
+            <div class="block absolute z-10 w-full max-h-max">
+              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
             </div>
-          </div>
+            <div class='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
+              <div class="text-center absolute w-full font-bold text-xs md:text-sm">{`${gBarTitle}`}</div>
+              <div class="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
+              <div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
+                <svg   ref = {svgRef} class="w-full bg-white  border-black border-dashed object-scale-down"></svg>
+              </div>
+            </div>
           </div>
         </FullScreen>
       </>

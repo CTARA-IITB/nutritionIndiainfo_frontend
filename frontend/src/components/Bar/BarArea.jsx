@@ -1,6 +1,6 @@
 import React, { useRef,useState,useEffect } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { commaSeparated } from '../../utils';
+import { commaSeparated} from '../../utils';
 import SideNavFirst from "../SideNav/SideNavFirst";
 import {
   scaleLinear,
@@ -25,7 +25,7 @@ let dynamicRange;
     right: 60,
     bottom: 50,
   };
-
+  
   const [data, setData] = useState(null);
   const [status,setStatus]=useState(null);
   let colorScale ='#eda143';
@@ -45,12 +45,12 @@ let dynamicRange;
     colorScale = '#b71c1c'; 
   else
     colorScale = '#eda143'; 
-  
+
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(d>100){
+      if(graphUnit != 'Percent'){
         oneDecimel = d;
       }
       else {
@@ -59,7 +59,7 @@ let dynamicRange;
       return oneDecimel;
     }
   }  
-    
+
   useEffect(() => {
     if(level === 1){
       setStatus("By State");
@@ -283,11 +283,11 @@ let dynamicRange;
           <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
           </div>
 
-          <div class='relative  w-full h-full pb-3 pt-1 pr-3'>
+          <div class='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
             <div class="text-center absolute w-full font-bold text-xs md:text-sm">{`${gBarTitle}`}</div>
               <div class="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
 						<div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
-                <svg id="svgBarArea"  ref = {svgRef}
+                <svg   ref = {svgRef}
                   class="w-full bg-white  border-black border-dashed object-scale-down">
                 </svg>
             </div>

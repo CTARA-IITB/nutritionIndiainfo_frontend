@@ -344,10 +344,15 @@ console.log( width,height)
       <div class="block absolute z-10 w-full max-h-max right-5">
         <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
       </div>
+<<<<<<< HEAD
       <div class='relative w-full h-full pb-3 pt-1 pr-3'>
         <div class="text-center absolute w-full text-xs md:text-sm  font-bold">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
+=======
+      <div class='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
+        <div class="text-center absolute w-full  font-bold text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
+>>>>>>> c278c0f866cf8a5335cf2414c909c6912d7948ff
         <div id="trend_svg" class='align-middle w-full h-full' ref={trendWrapper}>
-          <svg id="svgTrend"  ref = {svgRef} class="w-full bg-white  border-black border-dashed object-scale-down">
+          <svg   ref = {svgRef} class="w-full bg-white  border-black border-dashed object-scale-down">
           </svg>
         </div>
       </div>

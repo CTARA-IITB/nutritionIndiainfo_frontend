@@ -9,7 +9,7 @@ import {
   axisLeft,
   axisBottom
 } from 'd3';
-import { commaSeparated } from '../../utils';
+import { commaSeparated} from '../../utils';
 import './Bar.css'
 
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
@@ -60,12 +60,11 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     colorScale = '#eda143'; 
     lightColor = '#F7D9B3';
   }
-    
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(graphUnit != 'percent'){
+      if(graphUnit != 'Percent'){
         oneDecimel = d;
       }
       else {
@@ -75,7 +74,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }
   }  
   
-
   useEffect(() => {
     setStatus("By Background Characteristics")
     let cleanData = [];
@@ -92,7 +90,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     select(".tooltipGBar").remove();
     let TOOLTIP_FONTSIZE;
 
-    
     const svg = select(svgRef.current);
     let windowWidth = window.screen.width;
     let windowHeight = window.screen.height;

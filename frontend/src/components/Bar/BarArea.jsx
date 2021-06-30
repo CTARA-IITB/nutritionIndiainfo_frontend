@@ -1,6 +1,6 @@
 import React, { useRef,useState,useEffect } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { commaSeparated } from '../../utils';
+import { commaSeparated} from '../../utils';
 import SideNavFirst from "../SideNav/SideNavFirst";
 import {
   scaleLinear,
@@ -45,12 +45,12 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     colorScale = '#b71c1c'; 
   else
     colorScale = '#eda143'; 
-  
+
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(graphUnit != 'percent'){
+      if(graphUnit != 'Percent'){
         oneDecimel = d;
       }
       else {
@@ -59,7 +59,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       return oneDecimel;
     }
   }  
-    
+
   useEffect(() => {
     if(level === 1){
       setStatus("By State");
@@ -127,7 +127,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     }
         
     if(data && data.length >0){
-      const barSize = 18;
+      const barSize = 15;
       const dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length;
       const adjustedHeight = dynamicRange+180;
       svg.selectAll("*").remove();

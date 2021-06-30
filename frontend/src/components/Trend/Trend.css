@@ -20,7 +20,9 @@ div.tooltipX{
   display:flex;
   /* width: 100%; */
 }
-
+.fullscreen_enabled{
+  margin-bottom: -100px !important;
+}
 .trend_svg {
   /* background-color:grey; */
   margin: 0;

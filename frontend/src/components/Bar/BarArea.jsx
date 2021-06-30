@@ -25,7 +25,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     right: 60,
     bottom: 30,
   };
-
+  
   const [data, setData] = useState(null);
   const [status,setStatus]=useState(null);
   let colorScale ='#eda143';

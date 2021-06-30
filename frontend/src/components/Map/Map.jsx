@@ -682,16 +682,20 @@ export const Map = ({
   if(data ){
     for(var i=0;i<data.length;i++){
       if(toggleStateBurden){
-        table.push({
-          area:data[i].area_name,
-          data:fmt.format(data[i].data_value)
-        })
+        if(data[i].data_value){
+          table.push({
+            area:data[i].area_name,
+            data:fmt.format(data[i].data_value)
+          })
+        }
       }
       else{
-        table.push({
-          area:data[i].area_name,
-          data:fmt.format(data[i].data_value_num)
-        })
+        if(data[i].data_value_num){
+          table.push({
+            area:data[i].area_name,
+            data:fmt.format(data[i].data_value_num)
+          })
+        }
       }
     }
   }

@@ -60,20 +60,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     colorScale = '#eda143'; 
     lightColor = '#F7D9B3';
   }
-  //For One Decimel Precision    
-  function decimalPrecision(d){
-    let oneDecimel;
-    if(typeof d !== 'undefined'){
-      if(graphUnit != 'Percent'){
-        oneDecimel = d;
-      }
-      else {
-        oneDecimel = d.toFixed(1);  
-      }
-      return oneDecimel;
+ //For One Decimel Precision    
+ function decimalPrecision(d){
+  let oneDecimel;
+  if(typeof d !== 'undefined'){
+    if(graphUnit !== 'Percent'){
+      oneDecimel = fmt.format(d);
     }
-  }  
-  
+    else { 
+      oneDecimel =fmt.formatFixed(d, 1)
+    }
+    return oneDecimel;
+  }
+}  
+
   useEffect(() => {
     setStatus("By Background Characteristics")
     let cleanData = [];
@@ -196,13 +196,13 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipGBar.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${fmt.format(decimalPrecision(xValue(d)))}`).style("top", (e.pageY) - 1.5 * height+"px").style("left",(e.pageX) - width +"px");
+          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY) - 1.5 * height+"px").style("left",(e.pageX) - width +"px");
         })
         .on('mouseout', ()=>tooltipGBar.style("visibility", "hidden"));
         
 
       chart.enter().append("text")
-        .text(d => fmt.format(decimalPrecision(xValue(d))))
+        .text(d => decimalPrecision(xValue(d)))
         .attr('x', d => xScale(xValue(d)))
         .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
         .attr("font-family", "sans-serif")
@@ -248,7 +248,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         if(data[i].data_num){
           table.push({
             subgroup:data[i].subgroup_name,
-            data:fmt.format(decimalPrecision(data[i].data_value))
+            data:decimalPrecision(data[i].data_value)
           })
         }
       }
@@ -256,7 +256,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
         if(data[i].data_value_num){
           table.push({
             subgroup:data[i].subgroup_name,
-            data:fmt.format(decimalPrecision(data[i].data_value_num))
+            data:decimalPrecision(data[i].data_value_num)
           })
         }
       }

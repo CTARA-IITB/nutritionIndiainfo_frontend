@@ -50,11 +50,11 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(graphUnit != 'Percent'){
-        oneDecimel = d;
+      if(graphUnit !== 'Percent'){
+        oneDecimel = fmt.format(d);
       }
       else {
-        oneDecimel = d.toFixed(1);  
+        oneDecimel =fmt.formatFixed(d, 1)
       }
       return oneDecimel;
     }
@@ -213,13 +213,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${yValue(d)}</b><br/>${fmt.format(decimalPrecision(xValue(d)))}`).style("top", (e.pageY)-1.5*height+"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY)-1.5*height+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
 
 
       chart.enter().append("text")
-        .text(d => fmt.format(decimalPrecision(xValue(d))))
+        .text(d => decimalPrecision(xValue(d)))
         .attr('x', d => xScale(xValue(d)))
         .attr('y', d => yScale(yValue(d)) + (yScale.bandwidth()/2))
         .attr("font-family", "sans-serif")
@@ -263,13 +263,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
       if(toggleStateBurden){
         table.push({
           area:data[i].area_name,
-          data:fmt.format(decimalPrecision(data[i].data_value))
+          data:decimalPrecision(data[i].data_value)
         })
       }
       else{
         table.push({
           area:data[i].area_name,
-          data:fmt.format(decimalPrecision(data[i].data_value_num))
+          data:decimalPrecision(data[i].data_value_num)
         })
       }
     }

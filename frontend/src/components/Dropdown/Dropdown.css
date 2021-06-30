@@ -90,10 +90,13 @@ span.ant-select-selection-item{
   background-color: #DDDD;
 	border-radius: 5px;
 	font-size: 14px;
-	width: 11rem;
+	
 	height: 1.8rem;
 	display: flex;
 	align-items: center;
+}
+.ant-select-arrow{
+  color: black;
 }
 /* .layout_left_trend {
   width: 100%;

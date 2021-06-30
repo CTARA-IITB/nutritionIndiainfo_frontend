@@ -34,7 +34,7 @@ import pregnancy from './images/lifecycle/Pregnancy.png'
 import delivery from './images/lifecycle/DeliveryPNC.png'
 import early_childhood from './images/lifecycle/Early-Childhood.png'
 import school_age from './images/lifecycle/School-Age-.png'
-import iicon from "./images/i-con55.png";
+import iicon from "./images/i-icon.png";
 // footer images
 import nilf from "./images/nutrition-logo-footer.svg";
 import clf from "./images/ctara-logo.png";
@@ -579,7 +579,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
               <TreeSelect
                 showSearch
-                
+                className='w-100'
                 virtual={true}
                 // style={{ width: '100%' }}
                 value={selArea}

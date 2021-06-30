@@ -258,8 +258,12 @@ let dynamicRange;
   }
   // const reportChange = (state, handle) => {
   //   if(state === true){
-  //     document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: ${dynamicRange+250} !important`);
+  //     document.getElementsByClassName("fullscreen-enabled").setAttribute('style', 'height: 2500px !important');
       
+  //   }
+  //   else{
+  //     document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: 1080px !important`);
+
   //   }
   
   // };    

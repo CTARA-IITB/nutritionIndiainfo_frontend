@@ -148,6 +148,8 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         { value: 2, title: "Interventions" },
         { value: 3, title: "Determinants" }
       ])
+
+      console.log(selLifeycle,"Runniung")
       await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
       setIsSelected(true);
     }

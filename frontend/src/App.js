@@ -10,7 +10,7 @@ import "./components/Navbar/navbar.css";
 const App = ()=> {
 
     return(<> 
-    <Router>
+    <Router  basename={'/dashboard'}>
         <Route exact path="/">
             <Dropdown/>
         </Route>

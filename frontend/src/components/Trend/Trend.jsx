@@ -21,8 +21,8 @@ const tickLength = 8;
 let margin = {
   left: 50,
   top: 53,
-  right: 0,
-  bottom: 30,
+  right: 10,
+  bottom: 50,
 };
 
 
@@ -131,23 +131,25 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     .style("font-size",TOOLTIP_FONTSIZE)
  
     const { width, height } = {width:windowWidth,height:windowHeight}; 
-    
+console.log( width,height)  
    
 
-  const aspect = width / height;
+  const aspect = (width / height);
+  console.log(aspect)
     const adjustedHeight = Math.ceil(width / aspect);
+    console.log(adjustedHeight)
     if(!toggleStateBurden)
       margin = {...margin, 'left':100}  // change left margin for burden
     else
       margin = {...margin,'left':50}
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-    console.log(width,adjustedHeight)
+    // console.log(width,adjustedHeight)
    
     
     svg.selectAll("*").remove();
     svg.attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox",  `0 0 ${width} ${adjustedHeight*1.1}`)
+    .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
     
 // svg.attr("width", width)
 // .attr("height", height)
@@ -339,7 +341,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     <>
     <FullScreen  className="w-full h-full" handle={screen}>
     <div class='static relative w-full h-full'>
-      <div class="block absolute z-10 w-full max-h-max right-10">
+      <div class="block absolute z-10 w-full max-h-max right-5">
         <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
       </div>
       <div class='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">

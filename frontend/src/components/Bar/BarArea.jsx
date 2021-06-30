@@ -18,12 +18,12 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   const svgRef = useRef();
   const trendWrapper = useRef();
   let gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
-
+let dynamicRange;
   const margin = {
     left:160,
     top: 70,
     right: 60,
-    bottom: 30,
+    bottom: 50,
   };
   
   const [data, setData] = useState(null);
@@ -128,8 +128,12 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
         
     if(data && data.length >0){
       const barSize = 15;
-      const dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length;
-      const adjustedHeight = dynamicRange+180;
+      dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length;
+      const adjustedHeight = dynamicRange+150;
+  
+      document.getElementById("h_bar").style.height = dynamicRange+200;
+      
+
       svg.selectAll("*").remove();
       svg.attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
@@ -237,7 +241,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   			.call(axisBottom(xScale).ticks(3))
         .style('font-size',11)
         
-          
+        
     }
   },[data,toggleStateBurden])
     
@@ -252,7 +256,13 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
     //   }
     // }
   }
-
+  // const reportChange = (state, handle) => {
+  //   if(state === true){
+  //     document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: ${dynamicRange+250} !important`);
+      
+  //   }
+  
+  // };    
   let table=[];
   if(data ){
     for(var i=0;i<data.length;i++){
@@ -267,9 +277,9 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 
   return (
       <>
-        <FullScreen  className="w-full h-full" handle={screen}>
-				<div class='relative w-full h-full'>
-					<div class="block absolute z-10 w-full max-h-max">
+        <FullScreen  className="w-full h-full" handle={screen} >
+				<div class='relative w-full' id="h_bar">
+					<div class="block absolute z-10 w-full  max-h-max right-5">
           <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={title}  componentRef={svgRef}/>
           </div>
 

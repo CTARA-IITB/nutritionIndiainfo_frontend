@@ -23,7 +23,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     left:120,
     top: 70,
     right: 70,
-    bottom: 50,
+    bottom: 60,
   };
   const [data, setData] = useState(null);
    
@@ -115,7 +115,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     const innerWidth = width - margin.left - margin.right;
     const aspect = width / height;
 
-    const adjustedHeight = Math.ceil(width / aspect)*1.1;
+    const adjustedHeight = Math.ceil(width / aspect);
       svg.selectAll("*").remove();
       svg.attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
@@ -253,8 +253,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     <>
       <FullScreen  className="w-full h-full" handle={screen}>
 				<div class='relative w-full h-full'>
-					<div class="block absolute z-10 w-full max-h-max">
-            <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
+					<div class="block absolute z-10 w-full max-h-max right-5">
+        <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={title}  componentRef={svgRef}/>
         </div>
         <div class='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
 

@@ -1,8 +1,8 @@
 {
   "name": "frontend",
+  "homepage": "http://nutritionindia.communitygis.net/dashboard",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8000",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
@@ -16,7 +16,7 @@
     "@turf/turf": "^6.3.0",
     "antd": "^4.16.3",
     "axios": "^0.21.1",
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^5.0.2",
     "canvas-to-image": "^2.2.0",
     "chart.js": "^2.9.4",
     "d3": "6.2.0",

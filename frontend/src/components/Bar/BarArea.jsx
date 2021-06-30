@@ -50,7 +50,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(d>100){
+      if(graphUnit != 'percent'){
         oneDecimel = d;
       }
       else {

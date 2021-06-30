@@ -41,11 +41,7 @@ import clf from "./images/ctara-logo.png";
 import pl from "./images/proditech-logo.png";
 import unil from "./images/unicefLogo.png";
 
-
 const {Search} = Input;
-
-
-
 
 export const Dropdown = ({}) =>{
 

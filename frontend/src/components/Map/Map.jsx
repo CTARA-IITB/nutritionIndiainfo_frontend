@@ -14,7 +14,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { AnimateOnChange } from 'react-animation';
 import { json } from 'd3';
 import "./Map.css";
-import { commaSeparated } from "../../utils.js";
+import fmt from 'indian-number-format'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 export const Map = ({ 
@@ -391,7 +391,7 @@ export const Map = ({
       if (typeof c2Value(d) != 'undefined') {
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + commaSeparated(c2Value(d)))
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + fmt.format(c2Value(d)))
           .style("left", event.clientX - width+ "px")
           .style("top", event.clientY - height/2 + "px")
           .style("font-size","12px");
@@ -678,13 +678,21 @@ export const Map = ({
  
   const screen = useFullScreenHandle();
 
-    let table=[];
-  if(data){
-    for(let i=0;i<data.length;i++){
+  let table=[];
+  if(data ){
+    for(var i=0;i<data.length;i++){
+      if(toggleStateBurden){
         table.push({
-            area:data[i].area_name,
-            data:+data[i].data_value+" ("+graphTimeperiod + ")",
+          area:data[i].area_name,
+          data:fmt.format(data[i].data_value)
         })
+      }
+      else{
+        table.push({
+          area:data[i].area_name,
+          data:fmt.format(data[i].data_value_num)
+        })
+      }
     }
   }
 

@@ -75,6 +75,18 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const formatTooltipTime = timeFormat('%B-%Y');
   const formatTitleTime = timeFormat('%Y');
 
+  // //For One Decimel Precision    
+  function decimalPrecision(d){
+    let oneDecimel;
+    if(toggleStateBurden === false){
+      return oneDecimel = d;
+    }
+    else{
+      oneDecimel = d.toFixed(1);  
+      return oneDecimel;
+    }
+  }  
+
   useEffect(() => {
     let cleanData = [];
     indicatorTrend.map((d) => {
@@ -224,7 +236,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
           .attr("fill", colorScale)
           .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
           .on('mousemove',(e,d)=>{
-            return tooltipX.html(`<b>${d.timeperiod}</b> : ${fmt.format(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
+            return tooltipX.html(`<b>${d.timeperiod}</b> : ${fmt.format(decimalPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
           })
           .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       
@@ -274,18 +286,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     .style("text-anchor", "middle")
     .text(graphUnit);    
 
-    //For One Decimel Precision    
-    function decimelPrecision(d){
-      let oneDecimel;
-      if(toggleStateBurden === false){
-        return oneDecimel = d;
-      }
-      else{
-        oneDecimel = d.toFixed(1);  
-        return oneDecimel;
-      }
-    }  
-    
   },[dimensions,data, toggleStateBurden])
 
   if (!data) {
@@ -296,10 +296,18 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   let table=[];
   if(data ){
     for(var i=0;i<data.length;i++){
-      table.push({
-        timeperiod:data[i].timeperiod,
-        data:+data[i].data_value
-      })
+      if(toggleStateBurden){
+        table.push({
+          timeperiod:data[i].timeperiod,
+          data:fmt.format(decimalPrecision(data[i].data_value))
+        })
+      }
+      else{
+        table.push({
+          timeperiod:data[i].timeperiod,
+          data:fmt.format(decimalPrecision(data[i].data_value_num))
+        })
+      }
     }
   }
 

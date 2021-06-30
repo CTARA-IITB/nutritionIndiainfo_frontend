@@ -85,7 +85,16 @@ span.ant-select-selection-item{
   position: relative;
 
 }
-
+.ant-select:not(.ant-select-customize-input) .ant-select-selector { 
+  border: 1px solid #D66D07;
+  background-color: #DDDD;
+	border-radius: 5px;
+	font-size: 14px;
+	width: 11rem;
+	height: 1.8rem;
+	display: flex;
+	align-items: center;
+}
 /* .layout_left_trend {
   width: 100%;
   height: 100%;

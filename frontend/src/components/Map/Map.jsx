@@ -190,7 +190,7 @@ export const Map = ({
     
 
   const aspect = width / height;
-    const adjustedHeight = Math.ceil(width / aspect)*1.1;
+    const adjustedHeight = Math.ceil(width / aspect);
  
    
     
@@ -710,15 +710,15 @@ export const Map = ({
       <FullScreen className="w-full h-full" handle={screen}>
       
 			<div class='relative w-full h-full'>
-			  <div class="block absolute z-10 w-full max-h-max">
+			  <div class="block absolute z-10 w-full max-h-max right-5">
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
         <div class='relative  w-full pb-3 pt-1 pr-3'>
-              <div class="text-center absolute w-full text-xs md:text-sm font-bold">{`${mapTitle}`}</div>
-              <div class="text-center absolute w-full text-xs top-8">{`${warning}`}</div>
+              <div class="text-center absolute w-full text-xs  md:text-sm font-bold">{`${mapTitle}`}</div>
+              <div class="text-center absolute w-full text-xs top-7">{`${warning}`}</div>
 
 							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>
-              <div className="bg-green-200 flex flex-wrap absolute left-10 bottom-14 md:left-auto md:bottom-auto md:right-10 md:top-16">
+              <div className="bg-green-200 flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
                   {switchButton}       
               </div>
               <div className="bg-green-400 absolute left-10 top-10">
@@ -728,7 +728,7 @@ export const Map = ({
             class="w-full bg-white  border-black border-dashed object-scale-down"
             ></svg>
 
-                <div className="absolute right-10 bottom-10 text-xs font-bold">
+                <div className="absolute md:right-10 md:bottom-10  text-xs font-bold">
                   {statusMsg}        
               </div>
             </div>

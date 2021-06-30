@@ -521,7 +521,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
  
 			<main id='main_app_container' class='flex flex-col max-h-screen'>
       
-      <div  id="brand_container" className="flex justify-between w-full h-20">
+      <div  id="brand_container" className="flex flex-wrap-row justify-between w-full h-20">
 				{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
 					<img src={mhf} className="w-30 h-auto"/>
 					<img src={nil} className="w-25 h-auto"/>
@@ -579,7 +579,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
               <TreeSelect
                 showSearch
-                className='select-border w-10'
+                
                 virtual={true}
                 // style={{ width: '100%' }}
                 value={selArea}

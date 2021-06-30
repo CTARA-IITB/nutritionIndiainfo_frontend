@@ -714,7 +714,7 @@ export const Map = ({
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
         <div class='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
-              <div class="text-center absolute w-full text-xs md:text-sm font-bold">{`${mapTitle}`}</div>
+              <div class="text-center absolute w-full text-xs md:text-sm md:top-2 top-5  font-bold">{`${mapTitle}`}</div>
               <div class="text-center absolute w-full text-xs top-8">{`${warning}`}</div>
 
 							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>
@@ -725,10 +725,9 @@ export const Map = ({
                   {backButton}        
               </div>
             <svg    ref={svgRef} 
-            class="w-full bg-white  border-black border-dashed object-scale-down"
-            ></svg>
+            class="w-full bg-white  top-5 border-black border-dashed object-scale-down"></svg>
 
-                <div className="absolute md:right-10 md:bottom-10  text-xs font-bold">
+                <div className="absolute right-10 bottom-10  text-xs font-bold">
                   {statusMsg}        
               </div>
             </div>

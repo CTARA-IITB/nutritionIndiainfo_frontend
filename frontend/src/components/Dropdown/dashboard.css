@@ -102,17 +102,20 @@
 .iitb-image {
 	height: auto;
 	width: 25%;
+	margin: auto;
 }
 
 .proditech-image {
 	height: auto;
 	width:30%;
+	margin:auto;
 }
 
 .unichef-image {
 	height: auto;
 	width:30%;
 	/*padding-top: 1rem;*/
+	float: right;
 }
 .img-map {
     width: 100%;

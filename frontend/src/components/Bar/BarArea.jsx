@@ -128,9 +128,9 @@ let dynamicRange;
         
     if(data && data.length >0){
       const barSize = 15;
-      dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length;
+      dynamicRange = innerHeight ;
       const adjustedHeight = dynamicRange+150;
-  
+      // (barSize*data.length<innerHeight)?innerHeight:barSize*data.length
       document.getElementById("h_bar").style.height = dynamicRange+200;
       
 
@@ -262,17 +262,18 @@ let dynamicRange;
     //   }
     // }
   }
-  // const reportChange = (state, handle) => {
-  //   if(state === true){
-  //     document.getElementsByClassName("fullscreen-enabled").setAttribute('style', 'height: 2500px !important');
+  const reportChange = (state, handle) => {
+    if(state === true){
+     document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'height: 2500px !important');
+      document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: 2500px !important`);
+       
+    }
+    else{
       
-  //   }
-  //   else{
-  //     document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: 1080px !important`);
 
-  //   }
+    }
   
-  // };    
+  };    
   let table=[];
   if(data ){
     for(var i=0;i<data.length;i++){
@@ -293,7 +294,7 @@ let dynamicRange;
  
   return (
       <>
-        <FullScreen  className="w-full h-full" handle={screen}>
+        <FullScreen  className="w-full" handle={screen} onChange={reportChange}>
           <div class='relative w-full' id="h_bar">
             <div class="block absolute z-10 w-full max-h-max right-5">
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>

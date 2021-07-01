@@ -131,13 +131,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     .style("font-size",TOOLTIP_FONTSIZE)
  
     const { width, height } = {width:windowWidth,height:windowHeight}; 
-console.log( width,height)  
    
 
   const aspect = (width / height);
-  console.log(aspect)
     const adjustedHeight = Math.ceil(width / aspect);
-    console.log(adjustedHeight)
     if(!toggleStateBurden)
       margin = {...margin, 'left':100}  // change left margin for burden
     else
@@ -191,7 +188,6 @@ console.log( width,height)
       maxVal = max(data, (d) => yValue(d));
       maxVal = maxVal + maxVal/7;
       margin = {...margin, 'left':100}
-      console.log(margin)
       graphUnit ='Number';
       }
 

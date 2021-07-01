@@ -124,7 +124,6 @@ export const createHierarchy = (options) =>{
     let solr_url;
       solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv16/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     const solr_body_2 = await solr_url.json();
-    console.log("PRINT")
     setTimeperiodDropdownOpt(solr_body_2.response.docs);
     let timeVal ="";
     if(typeof solr_body_2.response.docs[0] !== 'undefined'){

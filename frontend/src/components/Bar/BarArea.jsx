@@ -31,17 +31,17 @@ let dynamicRange;
   let colorScale ='#eda143';
 
   let arrObese = [91,95,104,92,96,105,21];
-  if(selIndicator == 12 || selIndicator == 13)
+  if(selIndicator === 12 || selIndicator === 13)
     colorScale = '#a3c00f'; 
-  else if(selIndicator == 19 || selIndicator == 20)
+  else if(selIndicator === 19 || selIndicator === 20)
     colorScale = '#e53935'; 
-  else if(selIndicator == 17 || selIndicator == 18)
+  else if(selIndicator === 17 || selIndicator === 18)
     colorScale = '#039be5'; 
-  else if(selIndicator == 107 || selIndicator == 108)
+  else if(selIndicator === 107 || selIndicator === 108)
     colorScale = '#e53935'; 
   else  if(arrObese.includes(selIndicator))
     colorScale = '#7b1fa2'; 
-  else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
+  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125)
     colorScale = '#b71c1c'; 
   else
     colorScale = '#eda143'; 
@@ -119,7 +119,7 @@ let dynamicRange;
     //   svg.attr("preserveAspectRatio", "xMinYMin meet")
     //   .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
-    if (( toggleStateBurden == true)) {
+    if (( toggleStateBurden === true)) {
       gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
     else{

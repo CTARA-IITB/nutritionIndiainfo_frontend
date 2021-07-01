@@ -13,5 +13,5 @@ export const COLORS = {
     transparent_light_blue: 	"#039be580",   // Underweight 
     transparent_purple:	        "#7b1fa280",   // Overweight/Obese – 
     transparent_darker_red:		"#b71c1c80",    // Anemia
-    bright_orange:              "#eda14380",    // Other indicators
+    transparent_bright_orange:              "#eda14380",    // Other indicators
 };

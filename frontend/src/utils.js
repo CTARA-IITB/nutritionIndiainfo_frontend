@@ -135,7 +135,7 @@ export const createHierarchy = (options) =>{
       setSelTimeperiod("");
       setGraphTimeperiod("");
     }
-    if(timeVal != "")
+    if(timeVal !== "")
     await setVisulaizationData(indiVal, timeVal, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
   }
   

@@ -252,7 +252,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             setSelBurden(x);
             setToggleStateBurden(true);
           }
-          else if(x==2){
+          else if(x===2){
             setToggleStateBurden(false);
             setSelBurden(x);
           }
@@ -536,12 +536,12 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 						<div className="select-lifecycle-parent">
 							<div className="select-lifecycle-child">
 								<select className="select-lifecycle" value={selLifeycle} onChange={lifecycleChange}>
-                  {lifecycleData.map( ld => <option value={ld.value}>{ld.title}</option>)}
+                  {lifecycleData.map( opt => <option key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 								</select>
 							</div>
 							<div className="select-lifecycle-cat-child">
 								<select className="select-category" value={selCategory} onChange={categoryChange}>
-									{categorydDropdownOpt.map(opt => <option value={opt.value}>{opt.title}</option>)}
+									{categorydDropdownOpt.map(opt => <option key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 								</select>
 							</div>
 						</div>
@@ -552,7 +552,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 						<div className="col-6 col-lg-3 p-2">
 							<div>
 								<select className="select-border w-100" value={selIndicator} onChange={indicatorChange}>
-                {indicatorDropdownOpt.map(opt => <option value={opt.value}>{opt.title}</option>)}
+                {indicatorDropdownOpt.map(opt => <option key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 							
 								</select>
 							</div>
@@ -585,7 +585,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
                 showSearch	= {true}
                 treeData={areaDropdownOpt}
                 treeDefaultExpandAll={true}
-                keepChildrenOnSearch = {true}
+                // keepChildrenOnSearch = {true}
                 ref = {treeRef}
                 open={openDropdown}
                 filterTreeNode
@@ -603,7 +603,7 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 						<div className="col-6 col-lg-3 p-2">
 							<div>
 								<select className="select-border w-100" value={selTimeperiod} onChange={timeperiodChange}> 
-                {timeperiodDropdownOpt.map(opt => <option value={opt.value}>{opt.title}</option>)}
+                {timeperiodDropdownOpt.map(opt => <option  key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 								</select>
 							</div>
 						</div>

@@ -34,18 +34,14 @@ import pregnancy from './images/lifecycle/Pregnancy.png'
 import delivery from './images/lifecycle/DeliveryPNC.png'
 import early_childhood from './images/lifecycle/Early-Childhood.png'
 import school_age from './images/lifecycle/School-Age-.png'
-import iicon from "./images/i-icon.png";
+import iicon from "./images/i-con5.png";
 // footer images
 import nilf from "./images/nutrition-logo-footer.svg";
 import clf from "./images/ctara-logo.png";
 import pl from "./images/proditech-logo.png";
 import unil from "./images/unicefLogo.png";
 
-
 const {Search} = Input;
-
-
-
 
 export const Dropdown = ({}) =>{
 

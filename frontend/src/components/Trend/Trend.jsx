@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import SideNavFirst from "../SideNav/SideNavFirst";
-import { commaSeparated } from "../../utils.js";
+import fmt from 'indian-number-format'
 import "./Trend.css";
 
 import {
@@ -25,42 +25,36 @@ let margin = {
   bottom: 50,
 };
 
-
-
 const useResizeObserver = ref => {
   const [dimensions, setDimensions] = useState(null);
   useEffect(() => {
-  if(typeof ref.current != 'undefined'){
-    const observeTarget = ref.current;
-
-    const resizeObserver = new ResizeObserver(entries => {
-      entries.forEach(entry => {
-        setDimensions(entry.contentRect);
+    if(typeof ref.current != 'undefined'){
+      const observeTarget = ref.current;
+      const resizeObserver = new ResizeObserver(entries => {
+        entries.forEach(entry => {
+          setDimensions(entry.contentRect);
+        });
       });
-    });
-    resizeObserver.observe(observeTarget);
-    return () => {
-      resizeObserver.unobserve(observeTarget);
-    };
-  }
-
-  
-  }, [ref.current]);
+      resizeObserver.observe(observeTarget);
+      return () => {
+        resizeObserver.unobserve(observeTarget);
+      };
+    }  
+  },[ref.current]);
   return dimensions;
 };
+
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend, selIndicator}) => { 
 
   const [data, setData] = useState(null);
   const svgRef = useRef();
-  const [check,setCheck] = useState(true);
-
   const trendWrapper = useRef();
- 
   const dimensions = useResizeObserver(trendWrapper);
   const screen = useFullScreenHandle();
-  let colorScale;
 
+  let colorScale;
   let arrObese = [91,95,104,92,96,105,21];
+
   if(selIndicator == 12 || selIndicator == 13)
     colorScale = '#a3c00f80'; 
   else if(selIndicator == 19 || selIndicator == 20)
@@ -76,34 +70,39 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   else
     colorScale = '#eda14380'; 
 
-  const parseTime = timeParse('%d-%b-%y');
+  const parseTime = timeParse('%d-%b-%y'); 
+  const formatTime = timeFormat('%b-%y');
+  const formatTooltipTime = timeFormat('%B-%Y');
+  const formatTitleTime = timeFormat('%Y');
 
-	 
-    const formatTime = timeFormat('%b-%y');
-    const formatTooltipTime = timeFormat('%B-%Y');
-    const formatTitleTime = timeFormat('%Y');
-
-
-    
+  // //For One Decimel Precision    
+  function decimalPrecision(d){
+    let oneDecimel;
+    if(toggleStateBurden === false){
+      return oneDecimel = d;
+    }
+    else{
+      oneDecimel = d.toFixed(1);  
+      return oneDecimel;
+    }
+  }  
 
   useEffect(() => {
-      let cleanData = [];
-      indicatorTrend.map((d) => {
-        if(typeof d.data_value != 'undefined'){
-         	d.start_date = parseTime(d.start_date);
-          d.end_date = parseTime(d.end_date);
-          d["middle_date"] = new Date((d.start_date.getTime() + d.end_date.getTime())/2);
-          d["timeperiod"] = d.timeperiod.split(" ")[0];
-        	cleanData.push(d);
-        }
-      });
-      
+    let cleanData = [];
+    indicatorTrend.map((d) => {
+      if(typeof d.data_value != 'undefined'){
+        d.start_date = parseTime(d.start_date);
+        d.end_date = parseTime(d.end_date);
+        d["middle_date"] = new Date((d.start_date.getTime() + d.end_date.getTime())/2);
+        d["timeperiod"] = d.timeperiod.split(" ")[0];
+        cleanData.push(d);
+      }
+    });
 
-      cleanData = cleanData.sort(function (a, b) {  // sort the data according to start date.. specifically for AHS
-        return a.start_date - b.start_date;
-      });
-
-      setData(cleanData);
+    cleanData = cleanData.sort(function (a, b) {  // sort the data according to start date.. specifically for AHS
+      return a.start_date - b.start_date;
+    });
+    setData(cleanData);
   }, []);
 
   useEffect(()=>{
@@ -121,24 +120,25 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       windowWidth = windowWidth+100 ;
       windowHeight = windowHeight/2;
       TOOLTIP_FONTSIZE="8px";
-
     }
 
     var tooltipX = select("#trend_svg")
-    .append("div")
-    .attr("class", "tooltipX")
-    .style("visibility", "hidden")
-    .style("font-size",TOOLTIP_FONTSIZE)
+      .append("div")
+      .attr("class", "tooltipX")
+      .style("visibility", "hidden")
+      .style("font-size",TOOLTIP_FONTSIZE)
  
     const { width, height } = {width:windowWidth,height:windowHeight}; 
    
 
   const aspect = (width / height);
     const adjustedHeight = Math.ceil(width / aspect);
+
     if(!toggleStateBurden)
       margin = {...margin, 'left':100}  // change left margin for burden
     else
       margin = {...margin,'left':50}
+
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
     // console.log(width,adjustedHeight)
@@ -148,15 +148,12 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     svg.attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
     
-// svg.attr("width", width)
-// .attr("height", height)
+    // svg.attr("width", width)
+    // .attr("height", height)
     let bar = svg.append('g')
       .attr("transform",`translate(${margin.left},${margin.top})`);
 
-
-
     if(data && data.length >0){
-
       let listofDate = [];
       data.map((d) => {
         listofDate.push(d.start_date);
@@ -208,17 +205,16 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       //   .attr("dy", "-2em")
       //   .text(`${graphTitle}, ${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
       
-        
       bar.append("g")
       	.attr("class","axis")
         .call(axisLeft(yScale)
         .tickFormat(function (d) {
-          return commaSeparated(d);
-      }))
+          return fmt.format(d);
+        }))
         .style('font-size',11);
 			
       let xaxis = bar.append("g")
-      .attr("transform",`translate(0, ${innerHeight})`)
+        .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
         .style('font-size',11)
@@ -232,42 +228,38 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
           return "rotate(-90)"
         });
         
-        
-      	
-      
       bar.selectAll("mybar")
-      .data(data)
-      .enter()
-      .append("rect")
-        .attr("x", d => xScale(d.start_date))
-        .attr("y", d => yScale(yValue(d)))
-        .attr("width", d => xScale(d.end_date) - xScale(d.start_date))
-        .attr("height", d => yScale(0) - yScale(yValue(d)))
-        .attr("fill", colorScale)
-      	.on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
-        .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${d.timeperiod}</b> : ${commaSeparated(decimelPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
-        })
-        .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
+        .data(data)
+        .enter()
+        .append("rect")
+          .attr("x", d => xScale(d.start_date))
+          .attr("y", d => yScale(yValue(d)))
+          .attr("width", d => xScale(d.end_date) - xScale(d.start_date))
+          .attr("height", d => yScale(0) - yScale(yValue(d)))
+          .attr("fill", colorScale)
+          .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
+          .on('mousemove',(e,d)=>{
+            return tooltipX.html(`<b>${d.timeperiod}</b> : ${fmt.format(decimalPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
+          })
+          .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       
       const lineGenerator = line()
-    		.x(d => xScale(xValue(d)))
-    		.y(d => yScale(yValue(d)));
+        .x(d => xScale(xValue(d)))
+        .y(d => yScale(yValue(d)));
     
-    	bar.append('path')
-    		.attr("d", lineGenerator(data))
-      	.attr("class","trend-line")
+      bar.append('path')
+        .attr("d", lineGenerator(data))
+        .attr("class","trend-line")
       
       bar.selectAll("mytext").data(data).enter().append("text")
         .attr("x", function(d) { return xScale(xValue(d)); })
         .attr("y", d => yScale(yValue(d)))
         .attr("dy", "-1em")
-      	.style("text-anchor","middle")
-      	.style("font-size","11px")
+        .style("text-anchor","middle")
+        .style("font-size","11px")
         .text(function(d) { return d.timeperiod; });
-    }else{
-
-
+    }
+    else{
       bar.append("text")
       .attr('x',width/2 -90)
       .attr('y',0)
@@ -286,7 +278,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       // .style("font-size","10px")
       // .style("font-weight","bold")
     }
-    
+
     svg.append("text")
     .attr("transform", "rotate(-0)")
     .attr("x",margin.left)
@@ -297,58 +289,46 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     .style("text-anchor", "middle")
     .text(graphUnit);    
 
-    //For One Decimel Precision    
-    function decimelPrecision(d){
-      let oneDecimel;
-      if(toggleStateBurden === false){
-          return oneDecimel = d;
-      }
-      else{
-          oneDecimel = d.toFixed(1);  
-          return oneDecimel;
-      }
-      
-  }  
-   
-      
   },[dimensions,data, toggleStateBurden])
-
-
 
   if (!data) {
     return <pre>Loading...</pre>;
   }
   let title='Trend of ' + graphTitle+ ', '+titleAreaName
 
-
-
   let table=[];
   if(data ){
     for(var i=0;i<data.length;i++){
-      table.push({
-        timeperiod:data[i].timeperiod,
-        data:+data[i].data_value
-      })
+      if(toggleStateBurden){
+        table.push({
+          timeperiod:data[i].timeperiod,
+          data:fmt.format(decimalPrecision(data[i].data_value))
+        })
+      }
+      else{
+        table.push({
+          timeperiod:data[i].timeperiod,
+          data:fmt.format(decimalPrecision(data[i].data_value_num))
+        })
+      }
     }
   }
 
-
   return (
     <>
-    <FullScreen  className="w-full h-full" handle={screen}>
-    <div class='static relative w-full h-full'>
-      <div class="block absolute z-10 w-full max-h-max right-5">
-        <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
-      </div>
-      <div class='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
-        <div class="text-center absolute w-full  font-bold text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
-        <div id="trend_svg" class='align-middle w-full h-full' ref={trendWrapper}>
-          <svg   ref = {svgRef} class="w-full bg-white  border-black border-dashed object-scale-down">
-          </svg>
+      <FullScreen  className="w-full h-full" handle={screen}>
+        <div class='static relative w-full h-full'>
+          <div class="block absolute z-10 w-full max-h-max right-5">
+            <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
+          </div>
+          <div class='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
+            <div class="text-center absolute w-full  font-bold text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
+            <div id="trend_svg" class='align-middle w-full h-full' ref={trendWrapper}>
+              <svg   ref = {svgRef} class="w-full bg-white  border-black border-dashed object-scale-down"></svg>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    </FullScreen>
+      </FullScreen>
     </>
   );
 }

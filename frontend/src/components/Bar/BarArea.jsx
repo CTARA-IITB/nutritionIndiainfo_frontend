@@ -288,11 +288,11 @@ let dynamicRange;
           </div>
 
           <div class='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-            <div class="text-center absolute w-full font-bold text-xs md:text-sm">{`${gBarTitle}`}</div>
+            <div class="text-center absolute w-full font-bold text-xs md:top-2 top-5 md:text-sm">{`${gBarTitle}`}</div>
               <div class="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
 						<div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg   ref = {svgRef}
-                  class="w-full bg-white  border-black border-dashed object-scale-down">
+                  class="w-full bg-white top-5  border-black border-dashed object-scale-down">
                 </svg>
             </div>
           </div>

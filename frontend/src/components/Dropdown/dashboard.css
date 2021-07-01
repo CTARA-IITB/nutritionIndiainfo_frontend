@@ -21,17 +21,18 @@
 
 .health-ministry {
 	height: auto;
-	width: 100px;
+	width: 30%;
 }
 
 .poshan-abhiyan {
 	height: auto;
-	width: 100px;
+	width: 15%;
+	float: right;
 }
 
 .nutrition-india {
 	height: auto;
-	width: 100px;
+	width: 60%;
 }
 
 .lifecycle-img {
@@ -67,8 +68,9 @@
 }
 
 .i-icon {
-	width: 32%;
-	height: auto;
+	width: 1.5rem;
+	height: 1.7rem;
+	float: right;
 }
 
 .w-40 {

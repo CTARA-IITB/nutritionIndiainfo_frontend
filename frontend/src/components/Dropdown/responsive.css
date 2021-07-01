@@ -28,7 +28,7 @@
     	margin-top: 10%;
     }
     .i-icon {
-    	width: 30%;
+    	width: 1.5rem;
     }
 }
 @media (min-width: 1600px) and (max-width: 2560px) {
@@ -36,7 +36,7 @@
     	height: 5rem;
     }
     .i-icon {
-    	width: 27%;
+    	width: 1.5rem;
     }
 }
 @media (max-width: 1199px) {

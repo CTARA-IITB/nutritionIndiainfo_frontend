@@ -25,34 +25,16 @@ let margin = {
   bottom: 50,
 };
 
-const useResizeObserver = ref => {
-  const [dimensions, setDimensions] = useState(null);
-  useEffect(() => {
-    if(typeof ref.current != 'undefined'){
-      const observeTarget = ref.current;
-      const resizeObserver = new ResizeObserver(entries => {
-        entries.forEach(entry => {
-          setDimensions(entry.contentRect);
-        });
-      });
-      resizeObserver.observe(observeTarget);
-      return () => {
-        resizeObserver.unobserve(observeTarget);
-      };
-    }  
-  },[ref.current]);
-  return dimensions;
-};
 
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend, selIndicator}) => { 
 
-  const [data, setData] = useState(null);
+  let [data, setData] = useState(null);
   const svgRef = useRef();
   const trendWrapper = useRef();
-  const dimensions = useResizeObserver(trendWrapper);
   const screen = useFullScreenHandle();
 
   let colorScale;
+  let yValue = d => d.data_value;
   let arrObese = [91,95,104,92,96,105,21];
 
   if(selIndicator == 12 || selIndicator == 13)
@@ -104,6 +86,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     });
     setData(cleanData);
   }, []);
+  if(!toggleStateBurden)
+    data = data.filter(d => typeof d.data_value_num != 'undefined')
 
   useEffect(()=>{
     select(".tooltipX").remove();
@@ -173,7 +157,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       let max_date = new Date(max_year, max_month+6, max_day);
 
       const xValue = d => d.middle_date;
-      let yValue,maxVal;
+      let maxVal;
       if(toggleStateBurden){
         yValue = d => d.data_value;
         maxVal = max(data, (d) => yValue(d));
@@ -289,7 +273,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     .style("text-anchor", "middle")
     .text(graphUnit);    
 
-  },[dimensions,data, toggleStateBurden])
+  },[data, toggleStateBurden])
 
   if (!data) {
     return <pre>Loading...</pre>;

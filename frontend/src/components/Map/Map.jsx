@@ -716,15 +716,15 @@ export const Map = ({
     <>
       <FullScreen className="w-full h-full" handle={screen}>
       
-			<div class='relative w-full h-full'>
-			  <div class="block absolute z-10 w-full max-h-max right-5">
+			<div className='relative w-full h-full'>
+			  <div className="block absolute z-10 w-full max-h-max right-5">
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
-        <div class='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
-              <div class="text-center absolute w-full text-xs md:text-sm md:top-2 top-5  font-bold">{`${mapTitle}`}</div>
-              <div class="text-center absolute w-full text-xs top-8">{`${warning}`}</div>
+        <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
+              <div className="text-center absolute w-full text-xs md:text-sm md:top-2 top-5  font-bold">{`${mapTitle}`}</div>
+              <div className="text-center absolute w-full text-xs top-8">{`${warning}`}</div>
 
-							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>
+							<div id='map_svg' className='block align-middle w-full h-full' ref={wrapperRef}>
               <div className="bg-green-200 flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
                   {switchButton}       
               </div>
@@ -732,7 +732,7 @@ export const Map = ({
                   {backButton}        
               </div>
             <svg    ref={svgRef} 
-            class="w-full bg-white  top-5 border-black border-dashed object-scale-down"></svg>
+            className="w-full bg-white  top-5 border-black border-dashed object-scale-down"></svg>
 
                 <div className="absolute right-10 bottom-10  text-xs font-bold">
                   {statusMsg}        

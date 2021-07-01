@@ -301,14 +301,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   return (
     <>
       <FullScreen  className="w-full h-full" handle={screen}>
-        <div class='static relative w-full h-full'>
-          <div class="block absolute z-10 w-full max-h-max right-5">
+        <div className='static relative w-full h-full'>
+          <div className="block absolute z-10 w-full max-h-max right-5">
             <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
           </div>
-          <div class='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
-            <div class="text-center absolute w-full  font-bold text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
-            <div id="trend_svg" class='align-middle w-full h-full' ref={trendWrapper}>
-              <svg   ref = {svgRef} class="w-full bg-white  border-black border-dashed object-scale-down"></svg>
+          <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
+            <div className="text-center absolute w-full  font-bold text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
+            <div id="trend_svg" className='align-middle w-full h-full' ref={trendWrapper}>
+              <svg   ref = {svgRef} className="w-full bg-white  border-black border-dashed object-scale-down"></svg>
             </div>
           </div>
         </div>

@@ -266,15 +266,15 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   return(
     <>
       <FullScreen  className="w-full h-full" handle={screen}>
-				<div class='relative w-full h-full'>
-					<div class="block absolute z-10 w-full max-h-max right-5">
+				<div className='relative w-full h-full'>
+					<div className="block absolute z-10 w-full max-h-max right-5">
             <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
           </div>
-          <div class='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
-            <div class="text-center absolute w-full  font-bold text-xs md:top-2 top-5 md:text-sm">{`${gBarTitle}`}</div>
-            <div class="text-center absolute w-full text-xs top-8">{`${status}`}</div>
-            <div id="gbar_svg" class='block align-middle w-full h-full' >
-              <svg ref = {svgRef} class="w-full top-5 bg-white  border-black border-dashed object-scale-down"></svg>
+          <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
+            <div className="text-center absolute w-full  font-bold text-xs md:top-2 top-5 md:text-sm">{`${gBarTitle}`}</div>
+            <div className="text-center absolute w-full text-xs top-8">{`${status}`}</div>
+            <div id="gbar_svg" className='block align-middle w-full h-full' >
+              <svg ref = {svgRef} className="w-full top-5 bg-white  border-black border-dashed object-scale-down"></svg>
             </div>
           </div>
         </div>

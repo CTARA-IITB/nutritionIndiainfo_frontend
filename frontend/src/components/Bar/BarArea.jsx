@@ -294,15 +294,15 @@ let dynamicRange;
   return (
       <>
         <FullScreen  className="w-full h-full" handle={screen}>
-          <div class='relative w-full' id="h_bar">
-            <div class="block absolute z-10 w-full max-h-max right-5">
+          <div className='relative w-full' id="h_bar">
+            <div className="block absolute z-10 w-full max-h-max right-5">
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
             </div>
-            <div class='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-              <div class="text-center absolute w-full font-bold text-xs md:top-2 top-5 md:text-sm">{`${gBarTitle}`}</div>
-              <div class="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
-              <div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
-                <svg   ref = {svgRef} class="w-full bg-white top-5  border-black border-dashed object-scale-down"></svg>
+            <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
+              <div className="text-center absolute w-full font-bold text-xs md:top-2 top-5 md:text-sm">{`${gBarTitle}`}</div>
+              <div className="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
+              <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
+                <svg   ref = {svgRef} className="w-full bg-white top-5  border-black border-dashed object-scale-down"></svg>
               </div>
             </div>
           </div>

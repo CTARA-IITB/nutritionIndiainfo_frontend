@@ -1,5 +1,3 @@
-import { json } from 'd3';
-
 export const fetchAreaCode = (areaList,areaID) =>{
     return(areaList.filter(area => parseInt(area.area_id) === areaID)[0]['area_code']);
 }

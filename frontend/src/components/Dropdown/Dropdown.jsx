@@ -1,16 +1,14 @@
 import React,{useState,useEffect,useRef} from "react";
-import {Row, Col,ToggleButtonGroup,ToggleButton } from 'react-bootstrap';
-import { TreeSelect,Input } from 'antd';
+import {Row} from 'react-bootstrap';
+import { TreeSelect } from 'antd';
 import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, setCardData, populateDropdowns } from '../../utils';
+import { createHierarchy, setVisulaizationData, populateDropdowns } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
 // import "./Dropdown.css";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { Switch } from 'antd';
 import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
 import {EARLY_CHILDHOOD} from "../../constants"
@@ -41,7 +39,6 @@ import clf from "./images/ctara-logo.png";
 import pl from "./images/proditech-logo.png";
 import unil from "./images/unicefLogo.png";
 
-const {Search} = Input;
 
 export const Dropdown = ({}) =>{
 
@@ -74,14 +71,13 @@ export const Dropdown = ({}) =>{
  
   const iniSelArea = '1';  //india
   const [selArea, setSelArea] = useState(iniSelArea);
-  const iniSelIndicator = '12';
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
   const [selTimeperiod, setSelTimeperiod] = useState();
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
 
-const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
+  const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [categorydDropdownOpt, setCategoryDropdownOpt] = useState([]);
   const [stateID,setStateID] = useState(null);
   const [indicatorSense, setIndicatorSense] = useState('Negative');
@@ -96,7 +92,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const searchRef = useRef();
   const [filterDropdownValue, setFilterDropdownValue] = useState([]);
   const [parentArea, setParentArea] = useState(null);
-  const [indicatorDetail, setIndicatorDetail] = useState(null);
   const [indicatorTrend, setIndicatorTrend] = useState(null);
   const[indicatorBar, setIndicatorBar]= useState(null);
   const[selIndiaData, setSelIndiaData]= useState(null);
@@ -111,9 +106,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [selStateData, setSelStateData] = useState(null);
   const [selDistrictsData, setSelDistrictsData] = useState(null);
   const changeText = (text) => setButtonText(text);
-  const area = document.getElementsByClassName("ant-select-selection-item");
-  const map = document.getElementsByClassName("map");
-  const trend = document.getElementsByClassName("trend");
   const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
   const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
@@ -137,7 +129,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
       setIsSelected(false);
       setToggleState(true);
       setToggleStateBurden(true);
-      let subVal = '6';
       setLifecycleDropdownOpt(lifecycleData);
       setCategoryDropdownOpt([
         { value: 1, title: "Manifestation" },
@@ -245,19 +236,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
 
         }
 
-        const burdenChange = async(e) =>{
-          let x = e[1];
-          console.log(x)
-          if(x === 1){
-            setSelBurden(x);
-            setToggleStateBurden(true);
-          }
-          else if(x===2){
-            setToggleStateBurden(false);
-            setSelBurden(x);
-          }
-        }
-
         const categoryChange = async(e) =>{
           let val = parseInt(e.target.value);
           setIsSelected(false);
@@ -284,7 +262,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTitle(indiName);
           setIndicatorSense(indiSense);
-          let url;
           let solr_url;
               solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv16/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
@@ -383,7 +360,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
             setLevel(2);
             newLevel = 2;
           }
-          let url;
           let solr_url;
               solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv16/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             let solr_body_1 = await solr_url.json()
@@ -440,18 +416,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
           return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
         }
-      const checkchange = (state,handle)=>{
-        if(map){
-          if(state === true){
-            map[0].style.height = "100vh";
-          }
-          else if(state === false){
-            if(map[0] != undefined)
-            map[0].style.height = "50vh";
-            // map[0].style.height = "50vh";
-          }
-        }
-      }
       
       const burdenClick = () => {
         setToggleStateBurden(!toggleStateBurden); 
@@ -658,7 +622,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           titleAreaName = {titleAreaName}
           graphTimeperiod = {graphTimeperiod}
           toggleStateBurden = {toggleStateBurden}
-          trend = {trend}
           selIndicator={selIndicator}
           />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
@@ -704,7 +667,6 @@ const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
           changeBurdenText={changeBurdenText}
           drillDirection = {drillDirection}
           setDrillDirection ={setDrillDirection}
-          map={map}
           /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
      </div>
      </section>

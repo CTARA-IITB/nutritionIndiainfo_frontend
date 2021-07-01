@@ -17,7 +17,6 @@ import {
   axisBottom
 } from 'd3';
 
-const tickLength = 8;
 let margin = {
   left: 50,
   top: 53,
@@ -55,7 +54,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const parseTime = timeParse('%d-%b-%y'); 
   const formatTime = timeFormat('%b-%y');
   const formatTooltipTime = timeFormat('%B-%Y');
-  const formatTitleTime = timeFormat('%Y');
+  // const formatTitleTime = timeFormat('%Y');
 
   // //For One Decimel Precision    
   function decimalPrecision(d){

@@ -3,16 +3,10 @@ import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
 import { Button } from 'react-bootstrap';
-import * as turf from 'turf';
 import {NFHS5} from "../../constants";
-import { geoMercator, format,geoCircle ,geoPath, scaleQuantize, scaleThreshold,extent, select, schemeReds, geoCentroid, scaleOrdinal } from 'd3';
-import {poissonDiscSampler} from '../../utils'
-import { InfoCircleFill } from 'react-bootstrap-icons';
-import { Switch } from 'antd';
+import { geoMercator, format ,geoPath, scaleQuantize, scaleThreshold,extent, select, scaleOrdinal } from 'd3';
 import SideNavFirst from "../SideNav/SideNavFirst";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { AnimateOnChange } from 'react-animation';
-import { json } from 'd3';
 import "./Map.css";
 import fmt from 'indian-number-format'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -44,47 +38,31 @@ export const Map = ({
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
-  const svgLegRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
-
-  function removeShake() {
-    let element = document.getElementById("info-msg");
-    element.classList.remove("shake");
-  }
-
-  const handleClick = () => {
-    setToggleState(!toggleState);
-    let text = null;
-    if (buttonText === 'District')
-      text = 'state';
-    else
-      text = 'District';
-    changeText(text);
-  }
  
-  if (((unit == 1 || unit == 4 || unit == 3 || unit == 5) && toggleStateBurden == true)) {
+  if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true)) {
     mapTitle = `${graphTitle},${titleAreaName},${graphTimeperiod}`;
   }
   else{
     mapTitle =  `${graphTitle},Number,${titleAreaName},${graphTimeperiod}`;
   }
 
-  function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
-    if (i === 0) {
-      const values = generatedLabels[i].split(` ${labelDelimiter} `)
-      return `Less than ${values[1]}`
-    } else if(i == 1 || i== 2 || i== 3)
-    {
-      const values = generatedLabels[i].split(` ${labelDelimiter} `)
-      return `${values[0]} to  ${values[1] -0.1}`
-    }
-    else if (i === genLength -1) {
-      const values = generatedLabels[i].split(` ${labelDelimiter} `)
-      return ` ≥ ${values[0]}`
-    }
-    return generatedLabels[i]
-  };
+  // function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
+  //   if (i === 0) {
+  //     const values = generatedLabels[i].split(` ${labelDelimiter} `)
+  //     return `Less than ${values[1]}`
+  //   } else if(i === 1 || i=== 2 || i=== 3)
+  //   {
+  //     const values = generatedLabels[i].split(` ${labelDelimiter} `)
+  //     return `${values[0]} to  ${values[1] -0.1}`
+  //   }
+  //   else if (i === genLength -1) {
+  //     const values = generatedLabels[i].split(` ${labelDelimiter} `)
+  //     return ` ≥ ${values[0]}`
+  //   }
+  //   return generatedLabels[i]
+  // };
   
   //merge geometry and data
 
@@ -104,10 +82,6 @@ export const Map = ({
     return mergedGeoJson;
   }
 
-  function removeShake() {
-    let element = document.getElementById("info-msg");
-    element.classList.remove("shake");
-  }
   let statusMsg = "";
   let data = selIndiaData;
   let warning;
@@ -153,7 +127,7 @@ export const Map = ({
         statusMsg=`Click on map to select district \n or back to return`
       }
     }
-    if(selTimeperiod == NFHS5)
+    if(selTimeperiod === NFHS5)
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
       geometry = {type: "FeatureCollection",features}
@@ -184,7 +158,7 @@ export const Map = ({
       windowHeight = windowHeight/2;
     }else{
       windowWidth = windowWidth+200 ;
-      windowHeight = windowHeight;
+      // windowHeight = windowHeight;
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     
@@ -219,7 +193,7 @@ export const Map = ({
     // }
     //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
-    if(selArea == 28 || selArea == 8 ){
+    if(selArea === 28 || selArea === 8 ){
      projection = geoMercator().fitSize([width/1.9, adjustedHeight/1.2], geometry);
 
     }
@@ -234,7 +208,7 @@ export const Map = ({
     let mergedGeometry = addProperties(geojson, data);
     let c2Value;
     let color_range
-    if (((unit == 1 || unit == 4 || unit == 3 || unit == 5) && toggleStateBurden == true) || (unit == 2))
+    if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true) || (unit === 2))
     {
       c2Value = d => d.dataValue;
       color_range = _.map(data, d => {
@@ -264,21 +238,21 @@ export const Map = ({
     let sampleCategoricalData;
 
     let arr20to80 = [31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]
-    if (selIndicator == 19 || selIndicator == 21 || selIndicator == 105) {
+    if (selIndicator === 19 || selIndicator === 21 || selIndicator === 105) {
       low = 5.0;
       medium = 10.0;
       high = 15.0;
       highest = 20.0
       sampleCategoricalData = ["<5%", "5-9.9%", "10-14.9%", "15-19.9%", ">20%", "No Data"]
 
-    } else if (selIndicator == 17 || selIndicator == 18 || selIndicator == 12 || selIndicator == 13) {
+    } else if (selIndicator === 17 || selIndicator === 18 || selIndicator === 12 || selIndicator === 13) {
        low = 10.0;
        medium = 20.0;
        high = 30.0;
        highest = 40.0;
       sampleCategoricalData = ["<10%", "10-19.9%", "20-29.9%", "30-39.9%", ">40%", "No Data"]
 
-    } else if(selIndicator == 71 || selIndicator == 26 )
+    } else if(selIndicator === 71 || selIndicator === 26 )
     {
       low = 5.0;
       medium = 20.0;
@@ -286,7 +260,7 @@ export const Map = ({
       highest = 60.0;
       sampleCategoricalData = ["<5%", "5-19.9%", "20-39.9%", "40-59.9%", ">60%", "No Data"]
 
-    } else if(selIndicator == 20 || selIndicator == 108)
+    } else if(selIndicator === 20 || selIndicator === 108)
     {
       low = 1.0;
       medium = 2.0;
@@ -294,7 +268,7 @@ export const Map = ({
       highest = 10.0;
       sampleCategoricalData = ["<1%", "1-1.9%", "2-4.9%", "5-9.9%", ">10%", "No Data"]
 
-     }else if(selIndicator == 107)
+     }else if(selIndicator === 107)
     {
       low = 0.1;
       medium = 0.5;
@@ -302,7 +276,7 @@ export const Map = ({
       highest = 2.5;
       sampleCategoricalData = ["<0.1%", "0.1-0.49%", "0.5-0.9%", "1-2.49%", ">2.5%", "No Data"]
 
-    }else if(selIndicator == 89)
+    }else if(selIndicator === 89)
     {
       low = 5.0;
       medium = 10.0;
@@ -325,9 +299,9 @@ export const Map = ({
   let colorScale_new;
     let colorScale2;
     let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]; 
-    if ((unit == 1 || unit == 4 || unit == 3 || unit == 5)  && toggleStateBurden == true)
+    if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
     {
-    if(indicatorSense == 'Positive')
+    if(indicatorSense === 'Positive')
     {
     colorScale2 = scaleThreshold().domain([low, medium, high, highest])
     .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"]); 
@@ -371,17 +345,17 @@ export const Map = ({
   }
   else{
       let arrObese = [91,95,104,92,96,105,21];
-      if(selIndicator == 12 || selIndicator == 13)
+      if(selIndicator === 12 || selIndicator === 13)
         colorScale = '#a3c00f'; 
-      else if(selIndicator == 19 || selIndicator == 20)
+      else if(selIndicator === 19 || selIndicator === 20)
         colorScale = 'red'; 
-      else if(selIndicator == 17 || selIndicator == 18)
+      else if(selIndicator === 17 || selIndicator === 18)
         colorScale = '#039be5'; 
-      else if(selIndicator == 107 || selIndicator == 108)
+      else if(selIndicator === 107 || selIndicator === 108)
         colorScale = '#e35829'; 
       else  if(arrObese.includes(selIndicator))
         colorScale = '#7b1fa2'; 
-      else if(selIndicator == 123 || selIndicator == 26 || selIndicator == 125)
+      else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125)
         colorScale = '#b71c1c'; 
       else
         colorScale = '#eda143'; 
@@ -397,7 +371,7 @@ export const Map = ({
           .style("font-size","12px");
       }
     };
-    if ((unit == 1 || unit == 4 || unit == 3 || unit == 5)  && toggleStateBurden == true)
+    if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
     {  
     svg
       .selectAll(".polygon")
@@ -510,7 +484,7 @@ export const Map = ({
         
         let n;
         let data_value_num;
-        if(unit == 2)
+        if(unit === 2)
         {
           n = d.dataValue / (dotVal);
           data_value_num = d.dataValue
@@ -533,7 +507,7 @@ export const Map = ({
      
 
         }
-        let r,sw;
+        let r;
         if(height <= 550){
         r = .8;
         }
@@ -569,7 +543,7 @@ export const Map = ({
     let msg = legend.append("text")
       .style("font-size","12px")
       .attr("class", "statusmsg")
-      if(width < 680 && selArea == 1){
+      if(width < 680 && selArea === 1){
           svg.append("g")
              .attr("class", "legendQuant")
             .attr("transform", `translate(${width-100},${adjustedHeight-450})`)
@@ -615,9 +589,9 @@ export const Map = ({
     let formatter = format(".1f");
     let myLegend;
 
-    if((level == 1 && (null != selIndiaData && selIndiaData.length > 0)) || ((level == 2 || level == 3) && (null  != selStateData && selStateData.length > 0)))
+    if((level === 1 && (null != selIndiaData && selIndiaData.length > 0)) || ((level === 2 || level === 3) && (null  != selStateData && selStateData.length > 0)))
     {
-    if (((unit == 1 || unit == 4 || unit == 3 || unit == 5)  && toggleStateBurden == false) || unit == 2) 
+    if (((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === false) || unit === 2) 
     {
       
       svg.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");
@@ -642,7 +616,7 @@ export const Map = ({
       .call(myLegend); 
     }
   }
-    if((level == 1 && (null== selIndiaData || selIndiaData.length == 0)) || ((level == 2 || level == 3) && (null  == selStateData || selStateData.length == 0)))
+    if((level === 1 && (null=== selIndiaData || selIndiaData.length === 0)) || ((level === 2 || level === 3) && (null  === selStateData || selStateData.length === 0)))
      {
       svg.append("text").text("No districts data: please select another survey")
          .style("text-anchor", "middle")

@@ -481,26 +481,21 @@ export const Map = ({
       .on('click', (i, d) => {
         if(toggleState){
           tooltip.style('opacity', 0);
-
-            if (typeof c2Value(d) != "undefined") {
+          if (typeof c2Value(d) != "undefined") {
+              areaChange(d.area_id.toString());
               if(level === 1){
-                areaChange(d.area_id.toString());
+                // console.log("LEVEL 2");
                 setLevel(2);
-                setDrillDirection(true);
-              }else if(level === 2 && drillDirection){
-                setIsLevelThree(true);
-                areaChange(d.area_id.toString());
+              }else if(level === 2){
                 setLevel(3);
+                // console.log("LEVEL 3"); 
+                setIsLevelThree(true);
               }else if(level === 3){
-                areaChange(""+parentArea);
-                setLevel(2);
-                setDrillDirection(false);
-
-              }else if(level === 2 && !drillDirection){
-                areaChange("1");
-                setLevel(1);
-                setDrillDirection(true);
+                setLevel(3);
+                // console.log("STILL IN LEVEL 3");
               }
+  
+           
             }
         }
     

@@ -11,6 +11,7 @@ import {
   axisBottom,
   descending,
 } from 'd3';
+import { size } from 'lodash';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
@@ -21,7 +22,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 let dynamicRange;
   const margin = {
     left:160,
-    top: 70,
+    top: 100,
     right: 60,
     bottom: 50,
   };
@@ -128,9 +129,9 @@ let dynamicRange;
         
     if(data && data.length >0){
       const barSize = 15;
-      dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length;
+      dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length ;
       const adjustedHeight = dynamicRange+150;
-  
+      // (barSize*data.length<innerHeight)?innerHeight:barSize*data.length
       document.getElementById("h_bar").style.height = dynamicRange+200;
       
 
@@ -262,17 +263,18 @@ let dynamicRange;
     //   }
     // }
   }
-  // const reportChange = (state, handle) => {
-  //   if(state === true){
-  //     document.getElementsByClassName("fullscreen-enabled").setAttribute('style', 'height: 2500px !important');
+  const reportChange = (state, handle) => {
+    if(state === true){
+     document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'height: 2500px !important');
+      document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: 2500px !important`);
+       
+    }
+    else{
       
-  //   }
-  //   else{
-  //     document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: 1080px !important`);
 
-  //   }
+    }
   
-  // };    
+  };    
   let table=[];
   if(data ){
     for(var i=0;i<data.length;i++){
@@ -293,16 +295,16 @@ let dynamicRange;
  
   return (
       <>
-        <FullScreen  className="w-full h-full" handle={screen}>
+        <FullScreen  className="w-full" handle={screen} onChange={reportChange}>
           <div className='relative w-full' id="h_bar">
             <div className="block absolute z-10 w-full max-h-max right-5">
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
             </div>
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-              <div className="text-center absolute w-full font-bold text-xs md:top-2 top-5 md:text-sm">{`${gBarTitle}`}</div>
-              <div className="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
+              <div className="text-center absolute w-full font-bold md:top-1 top-5 md:text-sm text-xs" >{`${gBarTitle}`}</div>
+              <div className="text-center absolute w-full text-xs top-12" >{`${status}`}</div>
               <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
-                <svg   ref = {svgRef} className="w-full bg-white top-5  border-black border-dashed object-scale-down"></svg>
+                <svg   ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
               </div>
             </div>
           </div>

@@ -262,9 +262,12 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       // .style("font-weight","bold")
     }
 
+    let offSet = 0;
+    if(graphUnit === "Deaths per 1000 live births")
+      offSet = 40
     svg.append("text")
     .attr("transform", "rotate(-0)")
-    .attr("x",margin.left)
+    .attr("x",margin.left + offSet)
     .attr("y", margin.top-25)
     .attr("dy", "1em")
     .style("font-size","12px")

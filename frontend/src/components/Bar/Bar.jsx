@@ -12,13 +12,12 @@ import {
 import fmt from 'indian-number-format'
 import './Bar.css'
 
-export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, titleAreaName, toggleStateBurden, selIndicator})=>{
+export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAreaName, toggleStateBurden, selIndicator})=>{
 
   const screen = useFullScreenHandle();
   let status = "By Background Characteristics";
   const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
   const svgRef = useRef();
-  let graphUnit;
   const margin = {
     left:120,
     top: 100,
@@ -137,7 +136,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, titleAreaName, to
       if(toggleStateBurden){
         xValue = d => d.data_value;
         maxVal = max(data, (d) => xValue(d));
-        graphUnit="Percent"
       }  
       else{
         xValue = d => d.data_value_num;

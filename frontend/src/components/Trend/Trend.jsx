@@ -265,7 +265,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     svg.append("text")
     .attr("transform", "rotate(-0)")
     .attr("x",margin.left)
-    .attr("y", margin.top-15)
+    .attr("y", margin.top-25)
     .attr("dy", "1em")
     .style("font-size","12px")
     .style("font-weight","bold")

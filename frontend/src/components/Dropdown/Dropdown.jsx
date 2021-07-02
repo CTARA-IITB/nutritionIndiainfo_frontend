@@ -614,7 +614,7 @@ export const Dropdown = ({}) =>{
      <section id='main_dashboard_container' className='flex flex-col'>
      <section id='top_dashboard_row' className='flex flex-wrap-reverse'>
      <div className='flex w-full md:w-1/2'>
-        {(isSelected  & selTimeperiod != "")?
+        {(isSelected  & selTimeperiod !== "")?
           <Trend indicatorTrend = {indicatorTrend}
           graphTitle = {graphTitle}
           graphSubgroup = {graphSubgroup}
@@ -623,11 +623,11 @@ export const Dropdown = ({}) =>{
           graphTimeperiod = {graphTimeperiod}
           toggleStateBurden = {toggleStateBurden}
           selIndicator={selIndicator}
-          />: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
+          />: (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
      </div>
 
      <div className=" flex w-full md:w-1/2">
-        {(isSelected  & selTimeperiod != "")? <Map boundaries={boundaries} 
+        {(isSelected  & selTimeperiod !== "")? <Map boundaries={boundaries} 
           selIndiaData={selIndiaData} 
           setSelIndiaData ={setSelIndiaData}
           setLevel={setLevel} 
@@ -667,13 +667,13 @@ export const Dropdown = ({}) =>{
           changeBurdenText={changeBurdenText}
           drillDirection = {drillDirection}
           setDrillDirection ={setDrillDirection}
-          /> : (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
+          /> : (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
      </div>
      </section>
 
      <section id='bottom_dashboard_row' className='flex flex-wrap'>
      <div className=' flex w-full md:w-1/2'>
-        {(isSelected  & selTimeperiod != "")?<BarArea
+        {(isSelected  & selTimeperiod !== "")?<BarArea
           indicatorTrend = {indicatorTrend}
           graphTitle = {graphTitle}
           graphTimeperiod = {graphTimeperiod}
@@ -685,11 +685,11 @@ export const Dropdown = ({}) =>{
           areaName = {areaName}
           selStateData = {selStateData}
           toggleStateBurden = {toggleStateBurden}
-          selIndicator={selIndicator}/>: (selTimeperiod!= "")? null:<div id="msg">No data: please select another area</div>}
+          selIndicator={selIndicator}/>: (selTimeperiod!== "")? null:<div id="msg">No data: please select another area</div>}
      </div>
 
      <div className='flex w-full md:w-1/2'>
-      {(isSelected  & selTimeperiod != "")? <Bar indicatorBar = {indicatorBar}
+      {(isSelected  & selTimeperiod !== "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
       selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
@@ -699,7 +699,7 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: (selTimeperiod!= "")? null: <div id="msg">No data: please select another area</div>}
+      selIndicator={selIndicator}/>: (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
      </div>
 
      </section>

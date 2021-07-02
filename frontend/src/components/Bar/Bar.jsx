@@ -12,12 +12,13 @@ import {
 import fmt from 'indian-number-format'
 import './Bar.css'
 
-export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleAreaName, toggleStateBurden, selIndicator})=>{
+export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, titleAreaName, toggleStateBurden, selIndicator})=>{
 
   const screen = useFullScreenHandle();
-  const [status,setStatus] = useState(null);
+  let status = "By Background Characteristics";
   const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
   const svgRef = useRef();
+  let graphUnit;
   const margin = {
     left:120,
     top: 70,
@@ -74,7 +75,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
 }  
 
   useEffect(() => {
-    setStatus("By Background Characteristics")
+  
     let cleanData = [];
     cleanData = indicatorBar.map(d =>{
       if(d.subgroup_name === "All"){
@@ -84,6 +85,10 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     }).filter(d => listofSubgroup.includes(d.subgroup_name))
     setData(cleanData);
   }, []);
+
+  
+  gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
+ 
 
   useEffect(()=>{
     select(".tooltipGBar").remove();
@@ -122,12 +127,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
     const bar = svg.append("g")
                   .attr("transform",`translate(${margin.left},${margin.top})`);
     
-    if (( toggleStateBurden === true)) {
-      gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
-    }
-    else{
-      gBarTitle =  `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
-    }
+
         
     if(data && data.length >0){
 
@@ -137,6 +137,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
       if(toggleStateBurden){
         xValue = d => d.data_value;
         maxVal = max(data, (d) => xValue(d));
+        graphUnit="Percent"
       }  
       else{
         xValue = d => d.data_value_num;
@@ -228,17 +229,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit, titleA
   },[data,toggleStateBurden])
 
 
-  const checkchange = (state,handle)=>{
-    // if(gbar){
-    //   if(state === true){
-    //     gbar[0].style.height = "100vh";
-    //   }
-    //   else if(state === false){
-    //     if(gbar[0] != undefined)
-    //     gbar[0].style.height = "65vh";
-    //   }
-    // }
-  }
 
   let table=[];
   if(data ){

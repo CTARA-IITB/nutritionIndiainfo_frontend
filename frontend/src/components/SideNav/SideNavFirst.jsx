@@ -91,11 +91,6 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
     });
 
     // set white background of downloaded image
-    const options = {
-        scale: 10,
-        encoderOptions: 1,
-        backgroundColor: 'white',
-    }
     
     const saveJpeg=()=>{
         htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})

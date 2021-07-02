@@ -220,11 +220,11 @@ export const Map = ({
     //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
     if(selArea == 28 || selArea == 8 ){
-     projection = geoMercator().fitSize([width/1.9, adjustedHeight/1.2], geometry);
+     projection = geoMercator().fitSize([width/1.5, adjustedHeight/1.2], geometry);
 
     }
     else{
-     projection = geoMercator().fitSize([width/1.4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               , adjustedHeight/1.2], geometry);
+     projection = geoMercator().fitSize([width, adjustedHeight/1.2], geometry);
     }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
@@ -567,16 +567,17 @@ export const Map = ({
 
     }
     let msg = legend.append("text")
-      .style("font-size","12px")
+      .style("font-size","10px")
       .attr("class", "statusmsg")
-      if(width < 680 && selArea == 1){
-          svg.append("g")
-             .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-100},${adjustedHeight-450})`)
-          msg
-            // .text(statusMsg)
-            .attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
-      }else if(width < 680){
+      // if(width < 680 && selArea == 1){
+      //     svg.append("g")
+      //        .attr("class", "legendQuant")
+      //       .attr("transform", `translate(${width-(width-100)},${adjustedHeight-120})`)
+      //     msg
+      //       // .text(statusMsg)
+      //       .attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
+      // }else 
+      if(width < 680){
         console.log(level)
         if(level === 2 || level === 3){
             msg
@@ -603,12 +604,12 @@ export const Map = ({
     if(width > 680){
         svg.append("g")
           .attr("class", "legendQuant")
-          .attr("transform", `translate(${width-150},${adjustedHeight-220})`)
+          .attr("transform", `translate(${width-(width-100)},${adjustedHeight-150})`)
         }
     else{
         svg.append("g")
             .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-100},${adjustedHeight- 320})`)
+            .attr("transform", `translate(${width-(width-30)},${adjustedHeight- 160})`)
         }
             
 

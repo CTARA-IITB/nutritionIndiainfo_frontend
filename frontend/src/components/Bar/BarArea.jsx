@@ -11,6 +11,7 @@ import {
   axisBottom,
   descending,
 } from 'd3';
+import { size } from 'lodash';
 
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
 
@@ -300,7 +301,7 @@ let dynamicRange;
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
             </div>
             <div class='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-              <div class="text-center absolute w-full font-bold text-xs md:top-2 top-5 md:text-sm">{`${gBarTitle}`}</div>
+              <div class="text-center absolute w-full font-bold md:top-2 top-5 md:text-sm text-xs" >{`${gBarTitle}`}</div>
               <div class="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
               <div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg   ref = {svgRef} class="w-full bg-white top-5  border-black border-dashed object-scale-down"></svg>

@@ -224,7 +224,7 @@ export const Map = ({
 
     }
     else{
-     projection = geoMercator().fitSize([width, adjustedHeight/1.2], geometry);
+     projection = geoMercator().fitSize([width/1.1 , adjustedHeight/1.2], geometry);
     }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
@@ -447,7 +447,7 @@ export const Map = ({
       })
   
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(100,50)`);
+      .attr('transform',`translate(50,70)`);
 
    
 
@@ -501,7 +501,7 @@ export const Map = ({
     
       })
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(100,50)`);
+      .attr('transform',`translate(50,70)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -557,7 +557,7 @@ export const Map = ({
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
           .style('fill-opacity',0.8)
-          .attr('transform',`translate(100,50)`)
+          .attr('transform',`translate(50,70)`)
       
         
    
@@ -567,49 +567,43 @@ export const Map = ({
 
     }
     let msg = legend.append("text")
-      .style("font-size","10px")
+      .style("font-size","8px")
       .attr("class", "statusmsg")
-      // if(width < 680 && selArea == 1){
-      //     svg.append("g")
-      //        .attr("class", "legendQuant")
-      //       .attr("transform", `translate(${width-(width-100)},${adjustedHeight-120})`)
-      //     msg
-      //       // .text(statusMsg)
-      //       .attr("transform", `translate(${width-150},${adjustedHeight- 120})`)
-      // }else 
-      if(width < 680){
-        console.log(level)
-        if(level === 2 || level === 3){
-            msg
-            // .text(statusMsg)
-
-            .attr("transform", `translate(${width-380},${adjustedHeight- 120})`)
-          }
-        }
+      // if(width < 680){
+      //   console.log(level)
+       
+      //   }
     
-      else{
+      // else{
          
-          if(level === 2 || level === 3){
-           
-              msg
-              // .text(statusMsg)
-              .attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
-               }
-          else{
-              msg
-              // .text(statusMsg)
-                .attr("transform", `translate(${width-150},${adjustedHeight- 80})`)
-            }
-          }
+         
+      //     }
     if(width > 680){
+      if(level === 2 || level === 3){
+           
+        msg
+        // .text(statusMsg)
+        .attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
+         }
+    else{
+        msg
+        // .text(statusMsg)
+          .attr("transform", `translate(${width-150},${adjustedHeight- 80})`)
+      }
         svg.append("g")
           .attr("class", "legendQuant")
           .attr("transform", `translate(${width-(width-100)},${adjustedHeight-150})`)
         }
     else{
+      if(level === 2 || level === 3){
+        msg
+        // .text(statusMsg)
+
+        .attr("transform", `translate(${width-380},${adjustedHeight- 120})`)
+      }
         svg.append("g")
             .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-(width-30)},${adjustedHeight- 160})`)
+            .attr("transform", `translate(${width-(width-50)},${adjustedHeight- 160})`)
         }
             
 
@@ -722,7 +716,7 @@ export const Map = ({
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
         <div class='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
-              <div class="text-center absolute w-full text-xs md:text-sm md:top-2 top-5  font-bold">{`${mapTitle}`}</div>
+              <div class="text-center absolute w-full text-xs md:text-sm md:top-1 top-5  font-bold">{`${mapTitle}`}</div>
               <div class="text-center absolute w-full text-xs top-8">{`${warning}`}</div>
 
 							<div id='map_svg' class='block align-middle w-full h-full' ref={wrapperRef}>

@@ -22,7 +22,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 let dynamicRange;
   const margin = {
     left:160,
-    top: 70,
+    top: 100,
     right: 60,
     bottom: 50,
   };
@@ -129,7 +129,7 @@ let dynamicRange;
         
     if(data && data.length >0){
       const barSize = 15;
-      dynamicRange = innerHeight ;
+      dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length ;
       const adjustedHeight = dynamicRange+150;
       // (barSize*data.length<innerHeight)?innerHeight:barSize*data.length
       document.getElementById("h_bar").style.height = dynamicRange+200;
@@ -301,10 +301,10 @@ let dynamicRange;
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
             </div>
             <div class='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-              <div class="text-center absolute w-full font-bold md:top-2 top-5 md:text-sm text-xs" >{`${gBarTitle}`}</div>
-              <div class="text-center absolute w-full text-xs top-8" >{`${status}`}</div>
+              <div class="text-center absolute w-full font-bold md:top-1 top-5 md:text-sm text-xs" >{`${gBarTitle}`}</div>
+              <div class="text-center absolute w-full text-xs top-12" >{`${status}`}</div>
               <div id="hbar_svg" class='block align-middle w-full h-full' ref={trendWrapper}>
-                <svg   ref = {svgRef} class="w-full bg-white top-5  border-black border-dashed object-scale-down"></svg>
+                <svg   ref = {svgRef} class="w-full bg-white border-black border-dashed object-scale-down"></svg>
               </div>
             </div>
           </div>

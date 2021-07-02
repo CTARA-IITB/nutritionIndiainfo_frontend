@@ -273,3 +273,9 @@
 @media (max-width: 380px) {
 
 }
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+	.select-lifecycle-parent {
+	    width: 80%;
+	}
+}

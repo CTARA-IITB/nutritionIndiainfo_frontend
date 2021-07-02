@@ -59,6 +59,7 @@
 
 .select-border {
 	border: 1px solid #D66D07;
+	background-color: #DDDD;
 	border-radius: 5px;
 	font-size: 14px;
 	width: 11rem;
@@ -68,7 +69,7 @@
 }
 
 .i-icon {
-	width: 1.5rem;
+	width: 1.7rem;
 	height: 1.7rem;
 	float: right;
 }
@@ -102,17 +103,20 @@
 .iitb-image {
 	height: auto;
 	width: 25%;
+	margin: auto;
 }
 
 .proditech-image {
 	height: auto;
 	width:30%;
+	margin:auto;
 }
 
 .unichef-image {
 	height: auto;
 	width:30%;
 	/*padding-top: 1rem;*/
+	float: right;
 }
 .img-map {
     width: 100%;

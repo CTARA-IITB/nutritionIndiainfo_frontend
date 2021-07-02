@@ -261,7 +261,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, titleAreaName, to
           </div>
           <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
             <div className="text-center absolute w-full  font-bold text-xs md:top-1 top-5 md:text-sm">{`${gBarTitle}`}</div>
-            <div className="text-center absolute w-full text-xs top-12">{`${status}`}</div>
+            <div className="text-center absolute w-full text-xs md:top-6 top-12">{`${status}`}</div>
             <div id="gbar_svg" className='block align-middle w-full h-full' >
               <svg ref = {svgRef} className="w-full  bg-white  border-black border-dashed object-scale-down"></svg>
             </div>

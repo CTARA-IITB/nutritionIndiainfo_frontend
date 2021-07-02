@@ -421,7 +421,7 @@ export const Map = ({
       })
   
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(50,70)`);
+      .attr('transform',`translate(50,85)`);
 
    
 
@@ -475,7 +475,7 @@ export const Map = ({
     
       })
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(50,70)`);
+      .attr('transform',`translate(50,85)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -531,7 +531,7 @@ export const Map = ({
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
           .style('fill-opacity',0.8)
-          .attr('transform',`translate(50,70)`)
+          .attr('transform',`translate(50,85)`)
       
         
    
@@ -691,7 +691,7 @@ export const Map = ({
         </div>
         <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
               <div className="text-center absolute w-full text-xs md:text-sm md:top-1 top-5  font-bold">{`${mapTitle}`}</div>
-              <div className="text-center absolute w-full text-xs top-8">{`${warning}`}</div>
+              <div className="text-center absolute w-full text-xs md:top-6 top-12">{`${warning}`}</div>
 
 							<div id='map_svg' className='block align-middle w-full h-full' ref={wrapperRef}>
               <div className="bg-green-200 flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
@@ -703,7 +703,7 @@ export const Map = ({
             <svg    ref={svgRef} 
             className="w-full bg-white  top-5 border-black border-dashed object-scale-down"></svg>
 
-                <div className="absolute right-10 bottom-10  text-xs font-bold">
+                <div className="absolute right-10 bottom-5  text-xs font-bold">
                   {statusMsg}        
               </div>
             </div>

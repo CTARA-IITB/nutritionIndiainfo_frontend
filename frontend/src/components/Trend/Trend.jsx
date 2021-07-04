@@ -85,7 +85,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     });
     setData(cleanData);
   }, []);
-  if(!toggleStateBurden)
+  if(!toggleStateBurden && data)
     data = data.filter(d => typeof d.data_value_num != 'undefined')
 
   useEffect(()=>{

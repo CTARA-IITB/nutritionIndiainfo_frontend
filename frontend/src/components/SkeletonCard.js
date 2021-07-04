@@ -2,33 +2,33 @@ import React from "react";
 import "./SkeletonCard.css";
 import Skeleton from "react-loading-skeleton";
 import {Row,Col} from 'react-bootstrap';
+import {
+  Grid,
+  Paper,
+  Container,
+  Box,
+  Card
+} from '@material-ui/core';
 const SkeletonDropdown = () => {
 
     return (
-      <section>
-        {/* <Row >
-          <Col md={2}><Skeleton duration={.5} height={40} width={150} /> </Col>
-          <Col md={{ span: 2, offset: 3 }}><Skeleton duration={.15} height={60} width={65} /> </Col>
-        </Row> */}
-        {/* <Row>
-          <Col md={{ span: 6, offset: 3 }}><Skeleton duration={.15} height={20} width={300} /></Col>
-        </Row> */}
-        <Row>
-          <Col padding={2}><Skeleton circle={true} width={65} height={65} /><Skeleton duration={.15} height={20} width={100} /> </Col>
-          <Col> <Skeleton duration={.5} height={20} width={100} /></Col>
-          <Col><Skeleton duration={.5} height={20} width={100} /> </Col>
-          <Col> <Skeleton duration={.5} height={20} width={100} /></Col>
-          <Col><Skeleton duration={.5} height={20} width={100} /> </Col>
-        </Row>
-        <Row >
-          <Col><Skeleton rectangle={true} height={400} width={600} /></Col>
-          <Col><Skeleton rectangle={true} height={400} width={600} /> </Col>
-        </Row>   
-        <Row>
-          <Col><Skeleton rectangle={true} height={400} width={600} /></Col>
-          <Col><Skeleton rectangle={true} height={400} width={600} /> </Col>
-        </Row>  
-       </section>
+      <Box  p={2} lg={12}>
+        <Grid  lg={12} item container spacing={2} padding={2}>
+          <Grid lg={12} sm={6}>
+            <Row className=' mt-3 mb-3'>
+              <Col><Skeleton height={50}/> </Col>
+              <Col><Skeleton height={50}/> </Col>
+              <Col><Skeleton height={50}/> </Col>
+              <Col><Skeleton height={50}/> </Col>
+              <Col><Skeleton height={50}/> </Col>
+            </Row>
+          </Grid>
+          <Grid item lg={6} xs={12} sm={6}  zeroMinWidth><Skeleton height={400}/></Grid>
+          <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
+          <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
+          <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
+        </Grid>  
+      </Box>
     );
   };
   const SkeletonMapCard = () => {
@@ -53,9 +53,7 @@ const SkeletonDropdown = () => {
         <br/>
         <Skeleton rectangle={true} height={250} width={240} />&nbsp;&nbsp;&nbsp;&nbsp;
         <Skeleton rectangle={true} height={250} width={240} />
-
-
-</div>
+      </div>
       </section>
 
 );

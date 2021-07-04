@@ -207,6 +207,8 @@ export const Dropdown = ({}) =>{
           console.log(e);
           setIsSelected(false);
           setSelLifecycle(val);
+          setToggleState(true);
+
           let selCat = 1;
           if(val === 1 || val === 6){
             setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Determinants" } ])
@@ -245,6 +247,8 @@ export const Dropdown = ({}) =>{
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
+          setToggleState(true);
+
 
         }
      

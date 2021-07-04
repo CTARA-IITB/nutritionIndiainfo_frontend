@@ -484,7 +484,7 @@ export const Dropdown = ({}) =>{
       <div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
 				{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
 					<div><img src={mhf} className="health-ministry"/></div>
-				<div className="justify-center ml-10 mt-2">	<img src={nil} className="nutrition-india"/></div>
+				<div className="justify-center ml-10 mt-2">	<a href="/" target="_blank"><img src={nil} className="nutrition-india"/></a></div>
 				<div>	<img src={pa} className="poshan-abhiyan"/></div>
 				{/* </div> */}
 			</div>
@@ -575,7 +575,7 @@ export const Dropdown = ({}) =>{
 				</div>
 				<div className="col-2 col-lg-1 col-md-2 p-3  for-mobile-2 i-for-mobile-div3">
 					<div className="i-class">
-						<img src={iicon} className="i-icon md:mt-2"/>
+          <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon md:mt-2"/></a>
 					</div>
 				</div>
 			</div>

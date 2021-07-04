@@ -421,7 +421,7 @@ export const Map = ({
       })
   
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(50,85)`);
+      .attr('transform',`translate(50,60)`);
 
    
 
@@ -475,7 +475,7 @@ export const Map = ({
     
       })
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(50,85)`);
+      .attr('transform',`translate(50,60)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -531,7 +531,7 @@ export const Map = ({
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
           .style('fill-opacity',0.8)
-          .attr('transform',`translate(50,85)`)
+          .attr('transform',`translate(50,60)`)
       
         
    
@@ -566,7 +566,7 @@ export const Map = ({
       }
         svg.append("g")
           .attr("class", "legendQuant")
-          .attr("transform", `translate(${width-(width-100)},${adjustedHeight-150})`)
+          .attr("transform", `translate(${width-(width-10)},${adjustedHeight-150})`)
         }
     else{
       if(level === 2 || level === 3){
@@ -577,7 +577,7 @@ export const Map = ({
       }
         svg.append("g")
             .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-(width-50)},${adjustedHeight- 160})`)
+            .attr("transform", `translate(${width-(width-10)},${adjustedHeight- 160})`)
         }
             
 
@@ -690,8 +690,8 @@ export const Map = ({
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
         </div>
         <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
-              <div className="text-center absolute w-full text-xs md:text-sm md:top-1 top-5  font-bold">{`${mapTitle}`}</div>
-              <div className="text-center absolute w-full text-xs md:top-6 top-12">{`${warning}`}</div>
+              <div className="text-center  pr-4 pl-4 h-auto  w-full text-xs md:text-sm top-1 font-bold">{`${mapTitle}`}</div>
+              <div className="text-center  w-full text-xs ">{`${warning}`}</div>
 
 							<div id='map_svg' className='block align-middle w-full h-full' ref={wrapperRef}>
               <div className="bg-green-200 flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
@@ -701,9 +701,9 @@ export const Map = ({
                   {backButton}        
               </div>
             <svg    ref={svgRef} 
-            className="w-full bg-white  top-5 border-black border-dashed object-scale-down"></svg>
+            className="w-full bg-white border-black border-dashed object-scale-down"></svg>
 
-                <div className="absolute right-10 bottom-5  text-xs font-bold">
+                <div className="absolute right-10 bottom-3  text-xs font-bold">
                   {statusMsg}        
               </div>
             </div>

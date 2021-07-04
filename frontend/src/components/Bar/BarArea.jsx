@@ -22,7 +22,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 let dynamicRange;
   const margin = {
     left:160,
-    top: 100,
+    top: 50,
     right: 60,
     bottom: 50,
   };
@@ -301,8 +301,8 @@ let dynamicRange;
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
             </div>
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-              <div className="text-center absolute w-full font-bold md:top-1 top-5 md:text-sm text-xs" >{`${gBarTitle}`}</div>
-              <div className="text-center absolute w-full text-xs md:top-6 top-12" >{`${status}`}</div>
+              <div className="text-center pl-4 pr-4 w-full font-bold top-1 md:text-sm text-xs" >{`${gBarTitle}`}</div>
+              <div className="text-center  w-full text-xs" >{`${status}`}</div>
               <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg   ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
               </div>

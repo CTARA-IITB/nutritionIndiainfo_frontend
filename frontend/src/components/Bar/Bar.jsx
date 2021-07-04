@@ -21,7 +21,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, titleAreaName, to
   let graphUnit;
   const margin = {
     left:120,
-    top: 100,
+    top: 50,
     right: 70,
     bottom: 60,
   };
@@ -260,8 +260,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, titleAreaName, to
             <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
           </div>
           <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
-            <div className="text-center absolute w-full  font-bold text-xs md:top-1 top-5 md:text-sm">{`${gBarTitle}`}</div>
-            <div className="text-center absolute w-full text-xs md:top-6 top-12">{`${status}`}</div>
+            <div className="text-center pl-4 pr-4 w-full  font-bold text-xs top-1 md:text-sm">{`${gBarTitle}`}</div>
+            <div className="text-center  w-full text-xs md:top-6 top-12">{`${status}`}</div>
             <div id="gbar_svg" className='block align-middle w-full h-full' >
               <svg ref = {svgRef} className="w-full  bg-white  border-black border-dashed object-scale-down"></svg>
             </div>

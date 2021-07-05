@@ -258,15 +258,17 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
             <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
           </div>
           <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
-<<<<<<< HEAD
+
+
+
+            
           <div className="absolute w-full pr-4 pl-4 top-1">
             <div className="text-center w-full text-xs md:text-sm  font-bold">{`${gBarTitle}`}</div>
             <div className="text-center  w-full text-xs">{`${status}`}</div>
            </div>
-=======
-            <div className="text-center pl-4 pr-4 w-full  font-bold text-xs top-1 md:text-sm">{`${gBarTitle}`}</div>
-            <div className="text-center  w-full text-xs md:top-6 top-12">{`${status}`}</div>
->>>>>>> d8365fd5658fc494c46954f3e59665d2e935cb16
+
+
+
             <div id="gbar_svg" className='block align-middle w-full h-full' >
               <svg ref = {svgRef} className="w-full  bg-white  border-black border-dashed object-scale-down"></svg>
             </div>

@@ -65,8 +65,10 @@ let dynamicRange;
     if(level === 1){
       setStatus("By State");
       let sortedIndiaData;
-      if(toggleStateBurden)
+      if(toggleStateBurden){
+          selIndiaData = selIndiaData.filter(d => typeof d.data_value != 'undefined')
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+      }    
       else{
           selIndiaData = selIndiaData.filter(d => typeof d.data_value_num != 'undefined')
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
@@ -76,8 +78,10 @@ let dynamicRange;
     else if(level === 2 || level === 3){
       setStatus("By District")
       let sortedStateData;
-      if(toggleStateBurden)
+      if(toggleStateBurden){
+          selStateData = selStateData.filter(d => typeof d.data_value != 'undefined')
           sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+      }    
       else{
           selStateData = selStateData.filter(d => typeof d.data_value_num != 'undefined')
           sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))

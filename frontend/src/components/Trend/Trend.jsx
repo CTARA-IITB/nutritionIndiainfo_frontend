@@ -56,14 +56,16 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const formatTooltipTime = timeFormat('%b %Y');
   // const formatTitleTime = timeFormat('%Y');
 
-  // //For One Decimel Precision    
+ //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
-    if(toggleStateBurden === false){
-      return oneDecimel = d;
-    }
-    else{
-      oneDecimel = d.toFixed(1);  
+    if(typeof d !== 'undefined'){
+      if(graphUnit !== 'Percent'){
+        oneDecimel = fmt.format(d);
+      }
+      else {
+        oneDecimel =fmt.formatFixed(d, 1)
+      }
       return oneDecimel;
     }
   }  
@@ -222,7 +224,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
           .attr("fill", colorScale)
           .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
           .on('mousemove',(e,d)=>{
-            return tooltipX.html(`<b>${d.timeperiod}</b> : ${fmt.format(decimalPrecision(yValue(d)))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
+            return tooltipX.html(`<b>${d.timeperiod}</b> : ${decimalPrecision(yValue(d))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
           })
           .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       

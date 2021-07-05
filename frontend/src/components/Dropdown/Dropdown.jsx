@@ -598,6 +598,8 @@ export const Dropdown = ({}) =>{
           titleAreaName = {titleAreaName}
           graphTimeperiod = {graphTimeperiod}
           toggleStateBurden = {toggleStateBurden}
+          selLifecycle={selLifeycle}
+          selCategory ={selCategory}
           selIndicator={selIndicator}
           />: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
@@ -615,6 +617,8 @@ export const Dropdown = ({}) =>{
           searchRef={searchRef} 
           setFilterDropdownValue={setFilterDropdownValue} 
           areaDropdownOpt={areaDropdownOpt} 
+          selLifecycle={selLifeycle}
+          selCategory ={selCategory}
           selIndicator={selIndicator}
           indicatorSense={indicatorSense} 
           isLevelThree = {isLevelThree}
@@ -661,6 +665,8 @@ export const Dropdown = ({}) =>{
           areaName = {areaName}
           selStateData = {selStateData}
           toggleStateBurden = {toggleStateBurden}
+          selLifecycle={selLifeycle}
+          selCategory ={selCategory}
           selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />:<div id="msg">No data: please select another area</div>}
      </div>
 
@@ -675,6 +681,8 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
+      selLifecycle={selLifeycle}
+      selCategory ={selCategory}
       selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
 

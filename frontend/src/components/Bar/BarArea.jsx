@@ -13,7 +13,7 @@ import {
 } from 'd3';
 import { size } from 'lodash';
 
-export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
+export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selLifecycle,selCategory,selIndicator}) => {
 
   const screen=useFullScreenHandle();
   const svgRef = useRef();
@@ -302,7 +302,7 @@ let dynamicRange;
         <FullScreen  className="w-full bg-white" handle={screen} onChange={reportChange}>
           <div className='relative w-full' id="h_bar">
             <div className="block absolute z-10 w-full max-h-max right-5">
-              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
+              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
             <div className="absolute w-full pr-4 pl-4 top-1">

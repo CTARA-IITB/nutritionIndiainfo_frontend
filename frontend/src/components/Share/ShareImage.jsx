@@ -3,7 +3,7 @@ import "./Share.css";
 import * as htmlToImage from "html-to-image";
 import { WhatsappIcon,WhatsappShareButton,TwitterIcon,TwitterShareButton} from 'react-share';
 
-const ShareImage =({id,sel})=> {
+const ShareImage =({id,selLifecycle,selCategory,selIndicator})=> {
 
   const [imageUrl,setImageUrl]= useState();
   useEffect(()=>{
@@ -18,11 +18,11 @@ const ShareImage =({id,sel})=> {
           console.error('oops, something went wrong!', error);
       }); 
   })
-    
+  const url =  "http://localhost:3000/"+ selLifecycle + "/" + selCategory + "/" + selIndicator;
   return (
     < div className="container"  >
-      <TwitterShareButton  url="http://localhost:3000/5/1/18"> <TwitterIcon  size={25}/></TwitterShareButton> 
-      <WhatsappShareButton url="http://localhost:3000/5/1/18"> <WhatsappIcon size={25}/></WhatsappShareButton>
+      <TwitterShareButton  url={url}> <TwitterIcon  size={25}/></TwitterShareButton> 
+      <WhatsappShareButton url={url}> <WhatsappIcon size={25}/></WhatsappShareButton>
     </div>
   );
 }

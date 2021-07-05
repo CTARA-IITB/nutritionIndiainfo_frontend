@@ -26,5 +26,5 @@
 
 
 .fullscreen-enabled{
-  overflow: scroll;
+  overflow: auto;
 }

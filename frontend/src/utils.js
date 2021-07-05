@@ -95,7 +95,8 @@ export const createHierarchy = (options) =>{
     setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
   {
 
-    const solr_url_6 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=value:indicator_id%2Ctitle:indicator_name%2Cindi_sense&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`);
+    const solr_url_6 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=value:indicator_id%2Ctitle:indicator_short_name%2Cindi_sense%2Cindicator_name&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`);
+    // console.log(solr_url_6.url);
     const solr_body_6 = await solr_url_6.json();
     setIndicatorDropdownOpt(solr_body_6.response.docs);
     let indiVal;
@@ -103,16 +104,17 @@ export const createHierarchy = (options) =>{
       let passedIndicator = solr_body_6.response.docs.filter(i => i.value === parseInt(queryIndicator));
       setSelIndicator(passedIndicator[0].value);
       setIndicatorSense(passedIndicator[0].indi_sense);
-      setGraphTitle(passedIndicator[0].title)
+      setGraphTitle(passedIndicator[0].indicator_name)
       indiVal = passedIndicator[0].value;
 
     }
     else{
       setSelIndicator(solr_body_6.response.docs[0].value);
       setIndicatorSense(solr_body_6.response.docs[0].indi_sense);
-      setGraphTitle(solr_body_6.response.docs[0].title);
+      setGraphTitle(solr_body_6.response.docs[0].indicator_name);
       indiVal = solr_body_6.response.docs[0].value;
     }
+    console.log(solr_body_6.response.docs[0].indicator_name)
 
     const solr_url_8 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
     const solr_body_8 = await solr_url_8.json();

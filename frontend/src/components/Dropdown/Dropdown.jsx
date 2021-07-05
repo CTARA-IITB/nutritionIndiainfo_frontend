@@ -264,7 +264,7 @@ export const Dropdown = ({}) =>{
           }
           setSelIndicator(val);
           let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
-          let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
+          let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].indicator_name;
           setGraphTitle(indiName);
           setIndicatorSense(indiSense);
           let solr_url;

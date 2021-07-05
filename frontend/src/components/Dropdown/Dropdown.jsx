@@ -21,10 +21,7 @@ import "./bootstrap.min.css";
 import "./tailwind.min.css";
 import "./dashboard.css";
 import "./responsive.css";
-//header images
-import mhf from './images/mhf.png'
-import nil from './images/nutrition-logo.svg'
-import pa from './images/pa.png'
+
 // dropdown images
 import adolescene from './images/lifecycle/Adolescene.png'
 import wora from './images/lifecycle/Women-of-Reproductive-Age.png'
@@ -33,11 +30,7 @@ import delivery from './images/lifecycle/DeliveryPNC.png'
 import early_childhood from './images/lifecycle/Early-Childhood.png'
 import school_age from './images/lifecycle/School-Age-.png'
 import iicon from "./images/i-con5.png";
-// footer images
-import nilf from "./images/nutrition-logo-footer.svg";
-import clf from "./images/ctara-logo.png";
-import pl from "./images/proditech-logo.png";
-import unil from "./images/unicefLogo.png";
+
 
 
 export const Dropdown = ({}) =>{
@@ -484,15 +477,7 @@ export const Dropdown = ({}) =>{
     return (
       <>
  
-			<main id='main_app_container' className='flex flex-col max-h-screen'>
-      
-      <div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
-				{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
-					<div><img src={mhf} className="health-ministry"/></div>
-				<div className="justify-center ml-10 mt-2">	<a href="/" target="_blank"><img src={nil} className="nutrition-india"/></a></div>
-				<div>	<img src={pa} className="poshan-abhiyan"/></div>
-				{/* </div> */}
-			</div>
+
 
       <header
 					id='main_menu'
@@ -599,20 +584,6 @@ export const Dropdown = ({}) =>{
 			</div>
 		</div> */}
 		</header>
-		<div>
-
-
-		
-		
- 
-
-
-  
- 
-
-
-
-
 
      {/* Nakul sir style  */}
 
@@ -713,25 +684,7 @@ export const Dropdown = ({}) =>{
 
 
 
-  <footer className="footer p-0 mt-4">
-			<div className="row  p-0 m-0 align-items-center">
-				<div className="col-3">
-					<a href="https://nutritionindia.info/" target="_blank"><img src={nilf} className="nutrition-image"/></a>
-				</div>
-				<div className="col-3">
-					<a href="https://www.ctara.iitb.ac.in/" target="_blank"><img src={clf} title="CTARA" className="iitb-image"/></a>
-				</div>
-				<div className="col-3">
-					<a href="https://proditech.in" target="_blank"><img src={pl} title="Nutrition India, Website developed by PRODITECH Solutions, Mumbai." className="proditech-image"/></a>
-				</div>
-				<div className="col-3">
-					<a href="http://unicef.in/" target="_blank"><img src={unil}  className="unichef-image"/></a>
-				</div>
-			</div> 
-		</footer>
-		
-	</div> 
-  </main>
+    
    </>
     )
 }

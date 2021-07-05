@@ -46,6 +46,7 @@ export const createHierarchy = (options) =>{
   {
 
     const url_1 =  await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=timeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name%2Csubgroup_category%2Cstart_date%2Cend_date&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&omitHeader=true&q=*%3A*&rows=400&sort=timeperiod_id%20asc`);
+    console.log(url_1.url)
     const body_1 = await url_1.json();
     setIndicatorTrend(body_1.response.docs)
 

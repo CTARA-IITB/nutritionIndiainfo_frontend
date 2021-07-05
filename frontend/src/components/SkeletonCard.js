@@ -12,25 +12,18 @@ import {
 
 const SkeletonDropdown = () => {
   return (
-    
-    <Box pt={7} lg={12}>
-      <Grid  lg={12} item container spacing={2} padding={2} >
-        <Grid lg={12} sm={6}>
-          <Row className=' mt-3 mb-3'>
-            <Col><Skeleton height={30}/> </Col>
-            <Col><Skeleton height={30}/> </Col>
-            <Col><Skeleton height={30}/> </Col>
-            <Col><Skeleton height={30}/> </Col>
-            <Col><Skeleton height={30}/> </Col>
-          </Row>
-        </Grid>
+    <Box p={2} lg={12} >
+      <Grid  lg={12} container spacing={2} padding={2}>
+        <Grid item lg={3} xs={6} sm={3}  zeroMinWidth><Skeleton height={30}/></Grid>
+        <Grid item lg={3} xs={6} sm={3}  ><Skeleton height={30}/></Grid>
+        <Grid item lg={3} xs={6} sm={3}  ><Skeleton height={30}/></Grid>
+        <Grid item lg={3} xs={6} sm={3}  ><Skeleton height={30}/></Grid>
         <Grid item lg={6} xs={12} sm={6}  zeroMinWidth><Skeleton height={400}/></Grid>
         <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
         <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
         <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
       </Grid>  
     </Box>
-    
   );
 };
   const SkeletonMapCard = () => {

@@ -22,7 +22,6 @@ const SkeletonDropdown = () => {
             <Col><Skeleton height={30}/> </Col>
             <Col><Skeleton height={30}/> </Col>
             <Col><Skeleton height={30}/> </Col>
-            <Col><Skeleton circle={true}  width ={30} height={30}/> </Col>
           </Row>
         </Grid>
         <Grid item lg={6} xs={12} sm={6}  zeroMinWidth><Skeleton height={400}/></Grid>

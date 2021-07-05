@@ -56,17 +56,27 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const formatTooltipTime = timeFormat('%b %Y');
   // const formatTitleTime = timeFormat('%Y');
 
- //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(graphUnit !== 'Percent'){
-        oneDecimel = fmt.format(d);
-      }
-      else {
-        oneDecimel =fmt.formatFixed(d, 1)
-      }
-      return oneDecimel;
+      if(toggleStateBurden === false){
+        if(graphUnit !== 'Percent'){
+          oneDecimel = fmt.format(d);
+        }
+        else {
+          oneDecimel =fmt.formatFixed(d, 1)
+        }
+        return oneDecimel;
+      } 
+      else{
+        if(graphUnit !== 'Percent'){
+          oneDecimel = fmt.format(d);
+        }
+        else {
+          oneDecimel =fmt.formatFixed(d, 1)
+        }
+        return oneDecimel;
+      }   
     }
   }  
 

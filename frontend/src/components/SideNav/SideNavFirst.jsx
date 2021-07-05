@@ -17,7 +17,7 @@ import "./SideNav.css";
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
 
-const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})=>{
+const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,selLifecycle,selCategory,selIndicator})=>{
 
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenTable, setIsOpenTable] = useState(false);
@@ -147,7 +147,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
             {isOpenShare && <Popup
             content={<>
-                <ShareImage id={id}/>
+                <ShareImage id={id} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </>}
                 handleClose={toggleShare}
             />}

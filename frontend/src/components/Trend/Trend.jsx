@@ -25,7 +25,7 @@ let margin = {
 };
 
 
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend, selIndicator}) => { 
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend,selLifecycle,selCategory,selIndicator}) => { 
 
   let [data, setData] = useState(null);
   const svgRef = useRef();
@@ -56,17 +56,27 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const formatTooltipTime = timeFormat('%b %Y');
   // const formatTitleTime = timeFormat('%Y');
 
- //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
     if(typeof d !== 'undefined'){
-      if(graphUnit !== 'Percent'){
-        oneDecimel = fmt.format(d);
-      }
-      else {
-        oneDecimel =fmt.formatFixed(d, 1)
-      }
-      return oneDecimel;
+      if(toggleStateBurden === false){
+        if(graphUnit !== 'Percent'){
+          oneDecimel = fmt.format(d);
+        }
+        else {
+          oneDecimel =fmt.formatFixed(d, 1)
+        }
+        return oneDecimel;
+      } 
+      else{
+        if(graphUnit !== 'Percent'){
+          oneDecimel = fmt.format(d);
+        }
+        else {
+          oneDecimel =fmt.formatFixed(d, 1)
+        }
+        return oneDecimel;
+      }   
     }
   }  
 
@@ -225,7 +235,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
           .attr("fill", colorScale)
           .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
           .on('mousemove',(e,d)=>{
-            return tooltipX.html(`<b>${d.timeperiod}</b> : ${fmt.format(decimalPrecision(yValue(d)))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
+            return tooltipX.html(`<b>${d.timeperiod}</b> : ${decimalPrecision(yValue(d))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
           })
           .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       
@@ -308,7 +318,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       <FullScreen  className="w-full bg-white h-full" handle={screen}>
         <div className='static relative w-full h-full'>
           <div className="block absolute z-10 w-full max-h-max right-5">
-            <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
+            <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
           </div>
           <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
             <div className="text-center absolute right-10 left-10 mx-10 w-auto  font-bold  text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>

@@ -64,6 +64,19 @@ export const Map = ({
   //   return generatedLabels[i]
   // };
   
+  //For One Decimel Precision    
+  function decimalPrecision(d){
+    let oneDecimel;
+    if(typeof d !== 'undefined'){
+      if(graphUnit !== 'Percent'){
+        oneDecimel = fmt.format(d);
+      }
+      else {
+        oneDecimel =fmt.formatFixed(d, 1)
+      }
+      return oneDecimel;
+    }
+  }  
   //merge geometry and data
 
   function addProperties(geojson, data) {
@@ -365,7 +378,7 @@ export const Map = ({
       if (typeof c2Value(d) != 'undefined') {
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + fmt.format(c2Value(d)))
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + decimalPrecision(c2Value(d)))
           .style("left", event.clientX - width+ "px")
           .style("top", event.clientY - height/2 + "px")
           .style("font-size","12px");

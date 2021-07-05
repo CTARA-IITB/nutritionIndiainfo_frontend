@@ -19,7 +19,11 @@ import {
 
 let margin = {
   left: 50,
+<<<<<<< HEAD
   top: 43,
+=======
+  top: 53,
+>>>>>>> d8365fd5658fc494c46954f3e59665d2e935cb16
   right: 10,
   bottom: 50,
 };
@@ -56,14 +60,16 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const formatTooltipTime = timeFormat('%b %Y');
   // const formatTitleTime = timeFormat('%Y');
 
-  // //For One Decimel Precision    
+ //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
-    if(toggleStateBurden === false){
-      return oneDecimel = d;
-    }
-    else{
-      oneDecimel = d.toFixed(1);  
+    if(typeof d !== 'undefined'){
+      if(graphUnit !== 'Percent'){
+        oneDecimel = fmt.format(d);
+      }
+      else {
+        oneDecimel =fmt.formatFixed(d, 1)
+      }
       return oneDecimel;
     }
   }  

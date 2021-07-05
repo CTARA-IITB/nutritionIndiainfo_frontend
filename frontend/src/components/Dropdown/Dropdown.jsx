@@ -120,7 +120,7 @@ export const Dropdown = ({}) =>{
 ];
   const [drillDirection,setDrillDirection] = useState(true);
   //let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
-  let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63];
+  let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63, 56];
 
 
     useEffect(() => {
@@ -628,7 +628,7 @@ export const Dropdown = ({}) =>{
           graphTimeperiod = {graphTimeperiod}
           toggleStateBurden = {toggleStateBurden}
           selIndicator={selIndicator}
-          />: (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
+          />: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
 
      <div className=" flex w-full md:w-1/2">
@@ -672,7 +672,7 @@ export const Dropdown = ({}) =>{
           changeBurdenText={changeBurdenText}
           drillDirection = {drillDirection}
           setDrillDirection ={setDrillDirection}
-          /> : (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
+          /> : (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
      </section>
 
@@ -690,7 +690,7 @@ export const Dropdown = ({}) =>{
           areaName = {areaName}
           selStateData = {selStateData}
           toggleStateBurden = {toggleStateBurden}
-          selIndicator={selIndicator}/>: (selTimeperiod!== "")? null:<div id="msg">No data: please select another area</div>}
+          selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />:<div id="msg">No data: please select another area</div>}
      </div>
 
      <div className='flex w-full md:w-1/2'>
@@ -704,7 +704,7 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
+      selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
 
      </section>

@@ -4,16 +4,13 @@ import Skeleton from "react-loading-skeleton";
 import {Row,Col} from 'react-bootstrap';
 import {
   Grid,
-  Paper,
-  Container,
   Box,
-  Card
 } from '@material-ui/core';
 
 const SkeletonDropdown = () => {
   return (
     <Box p={2} lg={12} >
-      <Grid  lg={12} container spacing={2} padding={2}>
+      <Grid  lg={12} item container spacing={2} padding={2}>
         <Grid item lg={3} xs={6} sm={3}  zeroMinWidth><Skeleton height={30}/></Grid>
         <Grid item lg={3} xs={6} sm={3}  ><Skeleton height={30}/></Grid>
         <Grid item lg={3} xs={6} sm={3}  ><Skeleton height={30}/></Grid>

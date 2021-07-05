@@ -5,3 +5,6 @@
 #title{
     font-weight: bold;
 }
+.sideNav{
+    z-index: -1;
+}

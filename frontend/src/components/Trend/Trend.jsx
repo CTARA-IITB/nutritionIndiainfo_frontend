@@ -19,7 +19,7 @@ import {
 
 let margin = {
   left: 50,
-  top: 53,
+  top: 43,
   right: 10,
   bottom: 50,
 };
@@ -128,7 +128,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
    
     
     svg.selectAll("*").remove();
-    svg.attr("preserveAspectRatio", "xMinYMin meet")
+    svg
+    .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
     
     // svg.attr("width", width)
@@ -302,13 +303,13 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   return (
     <>
-      <FullScreen  className="w-full h-full" handle={screen}>
+      <FullScreen  className="w-full bg-white h-full" handle={screen}>
         <div className='static relative w-full h-full'>
           <div className="block absolute z-10 w-full max-h-max right-5">
             <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
           </div>
           <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
-            <div className="text-center pl-4 pr-4 w-full  font-bold text-xs md:text-sm  md:top-1 top-5 ">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
+            <div className="text-center absolute right-10 left-10 mx-10 w-auto  font-bold  text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
             <div id="trend_svg" className='align-middle  w-full h-full' ref={trendWrapper}>
               <svg   ref = {svgRef} className="w-full   bg-white  border-black border-dashed object-scale-down"></svg>
             </div>

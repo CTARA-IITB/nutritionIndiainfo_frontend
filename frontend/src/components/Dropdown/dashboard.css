@@ -1,10 +1,10 @@
-.sticky {
+/* .sticky {
 	position: fixed;
 	top: 0;
 	width: 100%;
 	z-index: 99999;
 	background-color: white;
-}
+} */
 
 .sticky + .content {
   	padding-top: 102px;

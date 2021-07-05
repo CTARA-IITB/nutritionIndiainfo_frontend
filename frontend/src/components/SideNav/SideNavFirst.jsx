@@ -129,13 +129,14 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
     return(
         <>
-            {isOpenTable && <Popup
+            {isOpenTable && <Popup style={{ zIndex:50 }}
             content={<>
-                <div id="title">{title}</div>
+                <div id="title" className="table">{title}</div>
                 <BootstrapTable data={ table } 
                     hover 
                     search
                     headerStyle={ { background:'#ECECEC' } }
+                
                 >
                     <TableHeaderColumn dataField={dataField}  isKey dataSort>{columnName}</TableHeaderColumn>
                     <TableHeaderColumn dataField='data'>Data</TableHeaderColumn>
@@ -165,7 +166,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
             </div>}
                 handleClose={togglePopup}
             />}
-            <Dropdown style={{float:'right'}}>
+            <Dropdown style={{float:'right'}} className="sideNav">
                 <Dropdown.Toggle variant="link" bsPrefix="p-0">
                     <MenuIcon id="icon"/>
                 </Dropdown.Toggle>

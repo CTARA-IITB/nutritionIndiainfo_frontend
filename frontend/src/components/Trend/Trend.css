@@ -23,6 +23,7 @@ div.tooltipX{
 }
 .fullscreen_enabled{
   height: 2500px !important;
+  position: absolute;
 }
 .trend_svg {
   /* background-color:grey; */

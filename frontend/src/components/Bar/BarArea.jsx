@@ -265,8 +265,8 @@ let dynamicRange;
   }
   const reportChange = (state, handle) => {
     if(state === true){
-     document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'height: 2500px !important');
-      document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: 2500px !important`);
+     document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
+
        
     }
     else{
@@ -295,14 +295,17 @@ let dynamicRange;
  
   return (
       <>
-        <FullScreen  className="w-full" handle={screen} onChange={reportChange}>
+        <FullScreen  className="w-full bg-white" handle={screen} onChange={reportChange}>
           <div className='relative w-full' id="h_bar">
             <div className="block absolute z-10 w-full max-h-max right-5">
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
             </div>
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-              <div className="text-center pl-4 pr-4 w-full font-bold top-1 md:text-sm text-xs" >{`${gBarTitle}`}</div>
-              <div className="text-center  w-full text-xs" >{`${status}`}</div>
+            <div className="absolute w-full pr-4 pl-4 top-1">
+
+              <div className="text-center w-full text-xs md:text-sm  font-bold" >{`${gBarTitle}`}</div>
+              <div className="text-center   w-full text-xs" >{`${status}`}</div>
+              </div>
               <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg   ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
               </div>

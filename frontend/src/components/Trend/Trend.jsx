@@ -160,7 +160,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       let min_year = min_d.getFullYear();
       let min_month = min_d.getMonth();
       let min_day = min_d.getDate();
-      let min_date = new Date(min_year, min_month-3, min_day);
+      let min_date = new Date(min_year, min_month-6, min_day);
 
       let max_d =  max(listofDate);
       let max_year = max_d.getFullYear();
@@ -235,7 +235,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
           .attr("fill", colorScale)
           .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
           .on('mousemove',(e,d)=>{
-            return tooltipX.html(`<b>${d.timeperiod}</b> : ${decimalPrecision(yValue(d))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
+            return tooltipX.html(`<b>${d.timeperiod}</b> : ${decimalPrecision(yValue(d))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX) - 80+"px");
           })
           .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       

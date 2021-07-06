@@ -18,7 +18,7 @@ const ShareImage =({id,selLifecycle,selCategory,selIndicator})=> {
           console.error('oops, something went wrong!', error);
       }); 
   })
-  const url =  "http://localhost:3000/"+ selLifecycle + "/" + selCategory + "/" + selIndicator;
+  const url =  `${window.location.href}${selLifecycle}/${selCategory}/${selIndicator}`;
   return (
     < div className="container"  >
       <TwitterShareButton  url={url}> <TwitterIcon  size={25}/></TwitterShareButton> 

@@ -645,10 +645,10 @@ export const Map = ({
   if(switchDisplay && level === 1){
     switchButton =        <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
     <li className="nav-item">
-        <a  className={`nav-link ${toggleState  && 'active radius2'}` }   id="state" data-toggle="tab"  role="tab" aria-controls="state" aria-selected="true" onClick={()=>{ setToggleState(true)}}>State</a>
+        <a  className={`nav-link radius2 ${toggleState  && 'active'}` }   id="state" data-toggle="tab"  role="tab" aria-controls="state" aria-selected="true" onClick={()=>{ setToggleState(true)}}>State</a>
     </li>
     <li className="nav-item">
-        <a className={`nav-link ${!toggleState  && 'active radius'}` }  id="district" data-toggle="tab" role="tab" aria-controls="district" aria-selected="false" onClick={()=>{ setToggleState(false)}} style={{"width":"70px"}}>District</a>
+        <a className={`nav-link radius ${!toggleState  && 'active'}` }  id="district" data-toggle="tab" role="tab" aria-controls="district" aria-selected="false" onClick={()=>{ setToggleState(false)}} style={{"width":"70px"}}>District</a>
     </li>
 </ul>
     // <div><Button className={`req_button ${!toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 

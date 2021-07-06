@@ -37,6 +37,8 @@ export const Map = ({
 
 }) => {
 
+  
+
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -675,6 +677,7 @@ export const Map = ({
             data:fmt.format(data[i].data_value_num)
           })
         }
+        graphUnit='Number'
       }
     }
   }

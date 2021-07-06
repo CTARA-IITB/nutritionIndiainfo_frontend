@@ -256,14 +256,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .text(function(d) { return d.timeperiod; });
     }
     else{
-      bar.append("text")
-      .attr('x',width/2 -90)
-      .attr('y',0)
-      .style("text-anchor","middle")
-      .style("font-size","13px")
-      .style("font-weight","bold")
-      .attr("dy", "-2em")
-      .text(`${graphTitle},${titleAreaName}`)
+      // bar.append("text")
+      // .attr('x',width/2 -90)
+      // .attr('y',0)
+      // .style("text-anchor","middle")
+      // .style("font-size","13px")
+      // .style("font-weight","bold")
+      // .attr("dy", "-2em")
+      // .text(`${graphTitle},${titleAreaName}`)
 
       // bar.append("text")
       // .attr("x",innerWidth/2)

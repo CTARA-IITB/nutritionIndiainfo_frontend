@@ -65,7 +65,7 @@ export const Map = ({
   //   }
   //   return generatedLabels[i]
   // };
-  
+  console.log(graphUnit)
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
@@ -79,6 +79,7 @@ export const Map = ({
       return oneDecimel;
     }
   }  
+  
   //merge geometry and data
 
   function addProperties(geojson, data) {

@@ -312,7 +312,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
     }
   }
-
+  
   return (
     <>
       <FullScreen  className="w-full bg-white h-full" handle={screen}>

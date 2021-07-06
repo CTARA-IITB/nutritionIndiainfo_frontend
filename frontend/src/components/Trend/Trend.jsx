@@ -160,7 +160,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       let min_year = min_d.getFullYear();
       let min_month = min_d.getMonth();
       let min_day = min_d.getDate();
-      let min_date = new Date(min_year, min_month-3, min_day);
+      let min_date = new Date(min_year, min_month-6, min_day);
 
       let max_d =  max(listofDate);
       let max_year = max_d.getFullYear();

@@ -324,6 +324,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
             <div className="text-center absolute right-10 left-10 mx-10 w-auto  font-bold  text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
             <div id="trend_svg" className='align-middle  w-full h-full' ref={trendWrapper}>
               <svg   ref = {svgRef} className="w-full   bg-white  border-black border-dashed object-scale-down"></svg>
+              <div className=" absolute  bg-red-200 left-2   text-xs">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
+
             </div>
           </div>
         </div>

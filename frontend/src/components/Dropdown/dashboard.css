@@ -20,8 +20,8 @@
 }
 
 .health-ministry {
-	height: auto;
-	width: 30%;
+	height: 100%;
+	width: 50%;
 }
 
 .poshan-abhiyan {
@@ -48,8 +48,10 @@
 	background: #D66D07;
 	padding: 0 20px;
 	position: relative;
-	font-weight: 500;
 	
+}
+select{
+	font-size: 14px;
 }
 .select-category {
 	border: 1px solid transparent;
@@ -130,13 +132,16 @@
 }
 .nav-tabs {
     border-bottom: none;
+	height: 1.7rem;
 }
 .nav-tabs .nav-item {
+	font-size: 14px;
     margin-bottom: 0px;
     width: 50%;
+	
 }
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-	color: #fff;
+	/* color: #fff; */
 	background-color: transparent;
 	border-color: transparent;
 	display: inline-block;
@@ -165,9 +170,9 @@
 	border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-.nav-item a {
+/* .nav-item a {
     color: #fff;
-}
+} */
 .select-lifecycle-child:after {
 	content: '';
     display: inline-block;

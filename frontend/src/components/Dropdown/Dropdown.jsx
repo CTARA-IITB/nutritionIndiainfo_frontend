@@ -511,7 +511,7 @@ export const Dropdown = ({}) =>{
 								</select>
 							</div>
 						</div>
-						<div className="col-6 col-lg-3 p-2">
+						<div className="col-6 col-lg-3 pt-2">
 							<div className="toogle-button">
                 {burdenDropdown}
 								{/* <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">

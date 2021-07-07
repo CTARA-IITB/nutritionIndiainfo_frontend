@@ -65,6 +65,7 @@ span.ant-select-selection-item{
 
 
 .tg_button{
+  height: 1.7rem;
   font-family: Arial, Helvetica, sans-serif;
   margin-top: 20px;
   background-color: #AF5907 !important;
@@ -72,6 +73,8 @@ span.ant-select-selection-item{
 }
 
 .tg_button_light{
+  font-size: 14px;
+
   background-color: #AF590780 !important;
   border-color: #AF590780 !important;
 }

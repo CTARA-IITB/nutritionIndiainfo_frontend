@@ -697,26 +697,26 @@ export const Map = ({
 
   let backButton;
   if(level !== 1)  
-    backButton = <Button className={`back_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'20px'}}/></Button> 
+    backButton = <Button className={`back_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'14px'}}/></Button> 
 
   return (
     <>
       <FullScreen className="w-full bg-white h-full" handle={screen}>
       
 			<div className='relative w-full h-full'>
-			  <div className="block absolute z-10 w-full max-h-max right-5">
+			  <div className="block absolute z-10 w-auto max-h-max left-15 right-5">
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
         </div>
         <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
-          <div className="absolute w-full pr-4 pl-4 top-1">
-              <div className="text-center w-full text-xs md:text-sm  font-bold">{`${mapTitle}`}</div>
-              <div className="text-center w-full text-xs ">{`${warning}`}</div>
+          <div className="absolute  right-10 left-10 mx-10 w-auto top-1">
+              <div className="text-center  text-xs md:text-sm  font-bold">{`${mapTitle}`}</div>
+              <div className="text-center  text-xs ">{`${warning}`}</div>
               </div>
 							<div id='map_svg' className='block align-middle w-full h-full' ref={wrapperRef}>
-              <div className="bg-green-200 flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
+              <div className="flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
                   {switchButton}       
               </div>
-              <div className="bg-green-400 absolute left-10 top-10">
+              <div className="absolute left-5 top-0">
                   {backButton}        
               </div>
             <svg    ref={svgRef} 

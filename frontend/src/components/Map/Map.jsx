@@ -704,7 +704,7 @@ export const Map = ({
       <FullScreen className="w-full bg-white h-full" handle={screen}>
       
 			<div className='relative w-full h-full'>
-			  <div className="block absolute z-10 w-full max-h-max right-5">
+			  <div className="block absolute z-10 w-auto max-h-max left-15 right-5">
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
         </div>
         <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
@@ -713,10 +713,10 @@ export const Map = ({
               <div className="text-center  text-xs ">{`${warning}`}</div>
               </div>
 							<div id='map_svg' className='block align-middle w-full h-full' ref={wrapperRef}>
-              <div className="bg-green-200 flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
+              <div className="flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
                   {switchButton}       
               </div>
-              <div className="bg-green-400 absolute left-10 top-0">
+              <div className="absolute left-5 top-0">
                   {backButton}        
               </div>
             <svg    ref={svgRef} 

@@ -487,7 +487,7 @@ export const Dropdown = ({}) =>{
 					className='p-2 flex flex-wrap
                   justify-between lg:top-0  bg-white'>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
-				<div className="col-10 col-lg-5 col-md-5 p-3 for-mobile-1 bg-red-200">
+				<div className="col-10 col-lg-5 col-md-5 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
 						<img src={selLifeycleImg} className="lifecycle-img"/>
 						<div className="select-lifecycle-parent">
@@ -504,7 +504,7 @@ export const Dropdown = ({}) =>{
 						</div>
 					</div>
 				</div>
-				<div className="col-12 col-lg-6 col-md-6 p-3 for-mobile-3 bg-green-200">
+				<div className="col-12 col-lg-6 col-md-6 p-3 for-mobile-3">
 					<div className="row">
 						<div className="col-6 col-lg-3 p-2">
 							<div>
@@ -566,7 +566,7 @@ export const Dropdown = ({}) =>{
 						</div>
 					</div>
 				</div>
-				<div className="col-2 col-lg-1 col-md-1 p-3  for-mobile-2 i-for-mobile-div3 bg-yellow-200">
+				<div className="col-2 col-lg-1 col-md-1 p-3  for-mobile-2 i-for-mobile-div3">
 					<div className="i-class">
           <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon md:mt-2"/></a>
 					</div>

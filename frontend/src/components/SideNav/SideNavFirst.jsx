@@ -137,6 +137,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
                     search
                     headerStyle={ { background:'#ECECEC', zIndex:'99' } }
                     className="table"
+                    style={{ backgroundColor:"red"}}
                 >
                     <TableHeaderColumn dataField={dataField}  isKey dataSort>{columnName}</TableHeaderColumn>
                     <TableHeaderColumn dataField='data'>Data</TableHeaderColumn>

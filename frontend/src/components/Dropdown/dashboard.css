@@ -179,7 +179,7 @@ select{
     display: inline-block;
     width: 0;
     height: 0;
-    border: 12px solid transparent;
+    border: 13px solid transparent;
     /* vertical-align: middle; */
     position: absolute;
 }

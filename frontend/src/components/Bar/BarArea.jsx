@@ -18,6 +18,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   const screen=useFullScreenHandle();
   const svgRef = useRef();
   const trendWrapper = useRef();
+  const  componentRef = useRef();
   let gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
 let dynamicRange;
   const margin = {
@@ -302,9 +303,9 @@ let dynamicRange;
         <FullScreen  className="w-full bg-white" handle={screen} onChange={reportChange}>
           <div className='relative w-full' id="h_bar">
             <div className="block absolute z-10 w-full max-h-max right-5">
-              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>
-            <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
+            <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef}>
             <div className="absolute w-full pr-4 pl-4 top-1">
 
               <div className="text-center w-full text-xs md:text-sm  font-bold" >{`${gBarTitle}`}</div>

@@ -37,10 +37,13 @@ export const Map = ({
 
 }) => {
 
+  
+
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
   const wrapperRef = useRef();
+  const componentRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
  
   if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true)) {
@@ -676,6 +679,7 @@ export const Map = ({
             data:fmt.format(data[i].data_value_num)
           })
         }
+        graphUnit='Number'
       }
     }
   }
@@ -703,9 +707,9 @@ export const Map = ({
       
 			<div className='relative w-full h-full'>
 			  <div className="block absolute z-10 w-full max-h-max right-5">
-          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
         </div>
-        <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
+        <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap" ref={componentRef}>
           <div className="absolute w-full pr-4 pl-4 top-1">
               <div className="text-center w-full text-xs md:text-sm  font-bold">{`${mapTitle}`}</div>
               <div className="text-center w-full text-xs ">{`${warning}`}</div>

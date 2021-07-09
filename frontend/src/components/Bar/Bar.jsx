@@ -17,7 +17,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
   const screen = useFullScreenHandle();
   let status = "By Background Characteristics";
   const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
-  const svgRef = useRef();
+  const svgRef = useRef()
+  const componentRef = useRef();
   const margin = {
     left:120,
     top: 50,
@@ -255,9 +256,9 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
       <FullScreen  className="w-full bg-white h-full" handle={screen}>
 				<div className='relative w-full h-full'>
 					<div className="block absolute z-10 w-full max-h-max right-5">
-            <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+            <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
           </div>
-          <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
+          <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar" ref={ componentRef}>
 
 
 

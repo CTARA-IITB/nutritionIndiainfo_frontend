@@ -18,12 +18,13 @@ const ShareImage =({id,title,selLifecycle,selCategory,selIndicator})=> {
           console.error('oops, something went wrong!', error);
       }); 
   })
-  // const url =  "http://nutritionindiainfo.communitygis.net/dashboard/"+ selLifecycle + "/" + selCategory + "/" + selIndicator;
-  const url = window.location.origin +"/"+ selLifecycle + "/" + selCategory + "/" + selIndicator;
+  const url =  `${window.location.href}/${selLifecycle}/${selCategory}/${selIndicator}`;
+  // const LinkPreview = <LinkPreview url={url}/>
+
   return (
     < div className="container"  >
-      <TwitterShareButton title={title} url={url}> <TwitterIcon  size={35}  round={true}/></TwitterShareButton> 
-      <WhatsappShareButton  title={title}  url={url}> <WhatsappIcon size={35}  round={true}/></WhatsappShareButton>
+      <TwitterShareButton title={title} url={url}> <TwitterIcon  size={35} round={true}/></TwitterShareButton> 
+      <WhatsappShareButton title={title} url={url}> <WhatsappIcon size={35} round={true}/></WhatsappShareButton>
     </div>
   );
 }

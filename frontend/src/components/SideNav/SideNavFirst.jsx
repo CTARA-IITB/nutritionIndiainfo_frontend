@@ -129,14 +129,14 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
 
     return(
         <>
-            {isOpenTable && <Popup style={{ zIndex:50 }}
+            {isOpenTable && <Popup 
             content={<>
                 <div id="title" className="table">{title}</div>
                 <BootstrapTable data={ table } 
                     hover 
                     search
-                    headerStyle={ { background:'#ECECEC' } }
-
+                    headerStyle={ { background:'#ECECEC', zIndex:'99' } }
+                    className="table"
                 >
                     <TableHeaderColumn dataField={dataField}  isKey dataSort>{columnName}</TableHeaderColumn>
                     <TableHeaderColumn dataField='data'>Data</TableHeaderColumn>
@@ -168,9 +168,9 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
             />}
             <Dropdown style={{float:'right'}} className="sideNav">
                 <Dropdown.Toggle variant="link" bsPrefix="p-0">
-                    <MenuIcon id="icon"/>
+                    <MenuIcon id="icon" className="sideNav"/>
                 </Dropdown.Toggle>
-                <Dropdown.Menu align="right" >
+                <Dropdown.Menu align="right" className="sideNav">
                     <Dropdown.Item  onClick={togglePopup} eventKey="1" style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
                     <Dropdown.Item 
                         onClick={(e)=>{

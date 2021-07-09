@@ -25,7 +25,7 @@ let margin = {
 };
 
 
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend,selLifecycle,selCategory,selIndicator}) => { 
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend,selLifecycle,selCategory,selIndicator,note}) => { 
 
   let [data, setData] = useState(null);
   const svgRef = useRef();
@@ -137,7 +137,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-    // console.log(width,adjustedHeight)
    
     
     svg.selectAll("*").remove();
@@ -236,7 +235,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
           .attr("fill", colorScale)
           .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
           .on('mousemove',(e,d)=>{
-            return tooltipX.html(`<b>${d.timeperiod}</b> : ${decimalPrecision(yValue(d))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
+            return tooltipX.html(`<b>${d.timeperiod}</b> : ${decimalPrecision(yValue(d))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX) - 80+"px");
           })
           .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       
@@ -257,14 +256,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .text(function(d) { return d.timeperiod; });
     }
     else{
-      bar.append("text")
-      .attr('x',width/2 -90)
-      .attr('y',0)
-      .style("text-anchor","middle")
-      .style("font-size","13px")
-      .style("font-weight","bold")
-      .attr("dy", "-2em")
-      .text(`${graphTitle},${titleAreaName}`)
+      // bar.append("text")
+      // .attr('x',width/2 -90)
+      // .attr('y',0)
+      // .style("text-anchor","middle")
+      // .style("font-size","13px")
+      // .style("font-weight","bold")
+      // .attr("dy", "-2em")
+      // .text(`${graphTitle},${titleAreaName}`)
 
       // bar.append("text")
       // .attr("x",innerWidth/2)
@@ -313,7 +312,9 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
     }
   }
-  
+let noteDiv = null;
+if(typeof note != "undefined")
+noteDiv = <div className=" absolute left-2   text-xs"><b>Note: </b>{note}`</div>;
   return (
     <>
       <FullScreen  className="w-full bg-white h-full" handle={screen}>
@@ -325,6 +326,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
             <div className="text-center absolute right-10 left-10 mx-10 w-auto  font-bold  text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
             <div id="trend_svg" className='align-middle  w-full h-full' ref={trendWrapper}>
               <svg   ref = {svgRef} className="w-full   bg-white  border-black border-dashed object-scale-down"></svg>
+              {noteDiv}
+
             </div>
           </div>
         </div>

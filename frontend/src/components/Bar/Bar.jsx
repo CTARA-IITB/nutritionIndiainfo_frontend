@@ -21,7 +21,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
   const componentRef = useRef();
   const margin = {
     left:120,
-    top: 50,
+    top: 70,
     right: 70,
     bottom: 60,
   };
@@ -263,9 +263,9 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
 
 
             
-          <div className="absolute w-full pr-4 pl-4 top-1">
-            <div className="text-center w-full text-xs md:text-sm  font-bold">{`${gBarTitle}`}</div>
-            <div className="text-center  w-full text-xs">{`${status}`}</div>
+          <div className="absolute   right-10 left-10 mx-10 w-auto top-1">
+            <div className="text-center  text-xs md:text-sm  font-bold">{`${gBarTitle}`}</div>
+            <div className="text-center   text-xs">{`${status}`}</div>
            </div>
 
 

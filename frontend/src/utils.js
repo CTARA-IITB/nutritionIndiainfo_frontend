@@ -46,7 +46,6 @@ export const createHierarchy = (options) =>{
   {
 
     const url_1 =  await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=timeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name%2Csubgroup_category%2Cstart_date%2Cend_date&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&omitHeader=true&q=*%3A*&rows=400&sort=timeperiod_id%20asc`);
-    console.log(url_1.url)
     const body_1 = await url_1.json();
     setIndicatorTrend(body_1.response.docs)
 
@@ -93,11 +92,10 @@ export const createHierarchy = (options) =>{
   }
 
   export async function populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt,
-    setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
+    setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator)
   {
 
-    const solr_url_6 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=value:indicator_id%2Ctitle:indicator_short_name%2Cindi_sense%2Cindicator_name&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`);
-    // console.log(solr_url_6.url);
+    const solr_url_6 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=value:indicator_id%2Ctitle:indicator_short_name%2Cindi_sense%2Cindicator_name%2Cnotes&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`);
     const solr_body_6 = await solr_url_6.json();
     setIndicatorDropdownOpt(solr_body_6.response.docs);
     let indiVal;
@@ -107,6 +105,7 @@ export const createHierarchy = (options) =>{
       setIndicatorSense(passedIndicator[0].indi_sense);
       setGraphTitle(passedIndicator[0].indicator_name)
       indiVal = passedIndicator[0].value;
+      setNote(passedIndicator[0].notes);
 
     }
     else{
@@ -114,8 +113,9 @@ export const createHierarchy = (options) =>{
       setIndicatorSense(solr_body_6.response.docs[0].indi_sense);
       setGraphTitle(solr_body_6.response.docs[0].indicator_name);
       indiVal = solr_body_6.response.docs[0].value;
+      setNote(solr_body_6.response.docs[0].notes);
+
     }
-    console.log(solr_body_6.response.docs[0].indicator_name)
 
     const solr_url_8 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
     const solr_body_8 = await solr_url_8.json();

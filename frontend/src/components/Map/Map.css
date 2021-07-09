@@ -100,9 +100,10 @@ div.tooltip {
 }
 
 .back_button{
-  /* margin-left: -400px; */
+  width: 30px;
+  height: 30px;
   padding: 1px 1px;
-  font-size: 1px;
+  font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #FFFFFF !important;
   border-color: #AF5907 !important;

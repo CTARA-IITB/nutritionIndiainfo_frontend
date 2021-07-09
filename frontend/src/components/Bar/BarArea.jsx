@@ -23,7 +23,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
 let dynamicRange;
   const margin = {
     left:160,
-    top: 50,
+    top: 70,
     right: 60,
     bottom: 50,
   };
@@ -306,7 +306,7 @@ let dynamicRange;
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef}>
-            <div className="absolute w-full pr-4 pl-4 top-1">
+            <div className="absolute  right-10 left-10 mx-10 w-auto top-1">
 
               <div className="text-center w-full text-xs md:text-sm  font-bold" >{`${gBarTitle}`}</div>
               <div className="text-center   w-full text-xs" >{`${status}`}</div>

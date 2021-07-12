@@ -6,7 +6,7 @@ import { createHierarchy, setVisulaizationData, populateDropdowns } from '../../
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
-import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
+import { SkeletonCard, SkeletonDropdown } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
 // import "./Dropdown.css";
 import {BarArea} from "../../components/Bar/BarArea";
@@ -415,7 +415,7 @@ export const Dropdown = ({}) =>{
           setIsSelected(true);
         }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
-          return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
+          return <div> </div>
         }
       
       const burdenClick = () => {

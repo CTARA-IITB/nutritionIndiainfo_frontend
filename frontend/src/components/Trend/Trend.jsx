@@ -31,6 +31,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const svgRef = useRef();
   const trendWrapper = useRef();
   const screen = useFullScreenHandle();
+  const componentRef = useRef();
 
   let colorScale;
   let yValue = d => d.data_value;
@@ -319,9 +320,9 @@ noteDiv = <div className=" absolute left-2   text-xs"><b>Note: </b>{note}`</div>
       <FullScreen  className="w-full bg-white h-full" handle={screen}>
         <div className='static relative w-full h-full'>
           <div className="block absolute z-10 w-full max-h-max right-5">
-            <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+            <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
           </div>
-          <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
+          <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend" ref={componentRef}>
             <div className="text-center absolute right-10 left-10 mx-10 w-auto  font-bold  text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
             <div id="trend_svg" className='align-middle  w-full h-full' ref={trendWrapper}>
               <svg   ref = {svgRef} className="w-full   bg-white  border-black border-dashed object-scale-down"></svg>

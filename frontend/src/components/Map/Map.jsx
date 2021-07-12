@@ -43,6 +43,7 @@ export const Map = ({
   let mapTitle;
   const svgRef = useRef();
   const wrapperRef = useRef();
+  const componentRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
  
   if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true)) {
@@ -67,7 +68,7 @@ export const Map = ({
   //   }
   //   return generatedLabels[i]
   // };
-  
+  console.log(graphUnit)
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
@@ -81,6 +82,7 @@ export const Map = ({
       return oneDecimel;
     }
   }  
+  
   //merge geometry and data
 
   function addProperties(geojson, data) {
@@ -705,9 +707,9 @@ export const Map = ({
       
 			<div className='relative w-full h-full'>
 			  <div className="block absolute z-10 w-auto max-h-max left-15 right-5">
-          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
         </div>
-        <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
+        <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap" ref={componentRef}>
           <div className="absolute  right-10 left-10 mx-10 w-auto top-1">
               <div className="text-center  text-xs md:text-sm  font-bold">{`${mapTitle}`}</div>
               <div className="text-center  text-xs ">{`${warning}`}</div>

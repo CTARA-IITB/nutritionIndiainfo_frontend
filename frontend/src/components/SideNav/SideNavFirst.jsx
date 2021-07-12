@@ -148,7 +148,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
 
             {isOpenShare && <Popup
             content={<>
-                <ShareImage id={id} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+                <ShareImage title={title} id={id} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </>}
                 handleClose={toggleShare}
             />}

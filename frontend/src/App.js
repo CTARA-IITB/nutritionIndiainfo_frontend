@@ -53,16 +53,14 @@ return(<>
 
 	<footer className="footer p-0 mt-4">
 			<div className="row  p-0 m-0 align-items-center">
-				<div className="col-3">
+				<div className="col-4">
 					<a href="https://nutritionindia.info/" target="_blank"><img src={nilf} className="nutrition-image"/></a>
 				</div>
-				<div className="col-3">
+				<div className="col-4">
 					<a href="https://www.ctara.iitb.ac.in/" target="_blank"><img src={clf} title="CTARA" className="iitb-image"/></a>
 				</div>
-				<div className="col-3">
-					<a href="https://proditech.in" target="_blank"><img src={pl} title="Nutrition India, Website developed by PRODITECH Solutions, Mumbai." className="proditech-image"/></a>
-				</div>
-				<div className="col-3">
+			
+				<div className="col-4">
 					<a href="http://unicef.in/" target="_blank"><img src={unil}  className="unichef-image"/></a>
 				</div>
 			</div> 

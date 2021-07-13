@@ -30,9 +30,9 @@ return(<>
 
 	<div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
 		{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
-			<div><img src={mhf} className="health-ministry"/></div>
-		<div className="mt-4">	<a href="/" target="_blank"><img src={nil} className="nutrition-india"/></a></div>
-		<div>	<img src={pa} className="poshan-abhiyan"/></div> 
+			<div ><a href="https://www.mohfw.gov.in/" target="_blank"><img src={mhf} className="health-ministry"/></a></div>
+		<div className="mt-2.5 lg:mt-4">	<a href="/" target=""><img src={nil} className="nutrition-india"/></a></div>
+		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank"> <img src={pa} className="poshan-abhiyan"/></a></div> 
 		{/* </div> */}
 	</div>
 	<Router  basename={'/dashboard'}>

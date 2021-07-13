@@ -485,7 +485,7 @@ export const Dropdown = ({}) =>{
       <header
 					id='main_menu'
 					className='p-2 flex flex-wrap
-                  justify-between lg:top-0  bg-white'>
+                  justify-between lg:top-0  bg-white lg:sticky z-40'>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-10 col-lg-5 col-md-5 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>

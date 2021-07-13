@@ -6,7 +6,7 @@ import { createHierarchy, setVisulaizationData, populateDropdowns } from '../../
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
-import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
+import { SkeletonCard, SkeletonDropdown } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
 // import "./Dropdown.css";
 import {BarArea} from "../../components/Bar/BarArea";
@@ -102,6 +102,7 @@ export const Dropdown = ({}) =>{
   const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
   const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
+  const [note,setNote] = useState(null);
   const [selBurden,setSelBurden] = useState("1");
   const lifecycleData = [
     {  title: "Adolescence", value: 1 },
@@ -128,7 +129,7 @@ export const Dropdown = ({}) =>{
         { value: 2, title: "Interventions" },
         { value: 3, title: "Determinants" }
       ])
-      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
+      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator)
       setIsSelected(true);
     }
     populateTabData();
@@ -198,7 +199,6 @@ export const Dropdown = ({}) =>{
         generateList(areaDropdownOpt)
         const lifecycleChange = async(e) =>{
           let val = parseInt(e.target.value);
-          console.log(e);
           setIsSelected(false);
           setSelLifecycle(val);
           setToggleState(true);
@@ -225,7 +225,7 @@ export const Dropdown = ({}) =>{
             ])
           }
           setSelCategory(selCat);
-          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
+          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -236,8 +236,7 @@ export const Dropdown = ({}) =>{
           let val = parseInt(e.target.value);
           setIsSelected(false);
           setSelCategory(val);       
-          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
-          console.log("selIndicator", selIndicator);     
+          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -256,10 +255,14 @@ export const Dropdown = ({}) =>{
           setToggleStateBurden(true);
           }
           setSelIndicator(val);
-          let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
-          let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].indicator_name;
+          let indiObject = indicatorDropdownOpt.filter(f => f.value === val)[0];
+          console.log(indiObject)
+          let indiSense = indiObject.indi_sense;
+          let indiName = indiObject.indicator_name;
+          let indiNotes = indiObject.notes;
           setGraphTitle(indiName);
           setIndicatorSense(indiSense);
+          setNote(indiNotes);
           let solr_url;
               solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
@@ -412,7 +415,7 @@ export const Dropdown = ({}) =>{
           setIsSelected(true);
         }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
-          return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
+          return <div> </div>
         }
       
       const burdenClick = () => {
@@ -482,9 +485,9 @@ export const Dropdown = ({}) =>{
       <header
 					id='main_menu'
 					className='p-2 flex flex-wrap
-                  justify-between lg:sticky lg:top-0  z-40 bg-white'>
+                  justify-between lg:top-0  bg-white lg:sticky z-40'>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
-				<div className="col-10 col-lg-4 col-md-10 p-3 for-mobile-1">
+				<div className="col-10 col-lg-5 col-md-5 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
 						<img src={selLifeycleImg} className="lifecycle-img"/>
 						<div className="select-lifecycle-parent">
@@ -501,7 +504,7 @@ export const Dropdown = ({}) =>{
 						</div>
 					</div>
 				</div>
-				<div className="col-12 col-lg-7 col-md-12 p-3 for-mobile-3">
+				<div className="col-12 col-lg-6 col-md-6 p-3 for-mobile-3">
 					<div className="row">
 						<div className="col-6 col-lg-3 p-2">
 							<div>
@@ -563,7 +566,7 @@ export const Dropdown = ({}) =>{
 						</div>
 					</div>
 				</div>
-				<div className="col-2 col-lg-1 col-md-2 p-3  for-mobile-2 i-for-mobile-div3">
+				<div className="col-2 col-lg-1 col-md-1 p-3  for-mobile-2 i-for-mobile-div3">
 					<div className="i-class">
           <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon md:mt-2"/></a>
 					</div>
@@ -601,6 +604,7 @@ export const Dropdown = ({}) =>{
           selLifecycle={selLifeycle}
           selCategory ={selCategory}
           selIndicator={selIndicator}
+          note={note}
           />: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
 

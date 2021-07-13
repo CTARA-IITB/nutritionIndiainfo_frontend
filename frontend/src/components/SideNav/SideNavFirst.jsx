@@ -137,6 +137,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
                     search
                     headerStyle={ { background:'#ECECEC', zIndex:'99' } }
                     className="table"
+                    style={{ backgroundColor:"red"}}
                 >
                     <TableHeaderColumn dataField={dataField}  isKey dataSort>{columnName}</TableHeaderColumn>
                     <TableHeaderColumn dataField='data'>Data</TableHeaderColumn>
@@ -147,7 +148,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
 
             {isOpenShare && <Popup
             content={<>
-                <ShareImage id={id} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+                <ShareImage title={title} id={id} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </>}
                 handleClose={toggleShare}
             />}

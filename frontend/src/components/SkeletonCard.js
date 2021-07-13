@@ -23,17 +23,7 @@ const SkeletonDropdown = () => {
     </Box>
   );
 };
-  const SkeletonMapCard = () => {
 
-    return (
-      <section>
-        <Row>
-        <Skeleton rectangle={true} height={300} width={250} /> 
-        &nbsp;&nbsp;<Skeleton rectangle={true} height={100} width={100} />
-        </Row>   
-      </section>
-    );
-  };
 const SkeletonCard = () => {
   return (
     <Box lg={12}>
@@ -43,4 +33,4 @@ const SkeletonCard = () => {
     </Box>
   );
 };
-export { SkeletonCard, SkeletonMapCard, SkeletonDropdown}
+export { SkeletonCard, SkeletonDropdown}

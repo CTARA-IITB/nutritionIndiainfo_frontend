@@ -649,7 +649,7 @@ export const Map = ({
     <li className="nav-item">
         <a  className={`nav-link radius3 ${toggleState  && 'active'}` }   id="state" data-toggle="tab"  role="tab" aria-controls="state" aria-selected="true" onClick={()=>{ setToggleState(true)}}>State</a>
     </li>
-    <li className="nav-item">
+    <li className="nav-item nav-item-right">
         <a className={`nav-link radius1 ${!toggleState  && 'active'}` }  id="district" data-toggle="tab" role="tab" aria-controls="district" aria-selected="false" onClick={()=>{ setToggleState(false)}} style={{"width":"70px"}}>District</a>
     </li>
 </ul>
@@ -710,7 +710,7 @@ export const Map = ({
           <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
         </div>
         <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap" ref={componentRef}>
-          <div className="absolute  right-10 left-10 mx-10 w-auto top-1">
+          <div className="absolute  right-5 left-5 mx-10 w-auto top-1">
               <div className="text-center  text-xs md:text-sm  font-bold">{`${mapTitle}`}</div>
               <div className="text-center  text-xs ">{`${warning}`}</div>
               </div>

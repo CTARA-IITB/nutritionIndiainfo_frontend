@@ -443,7 +443,7 @@ export const Dropdown = ({}) =>{
           <li className="nav-item">
               <a  className={`nav-link radius2 ${toggleStateBurden  && 'active '}` }   id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true" onClick={()=>{setSelBurden("1"); setToggleStateBurden(true);}}>Prevalence</a>
           </li>
-          <li className="nav-item">
+          <li className="nav-item nav-item-right">
               <a className={`nav-link radius ${!toggleStateBurden  && 'active '}` }  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" onClick={()=>{setSelBurden("2"); setToggleStateBurden(false);}}>Burden</a>
           </li>
       </ul>

@@ -107,7 +107,7 @@ select{
 
 .iitb-image {
 	height: auto;
-	width: 25%;
+	width: 20%;
 	margin: auto;
 }
 
@@ -139,8 +139,11 @@ select{
 .nav-tabs .nav-item {
 	font-size: 14px;
     margin-bottom: 0px;
-    width: 50%;
+    width: 60%;
 	
+}
+.nav-tabs .nav-item-right {
+	width:40%;
 }
 /* .radius2{
 	width: 60%;

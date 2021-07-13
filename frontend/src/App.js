@@ -31,7 +31,7 @@ return(<>
 	<div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
 		{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
 			<div><img src={mhf} className="health-ministry"/></div>
-		<div className="justify-center ml-10 mt-2">	<a href="/" target="_blank"><img src={nil} className="nutrition-india"/></a></div>
+		<div className="mt-4">	<a href="/" target="_blank"><img src={nil} className="nutrition-india"/></a></div>
 		<div>	<img src={pa} className="poshan-abhiyan"/></div> 
 		{/* </div> */}
 	</div>

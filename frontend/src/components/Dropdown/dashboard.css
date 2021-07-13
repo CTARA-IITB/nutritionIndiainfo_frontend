@@ -27,13 +27,14 @@
 
 .poshan-abhiyan {
 	height: auto;
-	width: 15%;
+	width:25%;
 	float: right;
 }
 
 .nutrition-india {
 	height: auto;
-	width: 60%;
+	width: 50%;
+	margin: auto;
 }
 
 .lifecycle-img {
@@ -68,7 +69,7 @@ select{
 	border-radius: 5px;
 	font-size: 14px;
 	width: 11rem;
-	height: 1.7rem;
+	/* height: 1.7rem; */
 	display: flex;
 	align-items: center;
 }

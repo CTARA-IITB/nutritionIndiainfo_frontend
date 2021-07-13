@@ -139,11 +139,8 @@ select{
 .nav-tabs .nav-item {
 	font-size: 14px;
     margin-bottom: 0px;
-    width: 60%;
+    width: 50%;
 	
-}
-.nav-tabs .nav-item-right {
-	width:40%;
 }
 /* .radius2{
 	width: 60%;

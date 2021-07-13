@@ -27,13 +27,14 @@
 
 .poshan-abhiyan {
 	height: auto;
-	width: 15%;
+	width:25%;
 	float: right;
 }
 
 .nutrition-india {
 	height: auto;
-	width: 60%;
+	width: 50%;
+	margin: auto;
 }
 
 .lifecycle-img {
@@ -62,16 +63,16 @@ select{
 
 }
 
-.select-border {
+/* .select-border {
 	border: 1px solid #D66D07;
 	background-color: #DDDD;
 	border-radius: 5px;
 	font-size: 14px;
 	width: 11rem;
-	height: 1.7rem;
+	height: 1.5rem;
 	display: flex;
 	align-items: center;
-}
+} */
 .i-icon {
 	width: 1.7rem;
 	height: 1.7rem;
@@ -141,6 +142,18 @@ select{
     width: 50%;
 	
 }
+/* .radius2{
+	width: 60%;
+}
+.radius{
+	width: 40%;
+} */
+.radius1{
+	width: 50%;
+}
+.radius3{
+	width: 50%;
+}
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
 	/* color: #fff; */
 	background-color: transparent;
@@ -148,14 +161,14 @@ select{
 	display: inline-block;
 	/* border-top-left-radius: 5px; */
 	/* border-bottom-left-radius: 5px; */
-	background: #AF5906;
+	background: #DDDD;
 }
 .nav-link {
     padding: 0px 19px 0px 19px;
 }
 .nav-tabs .nav-link {
     border: 1px solid #af5906;
-    background: #efc59c;
+    background: #fff;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     width: 100%;
@@ -166,7 +179,14 @@ select{
 	border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-
+.nav-tabs .nav-link.radius1{
+	border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.nav-tabs .nav-link.radius3{
+	border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
 .nav-tabs .nav-link.radius2{
 	border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -234,7 +254,7 @@ select{
     }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    background: RGB(175, 89, 6);
+    border: 1px solid RGB(175, 89, 6);
 }
 .select-category {
     background: RGB(239, 197, 156);
@@ -242,16 +262,16 @@ select{
 
 .nav-tabs .nav-link {
     border: 1px solid RGB(175, 89, 6);
-    background: RGB(239, 197, 156);
+    background: white;
 }
 .select-border {
 	border: 1px solid #D66D07;
-	padding: 3px;
+	padding: 0px;
 	background-color: #DDDD;
 	border-radius: 5px;
 	font-size: 14px;
 	width: 11rem;
-	height: 1.7rem;
+	height: 1.4rem;
 	display: flex;
 	align-items: center;
 	-webkit-appearance: none;
@@ -259,7 +279,7 @@ select{
 	background-image:url("data:image/svg+xml,<svg width='12' padding='11px' height='12' viewBox='64 64 896 896' focusable='false' xmlns='http://www.w3.org/2000/svg'><path d='M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z' /></svg>");
 	margin-right: 11px;
 	background-repeat: no-repeat;
-	background-position: right 11px top 53%;
+	background-position: right 2px top 53%;
 
 	/* border: 1px solid #dfdfdf; */
 

@@ -463,7 +463,7 @@ export const Dropdown = ({}) =>{
 
           <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
           <li className="nav-item">
-              <a className="nav-link radius2"  id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true">Prevalence</a>
+              <a className="nav-link radius2"  id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" style={{"width":"5000px"}} aria-selected="true">Prevalence</a>
           </li>
           <li className="nav-item">
               <a className="nav-link radius"  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" >Burden</a>
@@ -508,14 +508,14 @@ export const Dropdown = ({}) =>{
 					<div className="row">
 						<div className="col-6 col-lg-3 p-2">
 							<div>
-								<select className="select-border w-100" value={selIndicator} onChange={indicatorChange}>
+								<select className="select-border w-100 mt-1" value={selIndicator} onChange={indicatorChange}>
                 {indicatorDropdownOpt.map(opt => <option key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 							
 								</select>
 							</div>
 						</div>
-						<div className="col-6 col-lg-3 pt-2">
-							<div className="toogle-button">
+						<div className="col-6 col-lg-3 p-2 ">
+							<div className="toogle-button w-full mt-1">
                 {burdenDropdown}
 								{/* <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
 			                        <li className="nav-item">
@@ -532,7 +532,7 @@ export const Dropdown = ({}) =>{
 
               <TreeSelect
                 showSearch
-                className='w-100'
+                className='w-100 mt-1'
                 virtual={true}
                 // style={{ width: '100%' }}
                 value={selArea}
@@ -559,7 +559,7 @@ export const Dropdown = ({}) =>{
 						</div>
 						<div className="col-6 col-lg-3 p-2">
 							<div>
-								<select className="select-border w-100" value={selTimeperiod} onChange={timeperiodChange}> 
+								<select className="select-border w-100 mt-1" value={selTimeperiod} onChange={timeperiodChange}> 
                 {timeperiodDropdownOpt.map(opt => <option  key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 								</select>
 							</div>
@@ -567,7 +567,7 @@ export const Dropdown = ({}) =>{
 					</div>
 				</div>
 				<div className="col-2 col-lg-1 col-md-1 p-3  for-mobile-2 i-for-mobile-div3">
-					<div className="i-class">
+					<div className="i-class mt-1">
           <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon md:mt-2"/></a>
 					</div>
 				</div>
@@ -591,7 +591,7 @@ export const Dropdown = ({}) =>{
      {/* Nakul sir style  */}
 
      <section id='main_dashboard_container' className='flex flex-col'>
-     <section id='top_dashboard_row' className='flex flex-wrap-reverse'>
+     <section id='top_dashboard_row' className='flex md:flex-wrap-reverse flex-wrap-reverse'>
      <div className='flex w-full md:w-1/2'>
         {(isSelected  & selTimeperiod !== "")?
           <Trend indicatorTrend = {indicatorTrend}

@@ -101,7 +101,7 @@ select{
 
 .nutrition-image {
 	height: auto;
-	width:50%;
+	width:40%;
 	/*padding-top: 1rem;*/
 }
 
@@ -119,7 +119,7 @@ select{
 
 .unichef-image {
 	height: auto;
-	width:30%;
+	width:25%;
 	/*padding-top: 1rem;*/
 	float: right;
 }

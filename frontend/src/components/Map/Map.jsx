@@ -632,7 +632,7 @@ export const Map = ({
   }
     if((level === 1 && (null=== selIndiaData || selIndiaData.length === 0)) || ((level === 2 || level === 3) && (null  === selStateData || selStateData.length === 0)))
      {
-      svg.append("text").text("No districts data: please select another survey")
+      svg.append("text").text("No district data.  Please select another survey.")
          .style("text-anchor", "middle")
          .style("font-weight","bold")
          .style("fill", "red")

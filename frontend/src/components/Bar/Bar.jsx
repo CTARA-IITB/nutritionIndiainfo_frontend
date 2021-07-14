@@ -181,7 +181,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
       let chart = bar.selectAll("rect").data(data);
       
       const fillRect = (d) =>{
-        let darkSubgroup = ["Overall","Low Coverage","Mild Coverage","High Coverage","Poorest","Second","Middle","Fourth","Richest"]
+        let darkSubgroup = ["Overall","Low Coverage","Mid Coverage","High Coverage","Poorest","Second","Middle","Fourth","Richest"]
         if(darkSubgroup.includes(d.subgroup_name))
           return colorScale;
         else

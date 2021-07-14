@@ -68,7 +68,6 @@ export const Map = ({
   //   }
   //   return generatedLabels[i]
   // };
-  console.log(graphUnit)
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;

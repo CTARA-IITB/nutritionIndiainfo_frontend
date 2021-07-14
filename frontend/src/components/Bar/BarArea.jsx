@@ -242,7 +242,6 @@ let dynamicRange;
       	.attr("class","axis")
         .call(axisLeft(yScale).tickSize(0))
 		    .style('font-size',11);	
-     
       bar.append("g")
         .attr("transform",`translate(0, ${dynamicRange})`)
         // .attr("transform", "translate(0," + (barSize*data.length) + ")")
@@ -254,6 +253,42 @@ let dynamicRange;
         .style('font-size',11)
         
         
+    }else{ // show nodata svg
+      const noData = svg.attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox",  `0 0 ${width} ${height}`)
+        .append("g")
+        .attr("transform",`translate(${50},${margin.top})`);
+
+      svg.append("text").text("No district data.  Please select another survey.")
+      .style("text-anchor", "middle")
+      .style("font-weight","bold")
+      .style("fill", "red")
+      .attr('transform',`translate(${width/2}, ${height/2})`);
+
+
+
+    const dummyXScale = scaleLinear()
+      .domain([0, 100])
+      .range([0, innerWidth])
+
+    const dummyYScale = scaleBand()
+      .domain([])
+      .range([0,innerHeight])
+      .padding(0.1)
+
+      noData.append("g")
+      .attr("class","axis")
+      .call(axisLeft(dummyYScale).tickSize(0))
+      .style('font-size',11);	
+
+
+      noData.append("g")
+        // .attr("transform",`translate(0, ${dynamicRange})`)
+        .attr("transform", "translate(0," + (innerHeight) + ")")
+      	.attr("class","axis")
+  			.call(axisBottom(dummyXScale).ticks(3))
+        .style('font-size',11);
+
     }
   },[data,toggleStateBurden])
     

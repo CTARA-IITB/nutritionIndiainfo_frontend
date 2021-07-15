@@ -463,10 +463,10 @@ export const Dropdown = ({}) =>{
 
           <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
           <li className="nav-item">
-              <a className="nav-link radius2"  id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" style={{"width":"5000px"}} aria-selected="true">Prevalence</a>
+              <a className="nav-link radius2"  id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true">Prevalence</a>
           </li>
-          <li className="nav-item">
-              <a className="nav-link radius"  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" >Burden</a>
+          <li className="nav-item nav-item-right">
+              <a className="nav-link radius "  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" >Burden</a>
           </li>
       </ul>
 

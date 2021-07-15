@@ -700,9 +700,16 @@ export const Map = ({
   if(level !== 1)  
     backButton = <Button className={`back_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'14px'}}/></Button> 
 
+
+    const reportChange = (state, handle) => {
+      if(state === true){
+       document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
+      }
+    }; 
+
   return (
     <>
-      <FullScreen className="w-full bg-white h-full" handle={screen}>
+      <FullScreen className="w-full bg-white h-full" handle={screen} onChange={reportChange}>
       
 			<div className='relative w-full h-full'>
 			  <div className="block absolute z-10 w-auto max-h-max left-15 right-5">

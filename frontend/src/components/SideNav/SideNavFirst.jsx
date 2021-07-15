@@ -167,11 +167,11 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
             </div>}
                 handleClose={togglePopup}
             />}
-            <Dropdown style={{float:'right'}} className="sideNav">
+            <Dropdown style={{float:'right'}} className="">
                 <Dropdown.Toggle variant="link" bsPrefix="p-0">
-                    <MenuIcon id="icon" className="sideNav"/>
+                    <MenuIcon id="icon" className=""/>
                 </Dropdown.Toggle>
-                <Dropdown.Menu align="right" className="sideNav">
+                <Dropdown.Menu align="right" className="">
                     <Dropdown.Item  onClick={togglePopup} eventKey="1" style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
                     <Dropdown.Item 
                         onClick={(e)=>{

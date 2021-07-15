@@ -182,7 +182,7 @@ export const Map = ({
     
 
   const aspect = width / height;
-    const adjustedHeight = Math.ceil(width / aspect);
+    const adjustedHeight = Math.ceil(width / aspect) + 50;
  
    
     
@@ -216,7 +216,7 @@ export const Map = ({
 
     }
     else{
-     projection = geoMercator().fitSize([width/1.1 , adjustedHeight/1.2], geometry);
+     projection = geoMercator().fitSize([width/1.1 , adjustedHeight/1.16], geometry);
     }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;

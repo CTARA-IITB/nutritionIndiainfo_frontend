@@ -158,7 +158,7 @@ export const Map = ({
       warning="Administrative Boundaries as per NFHS4(2015-16)"
     }
   }
-  select(".tooltip").remove();
+  // select(".tooltip").remove();
 
   let tooltip = select("#map_svg").append("div")
     .attr("class", "tooltip")
@@ -720,7 +720,7 @@ export const Map = ({
               <div className="text-center  text-xs md:text-sm  font-bold">{`${mapTitle}`}</div>
               <div className="text-center  text-xs ">{`${warning}`}</div>
               </div>
-							<div id='map_svg' className='block align-middle w-full h-full' ref={wrapperRef}>
+							<div id='map_svg' className=' align-middle w-full h-full' ref={wrapperRef}>
               <div className="flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
                   {switchButton}       
               </div>

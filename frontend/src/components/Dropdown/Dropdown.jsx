@@ -2,7 +2,7 @@ import React,{useState,useEffect,useRef} from "react";
 import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
 import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, populateDropdowns } from '../../utils';
+import { createHierarchy, setVisulaizationData, populateDropdowns, solr_domain,solr_core } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
@@ -32,8 +32,7 @@ import school_age from './images/lifecycle/School-Age-.png'
 import iicon from "./images/i-con5.png";
 
 
-
-export const Dropdown = ({}) =>{
+export const Dropdown = () =>{
 
   let { queryLifecycle } = useParams();
   if(typeof queryLifecycle === 'undefined')
@@ -139,8 +138,9 @@ export const Dropdown = ({}) =>{
 
       useEffect(() => {
         // const url_4 = 'http://13.234.11.176/api/area';
-        const solr_url_4 = 'http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv18/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
-        // const solr_url_4 = "http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv18/select?fl=value:area_id%2Ccode:area_code%2Ctitle:area_name&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc";
+        const solr_url_4 = `${solr_domain}/solr/${solr_core}/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc`;
+        console.log(solr_url_4);
+        // const solr_url_4 = "${solr_domain}/solr/${solr_core}/select?fl=value:area_id%2Ccode:area_code%2Ctitle:area_name&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc";
         json(solr_url_4).then( options =>{
         const [country,statesID] = createHierarchy(options.response.docs);
         setStateID(statesID)
@@ -264,7 +264,7 @@ export const Dropdown = ({}) =>{
           setIndicatorSense(indiSense);
           setNote(indiNotes);
           let solr_url;
-              solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv18/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             const solr_body_1 = await solr_url.json()
 
@@ -290,7 +290,7 @@ export const Dropdown = ({}) =>{
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
-            const solr_url_3 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv18/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+            const solr_url_3 = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
 
             const solr_body_3 = await solr_url_3.json()
             setUnit(solr_body_3.response.docs[0].unit_id);
@@ -362,7 +362,7 @@ export const Dropdown = ({}) =>{
             newLevel = 2;
           }
           let solr_url;
-              solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv18/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             let solr_body_1 = await solr_url.json()
             solr_body_1 = solr_body_1.response.docs;
               setTimeperiodDropdownOpt(solr_body_1);

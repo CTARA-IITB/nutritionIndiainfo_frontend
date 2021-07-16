@@ -22,8 +22,7 @@ import pl from "./image_logos/proditech-logo.png";
 import unil from "./image_logos/unicefLogo.png";
 
 
-const App = ()=> { 
-
+const App = ()=> {
 return(<> 
 			
 <main id='main_app_container' className='flex flex-col max-h-screen'>

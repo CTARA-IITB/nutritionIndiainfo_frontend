@@ -306,14 +306,7 @@ let dynamicRange;
   const reportChange = (state, handle) => {
     if(state === true){
      document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
-
-       
     }
-    else{
-      
-
-    }
-  
   };    
   let table=[];
   if(data ){
@@ -336,8 +329,8 @@ let dynamicRange;
   return (
       <>
         <FullScreen  className="w-full bg-white" handle={screen} onChange={reportChange}>
-          <div className='relative w-full' id="h_bar">
-            <div className="block absolute z-10 w-full max-h-max right-5">
+          <div className='static relative w-full' id="h_bar">
+            <div className="block absolute w-full max-h-max right-5" style={{zIndex:1}}>
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef}>

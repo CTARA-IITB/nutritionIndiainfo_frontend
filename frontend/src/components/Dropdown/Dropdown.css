@@ -65,6 +65,7 @@ span.ant-select-selection-item{
 
 
 .tg_button{
+  height: 1.7rem;
   font-family: Arial, Helvetica, sans-serif;
   margin-top: 20px;
   background-color: #AF5907 !important;
@@ -72,6 +73,8 @@ span.ant-select-selection-item{
 }
 
 .tg_button_light{
+  font-size: 14px;
+
   background-color: #AF590780 !important;
   border-color: #AF590780 !important;
 }
@@ -91,9 +94,32 @@ span.ant-select-selection-item{
 	border-radius: 5px;
 	font-size: 14px;
 	color: black;
-	height: 1.8rem;
+	height: 1.4rem;
 	display: flex;
 	align-items: center;
+}
+/* 
+{
+  padding: 15px;
+  border-radius: 3px !important;
+  height: 50px !important;
+  color: #ffffff !important;
+  padding-right: 30px !important;
+  font-size: 14px !important;
+  border-color: blue !important;
+  position: relative;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: black url("data:image/svg+xml;utf8,<svg height='24' viewBox='0 0 24 24' width='24' height='24' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='#FFFFFF'/></g></svg>") no-repeat !important;
+  background-position-x: 100%;
+  background-position-y: 5px;
+} */
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  width: 100%;
+  /* height: 32px; */
+  padding: 0 3px;
 }
 .ant-select:not(.ant-select-customize-input) .ant-select-selector:hover {
   border: 1px solid #D66D07;
@@ -103,6 +129,7 @@ span.ant-select-selection-item{
 
 .ant-select-arrow{
   color: black;
+  right: 2px !important;
 }
 
 
@@ -142,25 +169,12 @@ span.ant-select-selection-item{
   .buttonmapcss {
     background-color: green;
   }
-}
-@media (max-width: 480px) {
-  .layout {
+}*/
+@media (min-width: 750px) and (max-width: 990px){
+  #main_dashboard_container {
     display: flex;
     flex-direction: column;
-    overflow-x: auto;
   }
-  .layout_left_trend {
-    width: 100%;
-   height: 50%;
- }
-#row1{
-   display: flex;
-   flex-direction: column-reverse;
- }
- #row2{
-  display: flex;
-  flex-direction: column;
-}
 
     
-} */
+} 

@@ -23,6 +23,8 @@ export const Map = ({
   searchRef, 
   setFilterDropdownValue, 
   areaDropdownOpt, 
+  selLifecycle,
+  selCategory,
   selIndicator, 
   indicatorSense,
   isLevelThree,
@@ -35,10 +37,13 @@ export const Map = ({
 
 }) => {
 
+  
+
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
   const wrapperRef = useRef();
+  const componentRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
  
   if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true)) {
@@ -63,6 +68,19 @@ export const Map = ({
   //   }
   //   return generatedLabels[i]
   // };
+  //For One Decimel Precision    
+  function decimalPrecision(d){
+    let oneDecimel;
+    if(typeof d !== 'undefined'){
+      if(graphUnit !== 'Percent'){
+        oneDecimel = fmt.format(d);
+      }
+      else {
+        oneDecimel =fmt.formatFixed(d, 1)
+      }
+      return oneDecimel;
+    }
+  }  
   
   //merge geometry and data
 
@@ -140,7 +158,7 @@ export const Map = ({
       warning="Administrative Boundaries as per NFHS4(2015-16)"
     }
   }
-  select(".tooltip").remove();
+  // select(".tooltip").remove();
 
   let tooltip = select("#map_svg").append("div")
     .attr("class", "tooltip")
@@ -164,7 +182,7 @@ export const Map = ({
     
 
   const aspect = width / height;
-    const adjustedHeight = Math.ceil(width / aspect);
+    const adjustedHeight = Math.ceil(width / aspect) + 50;
  
    
     
@@ -198,7 +216,7 @@ export const Map = ({
 
     }
     else{
-     projection = geoMercator().fitSize([width/1.1 , adjustedHeight/1.2], geometry);
+     projection = geoMercator().fitSize([width/1.1 , adjustedHeight/1.16], geometry);
     }
     const pathGenerator = geoPath(projection);
     let geojson = geometry.features;
@@ -365,7 +383,7 @@ export const Map = ({
       if (typeof c2Value(d) != 'undefined') {
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + fmt.format(c2Value(d)))
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + decimalPrecision(c2Value(d)))
           .style("left", event.clientX - width+ "px")
           .style("top", event.clientY - height/2 + "px")
           .style("font-size","12px");
@@ -421,7 +439,7 @@ export const Map = ({
       })
   
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(50,85)`);
+      .attr('transform',`translate(50,60)`);
 
    
 
@@ -475,7 +493,7 @@ export const Map = ({
     
       })
       .attr("d", feature => pathGenerator(feature))
-      .attr('transform',`translate(50,85)`);
+      .attr('transform',`translate(50,60)`);
 
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
@@ -531,7 +549,7 @@ export const Map = ({
           .style("stroke-width",.3)
           .style('stroke-opacity',1)
           .style('fill-opacity',0.8)
-          .attr('transform',`translate(50,85)`)
+          .attr('transform',`translate(50,60)`)
       
         
    
@@ -566,7 +584,7 @@ export const Map = ({
       }
         svg.append("g")
           .attr("class", "legendQuant")
-          .attr("transform", `translate(${width-(width-100)},${adjustedHeight-150})`)
+          .attr("transform", `translate(${width-(width-10)},${adjustedHeight-150})`)
         }
     else{
       if(level === 2 || level === 3){
@@ -577,7 +595,7 @@ export const Map = ({
       }
         svg.append("g")
             .attr("class", "legendQuant")
-            .attr("transform", `translate(${width-(width-50)},${adjustedHeight- 160})`)
+            .attr("transform", `translate(${width-(width-10)},${adjustedHeight- 160})`)
         }
             
 
@@ -613,7 +631,7 @@ export const Map = ({
   }
     if((level === 1 && (null=== selIndiaData || selIndiaData.length === 0)) || ((level === 2 || level === 3) && (null  === selStateData || selStateData.length === 0)))
      {
-      svg.append("text").text("No districts data: please select another survey")
+      svg.append("text").text("No district data.  Please select another survey.")
          .style("text-anchor", "middle")
          .style("font-weight","bold")
          .style("fill", "red")
@@ -628,10 +646,10 @@ export const Map = ({
   if(switchDisplay && level === 1){
     switchButton =        <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
     <li className="nav-item">
-        <a  className={`nav-link ${toggleState  && 'active radius2'}` }   id="state" data-toggle="tab"  role="tab" aria-controls="state" aria-selected="true" onClick={()=>{ setToggleState(true)}}>State</a>
+        <a  className={`nav-link radius3 ${toggleState  && 'active'}` }   id="state" data-toggle="tab"  role="tab" aria-controls="state" aria-selected="true" onClick={()=>{ setToggleState(true)}}>State</a>
     </li>
-    <li className="nav-item">
-        <a className={`nav-link ${!toggleState  && 'active radius'}` }  id="district" data-toggle="tab" role="tab" aria-controls="district" aria-selected="false" onClick={()=>{ setToggleState(false)}} style={{"width":"70px"}}>District</a>
+    <li className="nav-item nav-item-right">
+        <a className={`nav-link radius1 ${!toggleState  && 'active'}` }  id="district" data-toggle="tab" role="tab" aria-controls="district" aria-selected="false" onClick={()=>{ setToggleState(false)}} style={{"width":"70px"}}>District</a>
     </li>
 </ul>
     // <div><Button className={`req_button ${!toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
@@ -660,6 +678,7 @@ export const Map = ({
             data:fmt.format(data[i].data_value_num)
           })
         }
+        graphUnit='Number'
       }
     }
   }
@@ -679,31 +698,39 @@ export const Map = ({
 
   let backButton;
   if(level !== 1)  
-    backButton = <Button className={`back_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'20px'}}/></Button> 
+    backButton = <Button className={`back_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'14px'}}/></Button> 
+
+
+    const reportChange = (state, handle) => {
+      if(state === true){
+       document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
+      }
+    }; 
 
   return (
     <>
-      <FullScreen className="w-full h-full" handle={screen}>
+      <FullScreen className="w-full bg-white h-full" handle={screen} onChange={reportChange}>
       
 			<div className='relative w-full h-full'>
-			  <div className="block absolute z-10 w-full max-h-max right-5">
-          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={svgRef}/>
+			  <div className="block absolute w-auto max-h-max left-15 right-5" style={{zIndex:2}}>
+          <SideNavFirst table={table} id="svgMap" dataField="area" columnName="Area" screen={screen} title={mapTitle} timePeriod={graphTimeperiod} componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
         </div>
-        <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap">
-              <div className="text-center absolute w-full text-xs md:text-sm md:top-1 top-5  font-bold">{`${mapTitle}`}</div>
-              <div className="text-center absolute w-full text-xs md:top-6 top-12">{`${warning}`}</div>
-
-							<div id='map_svg' className='block align-middle w-full h-full' ref={wrapperRef}>
-              <div className="bg-green-200 flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
+        <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap" ref={componentRef}>
+          <div className="absolute  right-5 left-5 mx-10 w-auto top-1">
+              <div className="text-center  text-xs md:text-sm  font-bold">{`${mapTitle}`}</div>
+              <div className="text-center  text-xs ">{`${warning}`}</div>
+              </div>
+							<div id='map_svg' className=' align-middle w-full h-full' ref={wrapperRef}>
+              <div className="flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">
                   {switchButton}       
               </div>
-              <div className="bg-green-400 absolute left-10 top-10">
+              <div className="absolute left-5 top-0">
                   {backButton}        
               </div>
             <svg    ref={svgRef} 
-            className="w-full bg-white  top-5 border-black border-dashed object-scale-down"></svg>
+            className="w-full bg-white border-black border-dashed object-scale-down"></svg>
 
-                <div className="absolute right-10 bottom-5  text-xs font-bold">
+                <div className="absolute right-10 bottom-3  text-xs font-bold">
                   {statusMsg}        
               </div>
             </div>

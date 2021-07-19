@@ -25,6 +25,7 @@
 	.lifecycle-img {
     	width: 13%;
     }
+	
     .i-class {
     	margin-top: 10%;
     }
@@ -36,6 +37,10 @@
 	.footer {
     	height: 5rem;
     }
+	.poshan-abhiyan {
+    	width: 15%;
+	}
+	
     .i-icon {
     	width: 1.7rem;
     }
@@ -157,7 +162,7 @@
 	.i-for-mobile-div3{
 		position: absolute;
 		right: 0%;
-		top: 3%;
+		top: -30px;
 	}
 	.select-lifecycle {
 	    padding-right: 0;
@@ -180,7 +185,7 @@
 	    border-left-color: #efc59c;
 	}
 	.select-border {
-    	height: 1.7rem;
+    	height: 1.4rem;
 	}
 	.nav-tabs .nav-link {
 	    padding: 0px 0px;

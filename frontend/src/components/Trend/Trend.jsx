@@ -19,18 +19,19 @@ import {
 
 let margin = {
   left: 50,
-  top: 63,
+  top: 43,
   right: 10,
   bottom: 50,
 };
 
 
-export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend, selIndicator}) => { 
+export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend,selLifecycle,selCategory,selIndicator,note}) => { 
 
   let [data, setData] = useState(null);
   const svgRef = useRef();
   const trendWrapper = useRef();
   const screen = useFullScreenHandle();
+  const componentRef = useRef();
 
   let colorScale;
   let yValue = d => d.data_value;
@@ -53,18 +54,30 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   const parseTime = timeParse('%d-%b-%y'); 
   const formatTime = timeFormat('%b-%y');
-  const formatTooltipTime = timeFormat('%B-%Y');
+  const formatTooltipTime = timeFormat('%b %Y');
   // const formatTitleTime = timeFormat('%Y');
 
-  // //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
-    if(toggleStateBurden === false){
-      return oneDecimel = d;
-    }
-    else{
-      oneDecimel = d.toFixed(1);  
-      return oneDecimel;
+    if(typeof d !== 'undefined'){
+      if(toggleStateBurden === false){
+        if(graphUnit !== 'Percent'){
+          oneDecimel = fmt.format(d);
+        }
+        else {
+          oneDecimel =fmt.formatFixed(d, 1)
+        }
+        return oneDecimel;
+      } 
+      else{
+        if(graphUnit !== 'Percent'){
+          oneDecimel = fmt.format(d);
+        }
+        else {
+          oneDecimel =fmt.formatFixed(d, 1)
+        }
+        return oneDecimel;
+      }   
     }
   }  
 
@@ -124,11 +137,11 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-    // console.log(width,adjustedHeight)
    
     
     svg.selectAll("*").remove();
-    svg.attr("preserveAspectRatio", "xMinYMin meet")
+    svg
+    .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
     
     // svg.attr("width", width)
@@ -147,7 +160,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       let min_year = min_d.getFullYear();
       let min_month = min_d.getMonth();
       let min_day = min_d.getDate();
-      let min_date = new Date(min_year, min_month-3, min_day);
+      let min_date = new Date(min_year, min_month-6, min_day);
 
       let max_d =  max(listofDate);
       let max_year = max_d.getFullYear();
@@ -222,7 +235,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
           .attr("fill", colorScale)
           .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
           .on('mousemove',(e,d)=>{
-            return tooltipX.html(`<b>${d.timeperiod}</b> : ${fmt.format(decimalPrecision(yValue(d)))}</br><b>Start date</b> : ${formatTooltipTime(d.start_date)}</br><b>End date</b> : ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX)+"px");
+            return tooltipX.html(`<b>${d.timeperiod}</b> : ${decimalPrecision(yValue(d))}</br> ${formatTooltipTime(d.start_date)} -  ${formatTooltipTime(d.end_date)}</div>`).style("top", (e.pageY) - height/2+"px").style("left",(e.pageX) - 80+"px");
           })
           .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
       
@@ -243,14 +256,14 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .text(function(d) { return d.timeperiod; });
     }
     else{
-      bar.append("text")
-      .attr('x',width/2 -90)
-      .attr('y',0)
-      .style("text-anchor","middle")
-      .style("font-size","13px")
-      .style("font-weight","bold")
-      .attr("dy", "-2em")
-      .text(`${graphTitle},${titleAreaName}`)
+      // bar.append("text")
+      // .attr('x',width/2 -90)
+      // .attr('y',0)
+      // .style("text-anchor","middle")
+      // .style("font-size","13px")
+      // .style("font-weight","bold")
+      // .attr("dy", "-2em")
+      // .text(`${graphTitle},${titleAreaName}`)
 
       // bar.append("text")
       // .attr("x",innerWidth/2)
@@ -268,7 +281,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     svg.append("text")
     .attr("transform", "rotate(-0)")
     .attr("x",margin.left + offSet)
-    .attr("y", margin.top-25)
+    .attr("y", margin.top-20)
     .attr("dy", "1em")
     .style("font-size","12px")
     .style("font-weight","bold")
@@ -299,18 +312,22 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       }
     }
   }
-
+let noteDiv = null;
+if(typeof note != "undefined")
+noteDiv = <div className=" absolute left-2   text-xs"><b>Note: </b>{note}`</div>;
   return (
     <>
-      <FullScreen  className="w-full h-full" handle={screen}>
+      <FullScreen  className="w-full bg-white h-full" handle={screen}>
         <div className='static relative w-full h-full'>
-          <div className="block absolute z-10 w-full max-h-max right-5">
-            <SideNavFirst table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={svgRef}/>
+          <div className="block absolute w-full max-h-max right-5" style={{zIndex:2}}>
+            <SideNavFirst   table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
           </div>
-          <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend">
-            <div className="text-center absolute w-full  font-bold text-xs md:text-sm  md:top-1 top-5 ">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
+          <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend" ref={componentRef}>
+            <div className="text-center absolute right-10 left-10 mx-10 w-auto  font-bold  text-xs md:text-sm">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>
             <div id="trend_svg" className='align-middle  w-full h-full' ref={trendWrapper}>
               <svg   ref = {svgRef} className="w-full   bg-white  border-black border-dashed object-scale-down"></svg>
+              {noteDiv}
+
             </div>
           </div>
         </div>

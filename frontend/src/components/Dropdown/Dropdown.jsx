@@ -2,11 +2,11 @@ import React,{useState,useEffect,useRef} from "react";
 import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
 import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, populateDropdowns } from '../../utils';
+import { createHierarchy, setVisulaizationData, populateDropdowns, solr_domain,solr_core } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
-import { SkeletonCard, SkeletonDropdown, SkeletonMapCard } from "../SkeletonCard";
+import { SkeletonCard, SkeletonDropdown } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
 // import "./Dropdown.css";
 import {BarArea} from "../../components/Bar/BarArea";
@@ -21,10 +21,7 @@ import "./bootstrap.min.css";
 import "./tailwind.min.css";
 import "./dashboard.css";
 import "./responsive.css";
-//header images
-import mhf from './images/mhf.png'
-import nil from './images/nutrition-logo.svg'
-import pa from './images/pa.png'
+
 // dropdown images
 import adolescene from './images/lifecycle/Adolescene.png'
 import wora from './images/lifecycle/Women-of-Reproductive-Age.png'
@@ -33,14 +30,9 @@ import delivery from './images/lifecycle/DeliveryPNC.png'
 import early_childhood from './images/lifecycle/Early-Childhood.png'
 import school_age from './images/lifecycle/School-Age-.png'
 import iicon from "./images/i-con5.png";
-// footer images
-import nilf from "./images/nutrition-logo-footer.svg";
-import clf from "./images/ctara-logo.png";
-import pl from "./images/proditech-logo.png";
-import unil from "./images/unicefLogo.png";
 
 
-export const Dropdown = ({}) =>{
+export const Dropdown = () =>{
 
   let { queryLifecycle } = useParams();
   if(typeof queryLifecycle === 'undefined')
@@ -109,6 +101,7 @@ export const Dropdown = ({}) =>{
   const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
   const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
+  const [note,setNote] = useState(null);
   const [selBurden,setSelBurden] = useState("1");
   const lifecycleData = [
     {  title: "Adolescence", value: 1 },
@@ -135,7 +128,7 @@ export const Dropdown = ({}) =>{
         { value: 2, title: "Interventions" },
         { value: 3, title: "Determinants" }
       ])
-      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,queryIndicator)
+      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator)
       setIsSelected(true);
     }
     populateTabData();
@@ -145,8 +138,9 @@ export const Dropdown = ({}) =>{
 
       useEffect(() => {
         // const url_4 = 'http://13.234.11.176/api/area';
-        const solr_url_4 = 'http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc';
-        // const solr_url_4 = "http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=value:area_id%2Ccode:area_code%2Ctitle:area_name&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc";
+        const solr_url_4 = `${solr_domain}/solr/${solr_core}/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc`;
+        console.log(solr_url_4);
+        // const solr_url_4 = "${solr_domain}/solr/${solr_core}/select?fl=value:area_id%2Ccode:area_code%2Ctitle:area_name&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc";
         json(solr_url_4).then( options =>{
         const [country,statesID] = createHierarchy(options.response.docs);
         setStateID(statesID)
@@ -205,7 +199,6 @@ export const Dropdown = ({}) =>{
         generateList(areaDropdownOpt)
         const lifecycleChange = async(e) =>{
           let val = parseInt(e.target.value);
-          console.log(e);
           setIsSelected(false);
           setSelLifecycle(val);
           setToggleState(true);
@@ -232,7 +225,7 @@ export const Dropdown = ({}) =>{
             ])
           }
           setSelCategory(selCat);
-          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
+          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -243,8 +236,7 @@ export const Dropdown = ({}) =>{
           let val = parseInt(e.target.value);
           setIsSelected(false);
           setSelCategory(val);       
-          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense)
-          console.log("selIndicator", selIndicator);     
+          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -263,12 +255,16 @@ export const Dropdown = ({}) =>{
           setToggleStateBurden(true);
           }
           setSelIndicator(val);
-          let indiSense = indicatorDropdownOpt.filter(f => f.value === val)[0].indi_sense;
-          let indiName = indicatorDropdownOpt.filter(f => f.value === val)[0].title;
+          let indiObject = indicatorDropdownOpt.filter(f => f.value === val)[0];
+          console.log(indiObject)
+          let indiSense = indiObject.indi_sense;
+          let indiName = indiObject.indicator_name;
+          let indiNotes = indiObject.notes;
           setGraphTitle(indiName);
           setIndicatorSense(indiSense);
+          setNote(indiNotes);
           let solr_url;
-              solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
     
             const solr_body_1 = await solr_url.json()
 
@@ -294,7 +290,7 @@ export const Dropdown = ({}) =>{
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
-            const solr_url_3 = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+            const solr_url_3 = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
 
             const solr_body_3 = await solr_url_3.json()
             setUnit(solr_body_3.response.docs[0].unit_id);
@@ -366,7 +362,7 @@ export const Dropdown = ({}) =>{
             newLevel = 2;
           }
           let solr_url;
-              solr_url = await fetch(`http://nutritionindiainfo.communitygis.net:8983/solr/nutritionv17/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
             let solr_body_1 = await solr_url.json()
             solr_body_1 = solr_body_1.response.docs;
               setTimeperiodDropdownOpt(solr_body_1);
@@ -419,7 +415,7 @@ export const Dropdown = ({}) =>{
           setIsSelected(true);
         }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
-          return <div><Row><SkeletonCard /><SkeletonMapCard /> </Row> </div>
+          return <div> </div>
         }
       
       const burdenClick = () => {
@@ -445,10 +441,10 @@ export const Dropdown = ({}) =>{
 
         <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
           <li className="nav-item">
-              <a  className={`nav-link ${toggleStateBurden  && 'active radius2'}` }   id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true" onClick={()=>{setSelBurden("1"); setToggleStateBurden(true);}}>Prevalence</a>
+              <a  className={`nav-link radius2 ${toggleStateBurden  && 'active '}` }   id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true" onClick={()=>{setSelBurden("1"); setToggleStateBurden(true);}}>Prevalence</a>
           </li>
-          <li className="nav-item">
-              <a className={`nav-link ${!toggleStateBurden  && 'active radius'}` }  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" onClick={()=>{setSelBurden("2"); setToggleStateBurden(false);}}>Burden</a>
+          <li className="nav-item nav-item-right">
+              <a className={`nav-link radius ${!toggleStateBurden  && 'active '}` }  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" onClick={()=>{setSelBurden("2"); setToggleStateBurden(false);}}>Burden</a>
           </li>
       </ul>
 
@@ -469,8 +465,8 @@ export const Dropdown = ({}) =>{
           <li className="nav-item">
               <a className="nav-link radius2"  id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true">Prevalence</a>
           </li>
-          <li className="nav-item">
-              <a className="nav-link radius"  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" >Burden</a>
+          <li className="nav-item nav-item-right">
+              <a className="nav-link radius "  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" >Burden</a>
           </li>
       </ul>
 
@@ -484,22 +480,14 @@ export const Dropdown = ({}) =>{
     return (
       <>
  
-			<main id='main_app_container' className='flex flex-col max-h-screen'>
-      
-      <div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
-				{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
-					<div><img src={mhf} className="health-ministry"/></div>
-				<div className="justify-center ml-10 mt-2">	<img src={nil} className="nutrition-india"/></div>
-				<div>	<img src={pa} className="poshan-abhiyan"/></div>
-				{/* </div> */}
-			</div>
+
 
       <header
 					id='main_menu'
 					className='p-2 flex flex-wrap
-                  justify-between lg:sticky lg:top-0  z-40 bg-white'>
+                  justify-between lg:top-0  bg-white lg:sticky z-40'>
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
-				<div className="col-10 col-lg-4 col-md-10 p-3 for-mobile-1">
+				<div className="col-10 col-lg-5 col-md-5 p-3 for-mobile-1">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
 						<img src={selLifeycleImg} className="lifecycle-img"/>
 						<div className="select-lifecycle-parent">
@@ -516,18 +504,18 @@ export const Dropdown = ({}) =>{
 						</div>
 					</div>
 				</div>
-				<div className="col-12 col-lg-7 col-md-12 p-3 for-mobile-3">
+				<div className="col-12 col-lg-6 col-md-6 p-3 for-mobile-3">
 					<div className="row">
 						<div className="col-6 col-lg-3 p-2">
 							<div>
-								<select className="select-border w-100" value={selIndicator} onChange={indicatorChange}>
+								<select className="select-border w-100 mt-1" value={selIndicator} onChange={indicatorChange}>
                 {indicatorDropdownOpt.map(opt => <option key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 							
 								</select>
 							</div>
 						</div>
-						<div className="col-6 col-lg-3 p-2">
-							<div className="toogle-button">
+						<div className="col-6 col-lg-3 p-2 ">
+							<div className="toogle-button w-full mt-1">
                 {burdenDropdown}
 								{/* <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
 			                        <li className="nav-item">
@@ -544,7 +532,7 @@ export const Dropdown = ({}) =>{
 
               <TreeSelect
                 showSearch
-                className='w-100'
+                className='w-100 mt-1'
                 virtual={true}
                 // style={{ width: '100%' }}
                 value={selArea}
@@ -571,16 +559,16 @@ export const Dropdown = ({}) =>{
 						</div>
 						<div className="col-6 col-lg-3 p-2">
 							<div>
-								<select className="select-border w-100" value={selTimeperiod} onChange={timeperiodChange}> 
+								<select className="select-border w-100 mt-1" value={selTimeperiod} onChange={timeperiodChange}> 
                 {timeperiodDropdownOpt.map(opt => <option  key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 								</select>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div className="col-2 col-lg-1 col-md-2 p-3  for-mobile-2 i-for-mobile-div3">
-					<div className="i-class">
-						<img src={iicon} className="i-icon md:mt-2"/>
+				<div className="col-2 col-lg-1 col-md-1 p-3  for-mobile-2 i-for-mobile-div3">
+					<div className="i-class mt-2">
+          <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon md:mt-2"/></a>
 					</div>
 				</div>
 			</div>
@@ -599,25 +587,11 @@ export const Dropdown = ({}) =>{
 			</div>
 		</div> */}
 		</header>
-		<div>
-
-
-		
-		
- 
-
-
-  
- 
-
-
-
-
 
      {/* Nakul sir style  */}
 
      <section id='main_dashboard_container' className='flex flex-col'>
-     <section id='top_dashboard_row' className='flex flex-wrap-reverse'>
+     <section id='top_dashboard_row' className='flex md:flex-wrap-reverse flex-wrap-reverse'>
      <div className='flex w-full md:w-1/2'>
         {(isSelected  & selTimeperiod !== "")?
           <Trend indicatorTrend = {indicatorTrend}
@@ -627,8 +601,11 @@ export const Dropdown = ({}) =>{
           titleAreaName = {titleAreaName}
           graphTimeperiod = {graphTimeperiod}
           toggleStateBurden = {toggleStateBurden}
+          selLifecycle={selLifeycle}
+          selCategory ={selCategory}
           selIndicator={selIndicator}
-          />: (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
+          note={note}
+          />: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
 
      <div className=" flex w-full md:w-1/2">
@@ -644,6 +621,8 @@ export const Dropdown = ({}) =>{
           searchRef={searchRef} 
           setFilterDropdownValue={setFilterDropdownValue} 
           areaDropdownOpt={areaDropdownOpt} 
+          selLifecycle={selLifeycle}
+          selCategory ={selCategory}
           selIndicator={selIndicator}
           indicatorSense={indicatorSense} 
           isLevelThree = {isLevelThree}
@@ -672,7 +651,7 @@ export const Dropdown = ({}) =>{
           changeBurdenText={changeBurdenText}
           drillDirection = {drillDirection}
           setDrillDirection ={setDrillDirection}
-          /> : (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
+          /> : (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
      </section>
 
@@ -690,7 +669,9 @@ export const Dropdown = ({}) =>{
           areaName = {areaName}
           selStateData = {selStateData}
           toggleStateBurden = {toggleStateBurden}
-          selIndicator={selIndicator}/>: (selTimeperiod!== "")? null:<div id="msg">No data: please select another area</div>}
+          selLifecycle={selLifeycle}
+          selCategory ={selCategory}
+          selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />:<div id="msg">No data: please select another area</div>}
      </div>
 
      <div className='flex w-full md:w-1/2'>
@@ -704,7 +685,9 @@ export const Dropdown = ({}) =>{
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
-      selIndicator={selIndicator}/>: (selTimeperiod!== "")? null: <div id="msg">No data: please select another area</div>}
+      selLifecycle={selLifeycle}
+      selCategory ={selCategory}
+      selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
 
      </section>
@@ -713,25 +696,7 @@ export const Dropdown = ({}) =>{
 
 
 
-  <footer className="footer p-0 mt-4">
-			<div className="row  p-0 m-0 align-items-center">
-				<div className="col-3">
-					<a href="https://nutritionindia.info/" target="_blank"><img src={nilf} className="nutrition-image"/></a>
-				</div>
-				<div className="col-3">
-					<a href="https://www.ctara.iitb.ac.in/" target="_blank"><img src={clf} title="CTARA" className="iitb-image"/></a>
-				</div>
-				<div className="col-3">
-					<a href="https://proditech.in" target="_blank"><img src={pl} title="Nutrition India, Website developed by PRODITECH Solutions, Mumbai." className="proditech-image"/></a>
-				</div>
-				<div className="col-3">
-					<a href="http://unicef.in/" target="_blank"><img src={unil}  className="unichef-image"/></a>
-				</div>
-			</div> 
-		</footer>
-		
-	</div> 
-  </main>
+    
    </>
     )
 }

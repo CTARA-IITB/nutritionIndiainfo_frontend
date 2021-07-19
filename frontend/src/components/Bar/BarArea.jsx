@@ -13,16 +13,17 @@ import {
 } from 'd3';
 import { size } from 'lodash';
 
-export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selIndicator}) => {
+export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selLifecycle,selCategory,selIndicator}) => {
 
   const screen=useFullScreenHandle();
   const svgRef = useRef();
   const trendWrapper = useRef();
+  const  componentRef = useRef();
   let gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
 let dynamicRange;
   const margin = {
     left:160,
-    top: 100,
+    top: 70,
     right: 60,
     bottom: 50,
   };
@@ -65,8 +66,10 @@ let dynamicRange;
     if(level === 1){
       setStatus("By State");
       let sortedIndiaData;
-      if(toggleStateBurden)
+      if(toggleStateBurden){
+          selIndiaData = selIndiaData.filter(d => typeof d.data_value != 'undefined')
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+      }    
       else{
           selIndiaData = selIndiaData.filter(d => typeof d.data_value_num != 'undefined')
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
@@ -76,8 +79,10 @@ let dynamicRange;
     else if(level === 2 || level === 3){
       setStatus("By District")
       let sortedStateData;
-      if(toggleStateBurden)
+      if(toggleStateBurden){
+          selStateData = selStateData.filter(d => typeof d.data_value != 'undefined')
           sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+      }    
       else{
           selStateData = selStateData.filter(d => typeof d.data_value_num != 'undefined')
           sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
@@ -237,7 +242,6 @@ let dynamicRange;
       	.attr("class","axis")
         .call(axisLeft(yScale).tickSize(0))
 		    .style('font-size',11);	
-     
       bar.append("g")
         .attr("transform",`translate(0, ${dynamicRange})`)
         // .attr("transform", "translate(0," + (barSize*data.length) + ")")
@@ -249,6 +253,42 @@ let dynamicRange;
         .style('font-size',11)
         
         
+    }else{ // show nodata svg
+      const noData = svg.attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox",  `0 0 ${width} ${height}`)
+        .append("g")
+        .attr("transform",`translate(${50},${margin.top})`);
+
+      svg.append("text").text("No district data.  Please select another survey.")
+      .style("text-anchor", "middle")
+      .style("font-weight","bold")
+      .style("fill", "red")
+      .attr('transform',`translate(${width/2}, ${height/2})`);
+
+
+
+    const dummyXScale = scaleLinear()
+      .domain([0, 100])
+      .range([0, innerWidth])
+
+    const dummyYScale = scaleBand()
+      .domain([])
+      .range([0,innerHeight])
+      .padding(0.1)
+
+      noData.append("g")
+      .attr("class","axis")
+      .call(axisLeft(dummyYScale).tickSize(0))
+      .style('font-size',11);	
+
+
+      noData.append("g")
+        // .attr("transform",`translate(0, ${dynamicRange})`)
+        .attr("transform", "translate(0," + (innerHeight) + ")")
+      	.attr("class","axis")
+  			.call(axisBottom(dummyXScale).ticks(3))
+        .style('font-size',11);
+
     }
   },[data,toggleStateBurden])
     
@@ -265,15 +305,8 @@ let dynamicRange;
   }
   const reportChange = (state, handle) => {
     if(state === true){
-     document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'height: 2500px !important');
-      document.getElementsByClassName("fullscreen")[0].setAttribute('style', `width: 2500px !important`);
-       
+     document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
     }
-    else{
-      
-
-    }
-  
   };    
   let table=[];
   if(data ){
@@ -295,14 +328,17 @@ let dynamicRange;
  
   return (
       <>
-        <FullScreen  className="w-full" handle={screen} onChange={reportChange}>
-          <div className='relative w-full' id="h_bar">
-            <div className="block absolute z-10 w-full max-h-max right-5">
-              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
+        <FullScreen  className="w-full bg-white" handle={screen} onChange={reportChange}>
+          <div className='static relative w-full' id="h_bar">
+            <div className="block absolute w-full max-h-max right-5" style={{zIndex:1}}>
+              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>
-            <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea">
-              <div className="text-center absolute w-full font-bold md:top-1 top-5 md:text-sm text-xs" >{`${gBarTitle}`}</div>
-              <div className="text-center absolute w-full text-xs md:top-6 top-12" >{`${status}`}</div>
+            <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef}>
+            <div className="absolute  right-10 left-10 mx-10 w-auto top-1">
+
+              <div className="text-center w-full text-xs md:text-sm  font-bold" >{`${gBarTitle}`}</div>
+              <div className="text-center   w-full text-xs" >{`${status}`}</div>
+              </div>
               <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg   ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
               </div>

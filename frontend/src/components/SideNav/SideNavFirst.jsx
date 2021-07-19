@@ -17,7 +17,7 @@ import "./SideNav.css";
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
 
-const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})=>{
+const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,selLifecycle,selCategory,selIndicator})=>{
 
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenTable, setIsOpenTable] = useState(false);
@@ -129,13 +129,15 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
     return(
         <>
-            {isOpenTable && <Popup
+            {isOpenTable && <Popup 
             content={<>
-                <div id="title">{title}</div>
+                <div id="title" className="table">{title}</div>
                 <BootstrapTable data={ table } 
                     hover 
                     search
-                    headerStyle={ { background:'#ECECEC' } }
+                    headerStyle={ { background:'#ECECEC', zIndex:'99' } }
+                    className="table"
+                    // style={{ backgroundColor:"red"}}
                 >
                     <TableHeaderColumn dataField={dataField}  isKey dataSort>{columnName}</TableHeaderColumn>
                     <TableHeaderColumn dataField='data'>Data</TableHeaderColumn>
@@ -146,7 +148,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
 
             {isOpenShare && <Popup
             content={<>
-                <ShareImage id={id}/>
+                <ShareImage title={title} id={id} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </>}
                 handleClose={toggleShare}
             />}
@@ -165,11 +167,11 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef})
             </div>}
                 handleClose={togglePopup}
             />}
-            <Dropdown style={{float:'right'}}>
+            <Dropdown style={{float:'right'}} className="">
                 <Dropdown.Toggle variant="link" bsPrefix="p-0">
-                    <MenuIcon id="icon"/>
+                    <MenuIcon id="icon" className=""/>
                 </Dropdown.Toggle>
-                <Dropdown.Menu align="right" >
+                <Dropdown.Menu align="right" className="">
                     <Dropdown.Item  onClick={togglePopup} eventKey="1" style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
                     <Dropdown.Item 
                         onClick={(e)=>{

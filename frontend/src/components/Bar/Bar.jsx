@@ -12,15 +12,16 @@ import {
 import fmt from 'indian-number-format'
 import './Bar.css'
 
-export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAreaName, toggleStateBurden, selIndicator})=>{
+export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAreaName, toggleStateBurden, selLifecycle,selCategory,selIndicator})=>{
 
   const screen = useFullScreenHandle();
   let status = "By Background Characteristics";
-  const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mild Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
-  const svgRef = useRef();
+  const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mid Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
+  const svgRef = useRef()
+  const componentRef = useRef();
   const margin = {
     left:120,
-    top: 100,
+    top: 70,
     right: 70,
     bottom: 60,
   };
@@ -180,7 +181,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
       let chart = bar.selectAll("rect").data(data);
       
       const fillRect = (d) =>{
-        let darkSubgroup = ["Overall","Low Coverage","Mild Coverage","High Coverage","Poorest","Second","Middle","Fourth","Richest"]
+        let darkSubgroup = ["Overall","Low Coverage","Mid Coverage","High Coverage","Poorest","Second","Middle","Fourth","Richest"]
         if(darkSubgroup.includes(d.subgroup_name))
           return colorScale;
         else
@@ -252,14 +253,23 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
 
   return(
     <>
-      <FullScreen  className="w-full h-full" handle={screen}>
+      <FullScreen  className="w-full bg-white h-full" handle={screen}>
 				<div className='relative w-full h-full'>
-					<div className="block absolute z-10 w-full max-h-max right-5">
-            <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={svgRef}/>
+					<div className="block absolute w-full max-h-max right-5" style={{zIndex:1}}>
+            <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
           </div>
-          <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar">
-            <div className="text-center absolute w-full  font-bold text-xs md:top-1 top-5 md:text-sm">{`${gBarTitle}`}</div>
-            <div className="text-center absolute w-full text-xs md:top-6 top-12">{`${status}`}</div>
+          <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar" ref={ componentRef}>
+
+
+
+            
+          <div className="absolute   right-10 left-10 mx-10 w-auto top-1">
+            <div className="text-center  text-xs md:text-sm  font-bold">{`${gBarTitle}`}</div>
+            <div className="text-center   text-xs">{`${status}`}</div>
+           </div>
+
+
+
             <div id="gbar_svg" className='block align-middle w-full h-full' >
               <svg ref = {svgRef} className="w-full  bg-white  border-black border-dashed object-scale-down"></svg>
             </div>

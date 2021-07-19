@@ -316,7 +316,7 @@ export const Map = ({
     let colorScale;
   let colorScale_new;
     let colorScale2;
-    let arrsuw = [19,21,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]; 
+    let arrsuw = [19,21,105,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]; 
     if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
     {
     if(indicatorSense === 'Positive')
@@ -639,7 +639,7 @@ export const Map = ({
      }
  
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unit,geometry, dimensions, data, toggleStateBurden])
+  }, [unit,geometry, areaChange, data, toggleStateBurden])
 
   let switchButton;
 

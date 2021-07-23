@@ -164,7 +164,7 @@ export const Map = ({
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-  useEffect(() => {
+  // useEffect(() => {
     const svg = select(svgRef.current);
 
     const legend = select(svgRef.current)
@@ -639,7 +639,7 @@ export const Map = ({
      }
  
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unit,geometry, areaChange, data, toggleStateBurden])
+  // }, [unit,geometry, areaChange, data, toggleStateBurden])
 
   let switchButton;
 

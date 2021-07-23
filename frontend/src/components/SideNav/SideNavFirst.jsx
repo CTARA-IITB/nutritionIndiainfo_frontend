@@ -116,16 +116,31 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
         });
     }
 
-    const savePdf = ()=>{
-        htmlToImage.toPng(document.getElementById(id), { quality: 0.95 })
-        .then(function (dataUrl) {
+    const savePdf = () => {
+        htmlToImage
+          .toPng(document.getElementById(id), { quality: 1 })
+          .then(function (dataUrl) {
             var link = document.createElement('a');
             link.download = imageNameJpeg;
-            const pdf = new jsPDF();          
-            pdf.addImage(dataUrl, 'PNG', 0, 0);
-            pdf.save(imageNamePdf); 
-        });
-    }
+            const pdf = new jsPDF();
+    
+            let img = new Image();
+            img.src = dataUrl;
+            img.onload = function () {
+              var imgHeight = img.height;
+              var imgWidth = img.width;
+    
+              let width = pdf.internal.pageSize.getWidth();
+              let height = pdf.internal.pageSize.getHeight();
+              let hratio = imgHeight / imgWidth;
+              let imgPDFHeight = width * hratio;
+    
+              pdf.addImage(dataUrl, 'PNG', 0, 0, width, imgPDFHeight);
+              pdf.save(imageNamePdf);
+            };
+          })
+          .catch((error) => console.error('oops, something went wrong!', error));
+      };
 
     return(
         <>

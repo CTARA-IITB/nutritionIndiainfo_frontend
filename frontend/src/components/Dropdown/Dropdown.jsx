@@ -2,7 +2,7 @@ import React,{useState,useEffect,useRef} from "react";
 import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
 import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, populateDropdowns, solr_domain,solr_core } from '../../utils';
+import { createHierarchy, setVisulaizationData, populateDropdowns, API } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
@@ -138,14 +138,14 @@ export const Dropdown = () =>{
 
       useEffect(() => {
         // const url_4 = 'http://13.234.11.176/api/area';
-        const solr_url_4 = `${solr_domain}/solr/${solr_core}/select?fl=area_id%2Carea_parent_id%2Carea_code%2Carea_name%2Carea_level&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc`;
-        console.log(solr_url_4);
+        const solr_url_4 = `${API}/api/v1/url_4d`;
+        // console.log(solr_url_4);
         // const solr_url_4 = "${solr_domain}/solr/${solr_core}/select?fl=value:area_id%2Ccode:area_code%2Ctitle:area_name&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc";
         json(solr_url_4).then( options =>{
-        const [country,statesID] = createHierarchy(options.response.docs);
+        const [country,statesID] = createHierarchy(options.result.docs);
         setStateID(statesID)
         setAreaDropdownOpt(country);
-        setAreaList(options.response.docs);  
+        setAreaList(options.result.docs);  
         })
         
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -256,7 +256,7 @@ export const Dropdown = () =>{
           }
           setSelIndicator(val);
           let indiObject = indicatorDropdownOpt.filter(f => f.value === val)[0];
-          console.log(indiObject)
+          // console.log(indiObject)
           let indiSense = indiObject.indi_sense;
           let indiName = indiObject.indicator_name;
           let indiNotes = indiObject.notes;
@@ -264,24 +264,24 @@ export const Dropdown = () =>{
           setIndicatorSense(indiSense);
           setNote(indiNotes);
           let solr_url;
-              solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-    
+              // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              solr_url = await fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifeycle}&area_id=${selArea}&selIndicator=${val}`)
             const solr_body_1 = await solr_url.json()
 
-              setTimeperiodDropdownOpt(solr_body_1.response.docs);
+              setTimeperiodDropdownOpt(solr_body_1.result.docs);
               let flag = false;
               let timeValue = selTimeperiod;
-              if(solr_body_1.response.docs){
-                solr_body_1.response.docs.forEach(timeperiod => {
+              if(solr_body_1.result.docs){
+                solr_body_1.result.docs.forEach(timeperiod => {
                   if(timeperiod.value === selTimeperiod){
                     flag = true;
                   }
                 });
                 if(!flag){
-                  if(typeof solr_body_1.response.docs[0] !== 'undefined'){  // added this condition to resolve issue when UT data not present for CNNS Obesity in 10-14 year old
-                    timeValue = solr_body_1.response.docs[0].value;
-                    setSelTimeperiod(solr_body_1.response.docs[0].value);
-                    setGraphTimeperiod(solr_body_1.response.docs[0].title);
+                  if(typeof solr_body_1.result.docs[0] !== 'undefined'){  // added this condition to resolve issue when UT data not present for CNNS Obesity in 10-14 year old
+                    timeValue = solr_body_1.result.docs[0].value;
+                    setSelTimeperiod(solr_body_1.result.docs[0].value);
+                    setGraphTimeperiod(solr_body_1.result.docs[0].title);
                   }
                   else{
                     setSelTimeperiod("");
@@ -290,11 +290,11 @@ export const Dropdown = () =>{
                 }
             } 
             // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
-            const solr_url_3 = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
-
+            // const solr_url_3 = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
+            const solr_url_3 = await fetch(`${API}/api/v1/url_3d?val=${val}`)
             const solr_body_3 = await solr_url_3.json()
-            setUnit(solr_body_3.response.docs[0].unit_id);
-            setGraphUnit(solr_body_3.response.docs[0].unit_name);
+            setUnit(solr_body_3.result.docs[0].unit_id);
+            setGraphUnit(solr_body_3.result.docs[0].unit_name);
             await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             setIsSelected(true);
         }
@@ -362,9 +362,11 @@ export const Dropdown = () =>{
             newLevel = 2;
           }
           let solr_url;
-              solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+              // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
+
+            solr_url = await fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifeycle}&area_id=${value}&selIndicator=${selIndicator}`)  
             let solr_body_1 = await solr_url.json()
-            solr_body_1 = solr_body_1.response.docs;
+            solr_body_1 = solr_body_1.result.docs;
               setTimeperiodDropdownOpt(solr_body_1);
               let flag = false;
               let timeValue = selTimeperiod;

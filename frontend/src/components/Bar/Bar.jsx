@@ -251,9 +251,20 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
     }
   }
 
+  const reportChange = (state, handle) => {
+    if(state === true){
+     document.getElementsByClassName("my-bar-title")[0].setAttribute('style', 'font-size: 1.5rem');
+     document.getElementsByClassName("my-bar-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+    }else{
+     document.getElementsByClassName("my-bar-subtitle")[0].setAttribute('style', 'font-size: .55rem');
+     document.getElementsByClassName("my-bar-title")[0].setAttribute('style', 'font-size: .875rem');
+
+    }
+  }; 
+
   return(
     <>
-      <FullScreen  className="w-full bg-white h-full" handle={screen}>
+      <FullScreen  className="w-full bg-white h-full" handle={screen} onChange={reportChange}>
 				<div className='relative w-full h-full'>
 					<div className="block absolute w-full max-h-max right-5" style={{zIndex:1}}>
             <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
@@ -264,8 +275,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
 
             
           <div className="absolute   right-10 left-10 mx-10 w-auto top-1">
-            <div className="text-center  text-xs md:text-sm  font-bold">{`${gBarTitle}`}</div>
-            <div className="text-center   text-xs">{`${status}`}</div>
+            <div className="text-center  text-xs md:text-sm  font-bold my-bar-title">{`${gBarTitle}`}</div>
+            <div className="text-center   text-xs my-bar-subtitle">{`${status}`}</div>
            </div>
 
 

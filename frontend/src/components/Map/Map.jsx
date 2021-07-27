@@ -704,8 +704,13 @@ export const Map = ({
     const reportChange = (state, handle) => {
       if(state === true){
        document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: auto !important');
+       document.getElementsByClassName("my-map-title")[0].setAttribute('style', 'font-size: 1.5rem');
+       document.getElementsByClassName("my-map-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
       }else{
        document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: hidden !important');
+       document.getElementsByClassName("my-map-subtitle")[0].setAttribute('style', 'font-size: .55rem');
+       document.getElementsByClassName("my-map-title")[0].setAttribute('style', 'font-size: .875rem');
+
       }
     }; 
 
@@ -719,8 +724,8 @@ export const Map = ({
         </div>
         <div className='relative  w-full pb-3 pt-1 pr-3' id="svgMap" ref={componentRef}>
           <div className="absolute  right-5 left-5 mx-10 w-auto top-1">
-              <div className="text-center  text-xs md:text-sm  font-bold">{`${mapTitle}`}</div>
-              <div className="text-center  text-xs ">{`${warning}`}</div>
+              <div className="text-center  text-xs md:text-sm  font-bold my-map-title">{`${mapTitle}`}</div>
+              <div className="text-center  text-xs my-map-subtitle">{`${warning}`}</div>
               </div>
 							<div id='map_svg' className=' align-middle w-full h-full' ref={wrapperRef}>
               <div className="flex flex-wrap absolute  md:left-auto md:bottom-auto right-10 top-16">

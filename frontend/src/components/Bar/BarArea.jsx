@@ -305,8 +305,14 @@ let dynamicRange;
   }
   const reportChange = (state, handle) => {
     if(state === true){
-     document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
-    }
+      document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
+      document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: 1.5rem');
+      document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+     }else{
+      document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: .55rem');
+      document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: .875rem');
+     }
+
   };    
   let table=[];
   if(data ){
@@ -336,8 +342,8 @@ let dynamicRange;
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef}>
             <div className="absolute  right-10 left-10 mx-10 w-auto top-1">
 
-              <div className="text-center w-full text-xs md:text-sm  font-bold" >{`${gBarTitle}`}</div>
-              <div className="text-center   w-full text-xs" >{`${status}`}</div>
+              <div className="text-center w-full text-xs md:text-sm  font-bold my-bararea-title" >{`${gBarTitle}`}</div>
+              <div className="text-center   w-full text-xs my-bararea-subtitle" >{`${status}`}</div>
               </div>
               <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
                 <svg   ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>

@@ -21,7 +21,7 @@
 }
 
 .health-ministry {
-	height: 100%;
+	height: auto;
 	width: auto;
 }
 
@@ -33,7 +33,7 @@
 
 .nutrition-india {
 	height: 100%;
-	width: 60%;
+	width: 80%;
 }
 
 .lifecycle-img {

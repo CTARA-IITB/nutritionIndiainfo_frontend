@@ -204,6 +204,7 @@
 
 @media (min-width: 768px) and (max-width: 991px) {
 	.health-ministry {
+		height:auto;
 	    width: 60%;
 	}
 	.nutrition-india {

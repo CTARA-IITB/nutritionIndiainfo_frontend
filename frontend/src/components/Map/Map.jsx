@@ -703,13 +703,15 @@ export const Map = ({
 
     const reportChange = (state, handle) => {
       if(state === true){
-       document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
+       document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: auto !important');
+      }else{
+       document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: hidden !important');
       }
     }; 
 
   return (
     <>
-      <FullScreen className="w-full bg-white h-full" handle={screen} onChange={reportChange}>
+      <FullScreen className="my-fullscreen w-full bg-white h-full" handle={screen} onChange={reportChange}>
       
 			<div className='relative w-full h-full'>
 			  <div className="block absolute w-auto max-h-max left-15 right-5" style={{zIndex:2}}>

@@ -287,6 +287,9 @@ select{
 
 
 }
+select:focus{
+	outline: none !important;
+}
 svg{
 	margin-right: 11px;
 }

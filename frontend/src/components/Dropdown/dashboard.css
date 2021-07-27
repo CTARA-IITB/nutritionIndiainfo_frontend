@@ -21,8 +21,8 @@
 }
 
 .health-ministry {
-	height: auto;
-	/* width: 40%; */
+	height: 100%;
+	width: auto;
 }
 
 .poshan-abhiyan {
@@ -32,9 +32,8 @@
 }
 
 .nutrition-india {
-	height: auto;
-	width: 50%;
-	margin: auto;
+	height: 100%;
+	width: 60%;
 }
 
 .lifecycle-img {

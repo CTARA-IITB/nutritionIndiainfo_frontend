@@ -303,17 +303,7 @@ let dynamicRange;
     //   }
     // }
   }
-  const reportChange = (state, handle) => {
-    if(state === true){
-      document.getElementsByClassName("fullscreen-enabled")[0].setAttribute('style', 'overflow: auto !important');
-      document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: 1.5rem');
-      document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
-     }else{
-      document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: .55rem');
-      document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: .875rem');
-     }
-
-  };    
+ 
   let table=[];
   if(data ){
     for(var i=0;i<data.length;i++){
@@ -332,9 +322,23 @@ let dynamicRange;
     }
   }
  
+
+  const reportChange = (state, handle) => {
+    if(state === true){
+      document.getElementsByClassName("my-fullScreen")[0].setAttribute('style', 'overflow: auto !important');
+      document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: 1.5rem');
+      document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+     }else{
+      document.getElementsByClassName("my-fullScreen")[0].setAttribute('style', 'overflow: hidden !important');
+      document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: .55rem');
+      document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: .875rem');
+     }
+
+  };   
+
   return (
       <>
-        <FullScreen  className="w-full bg-white" handle={screen} onChange={reportChange}>
+        <FullScreen  className="my-fullScreen w-full bg-white" handle={screen} onChange={reportChange}>
           <div className='static relative w-full' id="h_bar">
             <div className="block absolute w-full max-h-max right-5" style={{zIndex:1}}>
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>

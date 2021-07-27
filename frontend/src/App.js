@@ -18,7 +18,6 @@ import pa from './image_logos/pa.png'
 // footer images
 import nilf from "./image_logos/nutrition-logo-footer.svg";
 import clf from "./image_logos/ctara-logo.png";
-import pl from "./image_logos/proditech-logo.png";
 import unil from "./image_logos/unicefLogo.png";
 
 
@@ -27,10 +26,10 @@ return(<>
 			
 <main id='main_app_container' className='flex flex-col max-h-screen'>
 
-	<div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
+	<div  id="brand_container" className="grid grid-cols-3 p-4 m-2 justify-between">
 		{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
 			<div ><a href="https://www.mohfw.gov.in/" target="_blank"><img src={mhf} className="health-ministry"/></a></div>
-		<div className="mt-2.5 lg:mt-4">	<a href="/" target=""><img src={nil} className="nutrition-india"/></a></div>
+		<div className="mt-4 mx-auto">	<a href="/" target=""><img src={nil} className="nutrition-india"/></a></div>
 		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank"> <img src={pa} className="poshan-abhiyan"/></a></div> 
 		{/* </div> */}
 	</div>

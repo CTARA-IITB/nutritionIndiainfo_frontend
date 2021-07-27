@@ -47,10 +47,10 @@ export const Map = ({
   const dimensions = useResizeObserver(wrapperRef);
  
   if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true)) {
-    mapTitle = `${graphTitle},${titleAreaName},${graphTimeperiod}`;
+    mapTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
   }
   else{
-    mapTitle =  `${graphTitle},Number,${titleAreaName},${graphTimeperiod}`;
+    mapTitle =  `${graphTitle}, Number, ${titleAreaName}, ${graphTimeperiod}`;
   }
 
   // function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
@@ -110,11 +110,11 @@ export const Map = ({
 
       if (selTimeperiod === NFHS5){    // change state boundaries when timeperiod is NFHS5
         geometry = boundaries.new_state;
-        warning="Administrative Boundaries as per NFHS5(2019-20)"
+        warning="Administrative Boundaries as per NFHS5 2019-20"
       }   
       else{
         geometry = boundaries.state;
-        warning="Administrative Boundaries as per NFHS4(2015-16)"
+        warning="Administrative Boundaries as per NFHS4 2015-16"
       }
       
       data = selIndiaData;
@@ -123,12 +123,12 @@ export const Map = ({
 
         if(selTimeperiod === NFHS5){
           geometry = boundaries.new_dist;
-          warning="Administrative Boundaries as per NFHS5(2019-20)"
+          warning="Administrative Boundaries as per NFHS5 2019-20"
 
         }
         else{
           geometry = boundaries.dist;
-          warning="Administrative Boundaries as per NFHS4(2015-16)"
+          warning="Administrative Boundaries as per NFHS4 2015-16"
 
         }
       data = selDistrictsData;

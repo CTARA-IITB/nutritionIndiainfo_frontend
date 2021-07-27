@@ -26,7 +26,6 @@ let margin = {
 
 
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend,selLifecycle,selCategory,selIndicator,note}) => { 
-
   let [data, setData] = useState(null);
   const svgRef = useRef();
   const trendWrapper = useRef();
@@ -130,7 +129,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const aspect = (width / height);
     const adjustedHeight = Math.ceil(width / aspect);
 
-    if(!toggleStateBurden)
+    if(!toggleStateBurden || selIndicator === 56) // 56 for population
       margin = {...margin, 'left':100}  // change left margin for burden
     else
       margin = {...margin,'left':50}

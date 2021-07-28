@@ -2,6 +2,11 @@ export const solr_domain = process.env.REACT_APP_SOLR_DOMAIN;
 export const solr_core = process.env.REACT_APP_SOLR_CORE;
 export const API = process.env.REACT_APP_BASEURL
 
+const CryptoJS = require("crypto-js");
+
+// Encrypt
+export const token = CryptoJS.AES.encrypt(JSON.stringify(process.env.REACT_APP_SECRET_DATA), process.env.REACT_APP_KEY).toString();
+
 export const fetchAreaCode = (areaList, areaID) => {
   return areaList.filter((area) => parseInt(area.area_id) === areaID)[0][
     'area_code'
@@ -62,7 +67,11 @@ export async function setVisulaizationData(
   setSelDistrictsData
 ) {
   const url_1 = await fetch(
-    `${API}/api/v1/url_1u?area=${area}&indicator=${indicator}`
+    `${API}/api/v1/url_1u?area=${area}&indicator=${indicator}` , {
+      headers:{
+        Authorization:`${token}`
+      }
+    }
   );
   // const url_1 =  await fetch(`${solr_domain}/solr/${solr_core}/select?fl=timeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name%2Csubgroup_category%2Cstart_date%2Cend_date&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&omitHeader=true&q=*%3A*&rows=400&sort=timeperiod_id%20asc`);
   // console.log('URL', url_1);
@@ -71,7 +80,11 @@ export async function setVisulaizationData(
   setIndicatorTrend(body_1.result.docs);
 
   const url_2 = await fetch(
-    `${API}/api/v1/url_2u?area=1&indicator=${indicator}&timeperiod=${timeperiod}`
+    `${API}/api/v1/url_2u?area=1&indicator=${indicator}&timeperiod=${timeperiod}` , {
+      headers:{
+        Authorization:`${token}`
+      }
+    }
   );
 
   // const url_2 = await fetch(
@@ -82,7 +95,11 @@ export async function setVisulaizationData(
 
   if (level === 1) {
     const solr_url_3 = await fetch(
-      `${API}/api/v1/url_3u?indicator=${indicator}&timeperiod=${timeperiod}`
+      `${API}/api/v1/url_3u?indicator=${indicator}&timeperiod=${timeperiod}` , {
+        headers:{
+          Authorization:`${token}`
+        }
+      }
     );
 
     // const solr_url_3 = await fetch(
@@ -94,14 +111,22 @@ export async function setVisulaizationData(
     let solr_url_4;
     if (levelThree) {
       solr_url_4 = await fetch(
-        `${API}/api/v1/url_4b_u?parentArea=${parentArea}&indicator=${indicator}&timeperiod=${timeperiod}`
+        `${API}/api/v1/url_4b_u?parentArea=${parentArea}&indicator=${indicator}&timeperiod=${timeperiod}` , {
+          headers:{
+            Authorization:`${token}`
+          }
+        }
       );
       // solr_url_4 = await fetch(
       //   `${solr_domain}/solr/${solr_core}/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${parentArea}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=1000&omitHeader=true&q=*%3A*`
       // );
     } else {
       solr_url_4 = await fetch(
-        `${API}/api/v1/url_4c_u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}`
+        `${API}/api/v1/url_4c_u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}` , {
+          headers:{
+            Authorization:`${token}`
+          }
+        }
       );
       // solr_url_4 = await fetch(
       //   `${solr_domain}/solr/${solr_core}/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_parent_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=1000&omitHeader=true&q=*%3A*`
@@ -112,7 +137,11 @@ export async function setVisulaizationData(
   }
  
   const solr_switchurl = await fetch(
-    `${API}/api/v1/url_5u?indicator=${indicator}&timeperiod=${timeperiod}`
+    `${API}/api/v1/url_5u?indicator=${indicator}&timeperiod=${timeperiod}` , {
+      headers:{
+        Authorization:`${token}`
+      }
+    }
   );
 
   // const solr_switchurl = await fetch(
@@ -159,7 +188,11 @@ export async function populateDropdowns(
   // console.log(`selCategory: ${selCategory}  ,  selLifeycle : ${selLifeycle}`);
 
   const solr_url_6 = await fetch(
-    `${API}/api/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifeycle}`
+    `${API}/api/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifeycle}` , {
+      headers:{
+        Authorization:`${token}`
+      }
+    }
   );
   // const solr_url_6 = await fetch(
   //   `${solr_domain}/solr/${solr_core}/select?fl=value:indicator_id%2Ctitle:indicator_short_name%2Cindi_sense%2Cindicator_name%2Cnotes&fq=category_id%3A${selCategory}&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&q=*%3A*&rows=100&sort=indicator_id%20asc&group=true&group.field=indicator_id&group.limit=1&group.main=true&omitHeader=true`
@@ -188,7 +221,11 @@ export async function populateDropdowns(
     setNote(solr_body_6.result.docs[0].notes);
   }
 
-  const solr_url_8 = await fetch(`${API}/api/v1/url_8u?indiVal=${indiVal}`)
+  const solr_url_8 = await fetch(`${API}/api/v1/url_8u?indiVal=${indiVal}` , {
+    headers:{
+      Authorization:`${token}`
+    }
+  })
 
   // const solr_url_8 = await fetch(
   //   `${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`
@@ -199,7 +236,11 @@ export async function populateDropdowns(
 
   let solr_url;
   // URL_9
-  solr_url = await fetch(`${API}/api/v1/url_9u?selLifeycle=${selLifeycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}`)
+  solr_url = await fetch(`${API}/api/v1/url_9u?selLifeycle=${selLifeycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
+    headers:{
+      Authorization:`${token}`
+    }
+  })
   // solr_url = await fetch(
   //   `${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`
   // );

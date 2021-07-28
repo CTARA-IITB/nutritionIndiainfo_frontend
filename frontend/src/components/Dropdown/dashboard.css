@@ -51,9 +51,9 @@
 	position: relative;
 	
 }
-/* select{
+select{
 	font-size: 14px;
-} */
+}
 .select-category {
 	border: 1px solid transparent;
     background: rgba(214, 109, 7, 0.4);

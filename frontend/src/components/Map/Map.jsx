@@ -158,7 +158,7 @@ export const Map = ({
       warning="Administrative Boundaries as per NFHS4(2015-16)"
     }
   }
-  select(".tooltip").remove();
+  // select(".tooltip").remove();
 
   let tooltip = select("#map_svg").append("div")
     .attr("class", "tooltip")
@@ -639,7 +639,7 @@ export const Map = ({
      }
  
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unit,geometry, areaChange, data, toggleStateBurden])
+  }, [unit,geometry, dimensions, data, toggleStateBurden])
 
   let switchButton;
 

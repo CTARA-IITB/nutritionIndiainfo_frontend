@@ -109,7 +109,7 @@
     	width: 40%;
 	}
 	.lifecycle-img {
-	    width: 16%;
+	    width: 27%;
 	}
 	.select-category {
     	padding-left: 12px;
@@ -162,7 +162,7 @@
 	.i-for-mobile-div3{
 		position: absolute;
 		right: 0%;
-		top: -30px;
+		top: 3px;
 	}
 	.select-lifecycle {
 	    padding-right: 0;
@@ -188,7 +188,7 @@
     	height: 1.4rem;
 	}
 	.nav-tabs .nav-link {
-	    padding: 0px 0px;
+	    padding: 2px 0px;
 	}
 	.p-2 {
 	    padding: .15rem!important;
@@ -215,13 +215,13 @@
     	width: 30%;
 	}
 	.lifecycle-img {
-    	width: 10%;
+    	width: 14%;
     }
 	.footer {
 	    height: 3rem;
 	}
 	.i-for-mobile-div3 {
-	    top: 7%;
+	    top: 3%;
 	}
 	.i-icon {
 	    /* width: 30%; */
@@ -229,12 +229,12 @@
 	}
 	.select-lifecycle-child:after {
 	    border: 10px solid transparent;
-	    top: 40%;
+	    top: 49%;
 	    border-left-color: #d66d07;
 	}
 	.select-lifecycle-cat-child:after {
 	    border: 10px solid transparent;
-	    top: 40%;
+	    top: 49%;
 	    border-left-color: #efc59c;
 	}
 	.for-mobile-1 {
@@ -285,3 +285,8 @@
 	    width: 80%;
 	}
 }
+
+
+
+/* added from change.txt */
+

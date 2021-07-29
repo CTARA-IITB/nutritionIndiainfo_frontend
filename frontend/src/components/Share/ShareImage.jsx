@@ -1,30 +1,17 @@
 import React,{useState,useEffect} from "react";
 import "./Share.css";
-import * as htmlToImage from "html-to-image";
-import { WhatsappIcon,WhatsappShareButton,TwitterIcon,TwitterShareButton} from 'react-share';
+import { WhatsappIcon,WhatsappShareButton,TwitterIcon,TwitterShareButton,FacebookIcon,FacebookShareButton} from 'react-share';
 
-const ShareImage =({id,title,selLifecycle,selCategory,selIndicator})=> {
-
-  const [imageUrl,setImageUrl]= useState();
+const ShareImage =({title,selLifecycle,selCategory,selIndicator})=> {
+  const [url,setUrl]= useState();
   useEffect(()=>{
-      var node = document.getElementById(id);
-      htmlToImage.toPng(node)
-      .then(function(dataUrl) {
-          var  img = new Image();
-          img.src = dataUrl;
-          setImageUrl(img);
-      })
-      .catch(function (error) {
-          console.error('oops, something went wrong!', error);
-      }); 
-  })
-  const url =  `${window.location.href}/${selLifecycle}/${selCategory}/${selIndicator}`;
-  // const LinkPreview = <LinkPreview url={url}/>
-
+    setUrl(`${window.location.origin}/${selLifecycle}/${selCategory}/${selIndicator}`);
+  },[])
   return (
-    < div className="container"  >
-      <TwitterShareButton title={title} url={url}> <TwitterIcon  size={35} round={true}/></TwitterShareButton> 
-      <WhatsappShareButton title={title} url={url}> <WhatsappIcon size={35} round={true}/></WhatsappShareButton>
+    <div className="container"  >
+      <TwitterShareButton title={title} url="http://nutritionindiainfo.communitygis.net/"> <TwitterIcon  size={35} round={true}/></TwitterShareButton> 
+      <WhatsappShareButton title={title} url="http://nutritionindiainfo.communitygis.net/"> <WhatsappIcon size={35} round={true}/></WhatsappShareButton>
+      <FacebookShareButton title={title} url="http://nutritionindiainfo.communitygis.net/"> <FacebookIcon size={35} round={true}/> </FacebookShareButton>
     </div>
   );
 }

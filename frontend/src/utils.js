@@ -73,6 +73,8 @@ export async function setVisulaizationData(
       }
     }
   );
+
+  console.log('AREA',area)
   // const url_1 =  await fetch(`${solr_domain}/solr/${solr_core}/select?fl=timeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name%2Csubgroup_category%2Cstart_date%2Cend_date&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&omitHeader=true&q=*%3A*&rows=400&sort=timeperiod_id%20asc`);
   // console.log('URL', url_1);
   const body_1 = await url_1.json();
@@ -80,12 +82,14 @@ export async function setVisulaizationData(
   setIndicatorTrend(body_1.result.docs);
 
   const url_2 = await fetch(
-    `${API}/api/v1/url_2u?area=1&indicator=${indicator}&timeperiod=${timeperiod}` , {
+    `${API}/api/v1/url_2u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}` , {
       headers:{
         Authorization:`${token}`
       }
     }
   );
+
+  
 
   // const url_2 = await fetch(
   //   `${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Csubgroup_name%2Csub_category%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name_subgroup_category&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=timeperiod_id%3A${timeperiod}&omitHeader=true&q=*%3A*&rows=100&sort=subgroup_order%20asc`

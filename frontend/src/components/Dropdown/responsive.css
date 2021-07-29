@@ -290,3 +290,9 @@
 
 /* added from change.txt */
 
+@media (max-width: 600px) {
+	.tooltipX{
+		/* visibility: hidden; */
+		opacity: 0;
+	}
+  }

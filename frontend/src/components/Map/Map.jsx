@@ -149,13 +149,13 @@ export const Map = ({
     {
       let features = boundaries.new_dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
       geometry = {type: "FeatureCollection",features}
-      warning=""
+      warning="Administrative Boundaries as per NFHS5 2019-20"
 
     }
     else{
       let features = boundaries.dist.features.filter(feature => feature.properties.NAME2_ === areaName); 
       geometry = {type: "FeatureCollection",features}
-      warning="Administrative Boundaries as per NFHS4(2015-16)"
+      warning="Administrative Boundaries as per NFHS4 2015-16"
     }
   }
   // select(".tooltip").remove();

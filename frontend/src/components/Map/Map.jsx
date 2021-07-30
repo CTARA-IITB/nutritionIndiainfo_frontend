@@ -385,7 +385,6 @@ export const Map = ({
 
   }
 
-  console.log("leftand right",left_offset,right_offset)
     const onMouseMove = (event, d) => {
       if (typeof c2Value(d) != 'undefined') {
         tooltip.style("opacity", 0);

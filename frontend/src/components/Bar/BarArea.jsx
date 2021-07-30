@@ -217,7 +217,6 @@ let dynamicRange;
           return yScale(yValue(d));
       }
       let TOOLTIP_TOP_OFFSET;
-      console.log(fullscreen)
       if(fullscreen)
         TOOLTIP_TOP_OFFSET = .8 * height;
       else

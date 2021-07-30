@@ -101,7 +101,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     data = data.filter(d => typeof d.data_value_num != 'undefined')
 
   useEffect(()=>{
-    select(".tooltipX").remove();
+    // select(".tooltipX").remove();
     let TOOLTIP_FONTSIZE;
     const svg = select(svgRef.current);
     let windowWidth = window.screen.width;

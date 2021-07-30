@@ -189,7 +189,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
           return lightColor;
       }
       let TOOLTIP_TOP_OFFSET,TOOLTIP_LEFT_OFFSET;
-      console.log(fullscreen)
       if(fullscreen){
         TOOLTIP_TOP_OFFSET = .6 * height;
         TOOLTIP_LEFT_OFFSET = 0;

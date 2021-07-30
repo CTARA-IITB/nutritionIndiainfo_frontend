@@ -18,6 +18,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
   const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mid Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
   const svgRef = useRef()
   const componentRef = useRef();
+  const [fullscreen,setFullscreen] = useState(false);
+
   const margin = {
     left:120,
     top: 70,
@@ -186,7 +188,18 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
         else
           return lightColor;
       }
+      let TOOLTIP_TOP_OFFSET,TOOLTIP_LEFT_OFFSET;
+      console.log(fullscreen)
+      if(fullscreen){
+        TOOLTIP_TOP_OFFSET = .6 * height;
+        TOOLTIP_LEFT_OFFSET = 0;
 
+      }
+      else{
+        TOOLTIP_TOP_OFFSET = 1.5 * height;
+        TOOLTIP_LEFT_OFFSET = width;
+      }
+      
       chart.enter().append("rect")
       	.attr('y', d => yScale(yValue(d)))
       	.attr('width', d => {return xScale(xValue(d))})
@@ -194,7 +207,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipGBar.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY) - 1.5 * height+"px").style("left",(e.pageX) - width +"px");
+          return tooltipGBar.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY) - TOOLTIP_TOP_OFFSET+"px").style("left",(e.pageX) - TOOLTIP_LEFT_OFFSET +"px");
         })
         .on('mouseout', ()=>tooltipGBar.style("visibility", "hidden"));
         
@@ -224,7 +237,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
         }))
         .style('font-size',11)
     }
-  },[data,toggleStateBurden])
+  },[data,toggleStateBurden,fullscreen])
 
 
 
@@ -251,6 +264,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
   }
 
   const reportChange = (state, handle) => {
+    setFullscreen(state);
     if(state === true){
      document.getElementsByClassName("my-bar-title")[0].setAttribute('style', 'font-size: 1.5rem');
      document.getElementsByClassName("my-bar-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');

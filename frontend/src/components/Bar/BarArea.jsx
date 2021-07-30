@@ -93,7 +93,7 @@ let dynamicRange;
   }, [toggleStateBurden]);
   
   useEffect(()=>{
-    select(".tooltipX").remove();
+    select(".tooltipBAR").remove();
     let TOOLTIP_FONTSIZE;
     
     const svg = select(svgRef.current);
@@ -110,9 +110,9 @@ let dynamicRange;
       TOOLTIP_FONTSIZE="8px";
     }
 
-    var tooltipX = select("#hbar_svg")
+    var tooltipBAR = select("#hbar_svg")
     .append("div")
-    .attr("class", "tooltipX")
+    .attr("class", "tooltipBAR")
     .style("visibility", "hidden")
     .style("font-size",TOOLTIP_FONTSIZE)
 
@@ -226,11 +226,11 @@ let dynamicRange;
         .attr('width', d => {return xScale(xValue(d))})
         .attr('height', rectHeight )
         .attr("fill", fillRect)
-        .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
+        .on('mouseover', (i,d) => tooltipBAR.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY)-TOOLTIP_TOP_OFFSET+"px").style("left",(e.pageX)+"px");
+          return tooltipBAR.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY)-TOOLTIP_TOP_OFFSET+"px").style("left",(e.pageX)+"px");
         })
-        .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
+        .on('mouseout', ()=>tooltipBAR.style("visibility", "hidden"));
 
 
       chart.enter().append("text")

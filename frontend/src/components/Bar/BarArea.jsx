@@ -19,6 +19,7 @@ export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,leve
   const svgRef = useRef();
   const trendWrapper = useRef();
   const  componentRef = useRef();
+  const [fullscreen,setFullscreen] = useState(false);
   let gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
 let dynamicRange;
   const margin = {
@@ -92,7 +93,7 @@ let dynamicRange;
   }, [toggleStateBurden]);
   
   useEffect(()=>{
-    // select(".tooltipX").remove();
+    select(".tooltipX").remove();
     let TOOLTIP_FONTSIZE;
     
     const svg = select(svgRef.current);
@@ -215,7 +216,12 @@ let dynamicRange;
         else
           return yScale(yValue(d));
       }
-
+      let TOOLTIP_TOP_OFFSET;
+      console.log(fullscreen)
+      if(fullscreen)
+        TOOLTIP_TOP_OFFSET = .8 * height;
+      else
+        TOOLTIP_TOP_OFFSET = 1.5 * height;
       chart.enter().append("rect")
         .attr('y', d => rectY(d))
         .attr('width', d => {return xScale(xValue(d))})
@@ -223,7 +229,7 @@ let dynamicRange;
         .attr("fill", fillRect)
         .on('mouseover', (i,d) => tooltipX.style("visibility", "visible"))
         .on('mousemove',(e,d)=>{
-          return tooltipX.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY)-1.5*height+"px").style("left",(e.pageX)+"px");
+          return tooltipX.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY)-TOOLTIP_TOP_OFFSET+"px").style("left",(e.pageX)+"px");
         })
         .on('mouseout', ()=>tooltipX.style("visibility", "hidden"));
 
@@ -290,7 +296,7 @@ let dynamicRange;
         .style('font-size',11);
 
     }
-  },[data,toggleStateBurden])
+  },[data,toggleStateBurden,fullscreen])
     
   const checkchange = (state,handle)=>{
     // if(trend){
@@ -324,6 +330,7 @@ let dynamicRange;
  
 
   const reportChange = (state, handle) => {
+    setFullscreen(state);
     if(state === true){
       document.getElementsByClassName("my-fullScreen")[0].setAttribute('style', 'overflow: auto !important');
       document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: 1.5rem');

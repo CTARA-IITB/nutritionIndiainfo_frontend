@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect,useState } from 'react';
 import _ from 'lodash';
 import useResizeObserver from "../../useResizeObserver";
 import { legendColor } from 'd3-svg-legend'
@@ -45,7 +45,7 @@ export const Map = ({
   const wrapperRef = useRef();
   const componentRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
- 
+  let [offset,setOffset] = useState(false);
   if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true)) {
     mapTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
   }
@@ -163,7 +163,7 @@ export const Map = ({
   let tooltip = select("#map_svg").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
-
+  let left_offset ,right_offset;
   useEffect(() => {
     const svg = select(svgRef.current);
 
@@ -179,8 +179,13 @@ export const Map = ({
       // windowHeight = windowHeight;
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
-    
-
+    if(offset){
+      left_offset = 0;
+      right_offset = 0;
+    }else{
+      left_offset = width;
+      right_offset = height/2;
+    }
   const aspect = width / height;
     const adjustedHeight = Math.ceil(width / aspect) + 50;
  
@@ -379,13 +384,15 @@ export const Map = ({
         colorScale = '#eda143'; 
 
   }
+
+  console.log("leftand right",left_offset,right_offset)
     const onMouseMove = (event, d) => {
       if (typeof c2Value(d) != 'undefined') {
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
         tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + decimalPrecision(c2Value(d)))
-          .style("left", event.clientX - width+ "px")
-          .style("top", event.clientY - height/2 + "px")
+          .style("left", event.clientX - left_offset+ "px")
+          .style("top", event.clientY - right_offset + "px")
           .style("font-size","12px");
       }
     };
@@ -702,10 +709,11 @@ export const Map = ({
 
 
     const reportChange = (state, handle) => {
+      setOffset(state)
       if(state === true){
-       document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: auto !important');
-       document.getElementsByClassName("my-map-title")[0].setAttribute('style', 'font-size: 1.5rem');
-       document.getElementsByClassName("my-map-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+        document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: auto !important');
+        document.getElementsByClassName("my-map-title")[0].setAttribute('style', 'font-size: 1.5rem');
+        document.getElementsByClassName("my-map-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
       }else{
        document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: hidden !important');
        document.getElementsByClassName("my-map-subtitle")[0].setAttribute('style', 'font-size: .55rem');

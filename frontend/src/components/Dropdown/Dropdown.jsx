@@ -619,7 +619,8 @@ export const Dropdown = () =>{
           selCategory ={selCategory}
           selIndicator={selIndicator}
           note={note}
-          />: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
+          />: (selTimeperiod!== "")? <SkeletonCard className='md:mx-8 sm:mx-2 xs:mx-4' />
+: <div id="msg">No data: please select another area</div>}
      </div>
 
      <div className=" flex w-full md:w-1/2">
@@ -665,7 +666,8 @@ export const Dropdown = () =>{
           changeBurdenText={changeBurdenText}
           drillDirection = {drillDirection}
           setDrillDirection ={setDrillDirection}
-          /> : (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
+          /> : (selTimeperiod!== "")? <SkeletonCard className='md:mx-8 sm:mx-2 xs:mx-4' />
+: <div id="msg">No data: please select another area</div>}
      </div>
      </section>
 
@@ -685,7 +687,8 @@ export const Dropdown = () =>{
           toggleStateBurden = {toggleStateBurden}
           selLifecycle={selLifeycle}
           selCategory ={selCategory}
-          selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />:<div id="msg">No data: please select another area</div>}
+          selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard className='md:mx-8 sm:mx-2 xs:mx-4' />
+:<div id="msg">No data: please select another area</div>}
      </div>
 
      <div className='flex w-full md:w-1/2'>
@@ -701,7 +704,7 @@ export const Dropdown = () =>{
       toggleStateBurden = {toggleStateBurden}
       selLifecycle={selLifeycle}
       selCategory ={selCategory}
-      selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
+      selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard className='md:mx-4 sm:mx-2 xs:mx-4' />: <div id="msg">No data: please select another area</div>}
      </div>
 
      </section>

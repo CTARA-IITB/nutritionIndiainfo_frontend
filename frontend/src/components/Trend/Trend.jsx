@@ -264,14 +264,40 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       // .attr("dy", "-2em")
       // .text(`${graphTitle},${titleAreaName}`)
 
-      // bar.append("text")
-      // .attr("x",innerWidth/2)
-      // .attr("y",innerHeight/2)
-      // .attr("dx","-.4em")
-      // .text("No data: please select another survey")
-      // .style("text-anchor","middle")
-      // .style("font-size","10px")
-      // .style("font-weight","bold")
+      bar.append("text")
+      .attr("x",innerWidth/2)
+      .attr("y",innerHeight/2)
+      .attr("dx","-.4em")
+      .text("No data. please select another survey.")
+      .style("text-anchor", "middle")
+      .style("font-weight","bold")
+      .style("fill", "red")
+
+
+
+      const dummyXScale = scaleTime()
+    		.domain([Date.now() -  5* 12 * 30 * 24 * 60 * 60 * 1000,Date.now()])
+    		.range([0, innerWidth])
+      
+    	const dummyYScale = scaleLinear()
+   	 		.domain([0, 100])
+    		.range([innerHeight, 0]);
+
+
+      bar.append("g")
+      .attr("class","axis")
+      .call(axisLeft(dummyYScale).tickSize(0))
+      .style('font-size',11);	
+
+
+      bar.append("g")
+        // .attr("transform",`translate(0, ${dynamicRange})`)
+        .attr("transform", "translate(0," + (innerHeight) + ")")
+      	.attr("class","axis")
+  			.call(axisBottom(dummyXScale).ticks(3))
+        .style('font-size',11);
+
+
     }
 
     let offSet = 0;

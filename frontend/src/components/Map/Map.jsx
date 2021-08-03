@@ -252,6 +252,14 @@ export const Map = ({
       return a + b;
   }, 0);
     let dotVal = Math.round(sum/4000);
+
+    if(dotVal > 10000)
+      dotVal = (dotVal/1000).toFixed(0) * 1000;
+    else if(dotVal < 10000 && dotVal > 100)
+      dotVal = (dotVal/100).toFixed(0) * 100;
+    else
+    dotVal = (dotVal/10).toFixed(0) * 10;
+
     let [min, max] = extent(color_range);
   
     let low;

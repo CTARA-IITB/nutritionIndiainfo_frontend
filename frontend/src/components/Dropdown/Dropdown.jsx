@@ -34,6 +34,7 @@ import iicon from "./images/i-con5.png";
 
 export const Dropdown = () =>{
 
+
   let { queryLifecycle } = useParams();
   if(typeof queryLifecycle === 'undefined')
     queryLifecycle = EARLY_CHILDHOOD;
@@ -103,6 +104,7 @@ export const Dropdown = () =>{
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
   const [note,setNote] = useState(null);
   const [selBurden,setSelBurden] = useState("1");
+  
   const lifecycleData = [
     {  title: "Adolescence", value: 1 },
     { title: "Women of Reproductive Age",value: 2 },
@@ -136,36 +138,49 @@ export const Dropdown = () =>{
 
 
 
-      useEffect(() => {
+      // useEffect(() => {
         // const url_4 = 'http://13.234.11.176/api/area';
-        const solr_url_4 = `${API}/api/v1/url_4d`;
+        // const solr_url_4 = `${API}/api/v1/url_4d`;
         // console.log(solr_url_4);
         // const solr_url_4 = "${solr_domain}/solr/${solr_core}/select?fl=value:area_id%2Ccode:area_code%2Ctitle:area_name&group.field=area_id&group.main=true&group=true&omitHeader=true&q=*%3A*&rows=7000&sort=area_id%20asc";
-        json(solr_url_4).then( options =>{
-        const [country,statesID] = createHierarchy(options.result.docs);
-        setStateID(statesID)
-        setAreaDropdownOpt(country);
-        setAreaList(options.result.docs);  
-        })
+        // json(solr_url_4).then( options =>{
+        // const [country,statesID] = createHierarchy(areaData.result.docs);
+        // })
+          
+        //disabled createHierarchy to improve performance
+        // let areaData = require('../../data/areaList.json');
+        // let country = require('../../data/areaListHierarchy.json');
+        // let statesID = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 4440, 6821];
+        // setStateID(statesID)
+        // setAreaDropdownOpt(country);
+        // setAreaList(areaData.result.docs);  
         
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [])
+      // }, [])
 
         useEffect(() => {
           async function fetchData(){
+            //disabled createHierarchy to improve performance
+            let areaData = require('../../data/areaList.json');
+            let country = require('../../data/areaListHierarchy.json');
+            let statesID = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 4440, 6821];
+            setStateID(statesID)
+            setAreaDropdownOpt(country);
+            setAreaList(areaData.result.docs);  
 
-            const jsonIndianstate =
-            'https://gist.githubusercontent.com/AnimeshN/b705d4f1a910a16013348e6743d597f4/raw/13ff136e1cd3a90b2fcca370158960dddf74fbee/india_state_old.json';
-            const jsonIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/9b27088c28f134b51983f1a25012474e/raw/7d551013cc70a2b4f08bc1bebd092f3e53a9ceca/india_district_old_v2.json';
+
+            // const jsonIndianstate =
+            // 'https://gist.githubusercontent.com/AnimeshN/b705d4f1a910a16013348e6743d597f4/raw/13ff136e1cd3a90b2fcca370158960dddf74fbee/india_state_old.json';
+            // const jsonIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/9b27088c28f134b51983f1a25012474e/raw/7d551013cc70a2b4f08bc1bebd092f3e53a9ceca/india_district_old_v2.json';
         
     
-            const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/88ca1582aae1960b739339013a43a228/raw/5a0a4ef6e454afcda1cf5de43fc24ed5bd2ddf53/india-state_26may.json';
-            const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/125da85ce3704409cb25dd53c0d86e98/raw/0117055a2adf7df234b4830b3f09f0b4c572a41c/india_new_dist.json';   
+            // const jsonNewIndianstate = 'https://gist.githubusercontent.com/AnimeshN/88ca1582aae1960b739339013a43a228/raw/5a0a4ef6e454afcda1cf5de43fc24ed5bd2ddf53/india-state_26may.json';
+            // const jsonNewIndiaDistrict = 'https://gist.githubusercontent.com/AnimeshN/125da85ce3704409cb25dd53c0d86e98/raw/0117055a2adf7df234b4830b3f09f0b4c572a41c/india_new_dist.json';   
 
-            const stateTopology = await json(jsonIndianstate);
-            const districtTopology = await json(jsonIndiaDistrict);
-            const newStateTopology = await json(jsonNewIndianstate);
-            const newDistrictTopology = await json(jsonNewIndiaDistrict);
+            const stateTopology = require('../../data/boundaries/nfhs4/jsonIndianstate.json');
+            const districtTopology = require('../../data/boundaries/nfhs4/jsonIndiaDistrict.json');
+            const newStateTopology = require('../../data/boundaries/nfhs5/jsonNewIndianstate.json');
+            const newDistrictTopology = require('../../data/boundaries/nfhs5/jsonNewIndiaDistrict.json')
 
             const stateObject = stateTopology.objects.india_state_old;
             const districtObject = districtTopology.objects.india_district_old_v2;

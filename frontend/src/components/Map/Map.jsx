@@ -643,7 +643,15 @@ export const Map = ({
       .call(myLegend); 
     }
   }
-    if((level === 1 && (null=== selIndiaData || selIndiaData.length === 0)) || ((level === 2 || level === 3) && (null  === selStateData || selStateData.length === 0)))
+    if((level === 1 && (null=== selIndiaData || selIndiaData.length === 0)))
+     {
+      svg.append("text").text("No state data.  Please select another survey.")
+         .style("text-anchor", "middle")
+         .style("font-weight","bold")
+         .style("fill", "red")
+         .attr('transform',`translate(${width/2}, ${height/2})`);
+     }
+     if((level === 2 || level === 3) && (null  === selStateData || selStateData.length === 0))
      {
       svg.append("text").text("No district data.  Please select another survey.")
          .style("text-anchor", "middle")

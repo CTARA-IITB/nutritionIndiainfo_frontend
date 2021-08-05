@@ -1,8 +1,6 @@
 import React,{useState,useEffect,useRef} from "react";
-import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
-import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, populateDropdowns, API, token } from '../../utils';
+import { setVisulaizationData, populateDropdowns, API, token } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
@@ -69,7 +67,7 @@ export const Dropdown = () =>{
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
-
+  // eslint-disable-next-line 
   const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [categorydDropdownOpt, setCategoryDropdownOpt] = useState([]);
   const [stateID,setStateID] = useState(null);
@@ -83,6 +81,7 @@ export const Dropdown = () =>{
   const [areaList, setAreaList] = useState(null);
   const [isLevelThree, setIsLevelThree] = useState(false);
   const searchRef = useRef();
+  // eslint-disable-next-line 
   const [filterDropdownValue, setFilterDropdownValue] = useState([]);
   const [parentArea, setParentArea] = useState(null);
   const [indicatorTrend, setIndicatorTrend] = useState(null);
@@ -90,6 +89,7 @@ export const Dropdown = () =>{
   const[selIndiaData, setSelIndiaData]= useState(null);
   const [boundaries, setBoundaries] = useState(null);
   const [graphTitle, setGraphTitle] = useState("Prevalence of stunting in under-five year olds");
+  // eslint-disable-next-line 
   const [graphSubgroup, setGraphSubgroup] = useState('All');
   const [graphTimeperiod, setGraphTimeperiod] = useState('NFHS5 2019-20');
   const [graphUnit, setGraphUnit] = useState('Percent');
@@ -103,6 +103,7 @@ export const Dropdown = () =>{
   const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
   const [note,setNote] = useState(null);
+  // eslint-disable-next-line 
   const [selBurden,setSelBurden] = useState("1");
   
   const lifecycleData = [
@@ -134,6 +135,7 @@ export const Dropdown = () =>{
       setIsSelected(true);
     }
     populateTabData();
+    // eslint-disable-next-line 
     }, [])
 
 
@@ -431,45 +433,45 @@ export const Dropdown = () =>{
         
         }
 
-        const onChange = (e) =>{
-          setIsSelected(false);
-          let { value } = e.target;
-          value = value.charAt(0).toUpperCase() + value.slice(1);
-          if(value === ""){
-            setOpenDropdown(false);
-            setFilterDropdownValue(areaDropdownOpt)
-          }
-          else{
-            setOpenDropdown(true);
-            const expandedKeys = dataList
-            .map((item) => {
-              if (item.title.indexOf(value) > -1) {
-                return item;
-              }
-              return null;
-            }).filter((item, i, self) => item && self.indexOf(item) === i);
+        // const onChange = (e) =>{
+        //   setIsSelected(false);
+        //   let { value } = e.target;
+        //   value = value.charAt(0).toUpperCase() + value.slice(1);
+        //   if(value === ""){
+        //     setOpenDropdown(false);
+        //     setFilterDropdownValue(areaDropdownOpt)
+        //   }
+        //   else{
+        //     setOpenDropdown(true);
+        //     const expandedKeys = dataList
+        //     .map((item) => {
+        //       if (item.title.indexOf(value) > -1) {
+        //         return item;
+        //       }
+        //       return null;
+        //     }).filter((item, i, self) => item && self.indexOf(item) === i);
         
-            setFilterDropdownValue(expandedKeys)
-          }
-          setIsSelected(true);
-        }
+        //     setFilterDropdownValue(expandedKeys)
+        //   }
+        //   setIsSelected(true);
+        // }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
           return <div> </div>
         }
       
-      const burdenClick = () => {
-        setToggleStateBurden(!toggleStateBurden); 
-        let text = null;
-        if (burdenbuttonText === 'Burden')
-        {
-          text = 'Prevalence';
-        }
-        else
-        {
-          text = 'Burden';
-        }
-          changeBurdenText(text);   
-      }
+      // const burdenClick = () => {
+      //   setToggleStateBurden(!toggleStateBurden); 
+      //   let text = null;
+      //   if (burdenbuttonText === 'Burden')
+      //   {
+      //     text = 'Prevalence';
+      //   }
+      //   else
+      //   {
+      //     text = 'Burden';
+      //   }
+      //     changeBurdenText(text);   
+      // }
 
      
       let burdenDropdown;
@@ -528,7 +530,7 @@ export const Dropdown = () =>{
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-6 col-lg-5 col-md-6 p-3 for-mobile-1 ">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
-						<img src={selLifeycleImg} className="lifecycle-img"/>
+						<img src={selLifeycleImg} className="lifecycle-img" alt="not found"/>
 						<div className="select-lifecycle-parent">
 							<div className="select-lifecycle-child">
 								<select className="select-lifecycle" value={selLifeycle} onChange={lifecycleChange}>
@@ -607,7 +609,7 @@ export const Dropdown = () =>{
 				</div>
 				<div className="col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0">
 					<div className="i-class">
-          <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon md:mt-2"/></a>
+          <a href="/reports/cnns-articles/" target="_blank"  rel="noopener noreferrer"><img src={iicon} className="i-icon md:mt-2" alt="not found"/></a>
 					</div>
 				</div>
 			</div>
@@ -716,7 +718,7 @@ export const Dropdown = () =>{
      <div className='flex w-full md:w-1/2'>
       {(isSelected  & selTimeperiod !== "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
-      selIndicator = {selIndicator}
+      // selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
       selArea = {selArea}
       graphTimeperiod={graphTimeperiod}

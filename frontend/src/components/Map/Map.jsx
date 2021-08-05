@@ -180,9 +180,12 @@ export const Map = ({
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     if(offset){
+      // eslint-disable-next-line
       left_offset = 0;
+      // eslint-disable-next-line
       right_offset = 0;
     }else{
+      // eslint-disable-next-line
       left_offset = width;
       right_offset = height/2;
     }
@@ -216,7 +219,7 @@ export const Map = ({
     // }
     //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
-    if(selArea == 28 || selArea == 8 ){
+    if(selArea === 28 || selArea === 8 ){
      projection = geoMercator().fitSize([width/1.5, adjustedHeight/1.2], geometry);
 
     }

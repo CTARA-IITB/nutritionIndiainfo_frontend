@@ -26,6 +26,7 @@ let margin = {
 
 
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend,selLifecycle,selCategory,selIndicator,note}) => { 
+  console.log(indicatorTrend,"IT")
   let [data, setData] = useState(null);
   const svgRef = useRef();
   const trendWrapper = useRef();
@@ -51,7 +52,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   else
     colorScale = '#eda14380'; 
 
-  const parseTime = timeParse('%d-%b-%y'); 
+  const parseTime = timeParse('%d-%b-%Y'); 
   const formatTime = timeFormat('%b-%y');
   const formatTooltipTime = timeFormat('%b %Y');
   // const formatTitleTime = timeFormat('%Y');

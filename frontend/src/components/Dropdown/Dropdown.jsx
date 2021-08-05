@@ -224,12 +224,22 @@ export const Dropdown = () =>{
           }else if(val === 2){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
+              { value: 2, title: "Interventions" },
               { value: 3, title: "Determinants" }                 
             ]);
-          }else if(val === 3 || val ===4){
+          }else if(val === 3){
+            setCategoryDropdownOpt([
+              { value: 1, title: "Manifestation" },
+              { value: 2, title: "Interventions" },
+              { value: 3, title: "Determinants" }                 
+
+            ]);
+          }
+          else if(val ===4){
             setCategoryDropdownOpt([
               { value: 2, title: "Interventions" },
-              { value: 3, title: "Determinants" }   
+              { value: 3, title: "Determinants" }                 
+
             ]);
             selCat = 2;
           }else if(val ===5){

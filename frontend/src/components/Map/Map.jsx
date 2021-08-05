@@ -37,9 +37,8 @@ export const Map = ({
 
 }) => {
 
-  console.log(selIndiaData,selStateData)
+  // console.log(selIndiaData,selStateData)
   
-
   let geometry = boundaries.new_state;
   let mapTitle;
   const svgRef = useRef();
@@ -268,23 +267,25 @@ export const Map = ({
     let high;
     let highest;
     let sampleCategoricalData;
-
-    let arr20to80 = [31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]
-    if (selIndicator === 19 || selIndicator === 21 || selIndicator === 105) {
+  
+    let arr20to80 = [4,31,11,28,6,7,37,51,42,43,66,84,85,86,23,25,32,99,100,70,74,76,77,78,75,34,5,57,14,15,24,304,309,329,293];
+    let arr5to30 = [53,89,92,96,129,131,145,148,151,154,267,271,135,137];
+    let arr5to60 = [1,2,26,29,62,71,72,239];
+    if (selIndicator === 19 || selIndicator === 21 || selIndicator === 105 ) {
       low = 5.0;
       medium = 10.0;
       high = 15.0;
       highest = 20.0
       sampleCategoricalData = ["<5%", "5-9.9%", "10-14.9%", "15-19.9%", ">20%", "No Data"]
 
-    } else if (selIndicator === 17 || selIndicator === 18 || selIndicator === 12 || selIndicator === 13) {
+    }else if (selIndicator === 17  || selIndicator === 12 ) {
        low = 10.0;
        medium = 20.0;
        high = 30.0;
        highest = 40.0;
       sampleCategoricalData = ["<10%", "10-19.9%", "20-29.9%", "30-39.9%", ">40%", "No Data"]
 
-    } else if(selIndicator === 71 || selIndicator === 26 )
+    } else if(arr5to60.includes(selIndicator) )
     {
       low = 5.0;
       medium = 20.0;
@@ -292,7 +293,7 @@ export const Map = ({
       highest = 60.0;
       sampleCategoricalData = ["<5%", "5-19.9%", "20-39.9%", "40-59.9%", ">60%", "No Data"]
 
-    } else if(selIndicator === 20 || selIndicator === 108)
+    } else if(selIndicator === 20 || selIndicator === 18 || selIndicator === 108)
     {
       low = 1.0;
       medium = 2.0;
@@ -308,7 +309,7 @@ export const Map = ({
       highest = 2.5;
       sampleCategoricalData = ["<0.1%", "0.1-0.49%", "0.5-0.9%", "1-2.49%", ">2.5%", "No Data"]
 
-    }else if(selIndicator === 89)
+    }else if(arr5to30.includes(selIndicator))
     {
       low = 5.0;
       medium = 10.0;
@@ -326,11 +327,10 @@ export const Map = ({
 
     }
     
-  
     let colorScale;
-  let colorScale_new;
+    let colorScale_new;
     let colorScale2;
-    let arrsuw = [19,21,105,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75]; 
+    let arrsuw = [19,21,105,17,18,12,13,71,26,20,108,107,89,31,11,28,6,7,37,51,42,84,23,25,32,99,100,70,76,77,78,75,34]; 
     if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
     {
     if(indicatorSense === 'Positive')
@@ -353,26 +353,26 @@ export const Map = ({
   
     }
 
-    let colorScale4 = scaleQuantize()
-      .domain([min, max])
-      .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"])
+    // let colorScale4 = scaleQuantize()
+    //   .domain([min, max])
+    //   .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"])
 
-    let colorScale4_p = scaleQuantize()
-      .domain([min, max])
-      .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"])
+    // let colorScale4_p = scaleQuantize()
+    //   .domain([min, max])
+    //   .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"])
 
-      if (arrsuw.includes(selIndicator)) {
-      colorScale = colorScale2;
-    }
-    else if (indicatorSense === 'Negative') {
-      colorScale = colorScale4;
-      colorScale_new = colorScale4;
+    // if (arrsuw.includes(selIndicator)) {
+    //   colorScale = colorScale2;
+    // }
+    // else if (indicatorSense === 'Negative') {
+    //   colorScale = colorScale4;
+    //   colorScale_new = colorScale4;
 
-    } else if (indicatorSense === 'Positive') {
-      colorScale = colorScale4_p;
-      colorScale_new = colorScale4_p;
+    // } else if (indicatorSense === 'Positive') {
+    //   colorScale = colorScale4_p;
+    //   colorScale_new = colorScale4_p;
 
-    }
+    // }
     
   }
   else{

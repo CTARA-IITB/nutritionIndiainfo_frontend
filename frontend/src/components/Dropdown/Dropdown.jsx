@@ -220,7 +220,7 @@ export const Dropdown = () =>{
 
           let selCat = 1;
           if(val === 1 || val === 6){
-            setCategoryDropdownOpt([{value:1,title:"Manifestation"} ])
+            setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Determinants" } ])
           }else if(val === 2){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
@@ -231,11 +231,15 @@ export const Dropdown = () =>{
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
               { value: 2, title: "Interventions" },
+              { value: 3, title: "Determinants" }                 
+
             ]);
           }
           else if(val ===4){
             setCategoryDropdownOpt([
               { value: 2, title: "Interventions" },
+              { value: 3, title: "Determinants" }                 
+
             ]);
             selCat = 2;
           }else if(val ===5){

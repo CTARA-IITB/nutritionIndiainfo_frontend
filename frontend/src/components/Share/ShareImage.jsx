@@ -5,7 +5,7 @@ import { WhatsappIcon,WhatsappShareButton,TwitterIcon,TwitterShareButton,Faceboo
 const ShareImage =({title,selLifecycle,selCategory,selIndicator})=> {
   const [url,setUrl]= useState();
   useEffect(()=>{
-    setUrl(`${window.location.origin}/${selLifecycle}/${selCategory}/${selIndicator}`);
+    setUrl(`${window.location.origin}/dashboard/${selLifecycle}/${selCategory}/${selIndicator}`);
     // eslint-disable-next-line
   },[])
   return (

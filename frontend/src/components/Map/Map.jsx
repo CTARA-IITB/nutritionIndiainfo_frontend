@@ -356,26 +356,26 @@ export const Map = ({
   
     }
 
-    // let colorScale4 = scaleQuantize()
-    //   .domain([min, max])
-    //   .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"])
+    let colorScale4 = scaleQuantize()
+      .domain([min, max])
+      .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"])
 
-    // let colorScale4_p = scaleQuantize()
-    //   .domain([min, max])
-    //   .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"])
+    let colorScale4_p = scaleQuantize()
+      .domain([min, max])
+      .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"])
 
-    // if (arrsuw.includes(selIndicator)) {
-    //   colorScale = colorScale2;
-    // }
-    // else if (indicatorSense === 'Negative') {
-    //   colorScale = colorScale4;
-    //   colorScale_new = colorScale4;
+    if (arrsuw.includes(selIndicator)) {
+      colorScale = colorScale2;
+    }
+    else if (indicatorSense === 'Negative') {
+      colorScale = colorScale4;
+      colorScale_new = colorScale4;
 
-    // } else if (indicatorSense === 'Positive') {
-    //   colorScale = colorScale4_p;
-    //   colorScale_new = colorScale4_p;
+    } else if (indicatorSense === 'Positive') {
+      colorScale = colorScale4_p;
+      colorScale_new = colorScale4_p;
 
-    // }
+    }
     
   }
   else{

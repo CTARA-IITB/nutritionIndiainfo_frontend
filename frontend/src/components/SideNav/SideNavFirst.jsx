@@ -189,13 +189,15 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
                     <Dropdown.Item  onClick={togglePopup} eventKey="1" style={{fontSize:'15px'}}><GetAppIcon/> Download</Dropdown.Item>
                     <Dropdown.Item 
                         onClick={(e)=>{
-                            if(isFullscreen){
-                                screen.enter();
-                                OpenFullscreen();
-                            }else{
-                                screen.exit();
-                                closeFullscreen();
-                            }
+                            screen.enter();
+                            // if(isFullscreen){
+                            //     screen.enter();
+                            //     OpenFullscreen();
+                            // }
+                            // else{
+                            //     screen.exit();
+                            //     closeFullscreen();
+                            // }
                         }}
                         eventKey="2" style={{fontSize:'15px'}}>{icon} {text}
                     </Dropdown.Item>

@@ -220,7 +220,6 @@ export async function populateDropdowns(
   // );
 
   const solr_body_6 = await solr_url_6.json();
-  console.log("indicatordata", solr_body_6.result.docs)
   // console.log('URL 6', API);
   setIndicatorDropdownOpt(solr_body_6.result.docs);
   let indiVal;

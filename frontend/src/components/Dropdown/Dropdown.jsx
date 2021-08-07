@@ -2,7 +2,7 @@ import React,{useState,useEffect,useRef} from "react";
 import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
 import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, populateDropdowns, API, token } from '../../utils';
+import { createHierarchy, setVisulaizationData, setVisulaizationOnTPChange, populateDropdowns, API, token } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
@@ -36,7 +36,10 @@ export const Dropdown = () =>{
 
 
   let { queryLifecycle } = useParams();
-  if(typeof queryLifecycle === 'undefined')
+  const arrayLifecycle = [1,2,3,4,5,6];
+  const arrayCategory =[1,2,3];
+
+  if(typeof queryLifecycle === 'undefined' || !arrayLifecycle.includes(queryLifecycle))
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifeycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
   
@@ -52,7 +55,7 @@ export const Dropdown = () =>{
   }
 
   let { queryCategory } = useParams();
-  if(typeof queryCategory === 'undefined')
+  if(typeof queryCategory === 'undefined' || !arrayCategory.includes(queryCategory))
     queryCategory = 1;
   const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
   
@@ -281,22 +284,30 @@ export const Dropdown = () =>{
           }
           setSelIndicator(val);
           let indiObject = indicatorDropdownOpt.filter(f => f.value === val)[0];
+          let indiSense;
+          let indiName;
+          let indiNotes;
           // console.log(indiObject)
+          if(indiObject)
+          {
           let indiSense = indiObject.indi_sense;
           let indiName = indiObject.indicator_name;
           let indiNotes = indiObject.notes;
           setGraphTitle(indiName);
           setIndicatorSense(indiSense);
           setNote(indiNotes);
+          setUnit(indiObject.unit_id);
+          setGraphUnit(indiObject.unit_name);
+          }
           let solr_url;
               // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-              solr_url = await fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifeycle}&area_id=${selArea}&selIndicator=${val}` , {
+              solr_url = await fetch(`${API}/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifeycle}&area_id=${selArea}&selIndicator=${val}` , {
                 headers:{
                   Authorization:`${token}`
                 }
               })
             const solr_body_1 = await solr_url.json()
-
+              
               setTimeperiodDropdownOpt(solr_body_1.result.docs);
               let flag = false;
               let timeValue = selTimeperiod;
@@ -315,19 +326,20 @@ export const Dropdown = () =>{
                   else{
                     setSelTimeperiod("");
                     setGraphTimeperiod("");
+                    timeValue = '';
                   }
                 }
             } 
-            // const url_3 = await fetch(`http://13.234.11.176/api/getUnit/${val}/6`);
+            // const url_3 = await fetch(`http://13.234.11.176/getUnit/${val}/6`);
             // const solr_url_3 = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
-            const solr_url_3 = await fetch(`${API}/api/v1/url_3d?val=${val}` , {
-              headers:{
-                Authorization:`${token}`
-              }
-            })
-            const solr_body_3 = await solr_url_3.json()
-            setUnit(solr_body_3.result.docs[0].unit_id);
-            setGraphUnit(solr_body_3.result.docs[0].unit_name);
+            // const solr_url_3 = await fetch(`${API}/v1/url_3d?val=${val}` , {
+            //   headers:{
+            //     Authorization:`${token}`
+            //   }
+            // })
+            // const solr_body_3 = await solr_url_3.json()
+            
+            if(timeValue != '')
             await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             setIsSelected(true);
         }
@@ -397,7 +409,7 @@ export const Dropdown = () =>{
           let solr_url;
               // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
 
-            solr_url = await fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifeycle}&area_id=${value}&selIndicator=${selIndicator}` , {
+            solr_url = await fetch(`${API}/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifeycle}&area_id=${value}&selIndicator=${selIndicator}` , {
               headers:{
                 Authorization:`${token}`
               }
@@ -423,9 +435,11 @@ export const Dropdown = () =>{
                   else{
                     setSelTimeperiod("");
                     setGraphTimeperiod("");
+                    timeValue = '';
                   }
                 }
             } 
+            if(timeValue != '')
             await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
             setIsSelected(true);
         

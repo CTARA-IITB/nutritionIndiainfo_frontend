@@ -67,7 +67,7 @@ export async function setVisulaizationData(
   setSelDistrictsData
 ) {
   const url_1 = await fetch(
-    `${API}/v1/url_1u?area=${area}&indicator=${indicator}` , {
+    `${API}/api/v1/url_1u?area=${area}&indicator=${indicator}` , {
       headers:{
         Authorization:`${token}`
       }
@@ -94,7 +94,7 @@ export async function setVisulaizationData(
   //setIndicatorTrend(body_1.result.docs);
 
   // const url_2 = await fetch(  
-  //   `${API}/v1/url_2u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}` , {
+  //   `${API}/api/v1/url_2u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}` , {
   //     headers:{
   //       Authorization:`${token}`
   //     }
@@ -108,7 +108,7 @@ export async function setVisulaizationData(
 
   if (level === 1) {
     const solr_url_3 = await fetch(
-      `${API}/v1/url_3u?indicator=${indicator}&timeperiod=${timeperiod}` , {
+      `${API}/api/v1/url_3u?indicator=${indicator}&timeperiod=${timeperiod}` , {
         headers:{
           Authorization:`${token}`
         }
@@ -124,7 +124,7 @@ export async function setVisulaizationData(
     let solr_url_4;
     if (levelThree) {
       solr_url_4 = await fetch(
-        `${API}/v1/url_4b_u?parentArea=${parentArea}&indicator=${indicator}&timeperiod=${timeperiod}` , {
+        `${API}/api/v1/url_4b_u?parentArea=${parentArea}&indicator=${indicator}&timeperiod=${timeperiod}` , {
           headers:{
             Authorization:`${token}`
           }
@@ -135,7 +135,7 @@ export async function setVisulaizationData(
       // );
     } else {
       solr_url_4 = await fetch(
-        `${API}/v1/url_4c_u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}` , {
+        `${API}/api/v1/url_4c_u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}` , {
           headers:{
             Authorization:`${token}`
           }
@@ -153,7 +153,7 @@ export async function setVisulaizationData(
   if (arrayTimeperiod.includes(timeperiod) && area === 1)
     {
         const solr_switchurl = await fetch(
-          `${API}/v1/url_5u?indicator=${indicator}&timeperiod=${timeperiod}` , {
+          `${API}/api/v1/url_5u?indicator=${indicator}&timeperiod=${timeperiod}` , {
             headers:{
               Authorization:`${token}`
             }
@@ -208,7 +208,7 @@ export async function populateDropdowns(
 ) {
   // console.log(`selCategory: ${selCategory}  ,  selLifeycle : ${selLifeycle}`);
   const solr_url_6 = await fetch(
-    `${API}/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifecycle}` , {
+    `${API}/api/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifecycle}` , {
       headers:{
         Authorization:`${token}`
       }
@@ -251,7 +251,7 @@ export async function populateDropdowns(
 }
  
 
-  // const solr_url_8 = await fetch(`${API}/v1/url_8u?indiVal=${indiVal}` , {
+  // const solr_url_8 = await fetch(`${API}/api/v1/url_8u?indiVal=${indiVal}` , {
   //   headers:{
   //     Authorization:`${token}`
   //   }
@@ -268,7 +268,7 @@ export async function populateDropdowns(
   // }
   let solr_url;
   // URL_9
-  solr_url = await fetch(`${API}/v1/url_9u?selLifecycle=${selLifecycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
+  solr_url = await fetch(`${API}/api/v1/url_9u?selLifecycle=${selLifecycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
     headers:{
       Authorization:`${token}`
     }

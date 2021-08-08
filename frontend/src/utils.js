@@ -268,7 +268,7 @@ export async function populateDropdowns(
   // }
   let solr_url;
   // URL_9
-  solr_url = await fetch(`${API}/v1/url_9u?selLifeycle=${selLifecycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
+  solr_url = await fetch(`${API}/v1/url_9u?selLifecycle=${selLifecycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
     headers:{
       Authorization:`${token}`
     }

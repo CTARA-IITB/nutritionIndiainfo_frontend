@@ -32,6 +32,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   const trendWrapper = useRef();
   const screen = useFullScreenHandle();
   const componentRef = useRef();
+  const [fullscreen,setFullscreen]=useState(false);
 
   let colorScale;
   let yValue = d => d.data_value;
@@ -343,6 +344,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   }
 
   const reportChange = (state, handle) => {
+    setFullscreen(state);
     if(state === true){
      document.getElementsByClassName("my-trend-title")[0].setAttribute('style', 'font-size: 1.5rem');
     }else{
@@ -359,7 +361,7 @@ noteDiv = <div className=" absolute left-2   text-xs"><b>Note: </b>{note}</div>;
       <FullScreen  className="w-full bg-white h-full" handle={screen} onChange={reportChange}>
         <div className='static relative w-full h-full'>
           <div className="block absolute w-full max-h-max right-5" style={{zIndex:2}}>
-            <SideNavFirst   table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+            <SideNavFirst   table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator} state={fullscreen}/>
           </div>
           <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend" ref={componentRef}>
             <div className="text-center absolute right-10 left-10 mx-10 w-auto  font-bold  text-xs md:text-sm my-trend-title">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>

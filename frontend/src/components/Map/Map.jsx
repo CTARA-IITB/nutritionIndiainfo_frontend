@@ -267,8 +267,8 @@ export const Map = ({
     let high;
     let highest;
     let sampleCategoricalData;
-
-    let arr20to80 = [31,11,28,37,51,42,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,74,85,86, 293,304,309,329]
+  console.log(selIndicator)
+    let arr20to80 = [31,11,28,37,51,66,42,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329]
     if (selIndicator === 19 || selIndicator === 21 || selIndicator === 105) {
       low = 5.0;
       medium = 10.0;
@@ -329,7 +329,7 @@ export const Map = ({
     let colorScale;
   let colorScale_new;
     let colorScale2;
-    let arrsuw = [31,11,28,37,51,42,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271]; 
+    let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271]; 
     if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
     {
     if(indicatorSense === 'Positive')
@@ -598,7 +598,7 @@ export const Map = ({
       }
         svg.append("g")
           .attr("class", "legendQuant")
-          .attr("transform", `translate(${width-(width-10)},${adjustedHeight-150})`)
+          .attr("transform", `translate(${width-(width-10)},${adjustedHeight-200})`)
         }
     else{
       if(level === 2 || level === 3){

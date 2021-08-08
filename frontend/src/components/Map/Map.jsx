@@ -37,7 +37,6 @@ export const Map = ({
 
 }) => {
 
-  console.log(selIndiaData,selStateData)
   
 
   let geometry = boundaries.new_state;

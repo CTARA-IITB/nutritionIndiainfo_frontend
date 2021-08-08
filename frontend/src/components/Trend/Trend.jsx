@@ -26,7 +26,6 @@ let margin = {
 
 
 export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, titleAreaName, toggleStateBurden,trend,selLifecycle,selCategory,selIndicator,note}) => { 
-  console.log(indicatorTrend,"IT")
   let [data, setData] = useState(null);
   const svgRef = useRef();
   const trendWrapper = useRef();

@@ -2,7 +2,7 @@ import React,{useState,useEffect,useRef} from "react";
 import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
 import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, setVisulaizationOnTPChange, populateDropdowns, API, token } from '../../utils';
+import { createHierarchy, setVisulaizationData, populateCategoryDropdown, populateDropdowns, API, token } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
@@ -39,12 +39,12 @@ export const Dropdown = () =>{
   const arrayLifecycle = [1,2,3,4,5,6];
   const arrayCategory =[1,2,3];
 
-  if(typeof queryLifecycle === 'undefined' || !arrayLifecycle.includes(queryLifecycle))
+  if(typeof queryLifecycle === 'undefined' || !arrayLifecycle.includes(parseInt(queryLifecycle)))
     queryLifecycle = EARLY_CHILDHOOD;
-  const [selLifeycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
+  const [selLifecycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
   
   let selLifeycleImg ;
-  switch(selLifeycle){
+  switch(selLifecycle){
     case 1: selLifeycleImg = adolescene;break;
     case 2: selLifeycleImg = wora;break;
     case 3: selLifeycleImg = pregnancy;break;
@@ -55,7 +55,7 @@ export const Dropdown = () =>{
   }
 
   let { queryCategory } = useParams();
-  if(typeof queryCategory === 'undefined' || !arrayCategory.includes(queryCategory))
+  if(typeof queryCategory === 'undefined' || !arrayCategory.includes(parseInt(queryCategory)))
     queryCategory = 1;
   const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
   
@@ -109,7 +109,7 @@ export const Dropdown = () =>{
   const [selBurden,setSelBurden] = useState("1");
   
   const lifecycleData = [
-    {  title: "Adolescence", value: 1 },
+    { title: "Adolescence", value: 1 },
     { title: "Women of Reproductive Age",value: 2 },
     { value: 3, title: "Pregnancy" },
     { value: 4, title: "Delivery PNC" },      
@@ -128,12 +128,17 @@ export const Dropdown = () =>{
       setToggleState(true);
       setToggleStateBurden(true);
       setLifecycleDropdownOpt(lifecycleData);
-      setCategoryDropdownOpt([
-        { value: 1, title: "Manifestation" },
-        { value: 2, title: "Interventions" },
-        { value: 3, title: "Determinants" }
-      ])
-      await populateDropdowns(selLifeycle, selCategory, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator)
+      await populateCategoryDropdown(selLifecycle, setCategoryDropdownOpt);
+      let catVal = selCategory;
+      if(selLifecycle === 1 || selLifecycle === 6){
+        if(selCategory === 2)
+        catVal=1;
+      }
+      else if(selLifecycle ===4){
+        if(selCategory === 1)
+        catVal=2;
+      }
+      await populateDropdowns(selLifecycle, catVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator)
       setIsSelected(true);
     }
     populateTabData();
@@ -264,7 +269,7 @@ export const Dropdown = () =>{
           let val = parseInt(e.target.value);
           setIsSelected(false);
           setSelCategory(val);       
-          await populateDropdowns(selLifeycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote)
+          await populateDropdowns(selLifecycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -301,7 +306,7 @@ export const Dropdown = () =>{
           }
           let solr_url;
               // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-              solr_url = await fetch(`${API}/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifeycle}&area_id=${selArea}&selIndicator=${val}` , {
+              solr_url = await fetch(`${API}/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifecycle}&area_id=${selArea}&selIndicator=${val}` , {
                 headers:{
                   Authorization:`${token}`
                 }
@@ -409,7 +414,7 @@ export const Dropdown = () =>{
           let solr_url;
               // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
 
-            solr_url = await fetch(`${API}/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifeycle}&area_id=${value}&selIndicator=${selIndicator}` , {
+            solr_url = await fetch(`${API}/v1/url_1d?selCategory=${selCategory}&selLifeycle=${selLifecycle}&area_id=${value}&selIndicator=${selIndicator}` , {
               headers:{
                 Authorization:`${token}`
               }
@@ -545,7 +550,7 @@ export const Dropdown = () =>{
 						<img src={selLifeycleImg} className="lifecycle-img"/>
 						<div className="select-lifecycle-parent">
 							<div className="select-lifecycle-child">
-								<select className="select-lifecycle" value={selLifeycle} onChange={lifecycleChange}>
+								<select className="select-lifecycle" value={selLifecycle} onChange={lifecycleChange}>
                   {lifecycleData.map( opt => <option key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 								</select>
 							</div>
@@ -654,7 +659,7 @@ export const Dropdown = () =>{
           titleAreaName = {titleAreaName}
           graphTimeperiod = {graphTimeperiod}
           toggleStateBurden = {toggleStateBurden}
-          selLifecycle={selLifeycle}
+          selLifecycle={selLifecycle}
           selCategory ={selCategory}
           selIndicator={selIndicator}
           note={note}
@@ -674,7 +679,7 @@ export const Dropdown = () =>{
           searchRef={searchRef} 
           setFilterDropdownValue={setFilterDropdownValue} 
           areaDropdownOpt={areaDropdownOpt} 
-          selLifecycle={selLifeycle}
+          selLifecycle={selLifecycle}
           selCategory ={selCategory}
           selIndicator={selIndicator}
           indicatorSense={indicatorSense} 
@@ -697,7 +702,6 @@ export const Dropdown = () =>{
           graphUnit = {graphUnit}
           areaName = {areaName}
           titleAreaName = {titleAreaName}
-
           toggleStateBurden={toggleStateBurden}
           setToggleStateBurden={setToggleStateBurden}
           burdenbuttonText={burdenbuttonText} 
@@ -722,7 +726,7 @@ export const Dropdown = () =>{
           areaName = {areaName}
           selStateData = {selStateData}
           toggleStateBurden = {toggleStateBurden}
-          selLifecycle={selLifeycle}
+          selLifecycle={selLifecycle}
           selCategory ={selCategory}
           selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />:<div id="msg">No data: please select another area</div>}
      </div>
@@ -738,7 +742,7 @@ export const Dropdown = () =>{
       graphUnit = {graphUnit}
       titleAreaName = {titleAreaName}
       toggleStateBurden = {toggleStateBurden}
-      selLifecycle={selLifeycle}
+      selLifecycle={selLifecycle}
       selCategory ={selCategory}
       selIndicator={selIndicator}/>: (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>

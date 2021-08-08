@@ -182,7 +182,7 @@ export async function setCardData(tab, area, setIndicatorDetail) {
 }
 
 export async function populateDropdowns(
-  selLifeycle,
+  selLifecycle,
   selCategory,
   setIndicatorDropdownOpt,
   setSelIndicator,
@@ -207,9 +207,8 @@ export async function populateDropdowns(
   queryIndicator
 ) {
   // console.log(`selCategory: ${selCategory}  ,  selLifeycle : ${selLifeycle}`);
-
   const solr_url_6 = await fetch(
-    `${API}/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifeycle}` , {
+    `${API}/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifecycle}` , {
       headers:{
         Authorization:`${token}`
       }
@@ -229,17 +228,17 @@ export async function populateDropdowns(
   if (queryIndicator) {
     passedIndicator = solr_body_6.result.docs.filter(
       (i) => i.value === parseInt(queryIndicator)
-    );
+    )[0];
   }
   if(passedIndicator)
   {
-    setSelIndicator(passedIndicator[0].value);
-    setIndicatorSense(passedIndicator[0].indi_sense);
-    setGraphTitle(passedIndicator[0].indicator_name);
-    indiVal = passedIndicator[0].value;
-    setUnit(passedIndicator[0].unit_id)
-    setGraphUnit(passedIndicator[0].unit_name)
-    setNote(passedIndicator[0].notes);
+    setSelIndicator(passedIndicator.value);
+    setIndicatorSense(passedIndicator.indi_sense);
+    setGraphTitle(passedIndicator.indicator_name);
+    indiVal = passedIndicator.value;
+    setUnit(passedIndicator.unit_id)
+    setGraphUnit(passedIndicator.unit_name)
+    setNote(passedIndicator.notes);
   } else {
     setSelIndicator(solr_body_6.result.docs[0].value);
     setIndicatorSense(solr_body_6.result.docs[0].indi_sense);
@@ -269,7 +268,7 @@ export async function populateDropdowns(
   // }
   let solr_url;
   // URL_9
-  solr_url = await fetch(`${API}/v1/url_9u?selLifeycle=${selLifeycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
+  solr_url = await fetch(`${API}/v1/url_9u?selLifeycle=${selLifecycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
     headers:{
       Authorization:`${token}`
     }
@@ -303,6 +302,39 @@ export async function populateDropdowns(
       setSwitchDisplay,
       setSelDistrictsData
     );
+}
+
+export async function populateCategoryDropdown(selLifecycle, setCategoryDropdownOpt)
+{  
+  if(selLifecycle === 1 || selLifecycle === 6){
+    setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Determinants" } ])
+  }else if(selLifecycle === 2){
+    setCategoryDropdownOpt([
+      { value: 1, title: "Manifestation" },
+      { value: 2, title: "Interventions" },
+      { value: 3, title: "Determinants" }                 
+    ]);
+  }else if(selLifecycle === 3){
+    setCategoryDropdownOpt([
+      { value: 1, title: "Manifestation" },
+      { value: 2, title: "Interventions" },
+      { value: 3, title: "Determinants" }                 
+
+    ]);
+  }
+  else if(selLifecycle ===4){
+    setCategoryDropdownOpt([
+      { value: 2, title: "Interventions" },
+      { value: 3, title: "Determinants" }                 
+
+    ]);
+  }else if(selLifecycle === 5){
+    setCategoryDropdownOpt([
+      { value: 1, title: "Manifestation" },
+      { value: 2, title: "Interventions" },
+      { value: 3, title: "Determinants" }
+    ])
+  }
 }
 
 export function commaSeparated(x) {

@@ -91,14 +91,14 @@ let dynamicRange;
       setData(sortedStateData)
     }
   }, [toggleStateBurden]);
-  
+  let windowWidth = window.screen.width;
+    let windowHeight = window.screen.height;
   useEffect(()=>{
     select(".tooltipBAR").remove();
     let TOOLTIP_FONTSIZE;
     
     const svg = select(svgRef.current);
-    let windowWidth = window.screen.width;
-    let windowHeight = window.screen.height;
+    
     
     if(windowWidth >= 480){
       windowWidth = windowWidth/2;
@@ -332,8 +332,10 @@ let dynamicRange;
     setFullscreen(state);
     if(state === true){
       document.getElementsByClassName("my-fullScreen")[0].setAttribute('style', 'overflow: auto !important');
-      document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: 1.5rem');
-      document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+      if( windowWidth > 780){
+        document.getElementsByClassName("my-bararea-title")[0].setAttribute('style', 'font-size: 1.5rem');
+        document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+      }
      }else{
       document.getElementsByClassName("my-fullScreen")[0].setAttribute('style', 'overflow: hidden !important');
       document.getElementsByClassName("my-bararea-subtitle")[0].setAttribute('style', 'font-size: .55rem');

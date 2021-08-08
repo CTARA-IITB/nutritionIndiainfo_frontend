@@ -90,14 +90,14 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
   
   gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
  
-
+  let windowWidth = window.screen.width;
+  let windowHeight = window.screen.height;
   useEffect(()=>{
     select(".tooltipGBar").remove();
     let TOOLTIP_FONTSIZE;
 
     const svg = select(svgRef.current);
-    let windowWidth = window.screen.width;
-    let windowHeight = window.screen.height;
+    
 
     if(windowWidth >= 480){
       windowWidth = windowWidth/2;
@@ -265,8 +265,10 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
   const reportChange = (state, handle) => {
     setFullscreen(state);
     if(state === true){
-     document.getElementsByClassName("my-bar-title")[0].setAttribute('style', 'font-size: 1.5rem');
-     document.getElementsByClassName("my-bar-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+      if( windowWidth > 780){
+        document.getElementsByClassName("my-bar-title")[0].setAttribute('style', 'font-size: 1.5rem');
+        document.getElementsByClassName("my-bar-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+      }
     }else{
      document.getElementsByClassName("my-bar-subtitle")[0].setAttribute('style', 'font-size: .55rem');
      document.getElementsByClassName("my-bar-title")[0].setAttribute('style', 'font-size: .875rem');

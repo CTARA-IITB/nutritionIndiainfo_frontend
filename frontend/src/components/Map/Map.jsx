@@ -164,12 +164,14 @@ export const Map = ({
     .attr("class", "tooltip")
     .style("opacity", 0);
   let left_offset ,right_offset;
+  let windowWidth = window.screen.width;
+  let windowHeight = window.screen.height;
+
   useEffect(() => {
     const svg = select(svgRef.current);
 
     const legend = select(svgRef.current)
-    let windowWidth = window.screen.width;
-    let windowHeight = window.screen.height;
+   
 
      if(windowWidth >= 480){
       windowWidth = windowWidth/2;
@@ -727,8 +729,11 @@ export const Map = ({
       setOffset(state)
       if(state === true){
         document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: auto !important');
-        document.getElementsByClassName("my-map-title")[0].setAttribute('style', 'font-size: 1.5rem');
-        document.getElementsByClassName("my-map-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+        if( windowWidth > 780){
+          document.getElementsByClassName("my-map-title")[0].setAttribute('style', 'font-size: 1.5rem');
+          document.getElementsByClassName("my-map-subtitle")[0].setAttribute('style', 'font-size: 1rem;margin-top:10px');
+        }
+
       }else{
        document.getElementsByClassName("my-fullscreen")[0].setAttribute('style', 'overflow: hidden !important');
        document.getElementsByClassName("my-map-subtitle")[0].setAttribute('style', 'font-size: .55rem');

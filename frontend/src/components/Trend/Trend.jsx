@@ -99,13 +99,13 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   }, []);
   if(!toggleStateBurden && data)
     data = data.filter(d => typeof d.data_value_num != 'undefined')
-
+    let windowWidth = window.screen.width;
+    let windowHeight = window.screen.height;
   useEffect(()=>{
     // select(".tooltipX").remove();
     let TOOLTIP_FONTSIZE;
     const svg = select(svgRef.current);
-    let windowWidth = window.screen.width;
-    let windowHeight = window.screen.height;
+    
 
     if(windowWidth >= 480){
       windowWidth = windowWidth/2;
@@ -340,7 +340,9 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
   const reportChange = (state, handle) => {
     if(state === true){
-     document.getElementsByClassName("my-trend-title")[0].setAttribute('style', 'font-size: 1.5rem');
+      if( windowWidth > 780){
+        document.getElementsByClassName("my-trend-title")[0].setAttribute('style', 'font-size: 1.5rem');
+      }
     }else{
      document.getElementsByClassName("my-trend-title")[0].setAttribute('style', 'font-size: .875rem');
 

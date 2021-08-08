@@ -77,24 +77,34 @@ export async function setVisulaizationData(
   // const url_1 =  await fetch(`${solr_domain}/solr/${solr_core}/select?fl=timeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name%2Csubgroup_category%2Cstart_date%2Cend_date&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&omitHeader=true&q=*%3A*&rows=400&sort=timeperiod_id%20asc`);
   // console.log('URL', url_1);
   const body_1 = await url_1.json();
+  if (body_1.result.docs.length) {
+  const trendData = body_1.result.docs.filter(data => data.subgroup_id === 6)
+  trendData.sort(function(a, b){
+      return a.timeperiod_id-b.timeperiod_id
+    })
+    setIndicatorTrend(trendData);
+ 
 
-  setIndicatorTrend(body_1.result.docs);
+  const subBarData = body_1.result.docs.filter(data => data.timeperiod_id === timeperiod)
+  subBarData.sort(function(a, b){
+    return a.subgroup_order-b.subgroup_order
+  })
+  setIndicatorBar(subBarData);
+}
+  //setIndicatorTrend(body_1.result.docs);
 
-  const url_2 = await fetch(
-    `${API}/api/v1/url_2u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}` , {
-      headers:{
-        Authorization:`${token}`
-      }
-    }
-  );
-
-  
-
+  // const url_2 = await fetch(  
+  //   `${API}/api/v1/url_2u?area=${area}&indicator=${indicator}&timeperiod=${timeperiod}` , {
+  //     headers:{
+  //       Authorization:`${token}`
+  //     }
+  //   }
+  // );
   // const url_2 = await fetch(
   //   `${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Csubgroup_name%2Csub_category%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name_subgroup_category&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=timeperiod_id%3A${timeperiod}&omitHeader=true&q=*%3A*&rows=100&sort=subgroup_order%20asc`
   // );
-  const body_2 = await url_2.json();
-  setIndicatorBar(body_2.result.docs);
+  // const body_2 = await url_2.json();
+
 
   if (level === 1) {
     const solr_url_3 = await fetch(
@@ -138,23 +148,31 @@ export async function setVisulaizationData(
     const solr_body_4 = await solr_url_4.json();
     setSelStateData(solr_body_4.result.docs);
   }
- 
-  const solr_switchurl = await fetch(
-    `${API}/api/v1/url_5u?indicator=${indicator}&timeperiod=${timeperiod}` , {
-      headers:{
-        Authorization:`${token}`
-      }
-    }
-  );
 
-  // const solr_switchurl = await fetch(
-  //   `${solr_domain}/solr/${solr_core}/select?fl=indicator_id%2Cindicator_name%2Ctimeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Carea_id%2Carea_code%2Carea_name%2Carea_level&fq=area_level%3A3&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&q=*%3A*&rows=10000&omitHeader=true`
-  // );
-  const solr_body_5 = await solr_switchurl.json();
-  if (solr_body_5.result.docs.length) {
-    setSwitchDisplay(true);
-    setSelDistrictsData(solr_body_5.result.docs);
-  } else setSwitchDisplay(false);
+  const arrayTimeperiod = [20,3,11,14,7,12,10,17,4,24]
+  if (arrayTimeperiod.includes(timeperiod) && area === 1)
+    {
+        const solr_switchurl = await fetch(
+          `${API}/api/v1/url_5u?indicator=${indicator}&timeperiod=${timeperiod}` , {
+            headers:{
+              Authorization:`${token}`
+            }
+          }
+        );
+
+        // const solr_switchurl = await fetch(
+        //   `${solr_domain}/solr/${solr_core}/select?fl=indicator_id%2Cindicator_name%2Ctimeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Carea_id%2Carea_code%2Carea_name%2Carea_level&fq=area_level%3A3&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&q=*%3A*&rows=10000&omitHeader=true`
+        // );
+        const solr_body_5 = await solr_switchurl.json();
+        if (solr_body_5.result.docs.length) {
+          setSwitchDisplay(true);
+          setSelDistrictsData(solr_body_5.result.docs);
+        } 
+        else setSwitchDisplay(false);
+    }
+  else {
+      setSwitchDisplay(false);
+      }
 }
 
 export async function setCardData(tab, area, setIndicatorDetail) {
@@ -164,7 +182,7 @@ export async function setCardData(tab, area, setIndicatorDetail) {
 }
 
 export async function populateDropdowns(
-  selLifeycle,
+  selLifecycle,
   selCategory,
   setIndicatorDropdownOpt,
   setSelIndicator,
@@ -189,9 +207,8 @@ export async function populateDropdowns(
   queryIndicator
 ) {
   // console.log(`selCategory: ${selCategory}  ,  selLifeycle : ${selLifeycle}`);
-
   const solr_url_6 = await fetch(
-    `${API}/api/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifeycle}` , {
+    `${API}/api/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifecycle}` , {
       headers:{
         Authorization:`${token}`
       }
@@ -203,43 +220,55 @@ export async function populateDropdowns(
 
   const solr_body_6 = await solr_url_6.json();
   // console.log('URL 6', API);
-
   setIndicatorDropdownOpt(solr_body_6.result.docs);
   let indiVal;
-
+  let passedIndicator;
+  if(solr_body_6.result.docs.length)
+  {
   if (queryIndicator) {
-    let passedIndicator = solr_body_6.result.docs.filter(
+    passedIndicator = solr_body_6.result.docs.filter(
       (i) => i.value === parseInt(queryIndicator)
-    );
-    setSelIndicator(passedIndicator[0].value);
-    setIndicatorSense(passedIndicator[0].indi_sense);
-    setGraphTitle(passedIndicator[0].indicator_name);
-    indiVal = passedIndicator[0].value;
-    setNote(passedIndicator[0].notes);
+    )[0];
+  }
+  if(passedIndicator)
+  {
+    setSelIndicator(passedIndicator.value);
+    setIndicatorSense(passedIndicator.indi_sense);
+    setGraphTitle(passedIndicator.indicator_name);
+    indiVal = passedIndicator.value;
+    setUnit(passedIndicator.unit_id)
+    setGraphUnit(passedIndicator.unit_name)
+    setNote(passedIndicator.notes);
   } else {
     setSelIndicator(solr_body_6.result.docs[0].value);
     setIndicatorSense(solr_body_6.result.docs[0].indi_sense);
     setGraphTitle(solr_body_6.result.docs[0].indicator_name);
     indiVal = solr_body_6.result.docs[0].value;
+    setUnit(solr_body_6.result.docs[0].unit_id)
+    setGraphUnit(solr_body_6.result.docs[0].unit_name)
     setNote(solr_body_6.result.docs[0].notes);
   }
+}
+ 
 
-  const solr_url_8 = await fetch(`${API}/api/v1/url_8u?indiVal=${indiVal}` , {
-    headers:{
-      Authorization:`${token}`
-    }
-  })
+  // const solr_url_8 = await fetch(`${API}/api/v1/url_8u?indiVal=${indiVal}` , {
+  //   headers:{
+  //     Authorization:`${token}`
+  //   }
+  // })
 
-  // const solr_url_8 = await fetch(
-  //   `${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`
-  // );
-  const solr_body_8 = await solr_url_8.json();
-  setUnit(solr_body_8.result.docs[0].unit_id);
-  setGraphUnit(solr_body_8.result.docs[0].unit_name);
-
+  // // const solr_url_8 = await fetch(
+  // //   `${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`
+  // // );
+  // const solr_body_8 = await solr_url_8.json();
+  // if(solr_body_8.result.docs.length)
+  // {
+  // setUnit(solr_body_8.result.docs[0].unit_id);
+  // setGraphUnit(solr_body_8.result.docs[0].unit_name);
+  // }
   let solr_url;
   // URL_9
-  solr_url = await fetch(`${API}/api/v1/url_9u?selLifeycle=${selLifeycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
+  solr_url = await fetch(`${API}/api/v1/url_9u?selLifecycle=${selLifecycle}&selCategory=${selCategory}&indiVal=${indiVal}&selArea=${selArea}` , {
     headers:{
       Authorization:`${token}`
     }
@@ -275,8 +304,42 @@ export async function populateDropdowns(
     );
 }
 
+export async function populateCategoryDropdown(selLifecycle, setCategoryDropdownOpt)
+{  
+  if(selLifecycle === 1 || selLifecycle === 6){
+    setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Determinants" } ])
+  }else if(selLifecycle === 2){
+    setCategoryDropdownOpt([
+      { value: 1, title: "Manifestation" },
+      { value: 2, title: "Interventions" },
+      { value: 3, title: "Determinants" }                 
+    ]);
+  }else if(selLifecycle === 3){
+    setCategoryDropdownOpt([
+      { value: 1, title: "Manifestation" },
+      { value: 2, title: "Interventions" },
+      { value: 3, title: "Determinants" }                 
+
+    ]);
+  }
+  else if(selLifecycle ===4){
+    setCategoryDropdownOpt([
+      { value: 2, title: "Interventions" },
+      { value: 3, title: "Determinants" }                 
+
+    ]);
+  }else if(selLifecycle === 5){
+    setCategoryDropdownOpt([
+      { value: 1, title: "Manifestation" },
+      { value: 2, title: "Interventions" },
+      { value: 3, title: "Determinants" }
+    ])
+  }
+}
+
 export function commaSeparated(x) {
   if (typeof x !== 'undefined') {
     return x.toLocaleString('en-IN');
   }
+
 }

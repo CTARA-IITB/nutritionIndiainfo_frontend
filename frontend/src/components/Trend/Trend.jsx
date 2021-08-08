@@ -137,7 +137,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
    
-    
     svg.selectAll("*").remove();
     svg
     .attr("preserveAspectRatio", "xMinYMin meet")
@@ -148,7 +147,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     let bar = svg.append('g')
       .attr("transform",`translate(${margin.left},${margin.top})`);
 
-    if(data && data.length >0){
+    if(data && data.length > 0){
       let listofDate = [];
       data.map((d) => {
         listofDate.push(d.start_date);

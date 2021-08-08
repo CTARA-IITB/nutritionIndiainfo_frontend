@@ -269,7 +269,6 @@ export const Map = ({
     let high;
     let highest;
     let sampleCategoricalData;
-  console.log(selIndicator)
     let arr20to80 = [31,11,28,37,51,66,42,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329]
     if (selIndicator === 19 || selIndicator === 21 || selIndicator === 105) {
       low = 5.0;

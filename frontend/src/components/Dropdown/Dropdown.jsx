@@ -118,7 +118,7 @@ export const Dropdown = () =>{
 ];
   const [drillDirection,setDrillDirection] = useState(true);
   //let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
-  let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63, 56];
+  let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63, 56, 31, 78];
 
 
     useEffect(() => {

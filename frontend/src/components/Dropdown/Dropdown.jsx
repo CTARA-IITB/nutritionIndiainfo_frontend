@@ -30,6 +30,7 @@ import delivery from './images/lifecycle/DeliveryPNC.png'
 import early_childhood from './images/lifecycle/Early-Childhood.png'
 import school_age from './images/lifecycle/School-Age-.png'
 import iicon from "./images/i-con5.png";
+import { NotFound } from "../../NotFound";
 
 
 export const Dropdown = () =>{
@@ -38,7 +39,6 @@ export const Dropdown = () =>{
   let { queryLifecycle } = useParams();
   const arrayLifecycle = [1,2,3,4,5,6];
   const arrayCategory =[1,2,3];
-
   if(typeof queryLifecycle === 'undefined' || !arrayLifecycle.includes(parseInt(queryLifecycle)))
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifecycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
@@ -63,6 +63,8 @@ export const Dropdown = () =>{
   if(typeof queryIndicator === 'undefined'){
     queryIndicator = null;
   }
+
+  const [httpStatusCode, setHttpStatusCode] = useState(null);
   const [selIndicator, setSelIndicator] = useState(null);
  
   const iniSelArea = '1';  //india
@@ -138,7 +140,8 @@ export const Dropdown = () =>{
         if(selCategory === 1)
         catVal=2;
       }
-      await populateDropdowns(selLifecycle, catVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator)
+     
+      await populateDropdowns(selLifecycle, catVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator, setHttpStatusCode)
       setIsSelected(true);
     }
     populateTabData();
@@ -258,7 +261,7 @@ export const Dropdown = () =>{
             ])
           }
           setSelCategory(selCat);
-          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote)
+          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,setHttpStatusCode)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -269,7 +272,7 @@ export const Dropdown = () =>{
           let val = parseInt(e.target.value);
           setIsSelected(false);
           setSelCategory(val);       
-          await populateDropdowns(selLifecycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote)
+          await populateDropdowns(selLifecycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,setHttpStatusCode)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -312,29 +315,31 @@ export const Dropdown = () =>{
                 }
               })
             const solr_body_1 = await solr_url.json()
-              
+            let flag = false;
+            let timeValue = selTimeperiod;
+            if(solr_url.statusText === 'OK')
+            {
               setTimeperiodDropdownOpt(solr_body_1.result.docs);
-              let flag = false;
-              let timeValue = selTimeperiod;
               if(solr_body_1.result.docs){
-                solr_body_1.result.docs.forEach(timeperiod => {
-                  if(timeperiod.value === selTimeperiod){
-                    flag = true;
+                  solr_body_1.result.docs.forEach(timeperiod => {
+                    if(timeperiod.value === selTimeperiod){
+                      flag = true;
+                    }
+                  });
+                  if(!flag){
+                    if(typeof solr_body_1.result.docs[0] !== 'undefined'){  // added this condition to resolve issue when UT data not present for CNNS Obesity in 10-14 year old
+                      timeValue = solr_body_1.result.docs[0].value;
+                      setSelTimeperiod(solr_body_1.result.docs[0].value);
+                      setGraphTimeperiod(solr_body_1.result.docs[0].title);
+                    }
+                    else{
+                      setSelTimeperiod("");
+                      setGraphTimeperiod("");
+                      timeValue = '';
+                    }
                   }
-                });
-                if(!flag){
-                  if(typeof solr_body_1.result.docs[0] !== 'undefined'){  // added this condition to resolve issue when UT data not present for CNNS Obesity in 10-14 year old
-                    timeValue = solr_body_1.result.docs[0].value;
-                    setSelTimeperiod(solr_body_1.result.docs[0].value);
-                    setGraphTimeperiod(solr_body_1.result.docs[0].title);
-                  }
-                  else{
-                    setSelTimeperiod("");
-                    setGraphTimeperiod("");
-                    timeValue = '';
-                  }
-                }
-            } 
+                } 
+            }
             // const url_3 = await fetch(`http://13.234.11.176/getUnit/${val}/6`);
             // const solr_url_3 = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=unit_id%2Cunit_name%2Cindicator_id&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&group.field=unit_id&group.main=true&group=true&omitHeader=true&q=*%3A*`);
             // const solr_url_3 = await fetch(`${API}/v1/url_3d?val=${val}` , {
@@ -345,7 +350,7 @@ export const Dropdown = () =>{
             // const solr_body_3 = await solr_url_3.json()
             
             if(timeValue != '')
-            await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
+            await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode);
             setIsSelected(true);
         }
 
@@ -361,7 +366,7 @@ export const Dropdown = () =>{
           setSelTimeperiod(val);
           let timePeriodName = timeperiodDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTimeperiod(timePeriodName);
-          await setVisulaizationData(selIndicator, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
+          await setVisulaizationData(selIndicator, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode);
           setIsSelected(true);
         }
 
@@ -420,10 +425,12 @@ export const Dropdown = () =>{
               }
             })  
             let solr_body_1 = await solr_url.json()
-            solr_body_1 = solr_body_1.result.docs;
-              setTimeperiodDropdownOpt(solr_body_1);
-              let flag = false;
-              let timeValue = selTimeperiod;
+            let flag = false;
+            let timeValue = selTimeperiod;
+            if(solr_url.statusText === 'OK')
+            {
+              solr_body_1 = solr_body_1.result.docs;
+              setTimeperiodDropdownOpt(solr_body_1); 
               if(solr_body_1){
                 solr_body_1.forEach(timeperiod => {
                   if(timeperiod.value === selTimeperiod){
@@ -443,9 +450,10 @@ export const Dropdown = () =>{
                     timeValue = '';
                   }
                 }
-            } 
+              } 
+            }
             if(timeValue != '')
-            await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData);
+            await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode);
             setIsSelected(true);
         
         }
@@ -533,6 +541,10 @@ export const Dropdown = () =>{
         //   <ToggleButton className='tg_button tg_button_light' value={2}>Burden</ToggleButton>
         // </ToggleButtonGroup>
           
+        }
+
+        if (httpStatusCode === 404) {
+          return <NotFound />
         }
     
     return (

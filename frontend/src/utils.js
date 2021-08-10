@@ -165,7 +165,8 @@ export async function setVisulaizationData(
   }
 
   const arrayTimeperiod = [20,3,11,14,7,12,10,17,4,24]
-  if (arrayTimeperiod.includes(timeperiod) && area === 1)
+  console.log("timeperiod", timeperiod, typeof timeperiod, arrayTimeperiod.includes(timeperiod), typeof area)
+  if (arrayTimeperiod.includes(timeperiod) && area === '1')
     {
         const solr_switchurl = await fetch(
           `${API}/v1/url_5u?indicator=${indicator}&timeperiod=${timeperiod}` , {

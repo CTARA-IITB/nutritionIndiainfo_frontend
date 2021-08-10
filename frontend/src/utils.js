@@ -64,7 +64,7 @@ export async function setVisulaizationData(
   setSelIndiaData,
   setSelStateData,
   setSwitchDisplay,
-  setSelDistrictsData
+  setSelDistrictsData, setHttpStatusCode
 ) {
   const url_1 = await fetch(
     `${API}/api/v1/url_1u?area=${area}&indicator=${indicator}` , {
@@ -77,20 +77,26 @@ export async function setVisulaizationData(
   // const url_1 =  await fetch(`${solr_domain}/solr/${solr_core}/select?fl=timeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name%2Csubgroup_category%2Cstart_date%2Cend_date&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&omitHeader=true&q=*%3A*&rows=400&sort=timeperiod_id%20asc`);
   // console.log('URL', url_1);
   const body_1 = await url_1.json();
-  if (body_1.result.docs.length) {
-  const trendData = body_1.result.docs.filter(data => data.subgroup_id === 6)
-  trendData.sort(function(a, b){
-      return a.timeperiod_id-b.timeperiod_id
-    })
-    setIndicatorTrend(trendData);
- 
+  if(url_1.status != 200)
+  setHttpStatusCode(url_1.status)
 
-  const subBarData = body_1.result.docs.filter(data => data.timeperiod_id === timeperiod)
-  subBarData.sort(function(a, b){
-    return a.subgroup_order-b.subgroup_order
-  })
-  setIndicatorBar(subBarData);
-}
+  if(url_1.statusText === 'OK')
+  {
+        if (body_1.result.docs.length) {
+        const trendData = body_1.result.docs.filter(data => data.subgroup_id === 6)
+        trendData.sort(function(a, b){
+            return a.timeperiod_id-b.timeperiod_id
+          })
+          setIndicatorTrend(trendData);
+      
+
+        const subBarData = body_1.result.docs.filter(data => data.timeperiod_id === timeperiod)
+        subBarData.sort(function(a, b){
+          return a.subgroup_order-b.subgroup_order
+        })
+        setIndicatorBar(subBarData);
+      }
+  }
   //setIndicatorTrend(body_1.result.docs);
 
   // const url_2 = await fetch(  
@@ -119,6 +125,10 @@ export async function setVisulaizationData(
     //   `${solr_domain}/solr/${solr_core}/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_level%3A2&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=100&omitHeader=true&q=*%3A*`
     // );
     const solr_body_3 = await solr_url_3.json();
+    if(solr_url_3.status != 200)
+    setHttpStatusCode(solr_url_3.status)
+
+    if(solr_url_3.statusText === 'OK')
     setSelIndiaData(solr_body_3.result.docs);
   } else {
     let solr_url_4;
@@ -146,6 +156,11 @@ export async function setVisulaizationData(
       // );
     }
     const solr_body_4 = await solr_url_4.json();
+
+    if(solr_url_4.status != 200)
+    setHttpStatusCode(solr_url_4.status)
+
+    if(solr_url_4.statusText === 'OK')
     setSelStateData(solr_body_4.result.docs);
   }
 
@@ -164,11 +179,18 @@ export async function setVisulaizationData(
         //   `${solr_domain}/solr/${solr_core}/select?fl=indicator_id%2Cindicator_name%2Ctimeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Carea_id%2Carea_code%2Carea_name%2Carea_level&fq=area_level%3A3&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&q=*%3A*&rows=10000&omitHeader=true`
         // );
         const solr_body_5 = await solr_switchurl.json();
-        if (solr_body_5.result.docs.length) {
-          setSwitchDisplay(true);
-          setSelDistrictsData(solr_body_5.result.docs);
-        } 
-        else setSwitchDisplay(false);
+
+        if(solr_switchurl.status != 200)
+        setHttpStatusCode(solr_switchurl.status)
+
+        if(solr_switchurl.statusText === 'OK')
+       {
+          if (solr_body_5.result.docs.length) {
+            setSwitchDisplay(true);
+            setSelDistrictsData(solr_body_5.result.docs);
+          } 
+          else setSwitchDisplay(false);
+        }
     }
   else {
       setSwitchDisplay(false);
@@ -204,7 +226,7 @@ export async function populateDropdowns(
   setGraphTimeperiod,
   setIndicatorSense,
   setNote,
-  queryIndicator
+  queryIndicator,setHttpStatusCode
 ) {
   // console.log(`selCategory: ${selCategory}  ,  selLifeycle : ${selLifeycle}`);
   const solr_url_6 = await fetch(
@@ -219,39 +241,45 @@ export async function populateDropdowns(
   // );
 
   const solr_body_6 = await solr_url_6.json();
-  // console.log('URL 6', API);
-  setIndicatorDropdownOpt(solr_body_6.result.docs);
   let indiVal;
   let passedIndicator;
-  if(solr_body_6.result.docs.length)
-  {
-  if (queryIndicator) {
-    passedIndicator = solr_body_6.result.docs.filter(
-      (i) => i.value === parseInt(queryIndicator)
-    )[0];
-  }
-  if(passedIndicator)
-  {
-    setSelIndicator(passedIndicator.value);
-    setIndicatorSense(passedIndicator.indi_sense);
-    setGraphTitle(passedIndicator.indicator_name);
-    indiVal = passedIndicator.value;
-    setUnit(passedIndicator.unit_id)
-    setGraphUnit(passedIndicator.unit_name)
-    setNote(passedIndicator.notes);
-  } else {
-    setSelIndicator(solr_body_6.result.docs[0].value);
-    setIndicatorSense(solr_body_6.result.docs[0].indi_sense);
-    setGraphTitle(solr_body_6.result.docs[0].indicator_name);
-    indiVal = solr_body_6.result.docs[0].value;
-    setUnit(solr_body_6.result.docs[0].unit_id)
-    setGraphUnit(solr_body_6.result.docs[0].unit_name)
-    setNote(solr_body_6.result.docs[0].notes);
-  }
-}
- 
+  if(solr_url_6.status != 200 )
+  setHttpStatusCode(solr_url_6.status)
 
-  // const solr_url_8 = await fetch(`${API}/api/v1/url_8u?indiVal=${indiVal}` , {
+  console.log("solr_url_6", solr_url_6);
+ 
+  if(solr_url_6.statusText === 'OK')
+  {
+        setIndicatorDropdownOpt(solr_body_6.result.docs); 
+        if(solr_body_6.result.docs.length)
+        {
+        if (queryIndicator) {
+          passedIndicator = solr_body_6.result.docs.filter(
+            (i) => i.value === parseInt(queryIndicator)
+          )[0];
+        }
+        if(passedIndicator)
+        {
+          setSelIndicator(passedIndicator.value);
+          setIndicatorSense(passedIndicator.indi_sense);
+          setGraphTitle(passedIndicator.indicator_name);
+          indiVal = passedIndicator.value;
+          setUnit(passedIndicator.unit_id)
+          setGraphUnit(passedIndicator.unit_name)
+          setNote(passedIndicator.notes);
+        } else {
+          setSelIndicator(solr_body_6.result.docs[0].value);
+          setIndicatorSense(solr_body_6.result.docs[0].indi_sense);
+          setGraphTitle(solr_body_6.result.docs[0].indicator_name);
+          indiVal = solr_body_6.result.docs[0].value;
+          setUnit(solr_body_6.result.docs[0].unit_id)
+          setGraphUnit(solr_body_6.result.docs[0].unit_name)
+          setNote(solr_body_6.result.docs[0].notes);
+        }
+      }
+ 
+}
+  // const solr_url_8 = await fetch(`${API}/v1/url_8u?indiVal=${indiVal}` , {
   //   headers:{
   //     Authorization:`${token}`
   //   }
@@ -277,16 +305,25 @@ export async function populateDropdowns(
   //   `${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${indiVal}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`
   // );
   const solr_body_2 = await solr_url.json();
-  setTimeperiodDropdownOpt(solr_body_2.result.docs);
   let timeVal = '';
-  if (typeof solr_body_2.result.docs[0] !== 'undefined') {
-    setSelTimeperiod(solr_body_2.result.docs[0].value);
-    timeVal = solr_body_2.result.docs[0].value;
-    setGraphTimeperiod(solr_body_2.result.docs[0].title);
-  } else {
-    setSelTimeperiod('');
-    setGraphTimeperiod('');
-  }
+  if(solr_url.status != 200 )
+  setHttpStatusCode(solr_url.status)
+
+  if(solr_url.statusText === 'OK')
+  {
+      setTimeperiodDropdownOpt(solr_body_2.result.docs);
+      if (typeof solr_body_2.result.docs[0] !== 'undefined') {
+        setSelTimeperiod(solr_body_2.result.docs[0].value);
+        timeVal = solr_body_2.result.docs[0].value;
+        setGraphTimeperiod(solr_body_2.result.docs[0].title);
+      } else {
+        setSelTimeperiod('');
+        setGraphTimeperiod('');
+      }
+}
+
+
+
   if (timeVal !== '')
     await setVisulaizationData(
       indiVal,

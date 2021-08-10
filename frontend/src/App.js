@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';       // added bootstrap
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.min.css';   
 import { Dropdown } from "./components/Dropdown/Dropdown";
+import { NotFound } from "./NotFound";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import "./components/Navbar/navbar.css";
 
@@ -46,6 +47,7 @@ return(<>
 		<Route exact path="/:queryLifecycle/:queryCategory/:queryIndicator">
 			<Dropdown/>
 		</Route>
+		<Route component={NotFound} />
 	</Router>   
 
 

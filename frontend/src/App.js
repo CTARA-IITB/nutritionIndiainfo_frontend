@@ -6,7 +6,7 @@ import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.min.css';   
 import { Dropdown } from "./components/Dropdown/Dropdown";
 import { NotFound } from "./NotFound";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import "./components/Navbar/navbar.css";
 
 
@@ -34,7 +34,8 @@ return(<>
 		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank"> <img src={pa} className="poshan-abhiyan"/></a></div> 
 		{/* </div> */}
 	</div>
-	<Router  basename={'/dashboard'}>
+<Router  basename={'/dashboard'}>
+<Switch>
 		<Route exact path="/">
 			<Dropdown/>
 		</Route>
@@ -48,7 +49,8 @@ return(<>
 			<Dropdown/>
 		</Route>
 		<Route component={NotFound} />
-	</Router>   
+	</Switch>
+</Router>
 
 
 	<footer className="footer p-0 mt-4">

@@ -163,7 +163,7 @@ select{
 	display: inline-block;
 	/* border-top-left-radius: 5px; */
 	/* border-bottom-left-radius: 5px; */
-	background: #DDDD;
+	background: #EFC69B;
 }
 .nav-link {
     padding: 0px 19px 0px 19px;
@@ -269,7 +269,7 @@ select{
 .select-border {
 	border: 1px solid #D66D07;
 	padding: 0px;
-	background-color: #DDDD;
+	background-color: #EFC69B;
 	border-radius: 5px;
 	font-size: 14px;
 	width: 11rem;

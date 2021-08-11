@@ -204,13 +204,13 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         .call(axisLeft(yScale)
         .tickFormat(function (d) {
           return fmt.format(d);
-        }))
+        }).tickSizeOuter(0))
         .style('font-size',11);
 			
       let xaxis = bar.append("g")
         .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
-        .call(axisBottom(xScale).tickFormat(tick => formatTime(tick))).selectAll("text")
+        .call(axisBottom(xScale).tickFormat(tick => formatTime(tick)).tickSizeOuter(0)).selectAll("text")
         .style('font-size',11)
         .attr("dy",()=>{
            return "-.5em"
@@ -350,7 +350,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
 
 let noteDiv = null;
 if(typeof note != "undefined")
-noteDiv = <div className=" absolute left-2   text-xs"><b>Note: </b>{note}</div>;
+noteDiv = <div className=" absolute left-2 h-10 text-xs"><b>Note: </b>{note}</div>;
   return (
     <>
       <FullScreen  className="w-full bg-white h-full" handle={screen} onChange={reportChange}>

@@ -347,7 +347,7 @@ let dynamicRange;
   return (
       <>
         <FullScreen  className="my-fullScreen w-full bg-white" handle={screen} onChange={reportChange}>
-          <div className='static relative w-full' id="h_bar">
+          <div className='static relative w-full mt-10 md:mt-0 lg:mt-0' id="h_bar">
             <div className="block absolute w-full max-h-max right-5" style={{zIndex:1}}>
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>

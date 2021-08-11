@@ -32,6 +32,14 @@
     .i-icon {
     	width: 1.7rem;
     }
+
+	.nav-tabs .nav-item {
+		width: 50%;
+		
+	}
+	.nav-tabs .nav-item-right {
+		width:50%;
+	}
 }
 @media (min-width: 1600px) and (max-width: 2560px) {
 	.footer {
@@ -44,6 +52,13 @@
     .i-icon {
     	width: 1.7rem;
     }
+	.nav-tabs .nav-item {
+		width: 50%;
+		
+	}
+	.nav-tabs .nav-item-right {
+		width:50%;
+	}
 }
 @media (max-width: 1199px) {
 

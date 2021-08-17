@@ -244,7 +244,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
   if(data ){
     for(var i=0;i<data.length;i++){
       if(toggleStateBurden){
-        if(data[i].data_num){
+        if(data[i].data_value){
           table.push({
             subgroup:data[i].subgroup_name,
             data:decimalPrecision(data[i].data_value)

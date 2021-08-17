@@ -352,7 +352,7 @@ let dynamicRange;
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef}>
-            <div className="absolute  right-10 left-10 mx-10 w-auto top-1">
+            <div className="absolute  right-5 left-5 mx-10 w-auto top-1">
 
               <div className="text-center w-full text-xs md:text-sm  font-bold my-bararea-title" >{`${gBarTitle}`}</div>
               <div className="text-center   w-full text-xs my-bararea-subtitle" >{`${status}`}</div>

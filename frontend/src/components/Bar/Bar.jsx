@@ -288,7 +288,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
 
 
             
-          <div className="absolute   right-10 left-10 mx-10 w-auto top-1">
+          <div className="absolute   right-5 left-5 mx-10 w-auto top-1">
             <div className="text-center  text-xs md:text-sm  font-bold my-bar-title">{`${gBarTitle}`}</div>
             <div className="text-center   text-xs my-bar-subtitle">{`${status}`}</div>
            </div>

@@ -96,6 +96,9 @@
 	.select-category {
     	font-size: 12px;
 	}
+	/* .select-border{
+		font-size: 12px;
+	} */
 	.select-lifecycle-child:after {
 	    border: 10px solid transparent;
 	    top: 32px;

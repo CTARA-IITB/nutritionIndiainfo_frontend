@@ -44,23 +44,23 @@
     z-index: 99999999;
 }
 
-.select-lifecycle {
+/* .select-lifecycle {
 	border: 1px solid #D66D07;
 	background: #D66D07;
 	padding: 0 20px;
 	position: relative;
 	
-}
+} */
 select{
 	font-size: 14px;
 }
-.select-category {
+/* .select-category {
 	border: 1px solid transparent;
     background: rgba(214, 109, 7, 0.4);
     padding-left: 20px;
     border-right: none;
 
-}
+} */
 
 /* .select-border {
 	border: 1px solid #D66D07;
@@ -258,9 +258,9 @@ select{
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     border: 1px solid RGB(175, 89, 6);
 }
-.select-category {
+/* .select-category {
     background: RGB(239, 197, 156);
-}
+} */
 
 .nav-tabs .nav-link {
     border: 1px solid RGB(175, 89, 6);
@@ -282,10 +282,37 @@ select{
 	margin-right: 11px;
 	background-repeat: no-repeat;
 	background-position: right 2px top 53%;
-
 	/* border: 1px solid #dfdfdf; */
+}
 
 
+.select-category {
+	border: 1px solid transparent;
+    background: rgba(214, 109, 7, 0.4);
+	padding-left: 20px;
+    border-right: none;
+	width: 8rem;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image:url("data:image/svg+xml,<svg width='12' padding='11px' height='12' viewBox='64 64 896 896' focusable='false' xmlns='http://www.w3.org/2000/svg'><path d='M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z' /></svg>");
+	background-repeat: no-repeat;
+	background-position: right 2px top 53%;
+	height: 1.35rem;
+
+}
+
+.select-lifecycle {
+	border: 1px solid #D66D07;
+	background: #D66D07;
+	padding: 0 20px;
+	position: relative;
+	height: 1.35rem;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image:url("data:image/svg+xml,<svg width='12' padding='11px' height='12' viewBox='64 64 896 896' focusable='false' xmlns='http://www.w3.org/2000/svg'><path d='M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z' /></svg>");
+	background-repeat: no-repeat;
+	background-position: right 2px top 53%;
+	
 }
 select:focus{
 	outline: none !important;

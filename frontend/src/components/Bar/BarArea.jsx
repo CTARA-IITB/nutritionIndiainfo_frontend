@@ -65,7 +65,7 @@ let dynamicRange;
 
   useEffect(() => {
     if(level === 1){
-      setStatus("By State");
+      setStatus("By State/UT");
       let sortedIndiaData;
       if(toggleStateBurden){
           selIndiaData = selIndiaData.filter(d => typeof d.data_value != 'undefined')

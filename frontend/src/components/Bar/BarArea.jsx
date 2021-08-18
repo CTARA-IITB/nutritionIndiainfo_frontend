@@ -44,7 +44,7 @@ let dynamicRange;
     colorScale = '#e53935'; 
   else  if(arrObese.includes(selIndicator))
     colorScale = '#7b1fa2'; 
-  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125)
+  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator==1 || selIndicator==71 || selIndicator==239)
     colorScale = '#b71c1c'; 
   else
     colorScale = '#eda143'; 

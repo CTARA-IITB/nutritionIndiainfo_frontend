@@ -282,7 +282,7 @@ export const Map = ({
        medium = 20.0;
        high = 30.0;
        highest = 40.0;
-      sampleCategoricalData = ["<10%", "10-19.9%", "20-29.9%", "30-39.9%", ">40%", "No Data"]
+      sampleCategoricalData = ["<10%", "10-19.9%", "20-29.9%", "30-39.9%", ">=40%", "No Data"]
 
     } else if(selIndicator === 71 || selIndicator === 26 || selIndicator === 1 || selIndicator === 29 || selIndicator === 2 || selIndicator === 62 || selIndicator === 72 || selIndicator === 239)
     {
@@ -690,7 +690,7 @@ export const Map = ({
         if(data[i].data_value){
           table.push({
             area:data[i].area_name,
-            data:fmt.format(data[i].data_value)
+            data:decimalPrecision(data[i].data_value)
           })
         }
       }

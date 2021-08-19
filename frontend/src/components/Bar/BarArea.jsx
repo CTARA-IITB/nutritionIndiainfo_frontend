@@ -28,7 +28,7 @@ let dynamicRange;
     right: 60,
     bottom: 50,
   };
-  
+  console.log(selIndicator)
   const [data, setData] = useState(null);
   const [status,setStatus]=useState(null);
   let colorScale ='#eda143';
@@ -48,7 +48,7 @@ let dynamicRange;
     colorScale = '#b71c1c'; 
   else
     colorScale = '#eda143'; 
-
+ 
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
@@ -321,7 +321,7 @@ let dynamicRange;
       else{
         table.push({
           area:data[i].area_name,
-          data:decimalPrecision(data[i].data_value_num)
+          data:fmt.format(data[i].data_value_num)
         })
       }
     }
@@ -349,7 +349,7 @@ let dynamicRange;
         <FullScreen  className="my-fullScreen w-full bg-white" handle={screen} onChange={reportChange}>
           <div className='static relative w-full mt-10 md:mt-0 lg:mt-0' id="h_bar">
             <div className="block absolute w-full max-h-max right-5" style={{zIndex:1}}>
-              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+              <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area" screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>
             <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef}>
             <div className="absolute  right-5 left-5 mx-10 w-auto top-1">
@@ -358,7 +358,7 @@ let dynamicRange;
               <div className="text-center   w-full text-xs my-bararea-subtitle" >{`${status}`}</div>
               </div>
               <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
-                <svg   ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
+                <svg  ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
               </div>
             </div>
           </div>

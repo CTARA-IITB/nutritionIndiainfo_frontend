@@ -1,6 +1,6 @@
 import React, { useState, useEffect,useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import SideNavFirst from "../SideNav/SideNavFirst";
+import SideNavSecond from "../SideNav/SideNavSecond";
 import fmt from 'indian-number-format'
 import "./Trend.css";
 
@@ -84,6 +84,8 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     let cleanData = [];
     indicatorTrend.map((d) => {
       if(typeof d.data_value != 'undefined'){
+        d["startDate"]=d.start_date
+        d["endDate"]=d.end_date
         d.start_date = parseTime(d.start_date);
         d.end_date = parseTime(d.end_date);
         d["middle_date"] = new Date((d.start_date.getTime() + d.end_date.getTime())/2);
@@ -320,23 +322,28 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   let title='Trend of ' + graphTitle+ ', '+titleAreaName
 
   let table=[];
+  let columns=[];
   if(data ){
     for(var i=0;i<data.length;i++){
       if(toggleStateBurden){
         table.push({
           timeperiod:data[i].timeperiod,
-          data:fmt.format(decimalPrecision(data[i].data_value))
+          data:decimalPrecision(data[i].data_value),
+          Start:data[i].startDate,
+          End:data[i].endDate
         })
       }
       else{
         table.push({
           timeperiod:data[i].timeperiod,
-          data:fmt.format(decimalPrecision(data[i].data_value_num))
+          data:fmt.format(data[i].data_value_num),
+          Start:data[i].startDate,
+          End:data[i].endDate
         })
       }
     }
   }
-
+  
   const reportChange = (state, handle) => {
     if(state === true){
       if( windowWidth > 780){
@@ -356,7 +363,7 @@ noteDiv = <div className=" absolute left-2 h-10 text-xs"><b>Note: </b>{note}</di
       <FullScreen  className="w-full bg-white h-full" handle={screen} onChange={reportChange}>
         <div className='static relative w-full h-full'>
           <div className="block absolute w-full max-h-max right-5" style={{zIndex:2}}>
-            <SideNavFirst   table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  screen={screen} title={title}  componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
+            <SideNavSecond   table={table} id="svgTrend" dataField="timeperiod" columnName="Time Period"  Start="Start" End="End" screen={screen} title={title}  componentRef={componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
           </div>
           <div className='relative w-full h-full pb-3 pt-1 pr-3' id="svgTrend" ref={componentRef}>
             <div className="text-center absolute right-5 left-5 mx-10 w-auto  font-bold  text-xs md:text-sm my-trend-title">{`Trend of ${graphTitle}, ${titleAreaName}`}</div>

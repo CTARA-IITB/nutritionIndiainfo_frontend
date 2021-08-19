@@ -147,15 +147,15 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
             {isOpenTable && <Popup 
             content={<>
                 <div id="title" className="table">{title}</div>
-                <BootstrapTable data={ table } 
+                <BootstrapTable data={ table }
                     hover 
                     search
                     headerStyle={ { background:'#ECECEC', zIndex:'99' } }
                     className="table"
                     // style={{ backgroundColor:"red"}}
                 >
-                    <TableHeaderColumn dataField={dataField}  isKey dataSort>{columnName}</TableHeaderColumn>
-                    <TableHeaderColumn dataField='data'>Data</TableHeaderColumn>
+                    <TableHeaderColumn dataField={dataField}  headerAlign="center" dataAlign="center"  width="500" isKey dataSort>{columnName}</TableHeaderColumn>
+                    <TableHeaderColumn dataField='data' headerAlign="center" dataAlign="center" >Data</TableHeaderColumn>
                 </BootstrapTable> 
             </>}
                 handleClose={toggleTablePopup}

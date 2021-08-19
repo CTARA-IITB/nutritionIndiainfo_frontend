@@ -690,7 +690,7 @@ export const Map = ({
         if(data[i].data_value){
           table.push({
             area:data[i].area_name,
-            data:fmt.format(data[i].data_value)
+            data:decimalPrecision(data[i].data_value)
           })
         }
       }

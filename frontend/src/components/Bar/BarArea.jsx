@@ -28,7 +28,7 @@ let dynamicRange;
     right: 60,
     bottom: 50,
   };
-  
+  console.log(selIndicator)
   const [data, setData] = useState(null);
   const [status,setStatus]=useState(null);
   let colorScale ='#eda143';
@@ -358,7 +358,7 @@ let dynamicRange;
               <div className="text-center   w-full text-xs my-bararea-subtitle" >{`${status}`}</div>
               </div>
               <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
-                <svg   ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
+                <svg  ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
               </div>
             </div>
           </div>

@@ -106,15 +106,15 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
         });
     }
 
-    // const saveSvg =()=>{
-    //     htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
-    //     .then(function (dataUrl) {
-    //         var link = document.createElement('a');
-    //         link.download = imageNameSvg;
-    //         link.href = dataUrl;
-    //         link.click();
-    //     });
-    // }
+    const saveSvg =()=>{
+        htmlToImage.toJpeg(document.getElementById(id),{backgroundColor:'white'})
+        .then(function (dataUrl) {
+            var link = document.createElement('a');
+            link.download = imageNameSvg;
+            link.href = dataUrl;
+            link.click();
+        });
+    }
 
     const savePdf = () => {
         htmlToImage
@@ -177,7 +177,7 @@ const SideNavFirst = ({table,id,dataField,columnName,screen,title,componentRef,s
                 ><button id="btn">csv</button></CSVLink>
                 <button onClick={saveJpeg} id="btn">jpeg</button>
                 <button onClick={savePng} id="btn">png</button>
-                {/* <button onClick={saveSvg} id="btn">svg</button> */}
+                <button onClick={saveSvg} id="btn">svg</button>
                 <button onClick={savePdf} id="btn">pdf</button>
             </div>}
                 handleClose={togglePopup}

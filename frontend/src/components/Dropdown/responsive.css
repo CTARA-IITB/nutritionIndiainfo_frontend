@@ -283,6 +283,10 @@
 		margin-top: 20px;
 	}
 
+	.lifecycle-img {
+    	width: 50px;
+    }
+
 }
 /*(min-width: 576px) and (max-width: 767px)*/
 
@@ -290,6 +294,10 @@
 	.i-icon{
 		margin-top: 0px !important;
 	}
+
+	.lifecycle-img {
+    	width: 50px;
+    }
 }
 /*(max-width: 575px)*/
 

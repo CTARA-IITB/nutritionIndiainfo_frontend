@@ -32,9 +32,13 @@
 	float: right;
 }
 
-.nutrition-india {
+/* .nutrition-india {
 	height: 100%;
 	width: 80%;
+} */
+.nutrition-india {
+	width: auto;
+	height: 30px;
 }
 
 .lifecycle-img {

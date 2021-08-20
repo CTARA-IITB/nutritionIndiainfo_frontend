@@ -246,7 +246,6 @@ export async function populateDropdowns(
   if(solr_url_6.status != 200 )
   setHttpStatusCode(solr_url_6.status)
 
-  console.log("solr_url_6", solr_url_6);
  
   if(solr_url_6.statusText === 'OK')
   {

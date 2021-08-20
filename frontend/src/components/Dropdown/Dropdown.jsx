@@ -638,7 +638,7 @@ export const Dropdown = () =>{
 				</div>
 				<div className="col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0">
 					<div className="i-class">
-          <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon md:mt-2"/></a>
+          <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon"/></a>
 					</div>
 				</div>
 			</div>

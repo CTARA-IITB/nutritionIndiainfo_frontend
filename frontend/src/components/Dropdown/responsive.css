@@ -278,13 +278,18 @@
 }
 /*(max-width: 767px)*/
 
-@media (min-width: 576px) and (max-width: 767px) {
+@media (min-width: 450px) and (max-width: 767px) {
+	.i-icon{
+		margin-top: 20px;
+	}
 
 }
 /*(min-width: 576px) and (max-width: 767px)*/
 
-@media (max-width: 575px) {
-
+@media (max-width: 450px) {
+	.i-icon{
+		margin-top: 0px !important;
+	}
 }
 /*(max-width: 575px)*/
 

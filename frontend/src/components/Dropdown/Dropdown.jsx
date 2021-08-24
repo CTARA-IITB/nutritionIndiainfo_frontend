@@ -310,7 +310,7 @@ export const Dropdown = () =>{
           }
           let solr_url;
               // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-              solr_url = await fetch(`${API}/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${selArea}&selIndicator=${val}` , {
+              solr_url = await fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${selArea}&selIndicator=${val}` , {
                 headers:{
                   Authorization:`${token}`
                 }
@@ -425,7 +425,7 @@ export const Dropdown = () =>{
           let solr_url;
               // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
 
-            solr_url = await fetch(`${API}/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${value}&selIndicator=${selIndicator}` , {
+            solr_url = await fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${value}&selIndicator=${selIndicator}` , {
               headers:{
                 Authorization:`${token}`
               }

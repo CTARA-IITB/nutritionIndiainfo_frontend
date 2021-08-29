@@ -64,7 +64,7 @@ export async function setVisulaizationData(
   setSelIndiaData,
   setSelStateData,
   setSwitchDisplay,
-  setSelDistrictsData, setHttpStatusCode
+  setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg
 ) {
   const url_1 = await fetch(
     `${API}/api/v1/url_1u?area=${area}&indicator=${indicator}` , {
@@ -78,7 +78,10 @@ export async function setVisulaizationData(
   // console.log('URL', url_1);
   const body_1 = await url_1.json();
   if(url_1.status != 200)
-  setHttpStatusCode(url_1.status)
+  {
+  setHttpStatusCode(url_1.status);
+  setHttpStatusMsg(body_1.message);
+  }
 
   if(url_1.statusText === 'OK')
   {
@@ -126,7 +129,10 @@ export async function setVisulaizationData(
     // );
     const solr_body_3 = await solr_url_3.json();
     if(solr_url_3.status != 200)
-    setHttpStatusCode(solr_url_3.status)
+    {
+    setHttpStatusCode(solr_url_3.status);
+    setHttpStatusMsg(solr_body_3.message);
+    }
 
     if(solr_url_3.statusText === 'OK')
     setSelIndiaData(solr_body_3.result.docs);
@@ -158,7 +164,10 @@ export async function setVisulaizationData(
     const solr_body_4 = await solr_url_4.json();
 
     if(solr_url_4.status != 200)
-    setHttpStatusCode(solr_url_4.status)
+    {
+    setHttpStatusCode(solr_url_4.status);
+    setHttpStatusMsg(solr_body_4.message);
+    }
 
     if(solr_url_4.statusText === 'OK')
     setSelStateData(solr_body_4.result.docs);
@@ -181,7 +190,10 @@ export async function setVisulaizationData(
         const solr_body_5 = await solr_switchurl.json();
 
         if(solr_switchurl.status != 200)
-        setHttpStatusCode(solr_switchurl.status)
+        {
+        setHttpStatusCode(solr_switchurl.status);
+        setHttpStatusMsg(solr_body_5.message);
+        }
 
         if(solr_switchurl.statusText === 'OK')
        {
@@ -226,7 +238,7 @@ export async function populateDropdowns(
   setGraphTimeperiod,
   setIndicatorSense,
   setNote,
-  queryIndicator,setHttpStatusCode
+  queryIndicator,setHttpStatusCode, setHttpStatusMsg
 ) {
   // console.log(`selCategory: ${selCategory}  ,  selLifeycle : ${selLifeycle}`);
   const solr_url_6 = await fetch(
@@ -244,9 +256,10 @@ export async function populateDropdowns(
   let indiVal;
   let passedIndicator;
   if(solr_url_6.status != 200 )
-  setHttpStatusCode(solr_url_6.status)
-
-  console.log("solr_url_6", solr_url_6);
+  {
+  setHttpStatusCode(solr_url_6.status);
+  setHttpStatusMsg(solr_body_6.message);
+  }
  
   if(solr_url_6.statusText === 'OK')
   {
@@ -257,7 +270,7 @@ export async function populateDropdowns(
           passedIndicator = solr_body_6.result.docs.filter(
             (i) => i.value === parseInt(queryIndicator)
           )[0];
-        }
+        
         if(passedIndicator)
         {
           setSelIndicator(passedIndicator.value);
@@ -267,7 +280,9 @@ export async function populateDropdowns(
           setUnit(passedIndicator.unit_id)
           setGraphUnit(passedIndicator.unit_name)
           setNote(passedIndicator.notes);
-        } else {
+        }
+        } 
+        else {
           setSelIndicator(solr_body_6.result.docs[0].value);
           setIndicatorSense(solr_body_6.result.docs[0].indi_sense);
           setGraphTitle(solr_body_6.result.docs[0].indicator_name);
@@ -307,7 +322,10 @@ export async function populateDropdowns(
   const solr_body_2 = await solr_url.json();
   let timeVal = '';
   if(solr_url.status != 200 )
-  setHttpStatusCode(solr_url.status)
+  {
+  setHttpStatusCode(solr_url.status);
+  setHttpStatusMsg(solr_body_2.message);
+  }
 
   if(solr_url.statusText === 'OK')
   {
@@ -337,7 +355,7 @@ export async function populateDropdowns(
       setSelIndiaData,
       setSelStateData,
       setSwitchDisplay,
-      setSelDistrictsData
+      setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg
     );
 }
 

@@ -39,7 +39,7 @@ export const Dropdown = () =>{
   let { queryLifecycle } = useParams();
   const arrayLifecycle = [1,2,3,4,5,6];
   const arrayCategory =[1,2,3];
-  if(typeof queryLifecycle === 'undefined' || !arrayLifecycle.includes(parseInt(queryLifecycle)))
+  if(typeof queryLifecycle === 'undefined')
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifecycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
   
@@ -55,7 +55,7 @@ export const Dropdown = () =>{
   }
 
   let { queryCategory } = useParams();
-  if(typeof queryCategory === 'undefined' || !arrayCategory.includes(parseInt(queryCategory)))
+  if(typeof queryCategory === 'undefined')
     queryCategory = 1;
   const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
   
@@ -65,6 +65,7 @@ export const Dropdown = () =>{
   }
 
   const [httpStatusCode, setHttpStatusCode] = useState(null);
+  const [httpStatusMsg, setHttpStatusMsg] = useState(null);
   const [selIndicator, setSelIndicator] = useState(null);
  
   const iniSelArea = '1';  //india
@@ -141,7 +142,7 @@ export const Dropdown = () =>{
         catVal=2;
       }
      
-      await populateDropdowns(selLifecycle, catVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator, setHttpStatusCode)
+      await populateDropdowns(selLifecycle, catVal, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,queryIndicator, setHttpStatusCode, setHttpStatusMsg)
       setIsSelected(true);
     }
     populateTabData();
@@ -261,7 +262,7 @@ export const Dropdown = () =>{
             ])
           }
           setSelCategory(selCat);
-          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,setHttpStatusCode)
+          await populateDropdowns(val, selCat, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,null,setHttpStatusCode, setHttpStatusMsg)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -272,7 +273,7 @@ export const Dropdown = () =>{
           let val = parseInt(e.target.value);
           setIsSelected(false);
           setSelCategory(val);       
-          await populateDropdowns(selLifecycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote,setHttpStatusCode)
+          await populateDropdowns(selLifecycle, val, setIndicatorDropdownOpt, setSelIndicator, setUnit, setGraphTitle, setGraphUnit, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData,setTimeperiodDropdownOpt, setSelTimeperiod, setGraphTimeperiod, setIndicatorSense,setNote, null ,setHttpStatusCode, setHttpStatusMsg)
           setSelBurden("1");
           setToggleStateBurden(true);
           setIsSelected(true);
@@ -317,6 +318,11 @@ export const Dropdown = () =>{
             const solr_body_1 = await solr_url.json()
             let flag = false;
             let timeValue = selTimeperiod;
+            if(solr_url.status != 200)
+            {
+              setHttpStatusCode(solr_url.status);
+              setHttpStatusMsg(solr_body_1.message);
+            }
             if(solr_url.statusText === 'OK')
             {
               setTimeperiodDropdownOpt(solr_body_1.result.docs);
@@ -350,7 +356,7 @@ export const Dropdown = () =>{
             // const solr_body_3 = await solr_url_3.json()
             
             if(timeValue != '')
-            await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode);
+            await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg);
             setIsSelected(true);
         }
 
@@ -366,7 +372,7 @@ export const Dropdown = () =>{
           setSelTimeperiod(val);
           let timePeriodName = timeperiodDropdownOpt.filter(f => f.value === val)[0].title;
           setGraphTimeperiod(timePeriodName);
-          await setVisulaizationData(selIndicator, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode);
+          await setVisulaizationData(selIndicator, val, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg);
           setIsSelected(true);
         }
 
@@ -427,6 +433,11 @@ export const Dropdown = () =>{
             let solr_body_1 = await solr_url.json()
             let flag = false;
             let timeValue = selTimeperiod;
+            if(solr_url.status != 200)
+            {
+              setHttpStatusCode(solr_url.status);
+              setHttpStatusMsg(solr_body_1.message);
+            }
             if(solr_url.statusText === 'OK')
             {
               solr_body_1 = solr_body_1.result.docs;
@@ -453,7 +464,7 @@ export const Dropdown = () =>{
               } 
             }
             if(timeValue != '')
-            await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode);
+            await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg);
             setIsSelected(true);
         
         }
@@ -543,8 +554,11 @@ export const Dropdown = () =>{
           
         }
 
-        if (httpStatusCode === 404) {
-          return <NotFound />
+        if (httpStatusCode === 400 || httpStatusCode === 404) {
+          return <NotFound 
+          httpStatusCode = {httpStatusCode}
+          httpStatusMsg = {httpStatusMsg}  
+          />
         }
     
     return (
@@ -638,7 +652,7 @@ export const Dropdown = () =>{
 				</div>
 				<div className="col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0">
 					<div className="i-class">
-          <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon md:mt-2"/></a>
+          <a href="/reports/cnns-articles/" target="_blank"><img src={iicon} className="i-icon"/></a>
 					</div>
 				</div>
 			</div>

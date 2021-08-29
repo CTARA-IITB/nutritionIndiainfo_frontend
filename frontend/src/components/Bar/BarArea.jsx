@@ -28,7 +28,6 @@ let dynamicRange;
     right: 60,
     bottom: 50,
   };
-  console.log(selIndicator)
   const [data, setData] = useState(null);
   const [status,setStatus]=useState(null);
   let colorScale ='#eda143';

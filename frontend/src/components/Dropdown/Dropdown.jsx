@@ -776,10 +776,6 @@ export const Dropdown = () =>{
      </section>
      
      </section>
-
-
-
-    
    </>
     )
 }

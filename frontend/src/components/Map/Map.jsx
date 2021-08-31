@@ -270,6 +270,7 @@ export const Map = ({
     let highest;
     let sampleCategoricalData;
     let arr20to80 = [31,11,28,37,51,66,42,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,298,304,309,329,317,326,320]
+    let arr5to30 = [247,249,250,251,252,253,254,255,256,257,258]
     if (selIndicator === 19 || selIndicator === 21 || selIndicator === 105) {
       low = 5.0;
       medium = 10.0;
@@ -277,14 +278,14 @@ export const Map = ({
       highest = 20.0
       sampleCategoricalData = ["<5%", "5-9.9%", "10-14.9%", "15-19.9%", ">20%", "No Data"]
 
-    } else if (selIndicator === 17 ||  selIndicator === 12 || selIndicator === 13) {
+    } else if (selIndicator === 17 ||  selIndicator === 12 || selIndicator === 13 || selIndicator=== 244 || selIndicator === 245) {
        low = 10.0;
        medium = 20.0;
        high = 30.0;
        highest = 40.0;
       sampleCategoricalData = ["<10%", "10-19.9%", "20-29.9%", "30-39.9%", ">=40%", "No Data"]
 
-    } else if(selIndicator === 71 || selIndicator === 26 || selIndicator === 1 || selIndicator === 29 || selIndicator === 2 || selIndicator === 62 || selIndicator === 72 || selIndicator === 239)
+    } else if(selIndicator === 71 || selIndicator === 26 || selIndicator === 1 || selIndicator === 29 || selIndicator === 2 || selIndicator === 62 || selIndicator === 72 || selIndicator === 239 || selIndicator==248)
     {
       low = 5.0;
       medium = 20.0;
@@ -308,7 +309,7 @@ export const Map = ({
       highest = 2.5;
       sampleCategoricalData = ["<0.1%", "0.1-0.49%", "0.5-0.9%", "1-2.49%", ">2.5%", "No Data"]
 
-    }else if(selIndicator === 89 || selIndicator === 53 || selIndicator === 129 || selIndicator === 131 || selIndicator === 135 || selIndicator === 137 || selIndicator === 145 || selIndicator === 148 || selIndicator === 151 || selIndicator === 154 || selIndicator === 261 || selIndicator === 267 || selIndicator === 271 || selIndicator === 234)
+    }else if(selIndicator === 89 || selIndicator === 53 || selIndicator === 129 || selIndicator === 131 || selIndicator === 135 || selIndicator === 137 || selIndicator === 145 || selIndicator === 148 || selIndicator === 151 || selIndicator === 154 || selIndicator === 261 || selIndicator === 267 || selIndicator === 271 || selIndicator === 234 || selIndicator === 92 || selIndicator === 96 ||arr5to30.includes(selIndicator))
     {
       low = 5.0;
       medium = 10.0;
@@ -330,7 +331,7 @@ export const Map = ({
     let colorScale;
   let colorScale_new;
     let colorScale2;
-    let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234]; 
+    let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234,247,249,250,251,252,253,254,255,256,257,258,92,96]; 
     if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
     {
     if(indicatorSense === 'Positive')

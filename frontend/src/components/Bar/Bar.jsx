@@ -33,7 +33,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
   let arrObese = [91,95,104,92,96,105,21];
   let gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
 
-  if(selIndicator === 12 || selIndicator === 13){
+  if(selIndicator === 12 || selIndicator === 13 || selIndicator === 244){
     colorScale = '#a3c00f'; 
     lightColor = '#DAE59F';
   }
@@ -41,7 +41,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
     colorScale = '#e53935'; 
     lightColor = '#F4AFAE';
   }
-  else if(selIndicator === 17 || selIndicator === 18){
+  else if(selIndicator === 17 || selIndicator === 18 || selIndicator === 245){
     colorScale = '#039be5'; 
     lightColor = '#9AD7F4';
   }
@@ -53,7 +53,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
     colorScale = '#7b1fa2'; 
     lightColor = '#CAA5D9';
   }
-  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator==1 || selIndicator==71 || selIndicator==239){
+  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator==1 || selIndicator==71 || selIndicator==239 || selIndicator === 248){
     colorScale = '#b71c1c'; 
     lightColor = '#E2A4A4';
   }

@@ -378,17 +378,17 @@ export const Map = ({
   }
   else{
       let arrObese = [91,95,104,92,96,105,21];
-      if(selIndicator === 12 || selIndicator === 13)
+      if(selIndicator === 12 || selIndicator === 13 || selIndicator === 244)
         colorScale = '#a3c00f'; 
       else if(selIndicator === 19 || selIndicator === 20)
         colorScale = 'red'; 
-      else if(selIndicator === 17 || selIndicator === 18)
+      else if(selIndicator === 17 || selIndicator === 18 || selIndicator === 245)
         colorScale = '#039be5'; 
       else if(selIndicator === 107 || selIndicator === 108)
         colorScale = '#e35829'; 
       else  if(arrObese.includes(selIndicator))
         colorScale = '#7b1fa2'; 
-      else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125)
+      else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator === 248)
         colorScale = '#b71c1c'; 
       else
         colorScale = '#eda143'; 

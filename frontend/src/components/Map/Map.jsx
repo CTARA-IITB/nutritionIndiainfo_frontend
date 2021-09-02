@@ -541,17 +541,16 @@ export const Map = ({
      
 
         }
-        let r;
-        if(height <= 550){
-        r = .8;
-        }
-        else if(height > 800){
-          r =2;
+        // let r;
+        // if(height <= 550){
+        // r = .8;
+        // }
+        // else if(height > 800){
+        //   r =2;
 
-        }else{
-          r=1.5
-        }
-      
+        // }else{
+        //   r=1.5
+        // }
         svg
         .selectAll("myCircles")
         .data(points)
@@ -559,12 +558,12 @@ export const Map = ({
         .append("circle")
           .attr("cx", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[0] })
           .attr("cy", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1] })
-          .attr("r",r)
+          .attr("r",1.5)
           .style("fill", colorScale)
-          .style("stroke", "#4a4740")
-          .style("stroke-width",.3)
+          // .style("stroke", "#4a4740")
+          // .style("stroke-width",.3)
           .style('stroke-opacity',1)
-          .style('fill-opacity',0.8)
+          // .style('fill-opacity',0.8)
           .attr('transform',`translate(50,60)`)
       
         

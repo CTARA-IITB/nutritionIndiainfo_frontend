@@ -36,17 +36,17 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   let yValue = d => d.data_value;
   let arrObese = [91,95,104,92,96,105,21];
   
-  if(selIndicator === 12 || selIndicator === 13)
+  if(selIndicator === 12 || selIndicator === 13 || selIndicator === 244)
     colorScale = '#a3c00f80'; 
   else if(selIndicator === 19 || selIndicator === 20)
     colorScale = '#e5393580'; 
-  else if(selIndicator === 17 || selIndicator === 18)
+  else if(selIndicator === 17 || selIndicator === 18 || selIndicator === 245)
     colorScale = '#039be580'; 
   else if(selIndicator === 107 || selIndicator === 108)
     colorScale = '#e5393580'; 
   else  if(arrObese.includes(selIndicator))
     colorScale = '#7b1fa280'; 
-  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125  || selIndicator==71 || selIndicator==1 || selIndicator==239)
+  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125  || selIndicator==71 || selIndicator==1 || selIndicator==239 || selIndicator === 248)
     colorScale = '#b71c1c80'; 
   else
     colorScale = '#eda14380'; 

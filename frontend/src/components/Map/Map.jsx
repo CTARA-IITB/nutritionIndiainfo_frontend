@@ -263,7 +263,7 @@ export const Map = ({
     dotVal = (dotVal/10).toFixed(0) * 10;
 
     let [min, max] = extent(color_range);
-  
+    // console.log(selLifecycle,selCategory,selIndicator,"lifecycle","category","indicator")
     let low;
     let medium;
     let high;
@@ -331,7 +331,7 @@ export const Map = ({
     let colorScale;
   let colorScale_new;
     let colorScale2;
-    let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234,247,249,250,251,252,253,254,255,256,257,258,92,96]; 
+    let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234,244,245,247,248,249,250,251,252,253,254,255,256,257,258,92,96]; 
     if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
     {
     if(indicatorSense === 'Positive')
@@ -378,17 +378,17 @@ export const Map = ({
   }
   else{
       let arrObese = [91,95,104,92,96,105,21];
-      if(selIndicator === 12 || selIndicator === 13)
+      if(selIndicator === 12 || selIndicator === 13 || selIndicator === 244)
         colorScale = '#a3c00f'; 
       else if(selIndicator === 19 || selIndicator === 20)
         colorScale = 'red'; 
-      else if(selIndicator === 17 || selIndicator === 18)
+      else if(selIndicator === 17 || selIndicator === 18 || selIndicator === 245)
         colorScale = '#039be5'; 
       else if(selIndicator === 107 || selIndicator === 108)
         colorScale = '#e35829'; 
       else  if(arrObese.includes(selIndicator))
         colorScale = '#7b1fa2'; 
-      else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125)
+      else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator === 248)
         colorScale = '#b71c1c'; 
       else
         colorScale = '#eda143'; 

@@ -85,7 +85,7 @@ export async function setVisulaizationData(
   setHttpStatusMsg(body_1.message);
   }
 
-  if(url_1.statusText === 'OK')
+  if(url_1.status === 200)
   {
         if (body_1.result.docs.length) {
         const trendData = body_1.result.docs.filter(data => data.subgroup_id === 6)
@@ -136,7 +136,7 @@ export async function setVisulaizationData(
     setHttpStatusMsg(solr_body_3.message);
     }
 
-    if(solr_url_3.statusText === 'OK')
+    if(solr_url_3.status === 200)
     setSelIndiaData(solr_body_3.result.docs);
   } else {
     let solr_url_4;
@@ -171,7 +171,7 @@ export async function setVisulaizationData(
     setHttpStatusMsg(solr_body_4.message);
     }
 
-    if(solr_url_4.statusText === 'OK')
+    if(solr_url_4.status === 200)
     setSelStateData(solr_body_4.result.docs);
   }
 
@@ -197,7 +197,7 @@ export async function setVisulaizationData(
         setHttpStatusMsg(solr_body_5.message);
         }
 
-        if(solr_switchurl.statusText === 'OK')
+        if(solr_switchurl.status === 200)
        {
           if (solr_body_5.result.docs.length) {
             setSwitchDisplay(true);
@@ -263,7 +263,7 @@ export async function populateDropdowns(
   setHttpStatusMsg(solr_body_6.message);
   }
  
-  if(solr_url_6.statusText === 'OK')
+  if(solr_url_6.status === 200)
   {
         setIndicatorDropdownOpt(solr_body_6.result.docs); 
         if(solr_body_6.result.docs.length)
@@ -329,7 +329,7 @@ export async function populateDropdowns(
   setHttpStatusMsg(solr_body_2.message);
   }
 
-  if(solr_url.statusText === 'OK')
+  if(solr_url.status === 200)
   {
       setTimeperiodDropdownOpt(solr_body_2.result.docs);
       if (typeof solr_body_2.result.docs[0] !== 'undefined') {

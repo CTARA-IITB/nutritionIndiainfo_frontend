@@ -1,4 +1,5 @@
 import React,{useState,useEffect,useRef} from "react";
+import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
 import { json } from 'd3';
 import { createHierarchy, setVisulaizationData, populateCategoryDropdown, populateDropdowns, API, token } from '../../utils';
@@ -30,8 +31,6 @@ import early_childhood from './images/lifecycle/Early-Childhood.png'
 import school_age from './images/lifecycle/School-Age-.png'
 import iicon from "./images/i-con5.png";
 import { NotFound } from "../../NotFound";
-import waitUntil from "async-wait-until";
-
 
 
 export const Dropdown = () =>{
@@ -76,7 +75,7 @@ export const Dropdown = () =>{
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
-  // eslint-disable-next-line 
+
   const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
   const [categorydDropdownOpt, setCategoryDropdownOpt] = useState([]);
   const [stateID,setStateID] = useState(null);
@@ -90,7 +89,6 @@ export const Dropdown = () =>{
   const [areaList, setAreaList] = useState(null);
   const [isLevelThree, setIsLevelThree] = useState(false);
   const searchRef = useRef();
-  // eslint-disable-next-line 
   const [filterDropdownValue, setFilterDropdownValue] = useState([]);
   const [parentArea, setParentArea] = useState(null);
   const [indicatorTrend, setIndicatorTrend] = useState(null);
@@ -98,7 +96,6 @@ export const Dropdown = () =>{
   const[selIndiaData, setSelIndiaData]= useState(null);
   const [boundaries, setBoundaries] = useState(null);
   const [graphTitle, setGraphTitle] = useState("Prevalence of stunting in under-five year olds");
-  // eslint-disable-next-line 
   const [graphSubgroup, setGraphSubgroup] = useState('All');
   const [graphTimeperiod, setGraphTimeperiod] = useState('NFHS5 2019-20');
   const [graphUnit, setGraphUnit] = useState('Percent');
@@ -112,7 +109,6 @@ export const Dropdown = () =>{
   const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
   const [note,setNote] = useState(null);
-  // eslint-disable-next-line 
   const [selBurden,setSelBurden] = useState("1");
   
   const lifecycleData = [
@@ -150,7 +146,6 @@ export const Dropdown = () =>{
       setIsSelected(true);
     }
     populateTabData();
-    // eslint-disable-next-line 
     }, [])
 
 
@@ -315,11 +310,11 @@ export const Dropdown = () =>{
           }
           let solr_url;
               // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${val}&fq=subgroup_id%3A6&fq=area_id%3A${selArea}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
-              solr_url = await waitUntil(()=> fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${selArea}&selIndicator=${val}` , {
+              solr_url = await fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${selArea}&selIndicator=${val}` , {
                 headers:{
                   Authorization:`${token}`
                 }
-              }))
+              })
             const solr_body_1 = await solr_url.json()
             let flag = false;
             let timeValue = selTimeperiod;
@@ -430,11 +425,11 @@ export const Dropdown = () =>{
           let solr_url;
               // solr_url = await fetch(`${solr_domain}/solr/${solr_core}/select?fl=title:timeperiod%2Cvalue:timeperiod_id&sort=timeperiod_id%20desc&fq=lifecycle_id%3A${selLifeycle}%20OR%20lifecycle_id%3A7&fq=category_id%3A${selCategory}&fq=indicator_id%3A${selIndicator}&fq=subgroup_id%3A6&fq=area_id%3A${value}&q=*%3A*&group=true&group.field=timeperiod_id&group.limit=1&group.main=true&omitHeader=true`);
 
-            solr_url = await waitUntil (()=> fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${value}&selIndicator=${selIndicator}` , {
+            solr_url = await fetch(`${API}/api/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${value}&selIndicator=${selIndicator}` , {
               headers:{
                 Authorization:`${token}`
               }
-            }))  
+            })  
             let solr_body_1 = await solr_url.json()
             let flag = false;
             let timeValue = selTimeperiod;
@@ -474,45 +469,45 @@ export const Dropdown = () =>{
         
         }
 
-        // const onChange = (e) =>{
-        //   setIsSelected(false);
-        //   let { value } = e.target;
-        //   value = value.charAt(0).toUpperCase() + value.slice(1);
-        //   if(value === ""){
-        //     setOpenDropdown(false);
-        //     setFilterDropdownValue(areaDropdownOpt)
-        //   }
-        //   else{
-        //     setOpenDropdown(true);
-        //     const expandedKeys = dataList
-        //     .map((item) => {
-        //       if (item.title.indexOf(value) > -1) {
-        //         return item;
-        //       }
-        //       return null;
-        //     }).filter((item, i, self) => item && self.indexOf(item) === i);
+        const onChange = (e) =>{
+          setIsSelected(false);
+          let { value } = e.target;
+          value = value.charAt(0).toUpperCase() + value.slice(1);
+          if(value === ""){
+            setOpenDropdown(false);
+            setFilterDropdownValue(areaDropdownOpt)
+          }
+          else{
+            setOpenDropdown(true);
+            const expandedKeys = dataList
+            .map((item) => {
+              if (item.title.indexOf(value) > -1) {
+                return item;
+              }
+              return null;
+            }).filter((item, i, self) => item && self.indexOf(item) === i);
         
-        //     setFilterDropdownValue(expandedKeys)
-        //   }
-        //   setIsSelected(true);
-        // }
+            setFilterDropdownValue(expandedKeys)
+          }
+          setIsSelected(true);
+        }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
           return <div> </div>
         }
       
-      // const burdenClick = () => {
-      //   setToggleStateBurden(!toggleStateBurden); 
-      //   let text = null;
-      //   if (burdenbuttonText === 'Burden')
-      //   {
-      //     text = 'Prevalence';
-      //   }
-      //   else
-      //   {
-      //     text = 'Burden';
-      //   }
-      //     changeBurdenText(text);   
-      // }
+      const burdenClick = () => {
+        setToggleStateBurden(!toggleStateBurden); 
+        let text = null;
+        if (burdenbuttonText === 'Burden')
+        {
+          text = 'Prevalence';
+        }
+        else
+        {
+          text = 'Burden';
+        }
+          changeBurdenText(text);   
+      }
 
      
       let burdenDropdown;
@@ -578,7 +573,7 @@ export const Dropdown = () =>{
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-6 col-lg-5 col-md-6 p-3 for-mobile-1 ">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
-						<img src={selLifeycleImg} className="lifecycle-img" alt="not found"/>
+						<img src={selLifeycleImg} className="lifecycle-img"/>
 						<div className="select-lifecycle-parent">
 							<div className="select-lifecycle-child">
 								<select className="select-lifecycle" value={selLifecycle} onChange={lifecycleChange}>
@@ -765,7 +760,7 @@ export const Dropdown = () =>{
      <div className='flex w-full md:w-1/2'>
       {(isSelected  & selTimeperiod !== "")? <Bar indicatorBar = {indicatorBar}
       setIndicatorBar = {setIndicatorBar}
-      // selIndicator = {selIndicator}
+      selIndicator = {selIndicator}
       selTimeperiod = {selTimeperiod}
       selArea = {selArea}
       graphTimeperiod={graphTimeperiod}

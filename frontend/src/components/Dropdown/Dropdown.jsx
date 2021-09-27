@@ -323,7 +323,7 @@ export const Dropdown = () =>{
               setHttpStatusCode(solr_url.status);
               setHttpStatusMsg(solr_body_1.message);
             }
-            if(solr_url.statusText === 'OK')
+            if(solr_url.status === 200)
             {
               setTimeperiodDropdownOpt(solr_body_1.result.docs);
               if(solr_body_1.result.docs){
@@ -438,7 +438,7 @@ export const Dropdown = () =>{
               setHttpStatusCode(solr_url.status);
               setHttpStatusMsg(solr_body_1.message);
             }
-            if(solr_url.statusText === 'OK')
+            if(solr_url.status === 200)
             {
               solr_body_1 = solr_body_1.result.docs;
               setTimeperiodDropdownOpt(solr_body_1); 

@@ -5,6 +5,22 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:3000 http://localhost:3000/dashboard/static/js/bundle.js;
+     script-src 'unsafe-inline' 'self'  https://dev.nutritionindiainfo.in/api/v1/ https://www.google-analytics.com https://ssl.google-analytics.com
+     http://localhost:3000/dashboard/static/js/bundle.js https://www.googletagmanager.com ;
+      style-src 'self' 'unsafe-inline';
+      img-src: https://www.google-analytics.com;
+ "> -->
+ <meta 
+      http-equiv="Content-Security-Policy" 
+      content="
+        connect-src 'self'  https://dev.nutritionindiainfo.in https://www.google-analytics.com;
+        default-src 'none';
+        img-src 'self' 'unsafe-inline' https://www.google-analytics.com data:;
+        manifest-src 'self';
+        script-src 'unsafe-inline' https://www.google-analytics.com https://www.googletagmanager.com http://www.googletagmanager.com http://localhost:3000  https://dev.nutritionindiainfo.in;
+        style-src 'self' 'unsafe-inline';
+    ">
     <meta
       name="description"
       content="Get infomation regarding women and child health indicator here"

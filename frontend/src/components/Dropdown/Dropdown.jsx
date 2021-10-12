@@ -83,8 +83,8 @@ export const Dropdown = () =>{
   const [level, setLevel] = useState(1);
   const [areaList, setAreaList] = useState(null);
   const [isLevelThree, setIsLevelThree] = useState(false);
-  const searchRef = useRef();
-  const [filterDropdownValue, setFilterDropdownValue] = useState([]);
+  // const searchRef = useRef();
+  // const [filterDropdownValue, setFilterDropdownValue] = useState([]);
   const [parentArea, setParentArea] = useState(null);
   const [indicatorTrend, setIndicatorTrend] = useState(null);
   const[indicatorBar, setIndicatorBar]= useState(null);
@@ -96,12 +96,12 @@ export const Dropdown = () =>{
   const [graphUnit, setGraphUnit] = useState('Percent');
   const [switchDisplay,setSwitchDisplay] = useState(true);
   const [toggleState, setToggleState] = useState(true);
-  const [buttonText, setButtonText] = useState("District");
+  // const [buttonText, setButtonText] = useState("District");
   const [selStateData, setSelStateData] = useState(null);
   const [selDistrictsData, setSelDistrictsData] = useState(null);
-  const changeText = (text) => setButtonText(text);
-  const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
-  const changeBurdenText = (text) => setBurdenButtonText(text);
+  // const changeText = (text) => setButtonText(text);
+  // const [burdenbuttonText, setBurdenButtonText] = useState("Burden");
+  // const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden,setToggleStateBurden]=useState(true);
   const [note,setNote] = useState(null);
   const [selBurden,setSelBurden] = useState("1");
@@ -114,7 +114,7 @@ export const Dropdown = () =>{
     { value: 5, title: "Early childhood" },
     { value: 6, title: "School age" },          
 ];
-  const [drillDirection,setDrillDirection] = useState(true);
+  // const [drillDirection,setDrillDirection] = useState(true);
   //let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
   let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63, 56, 31, 78,66];
 
@@ -466,45 +466,45 @@ export const Dropdown = () =>{
         
         }
 
-        const onChange = (e) =>{
-          setIsSelected(false);
-          let { value } = e.target;
-          value = value.charAt(0).toUpperCase() + value.slice(1);
-          if(value === ""){
-            setOpenDropdown(false);
-            setFilterDropdownValue(areaDropdownOpt)
-          }
-          else{
-            setOpenDropdown(true);
-            const expandedKeys = dataList
-            .map((item) => {
-              if (item.title.indexOf(value) > -1) {
-                return item;
-              }
-              return null;
-            }).filter((item, i, self) => item && self.indexOf(item) === i);
+        // const onChange = (e) =>{
+        //   setIsSelected(false);
+        //   let { value } = e.target;
+        //   value = value.charAt(0).toUpperCase() + value.slice(1);
+        //   if(value === ""){
+        //     setOpenDropdown(false);
+        //     setFilterDropdownValue(areaDropdownOpt)
+        //   }
+        //   else{
+        //     setOpenDropdown(true);
+        //     const expandedKeys = dataList
+        //     .map((item) => {
+        //       if (item.title.indexOf(value) > -1) {
+        //         return item;
+        //       }
+        //       return null;
+        //     }).filter((item, i, self) => item && self.indexOf(item) === i);
         
-            setFilterDropdownValue(expandedKeys)
-          }
-          setIsSelected(true);
-        }
+        //     setFilterDropdownValue(expandedKeys)
+        //   }
+        //   setIsSelected(true);
+        // }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
           return <div> </div>
         }
       
-      const burdenClick = () => {
-        setToggleStateBurden(!toggleStateBurden); 
-        let text = null;
-        if (burdenbuttonText === 'Burden')
-        {
-          text = 'Prevalence';
-        }
-        else
-        {
-          text = 'Burden';
-        }
-          changeBurdenText(text);   
-      }
+      // const burdenClick = () => {
+      //   setToggleStateBurden(!toggleStateBurden); 
+      //   let text = null;
+      //   if (burdenbuttonText === 'Burden')
+      //   {
+      //     text = 'Prevalence';
+      //   }
+      //   else
+      //   {
+      //     text = 'Burden';
+      //   }
+      //     changeBurdenText(text);   
+      // }
 
      
       let burdenDropdown;

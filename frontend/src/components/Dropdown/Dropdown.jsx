@@ -1,19 +1,14 @@
 import React,{useState,useEffect,useRef} from "react";
-import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
-import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, populateCategoryDropdown, populateDropdowns, API, token } from '../../utils';
+import { setVisulaizationData, populateCategoryDropdown, populateDropdowns, API, token } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
 import { SkeletonCard, SkeletonDropdown } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
-// import "./Dropdown.css";
 import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
 import {EARLY_CHILDHOOD} from "../../constants"
-// import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-// import ToggleButton from 'react-bootstrap/ToggleButton'
 
 
 import "./Dropdown.css";
@@ -695,18 +690,19 @@ export const Dropdown = () =>{
      </div>
 
      <div className=" flex w-full md:w-1/2">
-        {(isSelected  & selTimeperiod !== "")? <Map boundaries={boundaries} 
+        {(isSelected  & selTimeperiod !== "")? <Map 
+          boundaries={boundaries} 
           selIndiaData={selIndiaData} 
-          setSelIndiaData ={setSelIndiaData}
+          // setSelIndiaData ={setSelIndiaData}
           setLevel={setLevel} 
           level={level} 
-          setSelArea={setSelArea} 
+          // setSelArea={setSelArea} 
           unit={unit} 
           unitName={graphUnit} 
           selArea={selArea} 
-          searchRef={searchRef} 
-          setFilterDropdownValue={setFilterDropdownValue} 
-          areaDropdownOpt={areaDropdownOpt} 
+          // searchRef={searchRef} 
+          // setFilterDropdownValue={setFilterDropdownValue} 
+          // areaDropdownOpt={areaDropdownOpt} 
           selLifecycle={selLifecycle}
           selCategory ={selCategory}
           selIndicator={selIndicator}
@@ -719,10 +715,10 @@ export const Dropdown = () =>{
           toggleState = {toggleState}
           setToggleState = {setToggleState}
           setIsLevelThree = {setIsLevelThree}
-          buttonText = {buttonText}
-          changeText = {changeText}
+          // buttonText = {buttonText}
+          // changeText = {changeText}
           selStateData = {selStateData}
-          setSelStateData = {setSelStateData}
+          // setSelStateData = {setSelStateData}
           selDistrictsData = {selDistrictsData}
           areaChange = {areaChange}
           graphTitle = {graphTitle}
@@ -731,11 +727,11 @@ export const Dropdown = () =>{
           areaName = {areaName}
           titleAreaName = {titleAreaName}
           toggleStateBurden={toggleStateBurden}
-          setToggleStateBurden={setToggleStateBurden}
-          burdenbuttonText={burdenbuttonText} 
-          changeBurdenText={changeBurdenText}
-          drillDirection = {drillDirection}
-          setDrillDirection ={setDrillDirection}
+          // setToggleStateBurden={setToggleStateBurden}
+          // burdenbuttonText={burdenbuttonText} 
+          // changeBurdenText={changeBurdenText}
+          // drillDirection = {drillDirection}
+          // setDrillDirection ={setDrillDirection}
           /> : (selTimeperiod!== "")? <SkeletonCard />: <div id="msg">No data: please select another area</div>}
      </div>
      </section>

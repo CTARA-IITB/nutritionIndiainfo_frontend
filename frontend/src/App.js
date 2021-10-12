@@ -1,9 +1,7 @@
 import React from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';       // added bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';       // added bootstrap
 import 'antd/dist/antd.css';
-import 'bootstrap/dist/css/bootstrap.min.css';   
 import { Dropdown } from "./components/Dropdown/Dropdown";
 import { NotFound } from "./NotFound";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";

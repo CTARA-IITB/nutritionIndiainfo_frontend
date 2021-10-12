@@ -11,8 +11,6 @@ import {
   axisBottom,
   descending,
 } from 'd3';
-import { size } from 'lodash';
-
 export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selLifecycle,selCategory,selIndicator}) => {
 
   const screen=useFullScreenHandle();

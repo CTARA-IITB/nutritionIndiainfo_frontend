@@ -1,7 +1,6 @@
 import React from "react";
 import "./SkeletonCard.css";
 import Skeleton from "react-loading-skeleton";
-import {Row,Col} from 'react-bootstrap';
 import {
   Grid,
   Box,

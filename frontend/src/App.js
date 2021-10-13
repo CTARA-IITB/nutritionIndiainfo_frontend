@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { Dropdown } from "./components/Dropdown/Dropdown";
 import { NotFound } from "./NotFound";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import "./components/Navbar/navbar.css";
+// import "./components/Navbar/navbar.css";
 
 
 //header images

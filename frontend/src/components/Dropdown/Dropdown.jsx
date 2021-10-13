@@ -622,7 +622,7 @@ export const Dropdown = () =>{
                 // dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}    
                 showSearch	= {true}
                 treeData={areaDropdownOpt}
-                treeDefaultExpandAll={true}
+                treeDefaultExpandAll={false}
                 // keepChildrenOnSearch = {true}
                 ref = {treeRef}
                 open={openDropdown}

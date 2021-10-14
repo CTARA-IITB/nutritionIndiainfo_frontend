@@ -36,7 +36,7 @@ import { NotFound } from "../../NotFound";
 export const Dropdown = () =>{
 
 
-  let { queryLifecycle } = useParams();
+  let { queryLifecycle, queryCategory, queryIndicator } = useParams();
   const arrayLifecycle = [1,2,3,4,5,6];
   const arrayCategory =[1,2,3];
   if(typeof queryLifecycle === 'undefined')
@@ -54,12 +54,10 @@ export const Dropdown = () =>{
     default: break;
   }
 
-  let { queryCategory } = useParams();
   if(typeof queryCategory === 'undefined')
     queryCategory = 1;
   const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
   
-  let { queryIndicator } = useParams();
   if(typeof queryIndicator === 'undefined'){
     queryIndicator = null;
   }

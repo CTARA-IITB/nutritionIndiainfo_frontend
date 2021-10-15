@@ -594,7 +594,7 @@ export const Dropdown = () =>{
 					<div className="row">
 						<div className="col-6 col-lg-3 p-2">
 							<div>
-								<select className="select-border w-100 mt-1" value={selIndicator} onChange={indicatorChange}>
+								<select className="select-border w-100 mt-1 paddingOffset" value={selIndicator} onChange={indicatorChange}>
                 {indicatorDropdownOpt.map(opt => <option key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 							
 								</select>
@@ -618,7 +618,7 @@ export const Dropdown = () =>{
 
               <TreeSelect
                 showSearch
-                className='w-100 mt-1'
+                className='w-100 mt-1 paddingOffset'
                 virtual={true}
                 // style={{ width: '100%' }}
                 value={selArea}
@@ -645,7 +645,7 @@ export const Dropdown = () =>{
 						</div>
 						<div className="col-6 col-lg-3 p-2">
 							<div>
-								<select className="select-border w-100 mt-1" value={selTimeperiod} onChange={timeperiodChange}> 
+								<select className="select-border w-100 mt-1 paddingOffset" value={selTimeperiod} onChange={timeperiodChange}> 
                 {timeperiodDropdownOpt.map(opt => <option  key={opt.value+opt.title} value={opt.value}>{opt.title}</option>)}
 								</select>
 							</div>

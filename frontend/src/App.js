@@ -39,6 +39,11 @@ return(<>
 			<Route exact path="/">
 				<Dropdown/>
 			</Route>
+
+			<Route exact path="/nutritionINDIA/">
+				<Dropdown/>
+			</Route>
+			
 			<Route exact path="/:queryLifecycle">
 				<Dropdown/>
 			</Route>
@@ -48,6 +53,7 @@ return(<>
 			<Route exact path="/:queryLifecycle/:queryCategory/:queryIndicator">
 				<Dropdown/>
 			</Route>
+		
 			<Route component={NotFound} />
 		</Switch>
 	</Router>   

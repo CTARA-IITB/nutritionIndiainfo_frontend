@@ -8,7 +8,8 @@ import { SkeletonCard, SkeletonDropdown } from "../SkeletonCard";
 import { Map } from "../../components/Map/Map";
 import {BarArea} from "../../components/Bar/BarArea";
 import {Bar} from "../../components/Bar/Bar";
-import {EARLY_CHILDHOOD} from "../../constants"
+import {ADOLESCENCE,WORA,PREGNANCY,DELIVERY_PNC,EARLY_CHILDHOOD,SCHOOL_AGE, INDIA} from "../../constants"
+import {MANIFESTATION, INTERVENTIONS, DETERMINANTS } from "../../constants"
 
 
 import "./Dropdown.css";
@@ -32,8 +33,6 @@ export const Dropdown = () =>{
 
 
   let { queryLifecycle } = useParams();
-  const arrayLifecycle = [1,2,3,4,5,6];
-  const arrayCategory =[1,2,3];
   if(typeof queryLifecycle === 'undefined')
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifecycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
@@ -63,8 +62,7 @@ export const Dropdown = () =>{
   const [httpStatusMsg, setHttpStatusMsg] = useState(null);
   const [selIndicator, setSelIndicator] = useState(null);
  
-  const iniSelArea = '1';  //india
-  const [selArea, setSelArea] = useState(iniSelArea);
+  const [selArea, setSelArea] = useState(INDIA);
   const [indicatorDropdownOpt, setIndicatorDropdownOpt] = useState([]);
   const [selTimeperiod, setSelTimeperiod] = useState();
   const [unit, setUnit] = useState(1);
@@ -128,12 +126,12 @@ export const Dropdown = () =>{
       setLifecycleDropdownOpt(lifecycleData);
       await populateCategoryDropdown(selLifecycle, setCategoryDropdownOpt);
       let catVal = selCategory;
-      if(selLifecycle === 1 || selLifecycle === 6){
-        if(selCategory === 2)
+      if(selLifecycle === ADOLESCENCE || selLifecycle === SCHOOL_AGE){
+        if(selCategory === INTERVENTIONS)
         catVal=1;
       }
-      else if(selLifecycle ===4){
-        if(selCategory === 1)
+      else if(selLifecycle === DELIVERY_PNC){
+        if(selCategory === MANIFESTATION)
         catVal=2;
       }
      
@@ -227,16 +225,16 @@ export const Dropdown = () =>{
           setSelLifecycle(val);
           setToggleState(true);
 
-          let selCat = 1;
-          if(val === 1 || val === 6){
+          let selCat = MANIFESTATION ;
+          if(val === ADOLESCENCE || val === SCHOOL_AGE){
             setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Determinants" } ])
-          }else if(val === 2){
+          }else if(val === WORA){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
               { value: 2, title: "Interventions" },
               { value: 3, title: "Determinants" }                 
             ]);
-          }else if(val === 3){
+          }else if(val === PREGNANCY){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
               { value: 2, title: "Interventions" },
@@ -244,14 +242,14 @@ export const Dropdown = () =>{
 
             ]);
           }
-          else if(val ===4){
+          else if(val === DELIVERY_PNC){
             setCategoryDropdownOpt([
               { value: 2, title: "Interventions" },
               { value: 3, title: "Determinants" }                 
 
             ]);
-            selCat = 2;
-          }else if(val ===5){
+            selCat = INTERVENTIONS ;
+          }else if(val === EARLY_CHILDHOOD){
             setCategoryDropdownOpt([
               { value: 1, title: "Manifestation" },
               { value: 2, title: "Interventions" },

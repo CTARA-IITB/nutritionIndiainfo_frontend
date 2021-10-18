@@ -27,9 +27,9 @@ return(<>
 
 	<div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
 		{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
-			<div ><a href="https://www.mohfw.gov.in/" target="_blank"><img src={mhf} className="health-ministry"/></a></div>
-		<div className=" mt-4 mx-auto">	<a href="/" target=""><img src={nil} className="nutrition-india"/></a></div>
-		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank"> <img src={pa} className="poshan-abhiyan"/></a></div> 
+			<div ><a href="https://www.mohfw.gov.in/" target="_blank" title="Visit Ministry of Health & Family Welfare"><img src={mhf} className="health-ministry"/></a></div>
+		<div className=" mt-4 mx-auto">	<a href="/" target="" title="NutritionINDIA"><img src={nil} className="nutrition-india"/></a></div>
+		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank" title="Visit POSHAN Abhiyan" > <img src={pa} className="poshan-abhiyan"/></a></div> 
 		{/* </div> */}
 	</div>
 	<Router  basename={'/dashboard'}>

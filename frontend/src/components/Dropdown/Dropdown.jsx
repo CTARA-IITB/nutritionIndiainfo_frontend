@@ -39,7 +39,7 @@ export const Dropdown = () =>{
   let { queryLifecycle, queryCategory, queryIndicator } = useParams();
   const arrayLifecycle = [1,2,3,4,5,6];
   const arrayCategory =[1,2,3];
-  if(typeof queryLifecycle === 'undefined')
+  if(typeof queryLifecycle === 'undefined' || !arrayLifecycle.includes(parseInt(queryLifecycle)))
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifecycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
   
@@ -54,8 +54,8 @@ export const Dropdown = () =>{
     default: break;
   }
 
-  if(typeof queryCategory === 'undefined')
-    queryCategory = 1;
+  if(typeof queryCategory === 'undefined' || !arrayCategory.includes(parseInt(queryCategory)))
+  queryCategory = 1;
   const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
   
   if(typeof queryIndicator === 'undefined'){

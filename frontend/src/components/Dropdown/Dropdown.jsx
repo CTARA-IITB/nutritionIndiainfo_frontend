@@ -1,8 +1,6 @@
 import React,{useState,useEffect,useRef} from "react";
-import {Row} from 'react-bootstrap';
 import { TreeSelect } from 'antd';
-import { json } from 'd3';
-import { createHierarchy, setVisulaizationData, populateCategoryDropdown, populateDropdowns, API, token } from '../../utils';
+import { setVisulaizationData, populateCategoryDropdown, populateDropdowns, API, token } from '../../utils';
 import { useParams } from "react-router-dom";
 import {Trend}  from "../../components/Trend/Trend";
 import { feature } from 'topojson';
@@ -37,8 +35,6 @@ export const Dropdown = () =>{
 
 
   let { queryLifecycle } = useParams();
-  const arrayLifecycle = [1,2,3,4,5,6];
-  const arrayCategory =[1,2,3];
   if(typeof queryLifecycle === 'undefined')
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifecycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
@@ -146,6 +142,7 @@ export const Dropdown = () =>{
       setIsSelected(true);
     }
     populateTabData();
+    // eslint-disable-next-line
     }, [])
 
 
@@ -295,9 +292,9 @@ export const Dropdown = () =>{
           }
           setSelIndicator(val);
           let indiObject = indicatorDropdownOpt.filter(f => f.value === val)[0];
-          let indiSense;
-          let indiName;
-          let indiNotes;
+          // let indiSense;
+          // let indiName;
+          // let indiNotes;
           // console.log(indiObject)
           if(indiObject)
           {
@@ -320,7 +317,7 @@ export const Dropdown = () =>{
             const solr_body_1 = await solr_url.json()
             let flag = false;
             let timeValue = selTimeperiod;
-            if(solr_url.status != 200)
+            if(solr_url.status !== 200)
             {
               setHttpStatusCode(solr_url.status);
               setHttpStatusMsg(solr_body_1.message);
@@ -357,7 +354,7 @@ export const Dropdown = () =>{
             // })
             // const solr_body_3 = await solr_url_3.json()
             
-            if(timeValue != '')
+            if(timeValue !== '')
             await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg);
             setIsSelected(true);
         }
@@ -435,7 +432,7 @@ export const Dropdown = () =>{
             let solr_body_1 = await solr_url.json()
             let flag = false;
             let timeValue = selTimeperiod;
-            if(solr_url.status != 200)
+            if(solr_url.status !== 200)
             {
               setHttpStatusCode(solr_url.status);
               setHttpStatusMsg(solr_body_1.message);
@@ -465,51 +462,51 @@ export const Dropdown = () =>{
                 }
               } 
             }
-            if(timeValue != '')
+            if(timeValue !== '')
             await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg);
             setIsSelected(true);
         
         }
 
-        const onChange = (e) =>{
-          setIsSelected(false);
-          let { value } = e.target;
-          value = value.charAt(0).toUpperCase() + value.slice(1);
-          if(value === ""){
-            setOpenDropdown(false);
-            setFilterDropdownValue(areaDropdownOpt)
-          }
-          else{
-            setOpenDropdown(true);
-            const expandedKeys = dataList
-            .map((item) => {
-              if (item.title.indexOf(value) > -1) {
-                return item;
-              }
-              return null;
-            }).filter((item, i, self) => item && self.indexOf(item) === i);
+        // const onChange = (e) =>{
+        //   setIsSelected(false);
+        //   let { value } = e.target;
+        //   value = value.charAt(0).toUpperCase() + value.slice(1);
+        //   if(value === ""){
+        //     setOpenDropdown(false);
+        //     setFilterDropdownValue(areaDropdownOpt)
+        //   }
+        //   else{
+        //     setOpenDropdown(true);
+        //     const expandedKeys = dataList
+        //     .map((item) => {
+        //       if (item.title.indexOf(value) > -1) {
+        //         return item;
+        //       }
+        //       return null;
+        //     }).filter((item, i, self) => item && self.indexOf(item) === i);
         
-            setFilterDropdownValue(expandedKeys)
-          }
-          setIsSelected(true);
-        }
+        //     setFilterDropdownValue(expandedKeys)
+        //   }
+        //   setIsSelected(true);
+        // }
         if (!boundaries || !boundaries.state  || !boundaries.new_state) {
           return <div> </div>
         }
       
-      const burdenClick = () => {
-        setToggleStateBurden(!toggleStateBurden); 
-        let text = null;
-        if (burdenbuttonText === 'Burden')
-        {
-          text = 'Prevalence';
-        }
-        else
-        {
-          text = 'Burden';
-        }
-          changeBurdenText(text);   
-      }
+      // const burdenClick = () => {
+      //   setToggleStateBurden(!toggleStateBurden); 
+      //   let text = null;
+      //   if (burdenbuttonText === 'Burden')
+      //   {
+      //     text = 'Prevalence';
+      //   }
+      //   else
+      //   {
+      //     text = 'Burden';
+      //   }
+      //     changeBurdenText(text);   
+      // }
 
      
       let burdenDropdown;
@@ -523,7 +520,7 @@ export const Dropdown = () =>{
               <a  className={`nav-link radius2 ${toggleStateBurden  && 'active '}` }   id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true" onClick={()=>{setSelBurden("1"); setToggleStateBurden(true);}}>Prevalence</a>
           </li>
           <li className="nav-item nav-item-right">
-              <a className={`nav-link radius ${!toggleStateBurden  && 'active '}` }  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" onClick={()=>{setSelBurden("2"); setToggleStateBurden(false);}}>Burden</a>
+              <a className={`nav-link radius ${!toggleStateBurden  && 'active '}` } id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" onClick={()=>{setSelBurden("2"); setToggleStateBurden(false);}}>Burden</a>
           </li>
       </ul>
 
@@ -542,10 +539,10 @@ export const Dropdown = () =>{
 
           <ul className="nav nav-tabs d-flex" id="myTab" role="tablist">
           <li className="nav-item">
-              <a className="nav-link radius2"  id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true">Prevalence</a>
+              <a className="nav-link radius2" href="#/" id="Prevalence" data-toggle="tab"  role="tab" aria-controls="Prevalence" aria-selected="true">Prevalence</a>
           </li>
           <li className="nav-item nav-item-right">
-              <a className="nav-link radius "  id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" >Burden</a>
+              <a className="nav-link radius " href="#/" id="Burden" data-toggle="tab" role="tab" aria-controls="Burden" aria-selected="false" >Burden</a>
           </li>
       </ul>
 
@@ -575,7 +572,7 @@ export const Dropdown = () =>{
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-6 col-lg-5 col-md-6 p-3 for-mobile-1 ">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
-						<img src={selLifeycleImg} className="lifecycle-img"/>
+						<img src={selLifeycleImg} className="lifecycle-img" alt=""/>
 						<div className="select-lifecycle-parent">
 							<div className="select-lifecycle-child">
 								<select className="select-lifecycle" value={selLifecycle} onChange={lifecycleChange}>
@@ -654,7 +651,7 @@ export const Dropdown = () =>{
 				</div>
 				<div className="col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0">
 					<div className="i-class">
-          <a href="/reports/referenceDocuments" target="_blank"><img src={iicon} className="i-icon"/></a>
+          <a href="/reports/referenceDocuments" target="_blank"><img src={iicon} className="i-icon" alt=""/></a>
 					</div>
 				</div>
 			</div>

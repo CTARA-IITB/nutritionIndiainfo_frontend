@@ -77,7 +77,7 @@ export async function setVisulaizationData(
   // const url_1 =  await fetch(`${solr_domain}/solr/${solr_core}/select?fl=timeperiod_id%2Ctimeperiod%2Cunit_id%2Cunit_name%2Cdata_value%2Cdata_value_num%2Csubgroup_id%2Csubgroup_name%2Csubgroup_category%2Cstart_date%2Cend_date&fq=area_id%3A${area}&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&omitHeader=true&q=*%3A*&rows=400&sort=timeperiod_id%20asc`);
   // console.log('URL', url_1);
   const body_1 = await url_1.json();
-  if(url_1.status != 200)
+  if(url_1.status !== 200)
   {
   setHttpStatusCode(url_1.status);
   setHttpStatusMsg(body_1.message);
@@ -128,7 +128,7 @@ export async function setVisulaizationData(
     //   `${solr_domain}/solr/${solr_core}/select?fl=area_id%2Carea_code%2Carea_name%2Carea_level%2Cdata_value%2Cdata_value_num&fq=area_level%3A2&fq=indicator_id%3A${indicator}&fq=subgroup_id%3A6&fq=timeperiod_id%3A${timeperiod}&rows=100&omitHeader=true&q=*%3A*`
     // );
     const solr_body_3 = await solr_url_3.json();
-    if(solr_url_3.status != 200)
+    if(solr_url_3.status !== 200)
     {
     setHttpStatusCode(solr_url_3.status);
     setHttpStatusMsg(solr_body_3.message);
@@ -163,7 +163,7 @@ export async function setVisulaizationData(
     }
     const solr_body_4 = await solr_url_4.json();
 
-    if(solr_url_4.status != 200)
+    if(solr_url_4.status !== 200)
     {
     setHttpStatusCode(solr_url_4.status);
     setHttpStatusMsg(solr_body_4.message);
@@ -189,7 +189,7 @@ export async function setVisulaizationData(
         // );
         const solr_body_5 = await solr_switchurl.json();
 
-        if(solr_switchurl.status != 200)
+        if(solr_switchurl.status !== 200)
         {
         setHttpStatusCode(solr_switchurl.status);
         setHttpStatusMsg(solr_body_5.message);
@@ -255,7 +255,7 @@ export async function populateDropdowns(
   const solr_body_6 = await solr_url_6.json();
   let indiVal;
   let passedIndicator;
-  if(solr_url_6.status != 200 )
+  if(solr_url_6.status !== 200 )
   {
   setHttpStatusCode(solr_url_6.status);
   setHttpStatusMsg(solr_body_6.message);
@@ -321,7 +321,7 @@ export async function populateDropdowns(
   // );
   const solr_body_2 = await solr_url.json();
   let timeVal = '';
-  if(solr_url.status != 200 )
+  if(solr_url.status !== 200 )
   {
   setHttpStatusCode(solr_url.status);
   setHttpStatusMsg(solr_body_2.message);

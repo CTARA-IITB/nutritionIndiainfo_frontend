@@ -53,7 +53,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
     colorScale = '#7b1fa2'; 
     lightColor = '#CAA5D9';
   }
-  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator==1 || selIndicator==71 || selIndicator==239 || selIndicator === 248){
+  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator === 1 || selIndicator === 71 || selIndicator === 239 || selIndicator === 248){
     colorScale = '#b71c1c'; 
     lightColor = '#E2A4A4';
   }
@@ -85,6 +85,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
       return d;
     }).filter(d => listofSubgroup.includes(d.subgroup_name))
     setData(cleanData);
+    // eslint-disable-next-line
   }, []);
 
   
@@ -100,7 +101,9 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
     
 
     if(windowWidth >= 480){
+      // eslint-disable-next-line
       windowWidth = windowWidth/2;
+      // eslint-disable-next-line
       windowHeight = windowHeight/2;
       TOOLTIP_FONTSIZE="12px";
     }else{
@@ -142,6 +145,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
       else{
         xValue = d => d.data_value_num;
         maxVal = max(data, (d) => xValue(d));
+        // eslint-disable-next-line
         graphUnit ='Number';
       }
 

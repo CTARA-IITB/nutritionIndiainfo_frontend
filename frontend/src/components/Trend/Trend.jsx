@@ -46,7 +46,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     colorScale = '#e5393580'; 
   else  if(arrObese.includes(selIndicator))
     colorScale = '#7b1fa280'; 
-  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125  || selIndicator==71 || selIndicator==1 || selIndicator==239 || selIndicator === 248)
+  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125  || selIndicator === 71 || selIndicator === 1 || selIndicator === 239 || selIndicator === 248)
     colorScale = '#b71c1c80'; 
   else
     colorScale = '#eda14380'; 
@@ -98,6 +98,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       return a.start_date - b.start_date;
     });
     setData(cleanData);
+    // eslint-disable-next-line
   }, []);
   if(!toggleStateBurden && data)
     data = data.filter(d => typeof d.data_value_num != 'undefined')
@@ -108,9 +109,11 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
     let TOOLTIP_FONTSIZE;
     const svg = select(svgRef.current);
     
-
+   
     if(windowWidth >= 480){
+      // eslint-disable-next-line
       windowWidth = windowWidth/2;
+      // eslint-disable-next-line
       windowHeight = windowHeight/2;
       TOOLTIP_FONTSIZE="12px";
     }else{
@@ -171,6 +174,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       const xValue = d => d.middle_date;
       let maxVal;
       if(toggleStateBurden){
+        // eslint-disable-next-line
         yValue = d => d.data_value;
         maxVal = max(data, (d) => yValue(d));
         maxVal = maxVal + maxVal/7;
@@ -181,6 +185,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
       maxVal = max(data, (d) => yValue(d));
       maxVal = maxVal + maxVal/7;
       margin = {...margin, 'left':100}
+      // eslint-disable-next-line
       graphUnit ='Number';
       }
 
@@ -209,7 +214,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
         }).tickSizeOuter(0))
         .style('font-size',11);
 			
-      let xaxis = bar.append("g")
+      bar.append("g")
         .attr("transform",`translate(0, ${innerHeight})`)
       	.attr("class","axis")
         .call(axisBottom(xScale).tickFormat(tick => formatTime(tick)).tickSizeOuter(0)).selectAll("text")
@@ -322,7 +327,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphSubgroup, graphUnit, tit
   let title='Trend of ' + graphTitle+ ', '+titleAreaName
 
   let table=[];
-  let columns=[];
   if(data ){
     for(var i=0;i<data.length;i++){
       if(toggleStateBurden){

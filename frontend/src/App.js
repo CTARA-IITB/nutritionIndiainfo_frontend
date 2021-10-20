@@ -40,10 +40,6 @@ return(<>
 				<Dropdown/>
 			</Route>
 
-			<Route exact path="/nutritionINDIA/">
-				<Dropdown/>
-			</Route>
-			
 			<Route exact path="/:queryLifecycle">
 				<Dropdown/>
 			</Route>

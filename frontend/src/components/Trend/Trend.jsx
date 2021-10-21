@@ -82,7 +82,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
 
   useEffect(() => {
     let cleanData = [];
-    indicatorTrend.map((d) => {
+    indicatorTrend.forEach((d) => {
       if(typeof d.data_value != 'undefined'){
         d["startDate"]=d.start_date
         d["endDate"]=d.end_date
@@ -154,7 +154,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
 
     if(data && data.length > 0){
       let listofDate = [];
-      data.map((d) => {
+      data.forEach((d) => {
         listofDate.push(d.start_date);
         listofDate.push(d.end_date);
       });

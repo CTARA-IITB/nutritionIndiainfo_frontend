@@ -1,5 +1,5 @@
 export const NFHS5 = 24;
-export const EARLY_CHILDHOOD = 5;
+export const INDIA = "1";
 export const COLORS = {
     diarrhea_green: "#a3c00f", 	 // Stunting 
     emergency_red: 	"#e53935",   // Wasting , MUAC
@@ -15,3 +15,17 @@ export const COLORS = {
     transparent_darker_red:		"#b71c1c80",    // Anemia
     transparent_bright_orange:              "#eda14380",    // Other indicators
 };
+
+
+export const ADOLESCENCE = 1;
+export const WORA = 2;
+export const PREGNANCY = 3;
+export const DELIVERY_PNC = 4;
+export const EARLY_CHILDHOOD = 5;
+export const SCHOOL_AGE = 6;
+
+
+export const MANIFESTATION = 1;
+export const INTERVENTIONS = 2;
+export const DETERMINANTS = 3;
+

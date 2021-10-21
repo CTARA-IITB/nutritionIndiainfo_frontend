@@ -1,5 +1,5 @@
 import React from 'react';
-let origin = window.location.origin;
+// let origin = window.location.origin;
 export const NotFound = ({httpStatusCode, httpStatusMsg}) => (
 <div id="content" style={{margin:'auto',height:"100vh"}}>
 <div>

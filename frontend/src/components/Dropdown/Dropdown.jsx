@@ -32,8 +32,8 @@ export const Dropdown = () =>{
 
 
   let { queryLifecycle } = useParams();
-  const arrayLifecycle = [1,2,3,4,5,6];
-  const arrayCategory =[1,2,3];
+  // const arrayLifecycle = [1,2,3,4,5,6];
+  // const arrayCategory =[1,2,3];
   if(typeof queryLifecycle === 'undefined')
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifecycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
@@ -141,6 +141,7 @@ export const Dropdown = () =>{
       setIsSelected(true);
     }
     populateTabData();
+    // eslint-disable-next-line
     }, [])
 
 
@@ -290,9 +291,9 @@ export const Dropdown = () =>{
           }
           setSelIndicator(val);
           let indiObject = indicatorDropdownOpt.filter(f => f.value === val)[0];
-          let indiSense;
-          let indiName;
-          let indiNotes;
+          // let indiSense;
+          // let indiName;
+          // let indiNotes;
           // console.log(indiObject)
           if(indiObject)
           {
@@ -315,7 +316,7 @@ export const Dropdown = () =>{
             const solr_body_1 = await solr_url.json()
             let flag = false;
             let timeValue = selTimeperiod;
-            if(solr_url.status != 200)
+            if(solr_url.status !== 200)
             {
               setHttpStatusCode(solr_url.status);
               setHttpStatusMsg(solr_body_1.message);
@@ -352,7 +353,7 @@ export const Dropdown = () =>{
             // })
             // const solr_body_3 = await solr_url_3.json()
             
-            if(timeValue != '')
+            if(timeValue !== '')
             await setVisulaizationData(val, timeValue, selArea, parentArea, level, isLevelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg);
             setIsSelected(true);
         }
@@ -430,7 +431,7 @@ export const Dropdown = () =>{
             let solr_body_1 = await solr_url.json()
             let flag = false;
             let timeValue = selTimeperiod;
-            if(solr_url.status != 200)
+            if(solr_url.status !== 200)
             {
               setHttpStatusCode(solr_url.status);
               setHttpStatusMsg(solr_body_1.message);
@@ -460,7 +461,7 @@ export const Dropdown = () =>{
                 }
               } 
             }
-            if(timeValue != '')
+            if(timeValue !== '')
             await setVisulaizationData(selIndicator, timeValue, value, areaParentId, newLevel, levelThree, setIndicatorBar, setIndicatorTrend, setSelIndiaData, setSelStateData, setSwitchDisplay, setSelDistrictsData, setHttpStatusCode, setHttpStatusMsg);
             setIsSelected(true);
         
@@ -570,7 +571,7 @@ export const Dropdown = () =>{
 			<div className="row w-100 p-4 for-mobile i-for-mobile-div1" style={{margin: 0}}>
 				<div className="col-6 col-lg-5 col-md-6 p-3 for-mobile-1 ">
 					<div className="d-flex top-15" style={{position: 'relative'}}>
-						<img src={selLifeycleImg} className="lifecycle-img"/>
+						<img src={selLifeycleImg} alt="" className="lifecycle-img"/>
 						<div className="select-lifecycle-parent">
 							<div className="select-lifecycle-child">
 								<select className="select-lifecycle" value={selLifecycle} onChange={lifecycleChange}>
@@ -649,7 +650,7 @@ export const Dropdown = () =>{
 				</div>
 				<div className="col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0">
 					<div className="i-class">
-          <a href="/reports/referenceDocuments" target="_blank"><img src={iicon} className="i-icon"/></a>
+          <a href="/reports/referenceDocuments" target="_blank"><img src={iicon} alt="" className="i-icon"/></a>
 					</div>
 				</div>
 			</div>

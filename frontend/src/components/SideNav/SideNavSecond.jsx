@@ -131,7 +131,7 @@ const SideNavSecond = ({table,id,dataField,columnName,Start,End,screen,title,com
               var imgWidth = img.width;
     
               let width = pdf.internal.pageSize.getWidth();
-              let height = pdf.internal.pageSize.getHeight();
+            //   let height = pdf.internal.pageSize.getHeight();
               let hratio = imgHeight / imgWidth;
               let imgPDFHeight = width * hratio;
     

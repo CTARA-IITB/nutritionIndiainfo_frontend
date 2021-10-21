@@ -178,7 +178,9 @@ export const Map = ({
    
 
      if(windowWidth >= 480){
+      // eslint-disable-next-line
       windowWidth = windowWidth/2;
+      // eslint-disable-next-line
       windowHeight = windowHeight/2;
     }else{
       windowWidth = windowWidth+200 ;
@@ -186,7 +188,9 @@ export const Map = ({
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     if(offset){
+      // eslint-disable-next-line
       left_offset = 0;
+      // eslint-disable-next-line
       right_offset = 0;
     }else{
       left_offset = width;
@@ -222,7 +226,7 @@ export const Map = ({
     // }
     //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
-    if(selArea == 28 || selArea == 8 ){
+    if(selArea === 28 || selArea === 8 ){
      projection = geoMercator().fitSize([width/1.5, adjustedHeight/1.2], geometry);
 
     }
@@ -289,7 +293,7 @@ export const Map = ({
        highest = 40.0;
       sampleCategoricalData = ["<10%", "10-19.9%", "20-29.9%", "30-39.9%", ">=40%", "No Data"]
 
-    } else if(selIndicator === 71 || selIndicator === 26 || selIndicator === 1 || selIndicator === 29 || selIndicator === 2 || selIndicator === 62 || selIndicator === 72 || selIndicator === 239 || selIndicator==248)
+    } else if(selIndicator === 71 || selIndicator === 26 || selIndicator === 1 || selIndicator === 29 || selIndicator === 2 || selIndicator === 62 || selIndicator === 72 || selIndicator === 239 || selIndicator === 248)
     {
       low = 5.0;
       medium = 20.0;

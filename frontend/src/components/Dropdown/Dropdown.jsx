@@ -15,7 +15,7 @@ import { Map } from '../../components/Map/Map';
 import { BarArea } from '../../components/Bar/BarArea';
 import { Bar } from '../../components/Bar/Bar';
 import {ADOLESCENCE,WORA,PREGNANCY,DELIVERY_PNC,EARLY_CHILDHOOD,SCHOOL_AGE, INDIA} from "../../constants"
-import {MANIFESTATION, INTERVENTIONS, DETERMINANTS } from "../../constants"
+import {MANIFESTATION, INTERVENTIONS } from "../../constants"
 
 import './Dropdown.css';
 import './bootstrap.min.css';
@@ -73,7 +73,7 @@ export const Dropdown = () => {
 
   let { queryCategory } = useParams();
   if(typeof queryCategory === 'undefined' || !arrayCategory.includes(parseInt(queryCategory)))
-  queryCategory = 1;
+  queryCategory = MANIFESTATION;
   const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
 
   let { queryIndicator } = useParams();
@@ -91,8 +91,15 @@ export const Dropdown = () => {
   const [unit, setUnit] = useState(1);
   const [areaDropdownOpt, setAreaDropdownOpt] = useState(null);
   const [timeperiodDropdownOpt, setTimeperiodDropdownOpt] = useState([]);
-
-  const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState([]);
+  const lifecycleData = [
+    { title: 'Adolescence', value: 1 },
+    { title: 'Women of Reproductive Age', value: 2 },
+    { value: 3, title: 'Pregnancy' },
+    { value: 4, title: 'Delivery PNC' },
+    { value: 5, title: 'Early childhood' },
+    { value: 6, title: 'School age' },
+  ];
+  // const [lifecycledDropdownOpt, setLifecycleDropdownOpt] = useState(lifecycleData);
   const [categorydDropdownOpt, setCategoryDropdownOpt] = useState([]);
   const [stateID, setStateID] = useState(null);
   const [indicatorSense, setIndicatorSense] = useState('Negative');
@@ -114,7 +121,6 @@ export const Dropdown = () => {
   const [graphTitle, setGraphTitle] = useState(
     'Prevalence of stunting in under-five year olds'
   );
-  const [graphSubgroup, setGraphSubgroup] = useState('All');
   const [graphTimeperiod, setGraphTimeperiod] = useState('NFHS5 2019-20');
   const [graphUnit, setGraphUnit] = useState('Percent');
   const [switchDisplay, setSwitchDisplay] = useState(true);
@@ -127,16 +133,9 @@ export const Dropdown = () => {
   // const changeBurdenText = (text) => setBurdenButtonText(text);
   const [toggleStateBurden, setToggleStateBurden] = useState(true);
   const [note, setNote] = useState(null);
-  const [selBurden, setSelBurden] = useState('1');
+  // const [selBurden, setSelBurden] = useState('1');
 
-  const lifecycleData = [
-    { title: 'Adolescence', value: 1 },
-    { title: 'Women of Reproductive Age', value: 2 },
-    { value: 3, title: 'Pregnancy' },
-    { value: 4, title: 'Delivery PNC' },
-    { value: 5, title: 'Early childhood' },
-    { value: 6, title: 'School age' },
-  ];
+  
   // const [drillDirection,setDrillDirection] = useState(true);
   //let burdenIndicators = [12, 13, 17, 18, 19, 20, 29, 107, 108, 53, 62];
   let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63, 56, 31, 78, 66];
@@ -145,8 +144,8 @@ export const Dropdown = () => {
     async function populateTabData() {
       setIsSelected(false);
       setToggleState(true);
-      setToggleStateBurden(true);
-      setLifecycleDropdownOpt(lifecycleData);
+      // setToggleStateBurden(true);
+      // setLifecycleDropdownOpt(lifecycleData);
       await populateCategoryDropdown(selLifecycle, setCategoryDropdownOpt);
       let catVal = selCategory;
       if (selLifecycle === ADOLESCENCE || selLifecycle === SCHOOL_AGE) {
@@ -185,6 +184,7 @@ export const Dropdown = () => {
       setIsSelected(true);
     }
     populateTabData();
+    // eslint-disable-next-line
   }, []);
 
   // useEffect(() => {
@@ -242,6 +242,7 @@ export const Dropdown = () => {
       });
     }
     fetchData();
+     // eslint-disable-next-line
   }, []);
 
   if (!areaDropdownOpt) {
@@ -265,31 +266,31 @@ export const Dropdown = () => {
     setSelLifecycle(val);
     setToggleState(true);
 
-    let selCat = 1;
-    if (val === 1 || val === 6) {
+    let selCat = MANIFESTATION;
+    if (val === ADOLESCENCE || val === SCHOOL_AGE) {
       setCategoryDropdownOpt([
         { value: 1, title: 'Manifestation' },
         { value: 3, title: 'Determinants' },
       ]);
-    } else if (val === 2) {
-      setCategoryDropdownOpt([
-        { value: 1, title: 'Manifestation' },
-        { value: 2, title: 'Interventions' },
-        { value: 3, title: 'Determinants' },
-      ]);
-    } else if (val === 3) {
+    } else if (val === WORA) {
       setCategoryDropdownOpt([
         { value: 1, title: 'Manifestation' },
         { value: 2, title: 'Interventions' },
         { value: 3, title: 'Determinants' },
       ]);
-    } else if (val === 4) {
+    } else if (val === PREGNANCY) {
+      setCategoryDropdownOpt([
+        { value: 1, title: 'Manifestation' },
+        { value: 2, title: 'Interventions' },
+        { value: 3, title: 'Determinants' },
+      ]);
+    } else if (val === DELIVERY_PNC) {
       setCategoryDropdownOpt([
         { value: 2, title: 'Interventions' },
         { value: 3, title: 'Determinants' },
       ]);
-      selCat = 2;
-    } else if (val === 5) {
+      selCat = INTERVENTIONS;
+    } else if (val === EARLY_CHILDHOOD) {
       setCategoryDropdownOpt([
         { value: 1, title: 'Manifestation' },
         { value: 2, title: 'Interventions' },
@@ -324,7 +325,7 @@ export const Dropdown = () => {
       setHttpStatusCode,
       setHttpStatusMsg
     );
-    setSelBurden('1');
+    // setSelBurden('1');
     setToggleStateBurden(true);
     setIsSelected(true);
   };
@@ -360,7 +361,7 @@ export const Dropdown = () => {
       setHttpStatusCode,
       setHttpStatusMsg
     );
-    setSelBurden('1');
+    // setSelBurden('1');
     setToggleStateBurden(true);
     setIsSelected(true);
     setToggleState(true);
@@ -371,15 +372,11 @@ export const Dropdown = () => {
     setIsSelected(false);
     setToggleState(true);
     if (burdenIndicators.includes(val)) {
-      setSelBurden('1');
+      // setSelBurden('1');
       setToggleStateBurden(true);
     }
     setSelIndicator(val);
     let indiObject = indicatorDropdownOpt.filter((f) => f.value === val)[0];
-    let indiSense;
-    let indiName;
-    let indiNotes;
-    // console.log(indiObject)
     if (indiObject) {
       let indiSense = indiObject.indi_sense;
       let indiName = indiObject.indicator_name;
@@ -403,7 +400,7 @@ export const Dropdown = () => {
     const solr_body_1 = await solr_url.json();
     let flag = false;
     let timeValue = selTimeperiod;
-    if (solr_url.status != 200) {
+    if (solr_url.status !== 200) {
       setHttpStatusCode(solr_url.status);
       setHttpStatusMsg(solr_body_1.message);
     }
@@ -438,7 +435,7 @@ export const Dropdown = () => {
     // })
     // const solr_body_3 = await solr_url_3.json()
 
-    if (timeValue != '')
+    if (timeValue !== '')
       await setVisulaizationData(
         val,
         timeValue,
@@ -463,7 +460,7 @@ export const Dropdown = () => {
     setIsSelected(false);
     setToggleState(true);
     if (burdenIndicators.includes(selIndicator)) {
-      setSelBurden('1');
+      // setSelBurden('1');
       setToggleStateBurden(true);
     }
     setSelTimeperiod(val);
@@ -496,7 +493,7 @@ export const Dropdown = () => {
     setIsSelected(false);
     setToggleState(true);
     if (burdenIndicators.includes(selIndicator)) {
-      setSelBurden('1');
+      // setSelBurden('1');
       setToggleStateBurden(true);
     }
     if (value === '1') {
@@ -546,7 +543,7 @@ export const Dropdown = () => {
     let solr_body_1 = await solr_url.json();
     let flag = false;
     let timeValue = selTimeperiod;
-    if (solr_url.status != 200) {
+    if (solr_url.status !== 200) {
       setHttpStatusCode(solr_url.status);
       setHttpStatusMsg(solr_body_1.message);
     }
@@ -574,7 +571,7 @@ export const Dropdown = () => {
         }
       }
     }
-    if (timeValue != '')
+    if (timeValue !== '')
       await setVisulaizationData(
         selIndicator,
         timeValue,
@@ -640,6 +637,7 @@ export const Dropdown = () => {
       <ul className='nav nav-tabs d-flex' id='myTab' role='tablist'>
         <li className='nav-item'>
           <a
+            href={() => false}
             className={`nav-link radius2 ${toggleStateBurden && 'active '}`}
             id='Prevalence'
             data-toggle='tab'
@@ -647,7 +645,7 @@ export const Dropdown = () => {
             aria-controls='Prevalence'
             aria-selected='true'
             onClick={() => {
-              setSelBurden('1');
+              // setSelBurden('1');
               setToggleStateBurden(true);
             }}
           >
@@ -656,6 +654,7 @@ export const Dropdown = () => {
         </li>
         <li className='nav-item nav-item-right'>
           <a
+            href={() => false}
             className={`nav-link radius ${!toggleStateBurden && 'active '}`}
             id='Burden'
             data-toggle='tab'
@@ -663,7 +662,7 @@ export const Dropdown = () => {
             aria-controls='Burden'
             aria-selected='false'
             onClick={() => {
-              setSelBurden('2');
+              // setSelBurden('2');
               setToggleStateBurden(false);
             }}
           >
@@ -686,6 +685,7 @@ export const Dropdown = () => {
       <ul className='nav nav-tabs d-flex' id='myTab' role='tablist'>
         <li className='nav-item'>
           <a
+            href={() => false}
             className='nav-link radius2'
             id='Prevalence'
             data-toggle='tab'
@@ -698,6 +698,7 @@ export const Dropdown = () => {
         </li>
         <li className='nav-item nav-item-right'>
           <a
+            href={() => false}
             className='nav-link radius '
             id='Burden'
             data-toggle='tab'
@@ -736,7 +737,7 @@ export const Dropdown = () => {
         >
           <div className='col-6 col-lg-5 col-md-6 p-3 for-mobile-1 '>
             <div className='d-flex top-15' style={{ position: 'relative' }}>
-              <img src={selLifeycleImg} className='lifecycle-img' />
+              <img src={selLifeycleImg} alt="" className='lifecycle-img' />
               <div className='select-lifecycle-parent'>
                 <div className='select-lifecycle-child'>
                   <select
@@ -772,7 +773,7 @@ export const Dropdown = () => {
               <div className='col-6 col-lg-3 p-2'>
                 <div>
                   <select
-                    className='select-border w-100 mt-1'
+                    className='select-border w-100 mt-1 paddingOffset'
                     value={selIndicator}
                     onChange={indicatorChange}
                   >
@@ -800,8 +801,8 @@ export const Dropdown = () => {
               <div className='col-6 col-lg-3 p-2'>
                 <div>
                   <TreeSelect
-                    showSearch
-                    className='w-100 mt-1'
+                    // showSearch
+                    className='w-100 mt-1 paddingOffset'
                     virtual={true}
                     // style={{ width: '100%' }}
                     value={selArea}
@@ -828,7 +829,7 @@ export const Dropdown = () => {
               <div className='col-6 col-lg-3 p-2'>
                 <div>
                   <select
-                    className='select-border w-100 mt-1'
+                    className='select-border w-100 mt-1 paddingOffset'
                     value={selTimeperiod}
                     onChange={timeperiodChange}
                   >
@@ -845,7 +846,7 @@ export const Dropdown = () => {
           <div className='col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0'>
             <div className='i-class'>
               <a href='/reports/referenceDocuments' target='_blank'>
-                <img src={iicon} className='i-icon' title="Visit reference documents for data used on this website" />
+                <img src={iicon} className='i-icon' alt="" title="Visit reference documents for data used on this website" />
               </a>
             </div>
           </div>
@@ -878,7 +879,7 @@ export const Dropdown = () => {
               <Trend
                 indicatorTrend={indicatorTrend}
                 graphTitle={graphTitle}
-                graphSubgroup={graphSubgroup}
+                graphSubgroup="All"
                 graphUnit={graphUnit}
                 titleAreaName={titleAreaName}
                 graphTimeperiod={graphTimeperiod}
@@ -989,7 +990,6 @@ export const Dropdown = () => {
                 toggleStateBurden={toggleStateBurden}
                 selLifecycle={selLifecycle}
                 selCategory={selCategory}
-                selIndicator={selIndicator}
               />
             ) : selTimeperiod !== '' ? (
               <SkeletonCard />

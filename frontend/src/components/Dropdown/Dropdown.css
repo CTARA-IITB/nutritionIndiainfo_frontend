@@ -210,7 +210,11 @@ span.ant-select-selection-item{
 
     
 } 
+
 select.paddingOffset
 {
 	padding-left: 10px;
-}
+} 
+
+a { color: black; } 
+

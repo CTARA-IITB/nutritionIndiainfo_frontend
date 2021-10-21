@@ -27,9 +27,9 @@ return(<>
 
 	<div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
 		{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
-			<div ><a href="https://www.mohfw.gov.in/" target="_blank" title="Visit Ministry of Health & Family Welfare"><img src={mhf} className="health-ministry"/></a></div>
-		<div className=" mt-4 mx-auto">	<a href="/" target="" title="NutritionINDIA"><img src={nil} className="nutrition-india"/></a></div>
-		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank" title="Visit POSHAN Abhiyan" > <img src={pa} className="poshan-abhiyan"/></a></div> 
+			<div ><a href="https://www.mohfw.gov.in/" target="_blank" rel=" noreferrer" title="Visit Ministry of Health & Family Welfare"><img src={mhf} alt="" className="health-ministry"/></a></div>
+		<div className=" mt-4 mx-auto">	<a href="/" target="" title="NutritionINDIA"><img src={nil} alt="" className="nutrition-india"/></a></div>
+		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank" rel=" noreferrer" title="Visit POSHAN Abhiyan" > <img src={pa} alt="" className="poshan-abhiyan"/></a></div> 
 		{/* </div> */}
 	</div>
 	<Router  basename={'/dashboard'}>
@@ -56,14 +56,14 @@ return(<>
 	<footer className="footer p-0 mt-4">
 			<div className="row  p-0 m-0 align-items-center">
 				<div className="col-4">
-					<a href="https://nutritionindia.info/" target="_blank"><img src={nilf} className="nutrition-image"/></a>
+					<a href="https://nutritionindia.info/" target="_blank" rel=" noreferrer"><img src={nilf} alt="" className="nutrition-image"/></a>
 				</div>
 				<div className="col-4">
-					<a href="https://www.ctara.iitb.ac.in/" target="_blank"><img src={clf} title="CTARA" className="iitb-image"/></a>
+					<a href="https://www.ctara.iitb.ac.in/" target="_blank" rel=" noreferrer"><img src={clf} alt="" title="CTARA" className="iitb-image"/></a>
 				</div>
 			
 				<div className="col-4">
-					<a href="http://unicef.in/" target="_blank"><img src={unil}  className="unichef-image"/></a>
+					<a href="http://unicef.in/" target="_blank" rel=" noreferrer"><img src={unil} alt="" className="unichef-image"/></a>
 				</div>
 			</div> 
 		</footer>

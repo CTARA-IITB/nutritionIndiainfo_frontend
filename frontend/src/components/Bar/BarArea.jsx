@@ -41,7 +41,7 @@ let dynamicRange;
     colorScale = '#e53935'; 
   else  if(arrObese.includes(selIndicator))
     colorScale = '#7b1fa2'; 
-  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator==1 || selIndicator==71 || selIndicator==239 || selIndicator === 248)
+  else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator === 1 || selIndicator === 71 || selIndicator === 239 || selIndicator === 248)
     colorScale = '#b71c1c'; 
   else
     colorScale = '#eda143'; 
@@ -65,6 +65,7 @@ let dynamicRange;
       setStatus("By State/UT");
       let sortedIndiaData;
       if(toggleStateBurden){
+          // eslint-disable-next-line
           selIndiaData = selIndiaData.filter(d => typeof d.data_value != 'undefined')
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
       }    
@@ -78,6 +79,7 @@ let dynamicRange;
       setStatus("By District")
       let sortedStateData;
       if(toggleStateBurden){
+          // eslint-disable-next-line
           selStateData = selStateData.filter(d => typeof d.data_value != 'undefined')
           sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value, b.data_value))
       }    
@@ -98,7 +100,9 @@ let dynamicRange;
     
     
     if(windowWidth >= 480){
+      // eslint-disable-next-line
       windowWidth = windowWidth/2;
+      // eslint-disable-next-line
       windowHeight = windowHeight/2;
       TOOLTIP_FONTSIZE="12px";
     }else{
@@ -116,7 +120,7 @@ let dynamicRange;
     let { width, height } = {width:windowWidth,height:windowHeight}; 
     let innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-    const aspect = width / height;
+    // const aspect = width / height;
 
     // const adjustedHeight = Math.ceil(width / aspect)*1.1;
     //   svg.selectAll("*").remove();
@@ -124,6 +128,7 @@ let dynamicRange;
     //   .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
     if (( toggleStateBurden === true)) {
+      // eslint-disable-next-line
       gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
     else{
@@ -132,6 +137,7 @@ let dynamicRange;
         
     if(data && data.length >0){
       const barSize = 15;
+      // eslint-disable-next-line
       dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length ;
       const adjustedHeight = dynamicRange+150;
       // (barSize*data.length<innerHeight)?innerHeight:barSize*data.length
@@ -152,6 +158,7 @@ let dynamicRange;
       else{
         xValue = d => d.data_value_num;
         maxVal = max(data, (d) => xValue(d));
+        // eslint-disable-next-line
         graphUnit ='Number';
       }
       const bar = svg
@@ -294,7 +301,7 @@ let dynamicRange;
     }
   },[data,toggleStateBurden,fullscreen])
     
-  const checkchange = (state,handle)=>{
+  // const checkchange = (state,handle)=>{
     // if(trend){
     //   if(state === true){
     //     trend[0].style.height = "100vh";
@@ -304,7 +311,7 @@ let dynamicRange;
     //     trend[0].style.height = "65vh";
     //   }
     // }
-  }
+  // }
  
   let table=[];
   if(data ){

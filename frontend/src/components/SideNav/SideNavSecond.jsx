@@ -28,7 +28,7 @@ const SideNavSecond = ({table,id,dataField,columnName,Start,End,screen,title,com
 
     let imageNameJpeg;
     let imageNamePng;
-    let imageNameSvg;
+    // let imageNameSvg;
     let imageNamePdf;
     let imageNameCsv;
 
@@ -36,28 +36,28 @@ const SideNavSecond = ({table,id,dataField,columnName,Start,End,screen,title,com
     if(id==="svgMap"){
         imageNameJpeg = 'map.jpeg';
         imageNamePng = 'map.png';
-        imageNameSvg = 'map.svg';
+        // imageNameSvg = 'map.svg';
         imageNamePdf = 'map.pdf'
         imageNameCsv = 'map.csv'
     }
     else if(id==="svgBarArea"){
         imageNameJpeg = 'barArea.jpeg';
         imageNamePng = 'barArea.png';
-        imageNameSvg = 'barArea.svg';
+        // imageNameSvg = 'barArea.svg';
         imageNamePdf = 'barArea.pdf'
         imageNameCsv = 'barArea.csv'
     }
     else if(id==="svgBar"){
         imageNameJpeg = 'bar.jpeg';
         imageNamePng = 'bar.png';
-        imageNameSvg = 'bar.svg';
+        // imageNameSvg = 'bar.svg';
         imageNamePdf = 'bar.pdf'
         imageNameCsv = 'bar.csv'
     }
     else{
         imageNameJpeg = 'trend.jpeg';
         imageNamePng = 'trend.png';
-        imageNameSvg = 'trend.svg';
+        // imageNameSvg = 'trend.svg';
         imageNamePdf = 'trend.pdf'
         imageNameCsv = 'trend.csv'
     }
@@ -131,7 +131,7 @@ const SideNavSecond = ({table,id,dataField,columnName,Start,End,screen,title,com
               var imgWidth = img.width;
     
               let width = pdf.internal.pageSize.getWidth();
-              let height = pdf.internal.pageSize.getHeight();
+            //   let height = pdf.internal.pageSize.getHeight();
               let hratio = imgHeight / imgWidth;
               let imgPDFHeight = width * hratio;
     

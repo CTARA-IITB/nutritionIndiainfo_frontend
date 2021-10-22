@@ -6,8 +6,7 @@ export const NotFound = ({httpStatusCode, httpStatusMsg}) => (
        <p><br></br></p>  
        <p><br></br></p>   
        
-          {/* <h4 class="error-page-title" style={{fontSize:'30px'}}>{httpStatusCode} Page not found error</h4> */}
-          <h4 class="error-page-title" style={{fontSize:'30px'}}>404 Page Not Found</h4>
+          <h4 class="error-page-title" style={{fontSize:'30px'}}>{httpStatusCode} Page not found error</h4>
           <p>{httpStatusMsg}</p>
           <h4>Please use the <a   style={{color:'blue'}}     
             href={`${window.location.origin}`}>Home Page</a></h4>

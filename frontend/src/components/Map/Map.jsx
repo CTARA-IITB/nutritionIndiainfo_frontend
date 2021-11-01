@@ -338,7 +338,7 @@ export const Map = ({
       medium = 4.0;
       high = 4.5;
       highest = 5.0;
-      sampleCategoricalData = ["<3", "3-3.9%", "4-4.4", "4.5-4.9",">5", "No Data"]
+      sampleCategoricalData = ["<3", "3-3.9", "4-4.4", "4.5-4.9",">5", "No Data"]
     }
     
   

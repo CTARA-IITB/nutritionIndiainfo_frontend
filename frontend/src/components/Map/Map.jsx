@@ -50,7 +50,7 @@ export const Map = ({
   const componentRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
   let [offset,setOffset] = useState(false);
-  if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true)) {
+  if (((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6) && toggleStateBurden === true)) {
     mapTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
   }
   else{
@@ -241,7 +241,7 @@ export const Map = ({
     let mergedGeometry = addProperties(geojson, data);
     let c2Value;
     let color_range
-    if (((unit === 1 || unit === 4 || unit === 3 || unit === 5) && toggleStateBurden === true) || (unit === 2))
+    if (((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6) && toggleStateBurden === true) || (unit === 2))
     {
       c2Value = d => d.dataValue;
       color_range = _.map(data, d => {
@@ -333,14 +333,20 @@ export const Map = ({
       highest = 80.0;
       sampleCategoricalData = ["<20%", "20-39.9%", "40-59.9%", "60-79.9%", ">=80%", "No Data"]
 
+    }else if(selIndicator === 321){
+      low = 3.0;
+      medium = 4.0;
+      high = 4.5;
+      highest = 5.0;
+      sampleCategoricalData = ["<3", "3-3.9%", "4-4.4", "4.5-4.9",">5", "No Data"]
     }
     
   
     let colorScale;
   let colorScale_new;
     let colorScale2;
-    let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234,244,245,247,248,249,250,251,252,253,254,255,256,257,258,92,96,231]; 
-    if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
+    let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234,244,245,247,248,249,250,251,252,253,254,255,256,257,258,92,96,231,321]; 
+    if ((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6)  && toggleStateBurden === true)
     {
     if(indicatorSense === 'Positive')
     {
@@ -413,7 +419,7 @@ export const Map = ({
           .style("font-size","12px");
       }
     };
-    if ((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === true)
+    if ((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit ===6)  && toggleStateBurden === true)
     {  
     svg
       .selectAll(".polygon")
@@ -627,7 +633,7 @@ export const Map = ({
 
     if((level === 1 && (null != selIndiaData && selIndiaData.length > 0)) || ((level === 2 || level === 3) && (null  != selStateData && selStateData.length > 0)))
     {
-    if (((unit === 1 || unit === 4 || unit === 3 || unit === 5)  && toggleStateBurden === false) || unit === 2) 
+    if (((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6)  && toggleStateBurden === false) || unit === 2) 
     {
       
       svg.select(".legendQuant").append('text').text("1 dot =" + dotVal).style("font-size", "14px").attr("font-weight", "bold").attr("alignment-baseline","middle");

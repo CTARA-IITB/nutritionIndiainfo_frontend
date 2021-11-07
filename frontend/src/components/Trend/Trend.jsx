@@ -339,7 +339,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
         })
       }
       else{
-        table.push({
+        table.push({ 
           timeperiod:data[i].timeperiod,
           data:fmt.format(data[i].data_value_num),
           Start:data[i].startDate,

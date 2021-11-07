@@ -780,9 +780,9 @@ export const Map = ({
                   {backButton}        
               </div>
             <svg    ref={svgRef} 
-            className="w-full bg-white border-black border-dashed object-scale-down"></svg>
+            className="w-full bg-white border-black border-dashed object-scale-down"   alt="India State wise NFHS-5 Reports"></svg>
 
-                <div className="absolute right-10 bottom-3  text-xs font-bold">
+                <div className="absolute right-10 bottom-3  text-xs font-bold"   alt="India State wise NFHS-5 Reports">
                   {statusMsg}        
               </div>
             </div>

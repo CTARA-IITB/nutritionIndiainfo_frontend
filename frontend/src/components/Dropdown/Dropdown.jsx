@@ -737,7 +737,7 @@ export const Dropdown = () => {
         >
           <div className='col-6 col-lg-5 col-md-6 p-3 for-mobile-1 '>
             <div className='d-flex top-15' style={{ position: 'relative' }}>
-              <img src={selLifeycleImg} alt="" className='lifecycle-img' />
+              <img src={selLifeycleImg} alt="" className='lifecycle-img'   alt="India State wise NFHS-5 Reports"/>
               <div className='select-lifecycle-parent'>
                 <div className='select-lifecycle-child'>
                   <select
@@ -845,8 +845,8 @@ export const Dropdown = () => {
           </div>
           <div className='col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0'>
             <div className='i-class'>
-              <a href='/reports/referenceDocuments' target='_blank'>
-                <img src={iicon} className='i-icon' alt="" title="Visit reference documents for data used on this website" />
+              <a href='/reports/referenceDocuments' target='_blank'   alt="India State wise NFHS-5 Reports">
+                <img src={iicon} className='i-icon' alt="" title="Visit reference documents for data used on this website"   alt="India State wise NFHS-5 Reports"/>
               </a>
             </div>
           </div>
@@ -874,7 +874,7 @@ export const Dropdown = () => {
           id='top_dashboard_row'
           className='flex md:flex-wrap-reverse flex-wrap-reverse'
         >
-          <div className='flex w-full md:w-1/2'>
+          <div className='flex w-full md:w-1/2' alt="India State wise NFHS-5 Reports">
             {isSelected & (selTimeperiod !== '') ? (
               <Trend
                 indicatorTrend={indicatorTrend}
@@ -896,7 +896,7 @@ export const Dropdown = () => {
             )}
           </div>
 
-          <div className=' flex w-full md:w-1/2'>
+          <div className=' flex w-full md:w-1/2' alt="India State wise NFHS-5 Reports">
             {isSelected & (selTimeperiod !== '') ? (
               <Map
                 boundaries={boundaries}
@@ -949,7 +949,7 @@ export const Dropdown = () => {
           </div>
         </section>
 
-        <section id='bottom_dashboard_row' className='flex flex-wrap'>
+        <section id='bottom_dashboard_row' className='flex flex-wrap'  alt="India State wise NFHS-5 Reports">
           <div className=' flex w-full md:w-1/2'>
             {isSelected & (selTimeperiod !== '') ? (
               <BarArea
@@ -975,7 +975,7 @@ export const Dropdown = () => {
             )}
           </div>
 
-          <div className='flex w-full md:w-1/2'>
+          <div className='flex w-full md:w-1/2'  alt="India NFHS-5 Reports">
             {isSelected & (selTimeperiod !== '') ? (
               <Bar
                 indicatorBar={indicatorBar}

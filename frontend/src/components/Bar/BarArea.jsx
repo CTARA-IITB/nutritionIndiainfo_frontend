@@ -350,19 +350,19 @@ let dynamicRange;
 
   return (
       <>
-        <FullScreen  className="my-fullScreen w-full bg-white" handle={screen} onChange={reportChange}>
-          <div className='static relative w-full mt-10 md:mt-0 lg:mt-0' id="h_bar">
-            <div className="block absolute w-full max-h-max right-5" style={{zIndex:1}}>
+        <FullScreen  className="my-fullScreen w-full bg-white" handle={screen} onChange={reportChange} alt="State wise NFHS-5 Reports">
+          <div className='static relative w-full mt-10 md:mt-0 lg:mt-0' id="h_bar" alt="State wise NFHS-5 Reports">
+            <div className="block absolute w-full max-h-max right-5" style={{zIndex:1}} alt="State wise NFHS-5 Reports">
               <SideNavFirst table={table} id="svgBarArea" dataField="area" columnName="Area" screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
             </div>
-            <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef}>
+            <div className='relative  w-full h-full pb-3 pt-1 pr-3' id="svgBarArea" ref={componentRef} alt="State wise NFHS-5 Reports">
             <div className="absolute  right-5 left-5 mx-10 w-auto top-1">
 
               <div className="text-center w-full text-xs md:text-sm  font-bold my-bararea-title" >{`${gBarTitle}`}</div>
               <div className="text-center   w-full text-xs my-bararea-subtitle" >{`${status}`}</div>
               </div>
               <div id="hbar_svg" className='block align-middle w-full h-full' ref={trendWrapper}>
-                <svg  ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"></svg>
+                <svg  ref = {svgRef} className="w-full bg-white border-black border-dashed object-scale-down"  alt="State wise NFHS-5 Reports"></svg>
               </div>
             </div>
           </div>

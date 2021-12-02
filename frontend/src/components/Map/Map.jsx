@@ -317,7 +317,7 @@ export const Map = ({
       highest = 2.5;
       sampleCategoricalData = ["<0.1%", "0.1-0.49%", "0.5-0.9%", "1-2.49%", ">2.5%", "No Data"]
 
-    }else if(selIndicator === 89 || selIndicator === 53 || selIndicator === 129 || selIndicator === 131 || selIndicator === 135 || selIndicator === 137 || selIndicator === 145 || selIndicator === 148 || selIndicator === 151 || selIndicator === 154 || selIndicator === 261 || selIndicator === 267 || selIndicator === 271 || selIndicator === 234 || selIndicator === 92 || selIndicator === 96 ||arr5to30.includes(selIndicator))
+    }else if(selIndicator === 89 || selIndicator === 129 || selIndicator === 131 || selIndicator === 135 || selIndicator === 137 || selIndicator === 145 || selIndicator === 148 || selIndicator === 151 || selIndicator === 154 || selIndicator === 261 || selIndicator === 267 || selIndicator === 271 || selIndicator === 234 || selIndicator === 92 || selIndicator === 96 ||arr5to30.includes(selIndicator))
     {
       low = 5.0;
       medium = 10.0;
@@ -340,7 +340,15 @@ export const Map = ({
       highest = 5.0;
       sampleCategoricalData = ["<3", "3-3.9", "4-4.4", "4.5-4.9",">5", "No Data"]
     }
-    
+    else if(selIndicator === 53)
+    {
+      low = 5.0;
+      medium = 10.0;
+      high = 20.0;
+      highest = 30.0;
+      sampleCategoricalData = ["<5", "5-9.9", "10-19.9", "20-29.9", ">=30", "No Data"]
+
+    }
   
     let colorScale;
   let colorScale_new;

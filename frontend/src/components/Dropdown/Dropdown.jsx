@@ -224,15 +224,14 @@ export const Dropdown = () => {
       const stateTopology = require('../../data/boundaries/nfhs4/jsonIndianstate.json');
       const districtTopology = require('../../data/boundaries/nfhs4/jsonIndiaDistrict.json');
       const newStateTopology = require('../../data/boundaries/nfhs5/jsonNewIndianstate.json');
-      const newDistrictTopology = require('../../data/boundaries/nfhs5/jsonNewIndiaDistrict.json');
-      // const newDistrictTopology = require('../../data/boundaries/nfhs5/India_district_30sep2021_topo.json')
+      // const newDistrictTopology = require('../../data/boundaries/nfhs5/jsonNewIndiaDistrict.json');
+      const newDistrictTopology = require('../../data/boundaries/nfhs5/district_nfhs5_12_dec_2021.json')
 
       const stateObject = stateTopology.objects.india_state_old;
       const districtObject = districtTopology.objects.india_district_old_v2;
       const newStateObject = newStateTopology.objects['india-state_26may'];
-      const newDistrictObject =
-        newDistrictTopology.objects['india_new_dist (1)'];
-      // const newDistrictObject = newDistrictTopology.objects["India_district_30sep2021"];
+      // const newDistrictObject =newDistrictTopology.objects['india_new_dist (1)'];
+      const newDistrictObject = newDistrictTopology.objects["district_nfhs5_12_dec_2021"];
 
       setBoundaries({
         state: feature(stateTopology, stateObject),

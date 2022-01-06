@@ -23,13 +23,26 @@ const SkeletonDropdown = () => {
   );
 };
 
+const SkeletonQuadrant = () => {
+  return (
+    <Box p={2} lg={12} >
+      <Grid  lg={12} item container spacing={2} padding={2}>
+        <Grid item lg={6} xs={12} sm={6}  zeroMinWidth><Skeleton height={400}/></Grid>
+        <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
+        <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
+        <Grid item lg={6} xs={12} sm={6}  ><Skeleton height={400}/></Grid>
+      </Grid>  
+    </Box>
+  );
+};
+
 const SkeletonCard = () => {
   return (
     <Box lg={12}>
       <Grid  lg={12} item container>
-        <Grid item lg={12} xs={12} sm={12}><Skeleton height={400}/></Grid>
+        <Grid item lg={12} xs={12} sm={12}><Skeleton height={400} width={600}/></Grid>
       </Grid>
     </Box>
   );
 };
-export { SkeletonCard, SkeletonDropdown}
+export { SkeletonCard, SkeletonDropdown, SkeletonQuadrant}

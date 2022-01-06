@@ -120,12 +120,6 @@ let dynamicRange;
     let { width, height } = {width:windowWidth,height:windowHeight}; 
     let innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
-    // const aspect = width / height;
-
-    // const adjustedHeight = Math.ceil(width / aspect)*1.1;
-    //   svg.selectAll("*").remove();
-    //   svg.attr("preserveAspectRatio", "xMinYMin meet")
-    //   .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
     if (( toggleStateBurden === true)) {
       // eslint-disable-next-line
@@ -140,7 +134,6 @@ let dynamicRange;
       // eslint-disable-next-line
       dynamicRange = (barSize*data.length<innerHeight)?innerHeight:barSize*data.length ;
       const adjustedHeight = dynamicRange+150;
-      // (barSize*data.length<innerHeight)?innerHeight:barSize*data.length
       document.getElementById("h_bar").style.height = dynamicRange+200;
       
 
@@ -163,7 +156,6 @@ let dynamicRange;
       }
       const bar = svg
         .attr("width", width)
-        // .attr("height", dynamicRange+100)
         .append("g")
         .attr("transform",`translate(${margin.left},${margin.top})`);
 
@@ -173,26 +165,8 @@ let dynamicRange;
 
       const yScale = scaleBand()
         .domain(data.map(yValue))
-        // .range([0,innerHeight])
         .padding(0.1)
         .range([0,dynamicRange])
-          
-      // bar.append("text")
-      //   .attr('x',width/2 -90)
-      //   .attr('y',0)
-      //   .style("text-anchor","middle")
-      //   .style("font-size","13px")
-      //   .style("font-weight","bold")
-      //   .attr("dy", "-2em")
-      //   .text(`${gBarTitle}`)
-
-      // bar.append("text")
-      //   .attr('x',width/2 -90)
-      //   .attr('y',0)
-      //   .style("text-anchor","middle")
-      //   .style("font-size","11px")
-      //   .attr("dy", "-.5em")  
-      //   .text(`${status}`)
           
       bar.append("text")
         .attr("class", "x label")
@@ -253,7 +227,6 @@ let dynamicRange;
 		    .style('font-size',11);	
       bar.append("g")
         .attr("transform",`translate(0, ${dynamicRange})`)
-        // .attr("transform", "translate(0," + (barSize*data.length) + ")")
       	.attr("class","axis")
   			.call(axisBottom(xScale).ticks(3)
         .tickFormat(function (d) {
@@ -292,7 +265,6 @@ let dynamicRange;
 
 
       noData.append("g")
-        // .attr("transform",`translate(0, ${dynamicRange})`)
         .attr("transform", "translate(0," + (innerHeight) + ")")
       	.attr("class","axis")
   			.call(axisBottom(dummyXScale).ticks(3))
@@ -301,17 +273,6 @@ let dynamicRange;
     }
   },[data,toggleStateBurden,fullscreen])
     
-  // const checkchange = (state,handle)=>{
-    // if(trend){
-    //   if(state === true){
-    //     trend[0].style.height = "100vh";
-    //   }
-    //   else if(state === false){
-    //     if(trend[0] != undefined)
-    //     trend[0].style.height = "65vh";
-    //   }
-    // }
-  // }
  
   let table=[];
   if(data ){

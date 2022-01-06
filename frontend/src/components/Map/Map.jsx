@@ -57,21 +57,6 @@ export const Map = ({
     mapTitle =  `${graphTitle}, Number, ${titleAreaName}, ${graphTimeperiod}`;
   }
 
-  // function thresholdLabels({i, genLength, generatedLabels,labelDelimiter}) {
-  //   if (i === 0) {
-  //     const values = generatedLabels[i].split(` ${labelDelimiter} `)
-  //     return `Less than ${values[1]}`
-  //   } else if(i === 1 || i=== 2 || i=== 3)
-  //   {
-  //     const values = generatedLabels[i].split(` ${labelDelimiter} `)
-  //     return `${values[0]} to  ${values[1] -0.1}`
-  //   }
-  //   else if (i === genLength -1) {
-  //     const values = generatedLabels[i].split(` ${labelDelimiter} `)
-  //     return ` ≥ ${values[0]}`
-  //   }
-  //   return generatedLabels[i]
-  // };
   //For One Decimel Precision    
   function decimalPrecision(d){
     let oneDecimel;
@@ -162,7 +147,6 @@ export const Map = ({
       warning="Administrative Boundaries as per NFHS4 2015-16"
     }
   }
-  // select(".tooltip").remove();
 
   let tooltip = select("#map_svg").append("div")
     .attr("class", "tooltip")
@@ -184,7 +168,6 @@ export const Map = ({
       windowHeight = windowHeight/2;
     }else{
       windowWidth = windowWidth+200 ;
-      // windowHeight = windowHeight;
     }
     const { width, height } = {width:windowWidth,height:windowHeight}; 
     if(offset){
@@ -206,25 +189,6 @@ export const Map = ({
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
    
-//     let title = svg.append("text").text(`${mapTitle}`)
-//       .style("text-anchor","middle")
-//       .style("font-size","13px")
-//       .style("font-weight","bold")
-//       .attr("dy", "-2em")
-// .attr("class","map_title")      
-// .attr('transform',`translate(${width/2},40)`);
-
-      // svg.append("text").text(`${warning}`)
-      // .style("text-anchor","middle")
-      // .style("font-size","11px")
-      // .attr("dy", "-2.5em")
-
-
-      // .attr('transform',`translate(${width/2},60)`);
-    // if(width <= 480){
-    //   title = title.style("font-size", (width * 0.0025) + "em")
-    // }
-    //  let projection = geoMercator().fitSize([width, adjustedHeight/1.1], geometry);
     let projection;
     if(selArea === 28 || selArea === 8 ){
      projection = geoMercator().fitSize([width/1.5, adjustedHeight/1.2], geometry);
@@ -459,15 +423,12 @@ export const Map = ({
           if (typeof c2Value(d) != "undefined") {
               areaChange(d.area_id.toString());
               if(level === 1){
-                // console.log("LEVEL 2");
                 setLevel(2);
               }else if(level === 2){
                 setLevel(3);
-                // console.log("LEVEL 3"); 
                 setIsLevelThree(true);
               }else if(level === 3){
                 setLevel(3);
-                // console.log("STILL IN LEVEL 3");
               }
   
            
@@ -514,15 +475,12 @@ export const Map = ({
           if (typeof c2Value(d) != "undefined") {
               areaChange(d.area_id.toString());
               if(level === 1){
-                // console.log("LEVEL 2");
                 setLevel(2);
               }else if(level === 2){
                 setLevel(3);
-                // console.log("LEVEL 3"); 
                 setIsLevelThree(true);
               }else if(level === 3){
                 setLevel(3);
-                // console.log("STILL IN LEVEL 3");
               }
   
            
@@ -563,16 +521,6 @@ export const Map = ({
      
 
         }
-        // let r;
-        // if(height <= 550){
-        // r = .8;
-        // }
-        // else if(height > 800){
-        //   r =2;
-
-        // }else{
-        //   r=1.5
-        // }
         svg
         .selectAll("myCircles")
         .data(points)
@@ -582,10 +530,7 @@ export const Map = ({
           .attr("cy", function(d){ return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1] })
           .attr("r",1.5)
           .style("fill", colorScale)
-          // .style("stroke", "#4a4740")
-          // .style("stroke-width",.3)
           .style('stroke-opacity',1)
-          // .style('fill-opacity',0.8)
           .attr('transform',`translate(50,60)`)
       
         
@@ -598,25 +543,14 @@ export const Map = ({
     let msg = legend.append("text")
       .style("font-size","8px")
       .attr("class", "statusmsg")
-      // if(width < 680){
-      //   console.log(level)
-       
-      //   }
-    
-      // else{
-         
-         
-      //     }
     if(width > 680){
       if(level === 2 || level === 3){
            
         msg
-        // .text(statusMsg)
         .attr("transform", `translate(${width-280},${adjustedHeight- 80})`)
          }
     else{
         msg
-        // .text(statusMsg)
           .attr("transform", `translate(${width-150},${adjustedHeight- 80})`)
       }
         svg.append("g")
@@ -626,8 +560,6 @@ export const Map = ({
     else{
       if(level === 2 || level === 3){
         msg
-        // .text(statusMsg)
-
         .attr("transform", `translate(${width-380},${adjustedHeight- 120})`)
       }
         svg.append("g")
@@ -701,8 +633,6 @@ export const Map = ({
         className={`nav-link radius1 ${!toggleState  && 'active'}` }  id="district" data-toggle="tab" role="tab" aria-controls="district" aria-selected="false" onClick={()=>{ setToggleState(false)}} style={{"width":"70px"}}>District</a>
     </li>
 </ul>
-    // <div><Button className={`req_button ${!toggleState  && 'req_button_light'}` }  active onClick={()=>{ setToggleState(true)}}  size="sm">State Map</Button> 
-    // <Button className={`req_button ${toggleState  && 'req_button_light'}` } onClick={()=>{ setToggleState(false)}} size="sm">District Map</Button> </div>
   }else{
     switchButton= null;
   }
@@ -734,13 +664,9 @@ export const Map = ({
 
   const handleBackButton = () =>{
     if(level === 3){
-      // setLevel(2);
-      // console.log("LEVEL 2");
       areaChange(""+parentArea);
-      // areaChange()
     }
     if(level === 2){
-      // console.log("LEVEL 1"); 
       areaChange("1");
     }
   }

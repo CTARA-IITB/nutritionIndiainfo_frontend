@@ -5,7 +5,6 @@ import 'antd/dist/antd.css';
 import { Dropdown } from "./components/Dropdown/Dropdown";
 import { NotFound } from "./NotFound";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-// import "./components/Navbar/navbar.css";
 
 
 //header images
@@ -26,11 +25,9 @@ return(<>
 <main id='main_app_container' className='flex flex-col max-h-screen'>
 
 	<div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
-		{/* <div className="d-flex col-12 align-items-center p-4 main-head"> */}
 			<div ><a href="https://www.mohfw.gov.in/" target="_blank" rel=" noreferrer" title="Visit Ministry of Health & Family Welfare"><img src={mhf} alt="" className="health-ministry"/></a></div>
 		<div className=" mt-4 mx-auto">	<a href="/" target="" title="NutritionINDIA"><img src={nil} alt="" className="nutrition-india"/></a></div>
 		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank" rel=" noreferrer" title="Visit POSHAN Abhiyan" > <img src={pa} alt="" className="poshan-abhiyan"/></a></div> 
-		{/* </div> */}
 	</div>
 	<Router  basename={'/dashboard'}>
 		<Switch>

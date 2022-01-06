@@ -197,14 +197,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
    	 		.domain([0, maxVal])
     		.range([innerHeight, 0]);
       
-      //  bar.append("text")
-      //   .attr('x',width/2 -90)
-      //   .attr('y',0)
-      //   .style("text-anchor","middle")
-      //   .style("font-size","13px")
-      //   .style("font-weight","bold")
-      //   .attr("dy", "-2em")
-      //   .text(`${graphTitle}, ${titleAreaName} ${formatTitleTime(min_date)}-${formatTitleTime(max_date)}`)
       
       bar.append("g")
       	.attr("class","axis")
@@ -261,14 +253,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
         .text(function(d) { return d.timeperiod; });
     }
     else{
-      // bar.append("text")
-      // .attr('x',width/2 -90)
-      // .attr('y',0)
-      // .style("text-anchor","middle")
-      // .style("font-size","13px")
-      // .style("font-weight","bold")
-      // .attr("dy", "-2em")
-      // .text(`${graphTitle},${titleAreaName}`)
 
       bar.append("text")
       .attr("x",innerWidth/2)
@@ -297,7 +281,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
 
 
       bar.append("g")
-        // .attr("transform",`translate(0, ${dynamicRange})`)
         .attr("transform", "translate(0," + (innerHeight) + ")")
       	.attr("class","axis")
   			.call(axisBottom(dummyXScale).ticks(3))
@@ -327,7 +310,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
   let title='Trend of ' + graphTitle+ ', '+titleAreaName
 
   let table=[];
-  // let columns=[];
   if(data ){
     for(var i=0;i<data.length;i++){
       if(toggleStateBurden){

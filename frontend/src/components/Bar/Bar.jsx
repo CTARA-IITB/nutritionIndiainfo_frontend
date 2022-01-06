@@ -158,22 +158,6 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
         .range([0,innerHeight])
         .padding(0.1);
           
-      // bar.append("text")
-      //   .attr('x',width/2 -90)
-      //   .attr('y',0)
-      //   .style("text-anchor","middle")
-      //   .style("font-size","13px")
-      //   .style("font-weight","bold")
-      //   .attr("dy", "-2em")
-      //   .text(`${gBarTitle}`)
-
-      // bar.append("text")
-      //   .attr('x',width/2 -90)
-      //   .attr('y',0)
-      //   .style("text-anchor","middle")
-      //   .style("font-size","11px")
-      //   .attr("dy", "-.5em")  
-      //   .text(`${status}`)  
           
       bar.append("text")
         .attr("class", "x label")

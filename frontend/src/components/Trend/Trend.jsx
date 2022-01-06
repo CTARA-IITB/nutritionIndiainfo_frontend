@@ -79,7 +79,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
       }   
     }
   }  
-
+  //formatting data for trend
   useEffect(() => {
     let cleanData = [];
     indicatorTrend.forEach((d) => {
@@ -105,11 +105,10 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
     let windowWidth = window.screen.width;
     let windowHeight = window.screen.height;
   useEffect(()=>{
-    // select(".tooltipX").remove();
+    // tooltip location/font size for diffrent fullscreen
+
     let TOOLTIP_FONTSIZE;
     const svg = select(svgRef.current);
-    
-
     if(windowWidth >= 480){
       // eslint-disable-next-line
       windowWidth = windowWidth/2;
@@ -147,8 +146,6 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
     
-    // svg.attr("width", width)
-    // .attr("height", height)
     let bar = svg.append('g')
       .attr("transform",`translate(${margin.left},${margin.top})`);
 
@@ -184,7 +181,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
       yValue = d => d.data_value_num;
       maxVal = max(data, (d) => yValue(d));
       maxVal = maxVal + maxVal/7;
-      margin = {...margin, 'left':100}
+      margin = {...margin, 'left':100} // extra margin for burden values
       // eslint-disable-next-line
       graphUnit ='Number';
       }
@@ -264,7 +261,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
       .style("fill", "red")
 
 
-
+      // for graph when no data value found
       const dummyXScale = scaleTime()
     		.domain([Date.now() -  5* 12 * 30 * 24 * 60 * 60 * 1000,Date.now()])
     		.range([0, innerWidth])
@@ -290,7 +287,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
     }
 
     let offSet = 0;
-    if(graphUnit === "Deaths per 1000 live births")
+    if(graphUnit === "Deaths per 1000 live births")  //extra space for long string
       offSet = 40
     svg.append("text")
     .attr("transform", "rotate(-0)")
@@ -330,7 +327,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
       }
     }
   }
-  
+  //increse font size of title on fullscreen
   const reportChange = (state, handle) => {
     if(state === true){
       if( windowWidth > 780){

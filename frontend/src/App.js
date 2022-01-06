@@ -23,12 +23,15 @@ const App = ()=> {
 return(<> 
 			
 <main id='main_app_container' className='flex flex-col max-h-screen'>
-
+	
+	{/* Header */}
 	<div  id="brand_container" className="grid grid-cols-3 p-4 m-2">
 			<div ><a href="https://www.mohfw.gov.in/" target="_blank" rel=" noreferrer" title="Visit Ministry of Health & Family Welfare"><img src={mhf} alt="" className="health-ministry"/></a></div>
 		<div className=" mt-4 mx-auto">	<a href="/" target="" title="NutritionINDIA"><img src={nil} alt="" className="nutrition-india"/></a></div>
 		<div>	<a href="http://poshanabhiyaan.gov.in/#/" target="_blank" rel=" noreferrer" title="Visit POSHAN Abhiyan" > <img src={pa} alt="" className="poshan-abhiyan"/></a></div> 
 	</div>
+
+	{/* dashboard */}
 	<Router  basename={'/dashboard'}>
 		<Switch>
 			<Route exact path="/">
@@ -49,7 +52,7 @@ return(<>
 		</Switch>
 	</Router>   
 
-
+	{/* footer */}
 	<footer className="footer p-0 mt-4">
 			<div className="row  p-0 m-0 align-items-center">
 				<div className="col-4">

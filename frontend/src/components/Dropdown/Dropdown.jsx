@@ -34,8 +34,8 @@ import iicon from './images/i-con5.png';
 import { NotFound } from '../../NotFound';
 
 export const Dropdown = () => {
-  let areaData = require('../../data/areaList.json');
-  let country = require('../../data/areaListHierarchy.json');
+  let areaData = require('../../data/areaList.json'); // flat list of area
+  let country = require('../../data/areaListHierarchy.json'); // nested list of area for dropdown
   let statesID = [
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
     23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 4440, 6821,
@@ -131,6 +131,7 @@ export const Dropdown = () => {
   let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63, 56, 31, 78, 66];
 
   useEffect(() => {
+  
     async function populateTabData() {
       setIsSelected(false);
       setToggleState(true);
@@ -185,11 +186,12 @@ export const Dropdown = () => {
       setAreaList(areaData.result.docs);
 
      
-      const stateTopology = require('../../data/boundaries/nfhs4/jsonIndianstate.json');
-      const districtTopology = require('../../data/boundaries/nfhs4/jsonIndiaDistrict.json');
-      const newStateTopology = require('../../data/boundaries/nfhs5/jsonNewIndianstate.json');
-      const newDistrictTopology = require('../../data/boundaries/nfhs5/dist_16_dec_2021_dissolved.json')
+      const stateTopology = require('../../data/boundaries/nfhs4/jsonIndianstate.json'); // NFHS4 state vector layer
+      const districtTopology = require('../../data/boundaries/nfhs4/jsonIndiaDistrict.json'); // NFHS4 district vector layer
+      const newStateTopology = require('../../data/boundaries/nfhs5/jsonNewIndianstate.json'); // NFHS5 state vector layer
+      const newDistrictTopology = require('../../data/boundaries/nfhs5/dist_16_dec_2021_dissolved.json') // NFHS5 district vector layer
 
+      //conversion from topojson to geojson
       const stateObject = stateTopology.objects.india_state_old;
       const districtObject = districtTopology.objects.india_district_old_v2;
       const newStateObject = newStateTopology.objects['india-state_26may'];

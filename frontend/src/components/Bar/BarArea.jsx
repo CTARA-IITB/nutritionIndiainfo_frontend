@@ -235,7 +235,7 @@ let dynamicRange;
         .style('font-size',11)
         
         
-    }else{ // show nodata svg
+    }else{ // No data found draw empty graph
       const noData = svg.attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox",  `0 0 ${width} ${height}`)
         .append("g")
@@ -292,6 +292,7 @@ let dynamicRange;
     }
   }
  
+  // Change style for full screen
 
   const reportChange = (state, handle) => {
     setFullscreen(state);

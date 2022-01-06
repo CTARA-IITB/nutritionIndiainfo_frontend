@@ -190,7 +190,7 @@ export const Map = ({
 
    
     let projection;
-    if(selArea === 28 || selArea === 8 ){
+    if(selArea === 28 || selArea === 8 ){ // adjustment for daman  & diu, puducherry
      projection = geoMercator().fitSize([width/1.5, adjustedHeight/1.2], geometry);
 
     }
@@ -235,7 +235,6 @@ export const Map = ({
     dotVal = (dotVal/10).toFixed(0) * 10;
 
     let [min, max] = extent(color_range);
-    // console.log(selLifecycle,selCategory,selIndicator,"lifecycle","category","indicator")
     let low;
     let medium;
     let high;
@@ -422,6 +421,7 @@ export const Map = ({
           tooltip.style('opacity', 0);
           if (typeof c2Value(d) != "undefined") {
               areaChange(d.area_id.toString());
+              //drilldown
               if(level === 1){
                 setLevel(2);
               }else if(level === 2){
@@ -445,7 +445,7 @@ export const Map = ({
   
 
     }
-
+    // map for burden data
     else{
 
       for(let i =0;i<mergedGeometry.length;i++){
@@ -490,7 +490,7 @@ export const Map = ({
       })
       .attr("d", feature => pathGenerator(feature))
       .attr('transform',`translate(50,60)`);
-
+      
       function draw_circles(d) {
         let bounds = pathGenerator.bounds(d);
         let width_d = bounds[1][0] - bounds[0][0];
@@ -675,7 +675,7 @@ export const Map = ({
   if(level !== 1)  
     backButton = <Button className={`back_button`} active onClick={handleBackButton}  size="sm"><ArrowBackIcon style={{color:'#AF5907',fontSize:'14px'}}/></Button> 
 
-
+  // Change style for full screen
     const reportChange = (state, handle) => {
       setOffset(state)
       if(state === true){

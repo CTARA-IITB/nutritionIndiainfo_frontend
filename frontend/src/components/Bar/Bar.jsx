@@ -250,6 +250,8 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
     }
   }
 
+  // Change style for full screen
+
   const reportChange = (state, handle) => {
     setFullscreen(state);
     if(state === true){
@@ -272,16 +274,10 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
             <SideNavFirst table={table} id="svgBar" dataField="subgroup" columnName="Subgroup"  screen={screen} title={gBarTitle}  componentRef={ componentRef} selLifecycle={selLifecycle} selCategory ={selCategory} selIndicator={selIndicator}/>
           </div>
           <div className='relative  w-full pb-3 pt-1 pr-3 ' id="svgBar" ref={ componentRef}>
-
-
-
-            
           <div className="absolute   right-5 left-5 mx-10 w-auto top-1">
             <div className="text-center  text-xs md:text-sm  font-bold my-bar-title">{`${gBarTitle}`}</div>
             <div className="text-center   text-xs my-bar-subtitle">{`${status}`}</div>
            </div>
-
-
 
             <div id="gbar_svg" className='block align-middle w-full h-full' >
               <svg ref = {svgRef} className="w-full  bg-white  border-black border-dashed object-scale-down"></svg>

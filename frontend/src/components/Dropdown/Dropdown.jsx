@@ -771,7 +771,7 @@ export const Dropdown = () => {
               className='flex w-full md:w-1/2'
               alt='India State wise NFHS-5 Reports'
             >
-              {isSelected & (selTimeperiod !== '') ? (
+              {(selTimeperiod !== '') ? (
                 <Trend
                   indicatorTrend={indicatorTrend}
                   graphTitle={graphTitle}
@@ -794,7 +794,7 @@ export const Dropdown = () => {
               className=' flex w-full md:w-1/2'
               alt='India State wise NFHS-5 Reports'
             >
-              {isSelected & (selTimeperiod !== '') ? (
+              {(selTimeperiod !== '') ? (
                 <Map
                   boundaries={boundaries}
                   selIndiaData={selIndiaData}
@@ -837,7 +837,7 @@ export const Dropdown = () => {
             alt='India State wise NFHS-5 Reports'
           >
             <div className=' flex w-full md:w-1/2'>
-              {isSelected & (selTimeperiod !== '') ? (
+              {(selTimeperiod !== '') ? (
                 <BarArea
                   indicatorTrend={indicatorTrend}
                   graphTitle={graphTitle}
@@ -860,7 +860,7 @@ export const Dropdown = () => {
             </div>
 
             <div className='flex w-full md:w-1/2' alt='India NFHS-5 Reports'>
-              {isSelected & (selTimeperiod !== '') ? (
+              {(selTimeperiod !== '') ? (
                 <Bar
                   indicatorBar={indicatorBar}
                   setIndicatorBar={setIndicatorBar}

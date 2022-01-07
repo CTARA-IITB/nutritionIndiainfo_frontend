@@ -10,12 +10,23 @@ import {
 import { useParams } from 'react-router-dom';
 import { Trend } from '../../components/Trend/Trend';
 import { feature } from 'topojson';
-import { SkeletonCard, SkeletonDropdown } from '../SkeletonCard';
+import {
+  SkeletonDropdown,
+  SkeletonQuadrant,
+} from '../SkeletonCard';
 import { Map } from '../../components/Map/Map';
 import { BarArea } from '../../components/Bar/BarArea';
 import { Bar } from '../../components/Bar/Bar';
-import {ADOLESCENCE,WORA,PREGNANCY,DELIVERY_PNC,EARLY_CHILDHOOD,SCHOOL_AGE, INDIA} from "../../constants"
-import {MANIFESTATION, INTERVENTIONS } from "../../constants"
+import {
+  ADOLESCENCE,
+  WORA,
+  PREGNANCY,
+  DELIVERY_PNC,
+  EARLY_CHILDHOOD,
+  SCHOOL_AGE,
+  INDIA,
+} from '../../constants';
+import { MANIFESTATION, INTERVENTIONS } from '../../constants';
 
 import './Dropdown.css';
 import './bootstrap.min.css';
@@ -43,7 +54,10 @@ export const Dropdown = () => {
   let { queryLifecycle } = useParams();
   const arrayLifecycle = [1, 2, 3, 4, 5, 6];
   const arrayCategory = [1, 2, 3];
-  if(typeof queryLifecycle === 'undefined' || !arrayLifecycle.includes(parseInt(queryLifecycle)))
+  if (
+    typeof queryLifecycle === 'undefined' ||
+    !arrayLifecycle.includes(parseInt(queryLifecycle))
+  )
     queryLifecycle = EARLY_CHILDHOOD;
   const [selLifecycle, setSelLifecycle] = useState(parseInt(queryLifecycle));
 
@@ -72,8 +86,11 @@ export const Dropdown = () => {
   }
 
   let { queryCategory } = useParams();
-  if(typeof queryCategory === 'undefined' || !arrayCategory.includes(parseInt(queryCategory)))
-  queryCategory = MANIFESTATION;
+  if (
+    typeof queryCategory === 'undefined' ||
+    !arrayCategory.includes(parseInt(queryCategory))
+  )
+    queryCategory = MANIFESTATION;
   const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
 
   let { queryIndicator } = useParams();
@@ -127,11 +144,9 @@ export const Dropdown = () => {
   const [toggleStateBurden, setToggleStateBurden] = useState(true);
   const [note, setNote] = useState(null);
 
-  
   let burdenIndicators = [34, 43, 47, 36, 37, 51, 42, 63, 56, 31, 78, 66];
 
   useEffect(() => {
-  
     async function populateTabData() {
       setIsSelected(false);
       setToggleState(true);
@@ -176,8 +191,6 @@ export const Dropdown = () => {
     // eslint-disable-next-line
   }, []);
 
-  
-
   useEffect(() => {
     async function fetchData() {
       //disabled createHierarchy to improve performance
@@ -185,17 +198,17 @@ export const Dropdown = () => {
       setAreaDropdownOpt(country);
       setAreaList(areaData.result.docs);
 
-     
       const stateTopology = require('../../data/boundaries/nfhs4/jsonIndianstate.json'); // NFHS4 state vector layer
       const districtTopology = require('../../data/boundaries/nfhs4/jsonIndiaDistrict.json'); // NFHS4 district vector layer
       const newStateTopology = require('../../data/boundaries/nfhs5/jsonNewIndianstate.json'); // NFHS5 state vector layer
-      const newDistrictTopology = require('../../data/boundaries/nfhs5/dist_16_dec_2021_dissolved.json') // NFHS5 district vector layer
+      const newDistrictTopology = require('../../data/boundaries/nfhs5/dist_16_dec_2021_dissolved.json'); // NFHS5 district vector layer
 
       //conversion from topojson to geojson
       const stateObject = stateTopology.objects.india_state_old;
       const districtObject = districtTopology.objects.india_district_old_v2;
       const newStateObject = newStateTopology.objects['india-state_26may'];
-      const newDistrictObject = newDistrictTopology.objects["dist_16_dec_2021_dissolved"];
+      const newDistrictObject =
+        newDistrictTopology.objects['dist_16_dec_2021_dissolved'];
 
       setBoundaries({
         state: feature(stateTopology, stateObject),
@@ -205,7 +218,7 @@ export const Dropdown = () => {
       });
     }
     fetchData();
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   if (!areaDropdownOpt) {
@@ -385,7 +398,6 @@ export const Dropdown = () => {
         }
       }
     }
-   
 
     if (timeValue !== '')
       await setVisulaizationData(
@@ -539,12 +551,9 @@ export const Dropdown = () => {
     setIsSelected(true);
   };
 
- 
   if (!boundaries || !boundaries.state || !boundaries.new_state) {
     return <div> </div>;
   }
-
-  
 
   let burdenDropdown;
   if (!burdenIndicators.includes(selIndicator)) {
@@ -584,8 +593,6 @@ export const Dropdown = () => {
         </li>
       </ul>
     );
-
-
   } else {
     burdenDropdown = (
       <ul className='nav nav-tabs d-flex' id='myTab' role='tablist'>
@@ -617,8 +624,6 @@ export const Dropdown = () => {
         </li>
       </ul>
     );
-
-  
   }
 
   if (httpStatusCode === 400 || httpStatusCode === 404) {
@@ -640,7 +645,12 @@ export const Dropdown = () => {
         >
           <div className='col-6 col-lg-5 col-md-6 p-3 for-mobile-1 '>
             <div className='d-flex top-15' style={{ position: 'relative' }}>
-              <img src={selLifeycleImg} alt="" className='lifecycle-img'   alt="India State wise NFHS-5 Reports"/>
+              <img
+                src={selLifeycleImg}
+                alt=''
+                className='lifecycle-img'
+                alt='India State wise NFHS-5 Reports'
+              />
               <div className='select-lifecycle-parent'>
                 <div className='select-lifecycle-child'>
                   <select
@@ -691,7 +701,6 @@ export const Dropdown = () => {
               <div className='col-6 col-lg-3 p-2 '>
                 <div className='toogle-button w-full mt-1'>
                   {burdenDropdown}
-              
                 </div>
               </div>
               <div className='col-6 col-lg-3 p-2'>
@@ -712,8 +721,6 @@ export const Dropdown = () => {
                     treeNodeFilterProp='title'
                     onChange={areaChange}
                   />
-
-                 
                 </div>
               </div>
               <div className='col-6 col-lg-3 p-2'>
@@ -735,134 +742,148 @@ export const Dropdown = () => {
           </div>
           <div className='col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0'>
             <div className='i-class'>
-              <a href='/reports/referenceDocuments' target='_blank'   alt="India State wise NFHS-5 Reports">
-                <img src={iicon} className='i-icon' alt="" title="Visit reference documents for data used on this website"   alt="India State wise NFHS-5 Reports"/>
+              <a
+                href='/reports/referenceDocuments'
+                target='_blank'
+                alt='India State wise NFHS-5 Reports'
+              >
+                <img
+                  src={iicon}
+                  className='i-icon'
+                  alt=''
+                  title='Visit reference documents for data used on this website'
+                  alt='India State wise NFHS-5 Reports'
+                />
               </a>
             </div>
           </div>
         </div>
-       
       </header>
 
       {/* tailwind style  */}
+      {isSelected ? (
+        <section id='main_dashboard_container' className='flex flex-col'>
+          <section
+            id='top_dashboard_row'
+            className='flex md:flex-wrap-reverse flex-wrap-reverse'
+          >
+            <div
+              className='flex w-full md:w-1/2'
+              alt='India State wise NFHS-5 Reports'
+            >
+              {(selTimeperiod !== '') ? (
+                <Trend
+                  indicatorTrend={indicatorTrend}
+                  graphTitle={graphTitle}
+                  graphSubgroup='All'
+                  graphUnit={graphUnit}
+                  titleAreaName={titleAreaName}
+                  graphTimeperiod={graphTimeperiod}
+                  toggleStateBurden={toggleStateBurden}
+                  selLifecycle={selLifecycle}
+                  selCategory={selCategory}
+                  selIndicator={selIndicator}
+                  note={note}
+                />
+              ) : (
+                <div id='msg'>No data: please select another area</div>
+              )}
+            </div>
 
-      <section id='main_dashboard_container' className='flex flex-col'>
-        <section
-          id='top_dashboard_row'
-          className='flex md:flex-wrap-reverse flex-wrap-reverse'
-        >
-          <div className='flex w-full md:w-1/2' alt="India State wise NFHS-5 Reports">
-            {isSelected & (selTimeperiod !== '') ? (
-              <Trend
-                indicatorTrend={indicatorTrend}
-                graphTitle={graphTitle}
-                graphSubgroup="All"
-                graphUnit={graphUnit}
-                titleAreaName={titleAreaName}
-                graphTimeperiod={graphTimeperiod}
-                toggleStateBurden={toggleStateBurden}
-                selLifecycle={selLifecycle}
-                selCategory={selCategory}
-                selIndicator={selIndicator}
-                note={note}
-              />
-            ) : selTimeperiod !== '' ? (
-              <SkeletonCard />
-            ) : (
-              <div id='msg'>No data: please select another area</div>
-            )}
-          </div>
+            <div
+              className=' flex w-full md:w-1/2'
+              alt='India State wise NFHS-5 Reports'
+            >
+              {(selTimeperiod !== '') ? (
+                <Map
+                  boundaries={boundaries}
+                  selIndiaData={selIndiaData}
+                  setLevel={setLevel}
+                  level={level}
+                  unit={unit}
+                  unitName={graphUnit}
+                  selArea={selArea}
+                  selLifecycle={selLifecycle}
+                  selCategory={selCategory}
+                  selIndicator={selIndicator}
+                  indicatorSense={indicatorSense}
+                  isLevelThree={isLevelThree}
+                  switchDisplay={switchDisplay}
+                  setSwitchDisplay={setSwitchDisplay}
+                  selTimeperiod={selTimeperiod}
+                  parentArea={parentArea}
+                  toggleState={toggleState}
+                  setToggleState={setToggleState}
+                  setIsLevelThree={setIsLevelThree}
+                  selStateData={selStateData}
+                  selDistrictsData={selDistrictsData}
+                  areaChange={areaChange}
+                  graphTitle={graphTitle}
+                  graphTimeperiod={graphTimeperiod}
+                  graphUnit={graphUnit}
+                  areaName={areaName}
+                  titleAreaName={titleAreaName}
+                  toggleStateBurden={toggleStateBurden}
+                />
+              ) : (
+                <div id='msg'>No data: please select another area</div>
+              )}
+            </div>
+          </section>
 
-          <div className=' flex w-full md:w-1/2' alt="India State wise NFHS-5 Reports">
-            {isSelected & (selTimeperiod !== '') ? (
-              <Map
-                boundaries={boundaries}
-                selIndiaData={selIndiaData}
-                setLevel={setLevel}
-                level={level}
-                unit={unit}
-                unitName={graphUnit}
-                selArea={selArea}
-                selLifecycle={selLifecycle}
-                selCategory={selCategory}
-                selIndicator={selIndicator}
-                indicatorSense={indicatorSense}
-                isLevelThree={isLevelThree}
-                switchDisplay={switchDisplay}
-                setSwitchDisplay={setSwitchDisplay}
-                selTimeperiod={selTimeperiod}
-                parentArea={parentArea}
-                toggleState={toggleState}
-                setToggleState={setToggleState}
-                setIsLevelThree={setIsLevelThree}
-                selStateData={selStateData}
-                selDistrictsData={selDistrictsData}
-                areaChange={areaChange}
-                graphTitle={graphTitle}
-                graphTimeperiod={graphTimeperiod}
-                graphUnit={graphUnit}
-                areaName={areaName}
-                titleAreaName={titleAreaName}
-                toggleStateBurden={toggleStateBurden}
-              />
-            ) : selTimeperiod !== '' ? (
-              <SkeletonCard />
-            ) : (
-              <div id='msg'>No data: please select another area</div>
-            )}
-          </div>
+          <section
+            id='bottom_dashboard_row'
+            className='flex flex-wrap'
+            alt='India State wise NFHS-5 Reports'
+          >
+            <div className=' flex w-full md:w-1/2'>
+              {(selTimeperiod !== '') ? (
+                <BarArea
+                  indicatorTrend={indicatorTrend}
+                  graphTitle={graphTitle}
+                  graphTimeperiod={graphTimeperiod}
+                  graphUnit={graphUnit}
+                  selIndiaData={selIndiaData}
+                  level={level}
+                  selArea={selArea}
+                  titleAreaName={titleAreaName}
+                  areaName={areaName}
+                  selStateData={selStateData}
+                  toggleStateBurden={toggleStateBurden}
+                  selLifecycle={selLifecycle}
+                  selCategory={selCategory}
+                  selIndicator={selIndicator}
+                />
+              ) : (
+                <div id='msg'>No data: please select another area</div>
+              )}
+            </div>
+
+            <div className='flex w-full md:w-1/2' alt='India NFHS-5 Reports'>
+              {(selTimeperiod !== '') ? (
+                <Bar
+                  indicatorBar={indicatorBar}
+                  setIndicatorBar={setIndicatorBar}
+                  selIndicator={selIndicator}
+                  selTimeperiod={selTimeperiod}
+                  selArea={selArea}
+                  graphTimeperiod={graphTimeperiod}
+                  graphTitle={graphTitle}
+                  graphUnit={graphUnit}
+                  titleAreaName={titleAreaName}
+                  toggleStateBurden={toggleStateBurden}
+                  selLifecycle={selLifecycle}
+                  selCategory={selCategory}
+                />
+              ) : (
+                <div id='msg'>No data: please select another area</div>
+              )}
+            </div>
+          </section>
         </section>
-
-        <section id='bottom_dashboard_row' className='flex flex-wrap'  alt="India State wise NFHS-5 Reports">
-          <div className=' flex w-full md:w-1/2'>
-            {isSelected & (selTimeperiod !== '') ? (
-              <BarArea
-                indicatorTrend={indicatorTrend}
-                graphTitle={graphTitle}
-                graphTimeperiod={graphTimeperiod}
-                graphUnit={graphUnit}
-                selIndiaData={selIndiaData}
-                level={level}
-                selArea={selArea}
-                titleAreaName={titleAreaName}
-                areaName={areaName}
-                selStateData={selStateData}
-                toggleStateBurden={toggleStateBurden}
-                selLifecycle={selLifecycle}
-                selCategory={selCategory}
-                selIndicator={selIndicator}
-              />
-            ) : selTimeperiod !== '' ? (
-              <SkeletonCard />
-            ) : (
-              <div id='msg'>No data: please select another area</div>
-            )}
-          </div>
-
-          <div className='flex w-full md:w-1/2'  alt="India NFHS-5 Reports">
-            {isSelected & (selTimeperiod !== '') ? (
-              <Bar
-                indicatorBar={indicatorBar}
-                setIndicatorBar={setIndicatorBar}
-                selIndicator={selIndicator}
-                selTimeperiod={selTimeperiod}
-                selArea={selArea}
-                graphTimeperiod={graphTimeperiod}
-                graphTitle={graphTitle}
-                graphUnit={graphUnit}
-                titleAreaName={titleAreaName}
-                toggleStateBurden={toggleStateBurden}
-                selLifecycle={selLifecycle}
-                selCategory={selCategory}
-              />
-            ) : selTimeperiod !== '' ? (
-              <SkeletonCard />
-            ) : (
-              <div id='msg'>No data: please select another area</div>
-            )}
-          </div>
-        </section>
-      </section>
+      ) : (
+        <SkeletonQuadrant />
+      )}
     </>
   );
 };

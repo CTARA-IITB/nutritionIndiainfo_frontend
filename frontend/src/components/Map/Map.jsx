@@ -41,7 +41,7 @@ export const Map = ({
   toggleStateBurden
 }) => {
 
-  
+
 
   let geometry = boundaries.new_state;
   let mapTitle;
@@ -271,111 +271,114 @@ export const Map = ({
     dotVal = (dotVal/10).toFixed(0) * 10;
 
     let [min, max] = extent(color_range);
-    // console.log(selLifecycle,selCategory,selIndicator,"lifecycle","category","indicator")
-    let low;
-    let medium;
-    let high;
-    let highest;
-    let sampleCategoricalData;
+    
+    let low, medium, high, highest, sampleCategoricalData;
+    let colorScale, colorScale_new, colorScale2;
+    
+    // let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234,244,245,247,248,249,250,251,252,253,254,255,256,257,258,92,96,231,321,277]; 
     let arr20to80 = [31,11,28,37,51,66,42,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86,277,293,298,304,309,329,317,326,320]
-    let arr5to30 = [247,249,250,251,252,253,254,255,256,257,258,231]
-    if (selIndicator === 19 || selIndicator === 21 || selIndicator === 105) {
+    let arr5to30 = [89, 92, 96, 129, 131, 135, 137, 145, 148, 151, 154, 231, 234, 247, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 261, 267, 271]
+    let arr5to20 = [19, 21, 105]
+    let arr10to40 = [12, 13, 17, 244, 245]
+    let arr5to60 = [1, 2, 26, 29, 62, 71, 72, 239, 248]
+    let arr1to10 = [18, 20, 108]
+    let arr01to25 = [107]
+    let arr3to5 = [321]
+    let arr5to30Num = [53]
+    
+    // craeting array using following above array
+    let arrsuw = []
+    arrsuw.push(...arr20to80);
+    arrsuw.push(...arr5to30);
+    arrsuw.push(...arr5to20);
+    arrsuw.push(...arr10to40);
+    arrsuw.push(...arr5to60);
+    arrsuw.push(...arr1to10);
+    arrsuw.push(...arr01to25);
+    arrsuw.push(...arr3to5);
+    arrsuw.push(...arr5to30Num);
+
+    if (arr5to20.includes(selIndicator)) {
       low = 5.0;
       medium = 10.0;
       high = 15.0;
       highest = 20.0
       sampleCategoricalData = ["<5%", "5-9.9%", "10-14.9%", "15-19.9%", ">20%", "No Data"]
-
-    } else if (selIndicator === 17 ||  selIndicator === 12 || selIndicator === 13 || selIndicator=== 244 || selIndicator === 245) {
-       low = 10.0;
-       medium = 20.0;
-       high = 30.0;
-       highest = 40.0;
+    }
+    else if (arr10to40.includes(selIndicator)) {
+      low = 10.0;
+      medium = 20.0;
+      high = 30.0;
+      highest = 40.0;
       sampleCategoricalData = ["<10%", "10-19.9%", "20-29.9%", "30-39.9%", ">=40%", "No Data"]
-
-    } else if(selIndicator === 71 || selIndicator === 26 || selIndicator === 1 || selIndicator === 29 || selIndicator === 2 || selIndicator === 62 || selIndicator === 72 || selIndicator === 239 || selIndicator === 248)
-    {
+    }
+    else if (arr5to60.includes(selIndicator)){
       low = 5.0;
       medium = 20.0;
       high = 40.0;
       highest = 60.0;
       sampleCategoricalData = ["<5%", "5-19.9%", "20-39.9%", "40-59.9%", ">=60%", "No Data"]
-
-    } else if(selIndicator === 20 || selIndicator === 108 || selIndicator === 18 )
-    {
+    }
+    else if (arr1to10.includes(selIndicator)){
       low = 1.0;
       medium = 2.0;
       high = 5.0;
       highest = 10.0;
       sampleCategoricalData = ["<1%", "1-1.9%", "2-4.9%", "5-9.9%", ">10%", "No Data"]
-
-     }else if(selIndicator === 107)
-    {
+    }
+    else if (arr01to25.includes(selIndicator)){
       low = 0.1;
       medium = 0.5;
       high = 1;
       highest = 2.5;
       sampleCategoricalData = ["<0.1%", "0.1-0.49%", "0.5-0.9%", "1-2.49%", ">2.5%", "No Data"]
-
-    }else if(selIndicator === 89 || selIndicator === 129 || selIndicator === 131 || selIndicator === 135 || selIndicator === 137 || selIndicator === 145 || selIndicator === 148 || selIndicator === 151 || selIndicator === 154 || selIndicator === 261 || selIndicator === 267 || selIndicator === 271 || selIndicator === 234 || selIndicator === 92 || selIndicator === 96 ||arr5to30.includes(selIndicator))
-    {
+    }
+    else if (arr5to30.includes(selIndicator)){
       low = 5.0;
       medium = 10.0;
       high = 20.0;
       highest = 30.0;
       sampleCategoricalData = ["<5%", "5-9.9%", "10-19.9%", "20-29.9%", ">=30%", "No Data"]
-
-    }else if(arr20to80.includes(selIndicator))
-    {
+    }
+    else if (arr20to80.includes(selIndicator)){
       low = 20.0;
       medium = 40.0;
       high = 60.0;
       highest = 80.0;
       sampleCategoricalData = ["<20%", "20-39.9%", "40-59.9%", "60-79.9%", ">=80%", "No Data"]
 
-    }else if(selIndicator === 321){
+    }else if(arr3to5.includes(selIndicator)){
       low = 3.0;
       medium = 4.0;
       high = 4.5;
       highest = 5.0;
       sampleCategoricalData = ["<3", "3-3.9", "4-4.4", "4.5-4.9",">5", "No Data"]
     }
-    else if(selIndicator === 53)
-    {
+    else if(arr5to30Num.includes(selIndicator)){
       low = 5.0;
       medium = 10.0;
       high = 20.0;
       highest = 30.0;
       sampleCategoricalData = ["<5", "5-9.9", "10-19.9", "20-29.9", ">=30", "No Data"]
-
     }
   
-    let colorScale;
-  let colorScale_new;
-    let colorScale2;
-    let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234,244,245,247,248,249,250,251,252,253,254,255,256,257,258,92,96,231,321,277]; 
-    if ((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6)  && toggleStateBurden === true)
-    {
-    if(indicatorSense === 'Positive')
-    {
-    colorScale2 = scaleThreshold().domain([low, medium, high, highest])
-    .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"]); 
-    if(typeof sampleCategoricalData != 'undefined'){
-      colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
-      .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50","#A9A9B0"]);
-    }
+  if ((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6) && toggleStateBurden === true) {
+    if(indicatorSense === 'Positive'){
+      colorScale2 = scaleThreshold().domain([low, medium, high, highest])
+        .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"]); 
+      if(typeof sampleCategoricalData != 'undefined'){
+        colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
+          .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50","#A9A9B0"]);
+      }
     }
     else{
       colorScale2 = scaleThreshold().domain([low, medium, high, highest])
-    .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"]); 
+        .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"]); 
       if(typeof sampleCategoricalData != 'undefined'){
-      colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
-      .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000","#A9A9B0"]);
+        colorScale_new = scaleOrdinal().domain(sampleCategoricalData)
+        .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000","#A9A9B0"]);
       }
-
-  
     }
-
     let colorScale4 = scaleQuantize()
       .domain([min, max])
       .range(["#00af50", "#ffff00", "#ffc000", "#fe0000", "#8e0000"])
@@ -384,37 +387,34 @@ export const Map = ({
       .domain([min, max])
       .range(["#8e0000", "#fe0000", "#ffc000", "#ffff00", "#00af50"])
 
-      if (arrsuw.includes(selIndicator)) {
+    if (arrsuw.includes(selIndicator)) {
       colorScale = colorScale2;
     }
     else if (indicatorSense === 'Negative') {
       colorScale = colorScale4;
       colorScale_new = colorScale4;
-
-    } else if (indicatorSense === 'Positive') {
+    }
+    else if (indicatorSense === 'Positive') {
       colorScale = colorScale4_p;
       colorScale_new = colorScale4_p;
-
     }
-    
   }
   else{
-      let arrObese = [91,95,104,92,96,105,21];
-      if(selIndicator === 12 || selIndicator === 13 || selIndicator === 244)
-        colorScale = '#a3c00f'; 
-      else if(selIndicator === 19 || selIndicator === 20)
-        colorScale = 'red'; 
-      else if(selIndicator === 17 || selIndicator === 18 || selIndicator === 245)
-        colorScale = '#039be5'; 
-      else if(selIndicator === 107 || selIndicator === 108)
-        colorScale = '#e35829'; 
-      else  if(arrObese.includes(selIndicator))
-        colorScale = '#7b1fa2'; 
-      else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator === 248)
-        colorScale = '#b71c1c'; 
-      else
-        colorScale = '#eda143'; 
-
+    let arrObese = [91,95,104,92,96,105,21];
+    if(selIndicator === 12 || selIndicator === 13 || selIndicator === 244)
+      colorScale = '#a3c00f'; 
+    else if(selIndicator === 19 || selIndicator === 20)
+      colorScale = 'red'; 
+    else if(selIndicator === 17 || selIndicator === 18 || selIndicator === 245)
+      colorScale = '#039be5'; 
+    else if(selIndicator === 107 || selIndicator === 108)
+      colorScale = '#e35829'; 
+    else  if(arrObese.includes(selIndicator))
+      colorScale = '#7b1fa2'; 
+    else if(selIndicator === 123 || selIndicator === 26 || selIndicator === 125 || selIndicator === 248)
+      colorScale = '#b71c1c'; 
+    else
+      colorScale = '#eda143'; 
   }
 
     const onMouseMove = (event, d) => {

@@ -10,10 +10,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { Trend } from '../../components/Trend/Trend';
 import { feature } from 'topojson';
-import {
-  SkeletonDropdown,
-  SkeletonQuadrant,
-} from '../SkeletonCard';
+import { SkeletonDropdown, SkeletonQuadrant } from '../SkeletonCard';
 import { Map } from '../../components/Map/Map';
 import { BarArea } from '../../components/Bar/BarArea';
 import { Bar } from '../../components/Bar/Bar';
@@ -635,255 +632,255 @@ export const Dropdown = () => {
   return (
     <>
       {isSelected ? (
-<div>
-      <header
-        id='main_menu'
-        className='p-2 flex flex-wrap
+        <div>
+          <header
+            id='main_menu'
+            className='p-2 flex flex-wrap
                   justify-between lg:top-0  bg-white lg:sticky z-40'
-      >
-        <div
-          className='row w-100 p-4 for-mobile i-for-mobile-div1'
-          style={{ margin: 0 }}
-        >
-          <div className='col-6 col-lg-5 col-md-6 p-3 for-mobile-1 '>
-            <div className='d-flex top-15' style={{ position: 'relative' }}>
-              <img
-                src={selLifeycleImg}
-                alt=''
-                className='lifecycle-img'
-                alt='India State wise NFHS-5 Reports'
-              />
-              <div className='select-lifecycle-parent'>
-                <div className='select-lifecycle-child'>
-                  <select
-                    className='select-lifecycle'
-                    value={selLifecycle}
-                    onChange={lifecycleChange}
-                  >
-                    {lifecycleData.map((opt) => (
-                      <option key={opt.value + opt.title} value={opt.value}>
-                        {opt.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className='select-lifecycle-cat-child'>
-                  <select
-                    className='select-category'
-                    value={selCategory}
-                    onChange={categoryChange}
-                  >
-                    {categorydDropdownOpt.map((opt) => (
-                      <option key={opt.value + opt.title} value={opt.value}>
-                        {opt.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='col-12 col-lg-6 col-md-12 p-3 for-mobile-3 '>
-            <div className='row'>
-              <div className='col-6 col-lg-3 p-2'>
-                <div>
-                  <select
-                    className='select-border w-100 mt-1 paddingOffset'
-                    value={selIndicator}
-                    onChange={indicatorChange}
-                  >
-                    {indicatorDropdownOpt.map((opt) => (
-                      <option key={opt.value + opt.title} value={opt.value}>
-                        {opt.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className='col-6 col-lg-3 p-2 '>
-                <div className='toogle-button w-full mt-1'>
-                  {burdenDropdown}
-                </div>
-              </div>
-              <div className='col-6 col-lg-3 p-2'>
-                <div>
-                  <TreeSelect
-                    // showSearch
-                    className='w-100 mt-1 paddingOffset'
-                    virtual={true}
-                    value={selArea}
-                    onFocus={() => setOpenDropdown(true)}
-                    onBlur={() => setOpenDropdown(false)}
-                    showSearch={true}
-                    treeData={areaDropdownOpt}
-                    treeDefaultExpandAll={false}
-                    ref={treeRef}
-                    open={openDropdown}
-                    filterTreeNode
-                    treeNodeFilterProp='title'
-                    onChange={areaChange}
+          >
+            <div
+              className='row w-100 p-4 for-mobile i-for-mobile-div1'
+              style={{ margin: 0 }}
+            >
+              <div className='col-6 col-lg-5 col-md-6 p-3 for-mobile-1 '>
+                <div className='d-flex top-15' style={{ position: 'relative' }}>
+                  <img
+                    src={selLifeycleImg}
+                    alt=''
+                    className='lifecycle-img'
+                    alt='India State wise NFHS-5 Reports'
                   />
+                  <div className='select-lifecycle-parent'>
+                    <div className='select-lifecycle-child'>
+                      <select
+                        className='select-lifecycle'
+                        value={selLifecycle}
+                        onChange={lifecycleChange}
+                      >
+                        {lifecycleData.map((opt) => (
+                          <option key={opt.value + opt.title} value={opt.value}>
+                            {opt.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className='select-lifecycle-cat-child'>
+                      <select
+                        className='select-category'
+                        value={selCategory}
+                        onChange={categoryChange}
+                      >
+                        {categorydDropdownOpt.map((opt) => (
+                          <option key={opt.value + opt.title} value={opt.value}>
+                            {opt.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className='col-6 col-lg-3 p-2'>
-                <div>
-                  <select
-                    className='select-border w-100 mt-1 paddingOffset'
-                    value={selTimeperiod}
-                    onChange={timeperiodChange}
+              <div className='col-12 col-lg-6 col-md-12 p-3 for-mobile-3 '>
+                <div className='row'>
+                  <div className='col-6 col-lg-3 p-2'>
+                    <div>
+                      <select
+                        className='select-border w-100 mt-1 paddingOffset'
+                        value={selIndicator}
+                        onChange={indicatorChange}
+                      >
+                        {indicatorDropdownOpt.map((opt) => (
+                          <option key={opt.value + opt.title} value={opt.value}>
+                            {opt.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className='col-6 col-lg-3 p-2 '>
+                    <div className='toogle-button w-full mt-1'>
+                      {burdenDropdown}
+                    </div>
+                  </div>
+                  <div className='col-6 col-lg-3 p-2'>
+                    <div>
+                      <TreeSelect
+                        // showSearch
+                        className='w-100 mt-1 paddingOffset'
+                        virtual={true}
+                        value={selArea}
+                        onFocus={() => setOpenDropdown(true)}
+                        onBlur={() => setOpenDropdown(false)}
+                        showSearch={true}
+                        treeData={areaDropdownOpt}
+                        treeDefaultExpandAll={false}
+                        ref={treeRef}
+                        open={openDropdown}
+                        filterTreeNode
+                        treeNodeFilterProp='title'
+                        onChange={areaChange}
+                      />
+                    </div>
+                  </div>
+                  <div className='col-6 col-lg-3 p-2'>
+                    <div>
+                      <select
+                        className='select-border w-100 mt-1 paddingOffset'
+                        value={selTimeperiod}
+                        onChange={timeperiodChange}
+                      >
+                        {timeperiodDropdownOpt.map((opt) => (
+                          <option key={opt.value + opt.title} value={opt.value}>
+                            {opt.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0'>
+                <div className='i-class'>
+                  <a
+                    href='/reports/referenceDocuments'
+                    target='_blank'
+                    alt='India State wise NFHS-5 Reports'
                   >
-                    {timeperiodDropdownOpt.map((opt) => (
-                      <option key={opt.value + opt.title} value={opt.value}>
-                        {opt.title}
-                      </option>
-                    ))}
-                  </select>
+                    <img
+                      src={iicon}
+                      className='i-icon'
+                      alt=''
+                      title='Visit reference documents for data used on this website'
+                      alt='India State wise NFHS-5 Reports'
+                    />
+                  </a>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0'>
-            <div className='i-class'>
-              <a
-                href='/reports/referenceDocuments'
-                target='_blank'
+          </header>
+
+          <section id='main_dashboard_container' className='flex flex-col'>
+            <section
+              id='top_dashboard_row'
+              className='flex md:flex-wrap-reverse flex-wrap-reverse'
+            >
+              <div
+                className='flex w-full md:w-1/2'
                 alt='India State wise NFHS-5 Reports'
               >
-                <img
-                  src={iicon}
-                  className='i-icon'
-                  alt=''
-                  title='Visit reference documents for data used on this website'
-                  alt='India State wise NFHS-5 Reports'
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-      </header>
+                {selTimeperiod !== '' ? (
+                  <Trend
+                    indicatorTrend={indicatorTrend}
+                    graphTitle={graphTitle}
+                    graphSubgroup='All'
+                    graphUnit={graphUnit}
+                    titleAreaName={titleAreaName}
+                    graphTimeperiod={graphTimeperiod}
+                    toggleStateBurden={toggleStateBurden}
+                    selLifecycle={selLifecycle}
+                    selCategory={selCategory}
+                    selIndicator={selIndicator}
+                    note={note}
+                  />
+                ) : (
+                  <div id='msg'>No data: please select another area</div>
+                )}
+              </div>
 
-        <section id='main_dashboard_container' className='flex flex-col'>
-          <section
-            id='top_dashboard_row'
-            className='flex md:flex-wrap-reverse flex-wrap-reverse'
-          >
-            <div
-              className='flex w-full md:w-1/2'
+              <div
+                className=' flex w-full md:w-1/2'
+                alt='India State wise NFHS-5 Reports'
+              >
+                {selTimeperiod !== '' ? (
+                  <Map
+                    boundaries={boundaries}
+                    selIndiaData={selIndiaData}
+                    setLevel={setLevel}
+                    level={level}
+                    unit={unit}
+                    unitName={graphUnit}
+                    selArea={selArea}
+                    selLifecycle={selLifecycle}
+                    selCategory={selCategory}
+                    selIndicator={selIndicator}
+                    indicatorSense={indicatorSense}
+                    isLevelThree={isLevelThree}
+                    switchDisplay={switchDisplay}
+                    setSwitchDisplay={setSwitchDisplay}
+                    selTimeperiod={selTimeperiod}
+                    parentArea={parentArea}
+                    toggleState={toggleState}
+                    setToggleState={setToggleState}
+                    setIsLevelThree={setIsLevelThree}
+                    selStateData={selStateData}
+                    selDistrictsData={selDistrictsData}
+                    areaChange={areaChange}
+                    graphTitle={graphTitle}
+                    graphTimeperiod={graphTimeperiod}
+                    graphUnit={graphUnit}
+                    areaName={areaName}
+                    titleAreaName={titleAreaName}
+                    toggleStateBurden={toggleStateBurden}
+                  />
+                ) : (
+                  <div id='msg'>No data: please select another area</div>
+                )}
+              </div>
+            </section>
+
+            <section
+              id='bottom_dashboard_row'
+              className='flex flex-wrap'
               alt='India State wise NFHS-5 Reports'
             >
-              {(selTimeperiod !== '') ? (
-                <Trend
-                  indicatorTrend={indicatorTrend}
-                  graphTitle={graphTitle}
-                  graphSubgroup='All'
-                  graphUnit={graphUnit}
-                  titleAreaName={titleAreaName}
-                  graphTimeperiod={graphTimeperiod}
-                  toggleStateBurden={toggleStateBurden}
-                  selLifecycle={selLifecycle}
-                  selCategory={selCategory}
-                  selIndicator={selIndicator}
-                  note={note}
-                />
-              ) : (
-                <div id='msg'>No data: please select another area</div>
-              )}
-            </div>
+              <div className=' flex w-full md:w-1/2'>
+                {selTimeperiod !== '' ? (
+                  <BarArea
+                    indicatorTrend={indicatorTrend}
+                    graphTitle={graphTitle}
+                    graphTimeperiod={graphTimeperiod}
+                    graphUnit={graphUnit}
+                    selIndiaData={selIndiaData}
+                    level={level}
+                    selArea={selArea}
+                    titleAreaName={titleAreaName}
+                    areaName={areaName}
+                    selStateData={selStateData}
+                    toggleStateBurden={toggleStateBurden}
+                    selLifecycle={selLifecycle}
+                    selCategory={selCategory}
+                    selIndicator={selIndicator}
+                  />
+                ) : (
+                  <div id='msg'>No data: please select another area</div>
+                )}
+              </div>
 
-            <div
-              className=' flex w-full md:w-1/2'
-              alt='India State wise NFHS-5 Reports'
-            >
-              {(selTimeperiod !== '') ? (
-                <Map
-                  boundaries={boundaries}
-                  selIndiaData={selIndiaData}
-                  setLevel={setLevel}
-                  level={level}
-                  unit={unit}
-                  unitName={graphUnit}
-                  selArea={selArea}
-                  selLifecycle={selLifecycle}
-                  selCategory={selCategory}
-                  selIndicator={selIndicator}
-                  indicatorSense={indicatorSense}
-                  isLevelThree={isLevelThree}
-                  switchDisplay={switchDisplay}
-                  setSwitchDisplay={setSwitchDisplay}
-                  selTimeperiod={selTimeperiod}
-                  parentArea={parentArea}
-                  toggleState={toggleState}
-                  setToggleState={setToggleState}
-                  setIsLevelThree={setIsLevelThree}
-                  selStateData={selStateData}
-                  selDistrictsData={selDistrictsData}
-                  areaChange={areaChange}
-                  graphTitle={graphTitle}
-                  graphTimeperiod={graphTimeperiod}
-                  graphUnit={graphUnit}
-                  areaName={areaName}
-                  titleAreaName={titleAreaName}
-                  toggleStateBurden={toggleStateBurden}
-                />
-              ) : (
-                <div id='msg'>No data: please select another area</div>
-              )}
-            </div>
+              <div className='flex w-full md:w-1/2' alt='India NFHS-5 Reports'>
+                {selTimeperiod !== '' ? (
+                  <Bar
+                    indicatorBar={indicatorBar}
+                    setIndicatorBar={setIndicatorBar}
+                    selIndicator={selIndicator}
+                    selTimeperiod={selTimeperiod}
+                    selArea={selArea}
+                    graphTimeperiod={graphTimeperiod}
+                    graphTitle={graphTitle}
+                    graphUnit={graphUnit}
+                    titleAreaName={titleAreaName}
+                    toggleStateBurden={toggleStateBurden}
+                    selLifecycle={selLifecycle}
+                    selCategory={selCategory}
+                  />
+                ) : (
+                  <div id='msg'>No data: please select another area</div>
+                )}
+              </div>
+            </section>
           </section>
-
-          <section
-            id='bottom_dashboard_row'
-            className='flex flex-wrap'
-            alt='India State wise NFHS-5 Reports'
-          >
-            <div className=' flex w-full md:w-1/2'>
-              {(selTimeperiod !== '') ? (
-                <BarArea
-                  indicatorTrend={indicatorTrend}
-                  graphTitle={graphTitle}
-                  graphTimeperiod={graphTimeperiod}
-                  graphUnit={graphUnit}
-                  selIndiaData={selIndiaData}
-                  level={level}
-                  selArea={selArea}
-                  titleAreaName={titleAreaName}
-                  areaName={areaName}
-                  selStateData={selStateData}
-                  toggleStateBurden={toggleStateBurden}
-                  selLifecycle={selLifecycle}
-                  selCategory={selCategory}
-                  selIndicator={selIndicator}
-                />
-              ) : (
-                <div id='msg'>No data: please select another area</div>
-              )}
-            </div>
-
-            <div className='flex w-full md:w-1/2' alt='India NFHS-5 Reports'>
-              {(selTimeperiod !== '') ? (
-                <Bar
-                  indicatorBar={indicatorBar}
-                  setIndicatorBar={setIndicatorBar}
-                  selIndicator={selIndicator}
-                  selTimeperiod={selTimeperiod}
-                  selArea={selArea}
-                  graphTimeperiod={graphTimeperiod}
-                  graphTitle={graphTitle}
-                  graphUnit={graphUnit}
-                  titleAreaName={titleAreaName}
-                  toggleStateBurden={toggleStateBurden}
-                  selLifecycle={selLifecycle}
-                  selCategory={selCategory}
-                />
-              ) : (
-                <div id='msg'>No data: please select another area</div>
-              )}
-            </div>
-          </section>
-        </section>
         </div>
       ) : (
-        <SkeletonQuadrant />
+        <SkeletonDropdown />
       )}
     </>
   );

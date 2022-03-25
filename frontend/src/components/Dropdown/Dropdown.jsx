@@ -634,6 +634,8 @@ export const Dropdown = () => {
 
   return (
     <>
+      {isSelected ? (
+<div>
       <header
         id='main_menu'
         className='p-2 flex flex-wrap
@@ -760,8 +762,6 @@ export const Dropdown = () => {
         </div>
       </header>
 
-      {/* tailwind style  */}
-      {isSelected ? (
         <section id='main_dashboard_container' className='flex flex-col'>
           <section
             id='top_dashboard_row'
@@ -881,6 +881,7 @@ export const Dropdown = () => {
             </div>
           </section>
         </section>
+        </div>
       ) : (
         <SkeletonQuadrant />
       )}

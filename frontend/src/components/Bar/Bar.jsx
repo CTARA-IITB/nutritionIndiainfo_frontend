@@ -15,7 +15,7 @@ import './Bar.css'
 export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAreaName, toggleStateBurden, selLifecycle,selCategory,selIndicator})=>{
   const screen = useFullScreenHandle();
   let status = "By Background Characteristics";
-  const listofSubgroup = ["Overall"," ","Male","Female","  ","Low Coverage","Mid Coverage","High Coverage","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
+  const listofSubgroup = ["Overall"," ","Male","Female","  ","Rural","Urban","   ","No Education","< 5 years completed","5-9 years completed","10-11 years completed","12+ years completed","    ","Poorest","Second","Middle","Fourth","Richest"];
   const svgRef = useRef()
   const componentRef = useRef();
   const [fullscreen,setFullscreen] = useState(false);
@@ -171,8 +171,9 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
       
       const fillRect = (d) =>{
         let darkSubgroup = ["Overall","Low Coverage","Mid Coverage","High Coverage","Poorest","Second","Middle","Fourth","Richest"]
-        if(darkSubgroup.includes(d.subgroup_name))
-          return colorScale;
+        if(darkSubgroup.includes(d.subgroup_name)){
+          console.log(d.subgroup_name);
+          return colorScale;}
         else
           return lightColor;
       }

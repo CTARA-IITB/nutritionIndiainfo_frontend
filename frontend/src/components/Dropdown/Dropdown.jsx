@@ -473,6 +473,7 @@ export const Dropdown = () => {
       .area_name;
     setAreaName(title);
     setTitleAreaName(title);
+    if (treeRef.current)
     treeRef.current.blur();
 
     let areaParentId;

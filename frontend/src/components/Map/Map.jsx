@@ -203,6 +203,7 @@ export const Map = ({
       return _.omit(object, ['dataValue', 'dataValueNum'])
    })
     let mergedGeometry = addProperties(geojson, data);
+    console.log(data,mergedGeometry,"look at me")
     let c2Value;
     let color_range
     if (((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6) && toggleStateBurden === true) || (unit === 2))
@@ -382,10 +383,19 @@ export const Map = ({
   }
 
     const onMouseMove = (event, d) => {
+
       if (typeof c2Value(d) != 'undefined') {
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
         tooltip.html("<b>" + d.areaname + "</b><br><b></b>" + decimalPrecision(c2Value(d)))
+          .style("left", event.clientX - left_offset+ "px")
+          .style("top", event.clientY - right_offset + "px")
+          .style("font-size","12px");
+      }
+      else{
+        tooltip.style("opacity", 0);
+        tooltip.style("opacity", .9);
+        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" )
           .style("left", event.clientX - left_offset+ "px")
           .style("top", event.clientY - right_offset + "px")
           .style("font-size","12px");
@@ -599,7 +609,7 @@ export const Map = ({
       .call(myLegend); 
     }
   }
-    if((level === 1 && (null=== selIndiaData || selIndiaData.length === 0)))
+    if((level === 1 && (null === selIndiaData || selIndiaData.length === 0)))
      {
       svg.append("text").text("No state data.  Please select another survey.")
          .style("text-anchor", "middle")

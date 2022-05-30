@@ -61,16 +61,43 @@ let dynamicRange;
   }  
 
   useEffect(() => {
+    function alphabetically(ascending) {
+
+      return function (a, b) {
+    
+        // equal items sort equally
+        if (a.data_value === b.data_value) {
+            return 0;
+        }
+        // nulls sort after anything else
+        else if (a.data_value === undefined) {
+            return 1;
+        }
+        else if (b.data_value === undefined) {
+            return -1;
+        }
+        // otherwise, if we're ascending, lowest sorts first
+        else if (ascending) {
+            return a.data_value < b.data_value ? -1 : 1;
+        }
+        // if descending, highest sorts first
+        else { 
+            return a.data_value < b.data_value ? 1 : -1;
+        }
+    
+      };
+    
+    }
     if(level === 1){
       setStatus("By State/UT");
       let sortedIndiaData;
       if(toggleStateBurden){
           // eslint-disable-next-line
-          selIndiaData = selIndiaData.filter(d => typeof d.data_value != 'undefined')
+          // selIndiaData = selIndiaData.filter(d => typeof d.data_value != 'undefined')
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value, b.data_value))
       }    
       else{
-          selIndiaData = selIndiaData.filter(d => typeof d.data_value_num != 'undefined')
+          // selIndiaData = selIndiaData.filter(d => typeof d.data_value_num != 'undefined')
           sortedIndiaData = selIndiaData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
       }
       setData(sortedIndiaData);
@@ -80,14 +107,17 @@ let dynamicRange;
       let sortedStateData;
       if(toggleStateBurden){
           // eslint-disable-next-line
-          selStateData = selStateData.filter(d => typeof d.data_value != 'undefined')
-          sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value, b.data_value))
+          // selStateData = selStateData.filter(d => typeof d.data_value != 'undefined')
+          console.log(selStateData.sort(alphabetically(false)))
+
+          sortedStateData = selStateData.slice().sort(alphabetically(false))
       }    
       else{
-          selStateData = selStateData.filter(d => typeof d.data_value_num != 'undefined')
+          // selStateData = selStateData.filter(d => typeof d.data_value_num != 'undefined')
           sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
       }
       setData(sortedStateData)
+      console.log(sortedStateData,"look")
     }
   }, [toggleStateBurden]);
   let windowWidth = window.screen.width;

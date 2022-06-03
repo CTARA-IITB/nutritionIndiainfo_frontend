@@ -298,8 +298,8 @@ let dynamicRange;
 
     const dummyYScale = scaleBand()
     .domain(sel_area_names.map(yValue1))
-      .range([0,innerHeight])
-      .padding(0.1)
+    .padding(0.1)
+    .range([0,dynamicRange])
 
       noData.append("g")
       .attr("class","axis")
@@ -307,11 +307,11 @@ let dynamicRange;
       .style('font-size',11);	
      
 
-      noData.append("g")
-        .attr("transform", "translate(0," + (innerHeight) + ")")
-      	.attr("class","axis")
-  			.call(axisBottom(dummyXScale).ticks(3))
-        .style('font-size',11);
+      // noData.append("g")
+      //   .attr("transform", "translate(0," + (innerHeight) + ")")
+      // 	.attr("class","axis")
+  		// 	.call(axisBottom(dummyXScale).ticks(3))
+      //   .style('font-size',11);
         noData.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "middle")
@@ -324,13 +324,18 @@ let dynamicRange;
       const fillRect = (d) =>{
         return colorScale;
       }
-
       let rectHeight = d =>{
         if(sel_area_names.length <= 6)
-          return 20;
+          return dummyYScale(yValue1(d)) + dummyYScale.bandwidth()/2 - 10;
         else
-          return dummyYScale.bandwidth()
+          return dummyYScale(yValue1(d));
       }
+      // let rectHeight = d =>{
+      //   if(sel_area_names.length <= 6)
+      //     return 20;
+      //   else
+      //     return dummyYScale.bandwidth()
+      // }
 
       let rectY = d =>{
         if(sel_area_names.length <= 6)
@@ -343,16 +348,16 @@ let dynamicRange;
         TOOLTIP_TOP_OFFSET = .8 * height;
       else
         TOOLTIP_TOP_OFFSET = 1.5 * height;
-      // chart.enter().append("rect")
-      //   .attr('y', d => rectY(d))
-      //   .attr('width', d => {return dummyXScale(xValue(d))})
-      //   .attr('height', rectHeight )
-      //   .attr("fill", fillRect)
-      //   .on('mouseover', (i,d) => tooltipBAR.style("visibility", "visible"))
-      //   .on('mousemove',(e,d)=>{
-      //     return tooltipBAR.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY)-TOOLTIP_TOP_OFFSET+"px").style("left",(e.pageX)+"px");
-      //   })
-      //   .on('mouseout', ()=>tooltipBAR.style("visibility", "hidden"));
+      chart.enter().append("rect")
+        .attr('y', d => rectY(d))
+        .attr('width', d => {return dummyXScale(xValue1(d))})
+        .attr('height', rectHeight )
+        .attr("fill", fillRect)
+        .on('mouseover', (i,d) => tooltipBAR.style("visibility", "visible"))
+        .on('mousemove',(e,d)=>{
+          return tooltipBAR.html(`<b>${yValue1(d)}</b><br/>${decimalPrecision(xValue1(d))}`).style("top", (e.pageY)-TOOLTIP_TOP_OFFSET+"px").style("left",(e.pageX)+"px");
+        })
+        .on('mouseout', ()=>tooltipBAR.style("visibility", "hidden"));
 
 
       chart.enter().append("text")
@@ -365,18 +370,18 @@ let dynamicRange;
         .attr("font-size", "11px")
         .attr("fill", "black")
       
-        // noData.append("g")
-      	// .attr("class","axis")
-        // .call(axisLeft(dummyYScale).tickSize(0))
-		    // .style('font-size',11);	
-        // noData.append("g")
-        // .attr("transform",`translate(0, ${dynamicRange})`)
-      	// .attr("class","axis")
-  			// .call(axisBottom(dummyXScale).ticks(3)
-        // .tickFormat(function (d) {
-        //   return fmt.format(d);
-        // }))
-        // .style('font-size',11)
+        noData.append("g")
+      	.attr("class","axis")
+        .call(axisLeft(dummyYScale).tickSize(0))
+		    .style('font-size',11);	
+        noData.append("g")
+        .attr("transform",`translate(0, ${dynamicRange})`)
+      	.attr("class","axis")
+  			.call(axisBottom(dummyXScale).ticks(3)
+        .tickFormat(function (d) {
+          return fmt.format(d);
+        }))
+        .style('font-size',11)
         
         
     }

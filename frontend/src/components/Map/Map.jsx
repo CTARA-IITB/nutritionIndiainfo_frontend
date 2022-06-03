@@ -202,6 +202,7 @@ export const Map = ({
       return _.omit(object, ['dataValue', 'dataValueNum'])
    })
     let mergedGeometry = addProperties(geojson, data);
+    console.log(data,mergedGeometry,"look at me")
     let c2Value;
     let color_range
     if (((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6) && toggleStateBurden === true) || (unit === 2))

@@ -117,6 +117,7 @@ let dynamicRange;
           sortedStateData = selStateData.slice().sort((a, b) => descending(a.data_value_num, b.data_value_num))
       }
       setData(sortedStateData)
+      console.log(sortedStateData,"look")
     }
   }, [toggleStateBurden]);
   let windowWidth = window.screen.width;

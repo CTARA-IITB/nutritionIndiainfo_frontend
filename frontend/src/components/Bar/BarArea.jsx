@@ -11,7 +11,7 @@ import {
   axisBottom,
   descending,
 } from 'd3';
-export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName, areaName,selStateData, toggleStateBurden, selLifecycle,selCategory,selIndicator}) => {
+export const BarArea = ({graphTitle,graphTimeperiod, graphUnit,selIndiaData,level,selArea,titleAreaName,sel_area_names, areaName,selStateData, toggleStateBurden, selLifecycle,selCategory,selIndicator}) => {
 
   const screen=useFullScreenHandle();
   const svgRef = useRef();
@@ -108,7 +108,7 @@ let dynamicRange;
       if(toggleStateBurden){
           // eslint-disable-next-line
           // selStateData = selStateData.filter(d => typeof d.data_value != 'undefined')
-          console.log(selStateData.sort(alphabetically(false)))
+          
 
           sortedStateData = selStateData.slice().sort(alphabetically(false))
       }    
@@ -158,7 +158,7 @@ let dynamicRange;
     else{
       gBarTitle = `${graphTitle}, ${titleAreaName}, ${graphTimeperiod}`;
     }
-        
+    
     if(data && data.length >0){
       const barSize = 15;
       // eslint-disable-next-line
@@ -171,24 +171,24 @@ let dynamicRange;
       svg.attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
-      const yValue = d => d.area_name;
-      let xValue,maxVal;
-
-      if(toggleStateBurden){
-        xValue = d => d.data_value;
-        maxVal = max(data, (d) => xValue(d));
-      }  
-      else{
-        xValue = d => d.data_value_num;
-        maxVal = max(data, (d) => xValue(d));
-        // eslint-disable-next-line
-        graphUnit ='Number';
-      }
+     
       const bar = svg
         .attr("width", width)
         .append("g")
         .attr("transform",`translate(${margin.left},${margin.top})`);
-
+        const yValue = d => d.area_name;
+        let xValue,maxVal;
+    
+        if(toggleStateBurden){
+          xValue = d => d.data_value;
+          maxVal = max(data, (d) => xValue(d));
+        }  
+        else{
+          xValue = d => d.data_value_num;
+          maxVal = max(data, (d) => xValue(d));
+          // eslint-disable-next-line
+          graphUnit ='Number';
+        }
       const xScale = scaleLinear()
         .domain([0, maxVal])
         .range([0, innerWidth])
@@ -266,25 +266,38 @@ let dynamicRange;
         
         
     }else{ // No data found draw empty graph
-      const noData = svg.attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox",  `0 0 ${width} ${height}`)
-        .append("g")
-        .attr("transform",`translate(${50},${margin.top})`);
+      const barSize = 15;
+      // eslint-disable-next-line
+      dynamicRange = (barSize*sel_area_names.length<innerHeight)?innerHeight:barSize*sel_area_names.length ;
+      const adjustedHeight = dynamicRange+150;
+      document.getElementById("h_bar").style.height = dynamicRange+200;
+      svg.selectAll("*").remove();
+      svg.attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox",  `0 0 ${width} ${adjustedHeight}`)
 
+     
+      const noData = svg
+        .attr("width", width)
+        .append("g")
+        .attr("transform",`translate(${margin.left},${margin.top})`);
+     
+        const yValue1 = d => d.area_name;
+
+        let xValue1 = d => d.data_value;
       svg.append("text").text("No district data.  Please select another survey.")
       .style("text-anchor", "middle")
       .style("font-weight","bold")
       .style("fill", "red")
       .attr('transform',`translate(${width/2}, ${height/2})`);
 
-
-
+      
+     
     const dummyXScale = scaleLinear()
       .domain([0, 100])
       .range([0, innerWidth])
 
     const dummyYScale = scaleBand()
-      .domain([])
+    .domain(sel_area_names.map(yValue1))
       .range([0,innerHeight])
       .padding(0.1)
 
@@ -292,14 +305,80 @@ let dynamicRange;
       .attr("class","axis")
       .call(axisLeft(dummyYScale).tickSize(0))
       .style('font-size',11);	
-
+     
 
       noData.append("g")
         .attr("transform", "translate(0," + (innerHeight) + ")")
       	.attr("class","axis")
   			.call(axisBottom(dummyXScale).ticks(3))
         .style('font-size',11);
+        noData.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "middle")
+        .attr("x", innerWidth/2)
+        .attr("y", dynamicRange+50)
+        .text(`${graphUnit}`)
+        .style('font-size',13);
+    
+      let chart = noData.selectAll("rect").data(sel_area_names);
+      const fillRect = (d) =>{
+        return colorScale;
+      }
 
+      let rectHeight = d =>{
+        if(sel_area_names.length <= 6)
+          return 20;
+        else
+          return dummyYScale.bandwidth()
+      }
+
+      let rectY = d =>{
+        if(sel_area_names.length <= 6)
+          return dummyYScale(yValue1(d)) + dummyYScale.bandwidth()/2 - 10;
+        else
+          return dummyYScale(yValue1(d));
+      }
+      let TOOLTIP_TOP_OFFSET;
+      if(fullscreen)
+        TOOLTIP_TOP_OFFSET = .8 * height;
+      else
+        TOOLTIP_TOP_OFFSET = 1.5 * height;
+      // chart.enter().append("rect")
+      //   .attr('y', d => rectY(d))
+      //   .attr('width', d => {return dummyXScale(xValue(d))})
+      //   .attr('height', rectHeight )
+      //   .attr("fill", fillRect)
+      //   .on('mouseover', (i,d) => tooltipBAR.style("visibility", "visible"))
+      //   .on('mousemove',(e,d)=>{
+      //     return tooltipBAR.html(`<b>${yValue(d)}</b><br/>${decimalPrecision(xValue(d))}`).style("top", (e.pageY)-TOOLTIP_TOP_OFFSET+"px").style("left",(e.pageX)+"px");
+      //   })
+      //   .on('mouseout', ()=>tooltipBAR.style("visibility", "hidden"));
+
+
+      chart.enter().append("text")
+        .text(d => decimalPrecision(xValue1(d)))
+        .attr('x', d => dummyXScale(xValue1(d)))
+        .attr('y', d => dummyYScale(yValue1(d)) + (dummyYScale.bandwidth()/2))
+        .attr("font-family", "sans-serif")
+        .attr("dy", ".3em")
+        .attr("dx", ".3em")
+        .attr("font-size", "11px")
+        .attr("fill", "black")
+      
+        // noData.append("g")
+      	// .attr("class","axis")
+        // .call(axisLeft(dummyYScale).tickSize(0))
+		    // .style('font-size',11);	
+        // noData.append("g")
+        // .attr("transform",`translate(0, ${dynamicRange})`)
+      	// .attr("class","axis")
+  			// .call(axisBottom(dummyXScale).ticks(3)
+        // .tickFormat(function (d) {
+        //   return fmt.format(d);
+        // }))
+        // .style('font-size',11)
+        
+        
     }
   },[data,toggleStateBurden,fullscreen])
     

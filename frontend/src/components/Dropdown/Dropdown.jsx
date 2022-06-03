@@ -217,6 +217,19 @@ export const Dropdown = () => {
     fetchData();
     // eslint-disable-next-line
   }, []);
+let sel_area_names= []
+for (let i = 0; i < areaData.result.docs.length; i++) {
+  if(areaData.result.docs[i].area_parent_id==selArea){
+    sel_area_names.push({area_code: areaData.result.docs[i].area_code,
+    area_id: areaData.result.docs[i].area_id,
+    area_level: areaData.result.docs[i].area_level,
+    area_name: areaData.result.docs[i].area_name,
+    data_value: undefined,
+    data_value_num: undefined})
+  }
+
+
+}
 
   if (!areaDropdownOpt) {
     return <SkeletonDropdown />;
@@ -490,7 +503,6 @@ export const Dropdown = () => {
       newLevel = 2;
     }
     let solr_url;
-
     solr_url = await fetch(
       `${API}/api/v1/url_1d?selCategory=${selCategory}&selLifecycle=${selLifecycle}&area_id=${value}&selIndicator=${selIndicator}`,
       {
@@ -851,6 +863,7 @@ export const Dropdown = () => {
                     selLifecycle={selLifecycle}
                     selCategory={selCategory}
                     selIndicator={selIndicator}
+                    sel_area_names = {sel_area_names}
                   />
                 ) : (
                   <div id='msg'>No data: please select another area</div>

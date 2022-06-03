@@ -72,7 +72,6 @@ export const Map = ({
   }  
   
   //merge geometry and data
-
   function addProperties(geojson, data) {
     let newArr = _.map(data, function (item){
       return {
@@ -203,7 +202,6 @@ export const Map = ({
       return _.omit(object, ['dataValue', 'dataValueNum'])
    })
     let mergedGeometry = addProperties(geojson, data);
-    console.log(data,mergedGeometry,"look at me")
     let c2Value;
     let color_range
     if (((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6) && toggleStateBurden === true) || (unit === 2))
@@ -395,7 +393,7 @@ export const Map = ({
       else{
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.areaname + "</b><br><b></b>" )
+        tooltip.html("<b>" + d.properties.NAME1_ + "</b><br><b></b>" )
           .style("left", event.clientX - left_offset+ "px")
           .style("top", event.clientY - right_offset + "px")
           .style("font-size","12px");
@@ -616,6 +614,7 @@ export const Map = ({
          .style("font-weight","bold")
          .style("fill", "red")
          .attr('transform',`translate(${width/2}, ${height/2})`);
+         
      }
      if((level === 2 || level === 3) && (null  === selStateData || selStateData.length === 0))
      {

@@ -41,7 +41,9 @@ export const Map = ({
   toggleStateBurden
 }) => {
 
-
+console.log(selLifecycle,
+  selCategory,
+  selIndicator,selTimeperiod)
 
   let geometry = boundaries.new_state;
   let mapTitle;
@@ -202,7 +204,7 @@ export const Map = ({
       return _.omit(object, ['dataValue', 'dataValueNum'])
    })
     let mergedGeometry = addProperties(geojson, data);
-    console.log(data,mergedGeometry,"look at me")
+    console.log(mergedGeometry,"look at me")
     let c2Value;
     let color_range
     if (((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6) && toggleStateBurden === true) || (unit === 2))
@@ -240,7 +242,7 @@ export const Map = ({
     let colorScale, colorScale_new, colorScale2;
     
     // let arrsuw = [31,11,28,37,51,42,66,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86, 293,304,309,329,19,21,105,17,12,13,71,26,1,29,2,62,72,239,20,108,18,107,89,53,129,131,135,137,145,148,151,154,261,267,271,298,317,326,320,234,244,245,247,248,249,250,251,252,253,254,255,256,257,258,92,96,231,321,277]; 
-    let arr20to80 = [31,11,28,37,51,66,42,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86,277,286,293,298,304,309,329,317,326,320,333,334,335,285]
+    let arr20to80 = [31,11,28,37,51,66,42,43,84,23,25,32,99,100,70,76,77,78,75,4,5,6,7,14,15,34,57,24,74,85,86,277,286,293,298,304,309,329,317,326,320,333,334,335,285,331, 336, 338, 339, 340]
     let arr5to30 = [89, 92, 96, 129, 131, 135, 137, 145, 148, 151, 154,203,204,205,206,207,208,209,210,211,212, 231, 234, 247, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 261, 267, 271,219,220,221,222,223,224,225,226,227,228]
     let arr5to20 = [19, 21, 105]
     let arr10to40 = [12, 13, 17,200,214, 244, 245]
@@ -394,10 +396,21 @@ export const Map = ({
       else{
         tooltip.style("opacity", 0);
         tooltip.style("opacity", .9);
-        tooltip.html("<b>" + d.properties.NAME1_ + "</b><br><b></b>" )
+        if(level === 1){
+
+          tooltip.html("<b>" + d.properties.NAME2_ + "</b><br><b></b>" )
           .style("left", event.clientX - left_offset+ "px")
           .style("top", event.clientY - right_offset + "px")
           .style("font-size","12px");
+        }else if(level === 2 && level === 3){
+          tooltip.html("<b>" + d.properties.NAME1_ + "</b><br><b></b>" )
+          .style("left", event.clientX - left_offset+ "px")
+          .style("top", event.clientY - right_offset + "px")
+          .style("font-size","12px");
+          
+          
+        }
+        
       }
     };
     if ((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit ===6)  && toggleStateBurden === true)

@@ -88,6 +88,7 @@ export const Dropdown = () => {
     !arrayCategory.includes(parseInt(queryCategory))
   )
     queryCategory = MANIFESTATION;
+
   const [selCategory, setSelCategory] = useState(parseInt(queryCategory));
 
   let { queryIndicator } = useParams();
@@ -149,11 +150,11 @@ export const Dropdown = () => {
       setToggleState(true);
       await populateCategoryDropdown(selLifecycle, setCategoryDropdownOpt);
       let catVal = selCategory;
-      if (selLifecycle === ADOLESCENCE || selLifecycle === SCHOOL_AGE) {
-        if (selCategory === INTERVENTIONS) catVal = 1;
-      } else if (selLifecycle === DELIVERY_PNC) {
-        if (selCategory === MANIFESTATION) catVal = 2;
-      }
+      // if (selLifecycle === ADOLESCENCE || selLifecycle === SCHOOL_AGE) {
+      //   if (selCategory === INTERVENTIONS) catVal = 1;
+      // } else if (selLifecycle === DELIVERY_PNC) {
+      //   if (selCategory === MANIFESTATION) catVal = 2;
+      // }
 
       await populateDropdowns(
         selLifecycle,
@@ -253,12 +254,12 @@ for (let i = 0; i < areaData.result.docs.length; i++) {
     setToggleState(true);
 
     let selCat = MANIFESTATION;
-    if (val === ADOLESCENCE || val === SCHOOL_AGE) {
+    if (val === SCHOOL_AGE) {
       setCategoryDropdownOpt([
         { value: 1, title: 'Manifestation' },
         { value: 3, title: 'Determinants' },
       ]);
-    } else if (val === WORA) {
+    } else if (val === WORA || val === ADOLESCENCE) {
       setCategoryDropdownOpt([
         { value: 1, title: 'Manifestation' },
         { value: 2, title: 'Interventions' },

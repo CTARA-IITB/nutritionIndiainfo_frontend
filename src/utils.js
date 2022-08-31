@@ -240,7 +240,8 @@ export async function populateDropdowns(
   setNote,
   queryIndicator,setHttpStatusCode, setHttpStatusMsg
 ) {
-  // console.log(`selCategory: ${selCategory}  ,  selLifeycle : ${selLifeycle}`);
+
+  console.log(`selCategory: ${selCategory}  ,  selLifecycle : ${selLifecycle}`);
   const solr_url_6 = await fetch(
     `${API}/api/v1/url_6u?selCategory=${selCategory}&selLifecycle=${selLifecycle}` , {
       headers:{
@@ -264,12 +265,15 @@ export async function populateDropdowns(
   if(solr_url_6.status === 200)
   {
         setIndicatorDropdownOpt(solr_body_6.result.docs); 
+
         if(solr_body_6.result.docs.length)
         {
         if (queryIndicator) {
+
           passedIndicator = solr_body_6.result.docs.filter(
             (i) => i.value === parseInt(queryIndicator)
           )[0];
+
         
         if(passedIndicator)
         {
@@ -361,9 +365,9 @@ export async function populateDropdowns(
 
 export async function populateCategoryDropdown(selLifecycle, setCategoryDropdownOpt)
 {  
-  if(selLifecycle === 1 || selLifecycle === 6){
+  if(selLifecycle === 6){
     setCategoryDropdownOpt([{value:1,title:"Manifestation"},  { value: 3, title: "Determinants" } ])
-  }else if(selLifecycle === 2){
+  }else if(selLifecycle === 1 || selLifecycle === 2){
     setCategoryDropdownOpt([
       { value: 1, title: "Manifestation" },
       { value: 2, title: "Interventions" },

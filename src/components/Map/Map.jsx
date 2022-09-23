@@ -331,7 +331,7 @@ export const Map = ({
       medium = 25000.0;
       high = 30000.0;
       highest = 35000.0;
-      sampleCategoricalData = ["<20,000", "20,000-24,999", "25,000-29,000", "30,000-34,000", ">=35,000", "No Data"]
+      sampleCategoricalData = ["<20,000", "20,000-24,999", "25,000-29,999", "30,000-34,999", ">=35,000", "No Data"]
     }
   
   if ((unit === 1 || unit === 4 || unit === 3 || unit === 5 || unit === 6) && toggleStateBurden === true) {

@@ -9,12 +9,12 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 //header images
 import mhf from './image_logos/mhf.png'
-import nil from './image_logos/nutrition-logo.svg'
+import nil from './image_logos/h-nutrition-logo.png'
 import pa from './image_logos/pa.png'
 
 
 // footer images
-import nilf from "./image_logos/nutrition-logo-footer.svg";
+import nilf from "./image_logos/h-nutrition-logo-footer.png";
 import clf from "./image_logos/ctara-logo.png";
 import unil from "./image_logos/unicefLogo.png";
 
@@ -56,7 +56,7 @@ return(<>
 	<footer className="footer p-0 mt-4">
 			<div className="row  p-0 m-0 align-items-center">
 				<div className="col-4">
-					<a href="https://nutritionindia.info/" target="_blank" rel=" noreferrer"><img src={nilf} alt="" className="nutrition-image"/></a>
+					<a href="https://healthnutritionindia.in/" target="_blank" rel=" noreferrer"><img src={nilf} alt="" className="nutrition-image"/></a>
 				</div>
 				<div className="col-4">
 					<a href="https://www.ctara.iitb.ac.in/" target="_blank" rel=" noreferrer"><img src={clf} alt="" title="CTARA" className="iitb-image"/></a>

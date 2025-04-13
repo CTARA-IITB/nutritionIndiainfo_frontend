@@ -756,7 +756,7 @@ for (let i = 0; i < areaData.result.docs.length; i++) {
               <div className='col-6 col-lg-1 col-md-6 p-3 for-mobile-2 i-for-mobile-div3 -mt-6 md:mt-0'>
                 <div className='i-class'>
                   <a
-                    href='/reports/referenceDocuments'
+                    href='/reports/reference-documents/'
                     target='_blank'
                     alt='India State wise NFHS-5 Reports'
                   >

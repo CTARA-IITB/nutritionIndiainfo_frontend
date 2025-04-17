@@ -703,11 +703,13 @@ for (let i = 0; i < areaData.result.docs.length; i++) {
                         value={selIndicator}
                         onChange={indicatorChange}
                       >
-                        {indicatorDropdownOpt.map((opt) => (
-                          <option key={opt.value + opt.title} value={opt.value}>
-                            {opt.title}
-                          </option>
-                        ))}
+                        {indicatorDropdownOpt
+                          .sort((a, b) => a.title.localeCompare(b.title))
+                          .map((opt) => (
+                            <option key={opt.value + opt.title} value={opt.value}>
+                              {opt.title}
+                            </option>
+                          ))}
                       </select>
                     </div>
                   </div>

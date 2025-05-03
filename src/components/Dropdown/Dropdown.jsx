@@ -660,7 +660,6 @@ for (let i = 0; i < areaData.result.docs.length; i++) {
                 <div className='d-flex top-15' style={{ position: 'relative' }}>
                   <img
                     src={selLifeycleImg}
-                    alt=''
                     className='lifecycle-img'
                     alt='India State wise NFHS-5 Reports'
                   />

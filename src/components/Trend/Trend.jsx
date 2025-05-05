@@ -241,13 +241,33 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
         .attr("d", lineGenerator(data))
         .attr("class","trend-line")
       
-      bar.selectAll("mytext").data(data).enter().append("text")
-        .attr("x", function(d) { return xScale(xValue(d)); })
-        .attr("y", d => yScale(yValue(d)))
-        .attr("dy", "-1em")
-        .style("text-anchor","middle")
-        .style("font-size","11px")
-        .text(function(d) { return d.timeperiod; });
+      // bar.selectAll("mytext").data(data).enter().append("text")
+      //   .attr("x", function(d) { return xScale(xValue(d)); })
+      //   .attr("y", d => yScale(yValue(d)))
+      //   .attr("dy", "-1em")
+      //   .style("text-anchor","middle")
+      //   .style("font-size","11px")
+      //   .text(function(d) { return `${d.data_value} ${d.timeperiod}`; });
+
+        bar.selectAll("mytext").data(data).enter().append("text")
+    .attr("x", function(d) { return xScale(xValue(d)); })
+    .attr("y", d => yScale(yValue(d)))
+    .attr("dy", "-1em")
+    .style("text-anchor", "middle")
+    .style("font-size", "11px")
+    .each(function(d) {
+        select(this)
+            .append("tspan")
+            .attr("x", function() { return xScale(xValue(d)); })
+            .text(d.timeperiod);
+
+        select(this)
+            .append("tspan")
+            .attr("x", function() { return xScale(xValue(d)); })
+            .attr("dy", "2.5em")
+            .text(()=>{return toggleStateBurden?d.data_value:decimalPrecision(d.data_value_num)});
+            
+    });
     }
     else{
 

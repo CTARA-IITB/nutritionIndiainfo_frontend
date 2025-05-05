@@ -394,13 +394,13 @@ let dynamicRange;
       if(toggleStateBurden){
         table.push({
           area:data[i].area_name,
-          data:decimalPrecision(data[i].data_value)
+          [graphTitle]:decimalPrecision(data[i].data_value)
         })
       }
       else{
         table.push({
           area:data[i].area_name,
-          data:fmt.format(data[i].data_value_num)
+          [graphTitle]:fmt.format(data[i].data_value_num)
         })
       }
     }

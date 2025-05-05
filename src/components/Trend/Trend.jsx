@@ -332,7 +332,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
       if(toggleStateBurden){
         table.push({
           timeperiod:data[i].timeperiod,
-          data:decimalPrecision(data[i].data_value),
+          [graphTitle]:decimalPrecision(data[i].data_value),
           Start:data[i].startDate,
           End:data[i].endDate
         })
@@ -340,7 +340,7 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
       else{
         table.push({ 
           timeperiod:data[i].timeperiod,
-          data:fmt.format(data[i].data_value_num),
+          [graphTitle]:fmt.format(data[i].data_value_num),
           Start:data[i].startDate,
           End:data[i].endDate
         })

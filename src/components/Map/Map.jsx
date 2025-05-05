@@ -665,7 +665,7 @@ export const Map = ({
         if(data[i].data_value){
           table.push({
             area:data[i].area_name,
-            data:decimalPrecision(data[i].data_value)
+            [graphTitle]:decimalPrecision(data[i].data_value)
           })
         }
       }
@@ -673,7 +673,7 @@ export const Map = ({
         if(data[i].data_value_num){
           table.push({
             area:data[i].area_name,
-            data:fmt.format(data[i].data_value_num)
+            [graphTitle]:fmt.format(data[i].data_value_num)
           })
         }
         graphUnit='Number'

@@ -235,7 +235,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
         if(data[i].data_value){
           table.push({
             subgroup:data[i].subgroup_name,
-            data:decimalPrecision(data[i].data_value)
+            [graphTitle]:decimalPrecision(data[i].data_value)
           })
         }
       }
@@ -243,7 +243,7 @@ export const Bar = ({indicatorBar, graphTitle,graphTimeperiod, graphUnit,titleAr
         if(data[i].data_value_num){
           table.push({
             subgroup:data[i].subgroup_name,
-            data:fmt.format(data[i].data_value_num)
+            [graphTitle]:fmt.format(data[i].data_value_num)
           })
         }
       }

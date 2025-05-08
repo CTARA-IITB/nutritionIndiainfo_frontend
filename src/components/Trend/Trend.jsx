@@ -82,6 +82,18 @@ export const Trend = ({indicatorTrend, graphTitle, graphUnit, titleAreaName, tog
   //formatting data for trend
   useEffect(() => {
     let cleanData = [];
+    if(selIndicator === 56) // 56 for population
+    {
+      indicatorTrend = indicatorTrend.filter((d) => {
+        let currentDate = new Date();
+        let currentYear = currentDate.getFullYear();
+        if(d.timeperiod === "CENSUS 2001" || d.timeperiod === "CENSUS 2011" ||  d.timeperiod === "Population Projections 2021" || d.timeperiod === `Population Projections ${currentYear}`)
+          return true;
+        else
+          return false;
+      })
+    }
+    
     indicatorTrend.forEach((d) => {
       if(typeof d.data_value != 'undefined'){
         d["startDate"]=d.start_date
